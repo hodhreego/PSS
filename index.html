@@ -58,6 +58,18 @@
     border-radius:50%;
     background:radial-gradient(circle, rgba(201,162,39,.28) 0%, rgba(201,162,39,0) 70%);
   }
+  .celebrate-flash{
+    position:absolute; top:6px; left:50%; z-index:6;
+    font-size:28px; opacity:0; transform:translateX(-50%) scale(0);
+    pointer-events:none;
+  }
+  .celebrate-flash.pop{ animation: celebratePop 1s ease-out; }
+  @keyframes celebratePop{
+    0%{transform:translateX(-50%) scale(0); opacity:0;}
+    28%{transform:translateX(-50%) scale(1.35); opacity:1;}
+    55%{transform:translateX(-50%) scale(1); opacity:1;}
+    100%{transform:translateX(-50%) scale(.8) translateY(-6px); opacity:0;}
+  }
   .eyebrow{
     display:inline-flex; align-items:center; gap:6px;
     font-size:9.5px; letter-spacing:.14em; text-transform:uppercase; font-weight:700;
@@ -263,8 +275,20 @@
   }
   .outro-input.show{display:block;}
 
-  .cta{display:block; width:100%; text-align:center; background:linear-gradient(135deg, #25D366, #1DAE54); color:var(--white); font-weight:700; font-size:14px; padding:13px; border-radius:12px; border:none; text-decoration:none; box-shadow:0 8px 18px rgba(37,211,102,.35); margin-bottom:8px; transition:opacity .2s;}
-  .cta.disabled{opacity:.4; pointer-events:none; box-shadow:none;}
+  .cta{
+    display:flex; align-items:center; justify-content:center; gap:9px; width:100%;
+    text-align:center; background:linear-gradient(135deg, #25D366, #1DAE54); color:var(--white);
+    font-weight:700; font-size:14.5px; padding:14px; border-radius:14px; border:none;
+    text-decoration:none; box-shadow:0 8px 18px rgba(37,211,102,.35); margin-bottom:8px;
+    transition:opacity .2s;
+  }
+  .cta-icon{flex-shrink:0;}
+  .cta:not(.disabled){animation: ctaPulse 1.8s ease-in-out infinite;}
+  @keyframes ctaPulse{
+    0%,100%{box-shadow:0 8px 18px rgba(37,211,102,.35); transform:scale(1);}
+    50%{box-shadow:0 10px 28px rgba(37,211,102,.65); transform:scale(1.015);}
+  }
+  .cta.disabled{opacity:.4; pointer-events:none; box-shadow:none; animation:none;}
   .cta-hint{display:none; text-align:center; font-size:9.5px; color:var(--alert); font-weight:600; margin-bottom:8px;}
   .cta-hint.show{display:block;}
   .cta-sub{text-align:center; font-size:9.5px; color:#7285A0; margin-bottom:16px;}
@@ -295,6 +319,7 @@
 
     <!-- CABEÇALHO FIXO: pontuação e total sempre visíveis -->
     <div class="hero">
+      <div class="celebrate-flash" id="celebrateFlash"></div>
       <span class="eyebrow"><span class="dot"></span>PSS SEED-PR 2027 · Prova Prática</span>
       <div class="store-badge">
         <span class="temple">🏛️</span>
@@ -806,7 +831,12 @@
         <input type="text" class="outro-input" id="outroInput" placeholder="Digite o componente curricular">
       </div>
 
-      <a href="#" class="cta disabled" id="ctaBtn" target="_blank" rel="noopener">Chamar no WhatsApp</a>
+      <a href="#" class="cta disabled" id="ctaBtn" target="_blank" rel="noopener">
+        <svg class="cta-icon" viewBox="0 0 32 32" width="19" height="19" fill="currentColor" aria-hidden="true">
+          <path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.34.663 4.523 1.814 6.375L4 29l7.828-1.78A11.94 11.94 0 0 0 16.001 27C22.629 27 28 21.627 28 15S22.629 3 16.001 3Zm0 21.818c-1.99 0-3.85-.58-5.414-1.578l-.388-.24-4.65 1.057 1.086-4.53-.253-.4A9.77 9.77 0 0 1 5.09 15c0-6.02 4.892-10.909 10.911-10.909S26.91 8.98 26.91 15 22.02 24.818 16.001 24.818Zm5.997-8.19c-.328-.164-1.94-.957-2.24-1.066-.301-.109-.52-.164-.738.164-.219.328-.848 1.066-1.04 1.285-.191.219-.383.246-.71.082-.328-.164-1.386-.51-2.64-1.63-.976-.87-1.635-1.945-1.827-2.273-.191-.328-.02-.505.144-.668.148-.148.328-.383.492-.574.164-.191.219-.328.328-.547.109-.219.055-.41-.027-.574-.082-.164-.738-1.777-1.012-2.434-.267-.64-.539-.554-.738-.564l-.629-.011c-.219 0-.574.082-.875.41-.301.328-1.148 1.121-1.148 2.734s1.175 3.172 1.339 3.391c.164.219 2.312 3.532 5.605 4.953.783.338 1.394.54 1.87.69.786.25 1.502.215 2.068.13.631-.094 1.94-.793 2.213-1.559.273-.766.273-1.422.191-1.559-.082-.137-.301-.219-.629-.383Z"/>
+        </svg>
+        <span>Chamar no WhatsApp</span>
+      </a>
       <div class="cta-hint" id="ctaHint">Selecione ao menos uma opção acima para continuar</div>
       <div class="cta-sub">Vagas limitadas por turma — atendimento até a data de inscrição do edital</div>
 
@@ -859,6 +889,17 @@
   const PLANO_BASE = {basica:50, pedagogo:60, especial:70};
   const PLANO_COMBO_DESCONTO = 10; // cada plano marcado junto com exatamente mais um ganha R$10 de desconto
   const WHATSAPP_NUMBER = "5545999699444";
+  const celebrateFlash = document.getElementById('celebrateFlash');
+  const CELEBRATE_EMOJIS = ['🎉','✨','💛','🌟','😄','🥳','👏','💫','🙌'];
+  let firstRender = true;
+
+  function triggerCelebration(){
+    const emoji = CELEBRATE_EMOJIS[Math.floor(Math.random() * CELEBRATE_EMOJIS.length)];
+    celebrateFlash.textContent = emoji;
+    celebrateFlash.classList.remove('pop');
+    void celebrateFlash.offsetWidth; // força reflow pra reiniciar a animação
+    celebrateFlash.classList.add('pop');
+  }
   const GRAVACAO_PRICE = 90;
   const GRAVACAO_DESCONTO = 30; // desconto fixo no 2º vídeo (gravação)
 
@@ -935,7 +976,8 @@
     let items = [];
     let planosSelecionados = [];
 
-    // regra: quando exatamente 2 dos 3 planos estão marcados, cada um dos 2 ganha R$10 de desconto
+    // regra: quando exatamente 2 dos 3 planos estão marcados (qualquer par, incluindo Educação Básica),
+    // cada um dos 2 marcados ganha R$10 de desconto.
     const planoInputs = [
       {chk: planoBasicaChk, tipo: 'basica', display: basicaPriceDisplay},
       {chk: planoPedagogoChk, tipo: 'pedagogo', display: pedagogoPriceDisplay},
@@ -1049,6 +1091,9 @@
       msg += " Optou por seguir só com o vídeo, ciente do item 7.4.9.";
     }
     ctaBtn.href = canSubmit ? ("https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(msg)) : "#";
+
+    // acolhe a pessoa com um emoji toda vez que ela marca/desmarca algo (menos na carga inicial)
+    if(!firstRender){ triggerCelebration(); }
   }
 
   planoChecks.forEach(c => c.addEventListener('change', update));
@@ -1057,6 +1102,7 @@
   subjectSelect.addEventListener('change', update);
   outroInput.addEventListener('input', update);
   update();
+  firstRender = false;
 </script>
 
 </body>
