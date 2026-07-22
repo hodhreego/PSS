@@ -18,6 +18,7 @@
     --white:#FFFFFF;
     --alert:#B23A3A;
     --alert-bg:#FBEAEA;
+    --green:#34D399;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   html,body{
@@ -67,7 +68,28 @@
     padding:4px 9px; border-radius:20px;
     background:rgba(255,255,255,.04);
   }
-  .eyebrow span.dot{width:5px;height:5px;border-radius:50%;background:var(--gold);}
+  .eyebrow span.dot{
+    width:10px; height:10px; border-radius:50%; background:var(--gold); flex-shrink:0;
+    animation:dotBlink 1.2s ease-in-out infinite;
+  }
+  @keyframes dotBlink{0%,100%{background:var(--gold);} 50%{background:var(--green);}}
+
+  .store-badge{
+    position:absolute; top:16px; right:16px; z-index:3;
+    display:flex; flex-direction:column; align-items:center; gap:1px;
+    background:rgba(255,255,255,.08); border:1px solid rgba(233,212,142,.4);
+    border-radius:10px; padding:6px 9px;
+  }
+  .store-badge .temple{
+    font-size:19px; line-height:1; display:inline-block;
+    animation:templeWobble 2.4s ease-in-out infinite;
+  }
+  @keyframes templeWobble{0%,100%{transform:rotate(-45deg);} 50%{transform:rotate(45deg);}}
+  .store-badge .store-text{
+    font-size:7px; font-weight:800; color:var(--gold-light); text-align:center;
+    line-height:1.15; text-transform:uppercase; letter-spacing:.03em; white-space:nowrap;
+  }
+
   h1{
     font-family:'Playfair Display', serif; font-weight:700; font-size:18.5px; line-height:1.2;
     margin-top:9px; letter-spacing:.2px;
@@ -266,6 +288,10 @@
     <!-- CABEÇALHO FIXO: pontuação e total sempre visíveis -->
     <div class="hero">
       <span class="eyebrow"><span class="dot"></span>PSS SEED-PR 2027 · Prova Prática</span>
+      <div class="store-badge">
+        <span class="temple">🏛️</span>
+        <span class="store-text">Loja de<br>Matemática</span>
+      </div>
       <h1>Sua nota na Prova Prática não pode depender do <em>improviso</em>.</h1>
 
       <div class="meters" id="metersWrap"></div>
