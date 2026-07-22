@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --navy:#1B3A6B; 
+    --navy:#1B3A6B;
     --navy-deep:#0F2547;
     --gold:#C9A227;
     --gold-light:#E9D48E;
@@ -202,14 +202,9 @@
 
   .total-row{display:flex; justify-content:space-between; align-items:center; margin-top:11px; padding-top:11px; border-top:1.5px dashed var(--line);}
   .total-row .label{font-size:11px; color:#5A6B85; font-weight:600;}
-  .total-row .value-wrap{display:flex; align-items:baseline; gap:6px;}
-  .total-row .strike{font-size:12px; color:#9AA7BB; text-decoration:line-through; display:none;}
-  .total-row .strike.show{display:inline;}
   .total-row .value{font-family:'Playfair Display', serif; font-size:20px; font-weight:800; color:var(--navy);}
   .bundle-note{margin-top:8px; font-size:9.5px; color:var(--gold); background:#FBF6E7; border:1px solid var(--gold-light); padding:6px 10px; border-radius:8px; display:none; text-align:center; font-weight:600;}
   .bundle-note.show{display:block;}
-  .discount-note{margin-top:8px; font-size:9.5px; color:var(--gold); background:#FBF6E7; border:1px solid var(--gold-light); padding:6px 10px; border-radius:8px; display:none; text-align:center; font-weight:600; line-height:1.4;}
-  .discount-note.show{display:block;}
 
   /* menu de componente curricular — só aparece para Educação Básica */
   .subject-box{background:var(--white); border:1px solid var(--line); border-radius:14px; padding:0; margin-bottom:0; max-height:0; opacity:0; overflow:hidden; transition:max-height .3s ease, opacity .25s ease, padding .3s ease, margin .3s ease;}
@@ -620,33 +615,33 @@
         <div class="selector-subtitle">🖥️ Apoio na inscrição da plataforma</div>
 
         <label class="opt">
-          <input type="checkbox" class="chk" data-price="15" data-label="Inscrição na plataforma" data-key="inscricao">
+          <input type="checkbox" class="chk" data-price="20" data-label="Inscrição na plataforma" data-key="inscricao">
           <span class="opt-emoji">📝</span>
           <span class="opt-text">
             <div class="name">Cadastro e inscrição na plataforma</div>
             <div class="desc">Te ajudo a fazer o cadastro e a inscrição certinha no site da banca</div>
           </span>
-          <span class="opt-price">R$ 15</span>
+          <span class="opt-price">R$ 20</span>
         </label>
 
         <label class="opt">
-          <input type="checkbox" class="chk" data-price="15" data-label="Anexação do vídeo na plataforma" data-key="anexoVideo">
+          <input type="checkbox" class="chk" data-price="5" data-label="Anexação do vídeo na plataforma" data-key="anexoVideo">
           <span class="opt-emoji">📤</span>
           <span class="opt-text">
             <div class="name">Anexar o vídeo na plataforma</div>
             <div class="desc">Faço o upload do seu vídeo no formato e prazo exigidos pelo edital</div>
           </span>
-          <span class="opt-price">R$ 15</span>
+          <span class="opt-price">R$ 5</span>
         </label>
 
         <label class="opt">
-          <input type="checkbox" class="chk" data-price="15" data-label="Anexação do Plano de Aula na plataforma" data-key="anexoPlano">
+          <input type="checkbox" class="chk" data-price="5" data-label="Anexação do Plano de Aula na plataforma" data-key="anexoPlano">
           <span class="opt-emoji">📎</span>
           <span class="opt-text">
             <div class="name">Anexar o Plano de Aula na plataforma</div>
             <div class="desc">Faço o upload do seu plano no local certo do sistema de inscrição</div>
           </span>
-          <span class="opt-price">R$ 15</span>
+          <span class="opt-price">R$ 5</span>
         </label>
 
         <div class="plan-warn" id="planWarn">⚠️ Sem o Plano de Aula, o vídeo não é avaliado (edital, item 7.4.9).</div>
@@ -658,12 +653,8 @@
 
         <div class="total-row">
           <span class="label">Total selecionado</span>
-          <span class="value-wrap">
-            <span class="strike" id="totalStrike">R$ 0</span>
-            <span class="value" id="total">R$ 0</span>
-          </span>
+          <span class="value" id="total">R$ 0</span>
         </div>
-        <div class="discount-note" id="discountNote">🏷️ 2 planos = 2 vídeos exigidos pelo edital (item 7.3.5) — desconto de 20% já aplicado</div>
         <div class="bundle-note" id="bundleNote">✓ Pacote completo selecionado — Plano + Vídeo do início ao fim 🎉</div>
       </div>
 
@@ -827,10 +818,8 @@
   const planoChecks = document.querySelectorAll('.planoChk');
   const checks = document.querySelectorAll('.chk');
   const totalEl = document.getElementById('total');
-  const totalStrike = document.getElementById('totalStrike');
   const totalFixedEl = document.getElementById('totalFixed');
   const bundleNote = document.getElementById('bundleNote');
-  const discountNote = document.getElementById('discountNote');
   const planWarn = document.getElementById('planWarn');
   const confirmRisk = document.getElementById('confirmRisk');
   const confirmRiskChk = document.getElementById('confirmRiskChk');
@@ -846,19 +835,18 @@
   const legVideo = document.getElementById('legVideo');
   const planoCards = [document.getElementById('cardBasica'), document.getElementById('cardPedagogo'), document.getElementById('cardEspecial')];
   const WHATSAPP_NUMBER = "5545999699444";
-  const DISCOUNT_RATE = 0.20;
 
   function update(){
-    let rawTotal = 0;
+    let total = 0;
     let items = [];
     let planosSelecionados = [];
 
-    // tipo(s) de plano — agora é possível marcar mais de um (2 inscrições = 2 vídeos)
+    // tipo(s) de plano — é possível marcar mais de um (2 inscrições = 2 vídeos)
     planoChecks.forEach(c => {
       c.closest('.plano-card').classList.toggle('selected', c.checked);
       if(c.checked){
         planosSelecionados.push(c.dataset.tipo);
-        rawTotal += Number(c.dataset.price);
+        total += Number(c.dataset.price);
         items.push(c.dataset.label);
       }
     });
@@ -867,7 +855,7 @@
     let slidesChecked = false, gravacaoChecked = false;
     checks.forEach(c => {
       if(c.checked){
-        rawTotal += Number(c.dataset.price);
+        total += Number(c.dataset.price);
         items.push(c.dataset.label);
         if(c.dataset.key === 'slides') slidesChecked = true;
         if(c.dataset.key === 'gravacao') gravacaoChecked = true;
@@ -875,15 +863,8 @@
     });
     const videoChecked = slidesChecked || gravacaoChecked;
 
-    // 2 planos = 2 vídeos obrigatórios (edital, item 7.3.5) -> 20% de desconto
-    const doisVideosExigidos = planosSelecionados.length >= 2;
-    const finalTotal = doisVideosExigidos ? Math.round(rawTotal * (1 - DISCOUNT_RATE)) : rawTotal;
-
-    totalEl.textContent = "R$ " + finalTotal;
-    totalFixedEl.textContent = "R$ " + finalTotal;
-    totalStrike.textContent = "R$ " + rawTotal;
-    totalStrike.classList.toggle('show', doisVideosExigidos);
-    discountNote.classList.toggle('show', doisVideosExigidos);
+    totalEl.textContent = "R$ " + total;
+    totalFixedEl.textContent = "R$ " + total;
 
     const fullPackage = planosSelecionados.length > 0 && slidesChecked && gravacaoChecked;
     bundleNote.classList.toggle('show', fullPackage);
@@ -927,12 +908,7 @@
     // mensagem automática do WhatsApp
     let msg = "Olá, Prof. Rodrigo! Vim pelo anúncio da assessoria para a Prova Prática do PSS SEED-PR 2027.";
     if(items.length){
-      msg += " Tenho interesse em: " + items.join(", ") + ".";
-    }
-    if(doisVideosExigidos){
-      msg += " Preciso de 2 Planos/2 Vídeos (edital, item 7.3.5). Total com 20% de desconto: R$ " + finalTotal + " (de R$ " + rawTotal + ").";
-    } else if(items.length){
-      msg += " Total: R$ " + finalTotal + ".";
+      msg += " Tenho interesse em: " + items.join(", ") + ". Total: R$ " + total + ".";
     }
     if(showSubject && subjectSelect.value){
       const comp = (subjectSelect.value === 'Outro componente curricular' && outroInput.value.trim())
