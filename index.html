@@ -75,24 +75,24 @@
   @keyframes dotBlink{0%,100%{background:var(--gold);} 50%{background:var(--green);}}
 
   .store-badge{
-    position:absolute; top:16px; right:16px; z-index:3;
-    display:flex; flex-direction:column; align-items:center; gap:1px;
+    position:absolute; top:14px; right:14px; z-index:3;
+    display:flex; flex-direction:column; align-items:center; gap:3px;
     background:rgba(255,255,255,.08); border:1px solid rgba(233,212,142,.4);
-    border-radius:10px; padding:6px 9px;
+    border-radius:13px; padding:10px 15px;
   }
   .store-badge .temple{
-    font-size:19px; line-height:1; display:inline-block;
+    font-size:36px; line-height:1; display:inline-block;
     animation:templeWobble 2.4s ease-in-out infinite;
   }
   @keyframes templeWobble{0%,100%{transform:rotate(-45deg);} 50%{transform:rotate(45deg);}}
   .store-badge .store-text{
-    font-size:7px; font-weight:800; color:var(--gold-light); text-align:center;
-    line-height:1.15; text-transform:uppercase; letter-spacing:.03em; white-space:nowrap;
+    font-size:9.5px; font-weight:800; color:var(--gold-light); text-align:center;
+    line-height:1.2; text-transform:uppercase; letter-spacing:.03em; white-space:nowrap;
   }
 
   h1{
     font-family:'Playfair Display', serif; font-weight:700; font-size:18.5px; line-height:1.2;
-    margin-top:9px; letter-spacing:.2px;
+    margin-top:53px; letter-spacing:.2px;
   }
   h1 em{font-style:italic; color:var(--gold-light);}
 
@@ -135,8 +135,7 @@
   }
   details.rubric summary::-webkit-details-marker{display:none;}
   summary .summary-text{flex:1;}
-  summary .tap-hint{font-size:15px; flex-shrink:0; animation:tapBounce 1.3s ease-in-out infinite;}
-  @keyframes tapBounce{0%,100%{transform:translateY(0);} 50%{transform:translateY(-3px);}}
+  summary .tap-hint{font-size:15px; flex-shrink:0; animation:swipeMove 1.3s ease-in-out infinite;}
   summary .chev-btn{
     width:24px; height:24px; border-radius:50%; background:var(--bg); border:1px solid var(--line);
     display:flex; align-items:center; justify-content:center; flex-shrink:0;
@@ -217,6 +216,8 @@
   .opt-price{font-size:12px; font-weight:700; color:var(--navy); white-space:nowrap; margin-top:1px;}
   .opt-price .strike-mini{font-size:10px; font-weight:600; color:#9AA7BB; text-decoration:line-through; margin-right:4px;}
   .opt-price .price-final{color:var(--alert);}
+  .plano-card .price .strike-mini{font-size:10px; font-weight:600; color:#9AA7BB; text-decoration:line-through; margin-right:4px;}
+  .plano-card .price .price-final{color:var(--alert);}
 
   .discount-note-red{
     display:none; font-size:10px; line-height:1.4; color:var(--alert); background:var(--alert-bg);
@@ -336,7 +337,7 @@
       <details class="rubric">
         <summary>
           <span class="summary-text">📊 Ver critérios de avaliação detalhados</span>
-          <span class="tap-hint">👆</span>
+          <span class="tap-hint">👉</span>
           <span class="chev-btn"><span class="chev">▾</span></span>
         </summary>
         <div class="rubric-body">
@@ -610,7 +611,7 @@
           </label>
 
           <label class="plano-card" id="cardPedagogo">
-            <input type="checkbox" class="planoChk" data-price="60" data-label="Plano de Ação (Mentoria) – Pedagogo" data-tipo="pedagogo">
+            <input type="checkbox" class="planoChk" id="planoPedagogoChk" data-price="60" data-label="Plano de Ação (Mentoria) – Pedagogo" data-tipo="pedagogo">
             <span class="emoji">🧑‍🏫</span>
             <span class="txt">
               <div class="name">Pedagogo</div>
@@ -620,13 +621,13 @@
           </label>
 
           <label class="plano-card" id="cardEspecial">
-            <input type="checkbox" class="planoChk" data-price="70" data-label="Plano de Atendimento (Mentoria) – Educação Especial" data-tipo="especial">
+            <input type="checkbox" class="planoChk" id="planoEspecialChk" data-price="70" data-label="Plano de Atendimento (Mentoria) – Educação Especial" data-tipo="especial">
             <span class="emoji">🧩</span>
             <span class="txt">
               <div class="name">Educação Especial</div>
               <div class="desc">Plano de Atendimento (Mentoria — Word ou PDF)</div>
             </span>
-            <span class="price">R$ 70</span>
+            <span class="price" id="especialPriceDisplay">R$ 70</span>
           </label>
         </div>
 
@@ -820,6 +821,9 @@
 
 <script>
   const planoChecks = document.querySelectorAll('.planoChk');
+  const planoPedagogoChk = document.getElementById('planoPedagogoChk');
+  const planoEspecialChk = document.getElementById('planoEspecialChk');
+  const especialPriceDisplay = document.getElementById('especialPriceDisplay');
   const totalEl = document.getElementById('total');
   const totalFixedEl = document.getElementById('totalFixed');
   const bundleNote = document.getElementById('bundleNote');
@@ -913,6 +917,13 @@
     let total = 0;
     let items = [];
     let planosSelecionados = [];
+
+    // Educação Especial cai de R$70 pra R$60 quando combinada com Pedagogo
+    const especialComDesconto = planoPedagogoChk.checked && planoEspecialChk.checked;
+    planoEspecialChk.dataset.price = especialComDesconto ? '60' : '70';
+    especialPriceDisplay.innerHTML = especialComDesconto
+      ? '<span class="strike-mini">R$ 70</span><span class="price-final">R$ 60</span>'
+      : 'R$ 70';
 
     // tipo(s) de plano — é possível marcar mais de um (2 inscrições = 2 vídeos)
     planoChecks.forEach(c => {
