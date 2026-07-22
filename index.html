@@ -274,6 +274,15 @@
   .trust-item .n{font-family:'Playfair Display', serif; font-weight:800; font-size:14px; color:var(--navy);}
   .trust-item .t{font-size:8.5px; color:#5A6B85; text-transform:uppercase; letter-spacing:.04em; margin-top:2px;}
 
+  .edital-link-wrap{display:flex; flex-direction:column; align-items:center; gap:2px; margin-bottom:16px;}
+  .edital-hand{font-size:17px; animation:handDown 1.3s ease-in-out infinite;}
+  @keyframes handDown{0%,100%{transform:translateY(0);} 50%{transform:translateY(4px);}}
+  .edital-link{
+    display:block; text-align:center; font-size:11.5px; font-weight:700; color:var(--navy);
+    background:var(--bg); border:1.5px solid var(--navy); border-radius:10px;
+    padding:9px 14px; text-decoration:none;
+  }
+
   footer{background:var(--navy-deep); color:#B9C4D6; padding:15px 20px 22px; text-align:center; margin:0 -20px;}
   footer .name{font-family:'Playfair Display', serif; color:var(--white); font-size:12.5px; font-weight:700; margin-bottom:3px;}
   footer .disc{font-size:8.5px; line-height:1.5; color:#8CA0BF; margin-top:7px; max-width:34ch; margin-left:auto; margin-right:auto;}
@@ -599,13 +608,13 @@
         <div class="selector-subtitle">📄 Seu(s) tipo(s) de plano (Mentoria) — marque mais de um se fizer 2 inscrições</div>
         <div class="plano-group">
           <label class="plano-card" id="cardBasica">
-            <input type="checkbox" class="planoChk" data-price="50" data-label="Plano de Aula (Mentoria) – Educação Básica" data-tipo="basica">
+            <input type="checkbox" class="planoChk" id="planoBasicaChk" data-price="50" data-label="Plano de Aula (Mentoria) – Educação Básica" data-tipo="basica">
             <span class="emoji">🏫</span>
             <span class="txt">
               <div class="name">Educação Básica</div>
               <div class="desc">Plano de Aula (Mentoria — Word ou PDF)</div>
             </span>
-            <span class="price">R$ 50</span>
+            <span class="price" id="basicaPriceDisplay">R$ 50</span>
           </label>
 
           <label class="plano-card" id="cardPedagogo">
@@ -615,7 +624,7 @@
               <div class="name">Pedagogo</div>
               <div class="desc">Plano de Ação (Mentoria — Word ou PDF)</div>
             </span>
-            <span class="price">R$ 60</span>
+            <span class="price" id="pedagogoPriceDisplay">R$ 60</span>
           </label>
 
           <label class="plano-card" id="cardEspecial">
@@ -807,6 +816,11 @@
         <div class="trust-item"><div class="n">2027</div><div class="t">PSS Atual</div></div>
       </div>
 
+      <div class="edital-link-wrap">
+        <span class="edital-hand">👇</span>
+        <a href="https://servicos.nc.ufpr.br/PortalNC/Processos?ano=2027" target="_blank" rel="noopener" class="edital-link">Clique aqui para acessar a página do edital</a>
+      </div>
+
       <footer>
         <div class="name">Prof. Rodrigo G. Pereira</div>
         <div style="font-size:10px;">Assessoria para Plano de Aula e Vídeo — Prova Prática</div>
@@ -819,8 +833,11 @@
 
 <script>
   const planoChecks = document.querySelectorAll('.planoChk');
+  const planoBasicaChk = document.getElementById('planoBasicaChk');
   const planoPedagogoChk = document.getElementById('planoPedagogoChk');
   const planoEspecialChk = document.getElementById('planoEspecialChk');
+  const basicaPriceDisplay = document.getElementById('basicaPriceDisplay');
+  const pedagogoPriceDisplay = document.getElementById('pedagogoPriceDisplay');
   const especialPriceDisplay = document.getElementById('especialPriceDisplay');
   const totalEl = document.getElementById('total');
   const totalFixedEl = document.getElementById('totalFixed');
@@ -839,6 +856,8 @@
   const uploadOptionsWrap = document.getElementById('uploadOptionsWrap');
   const planoCards = [document.getElementById('cardBasica'), document.getElementById('cardPedagogo'), document.getElementById('cardEspecial')];
   const PLANO_LABELS = {basica:'Educação Básica', pedagogo:'Pedagogo', especial:'Educação Especial'};
+  const PLANO_BASE = {basica:50, pedagogo:60, especial:70};
+  const PLANO_COMBO_DESCONTO = 10; // cada plano marcado junto com exatamente mais um ganha R$10 de desconto
   const WHATSAPP_NUMBER = "5545999699444";
   const GRAVACAO_PRICE = 90;
   const GRAVACAO_DESCONTO = 30; // desconto fixo no 2º vídeo (gravação)
@@ -916,12 +935,24 @@
     let items = [];
     let planosSelecionados = [];
 
-    // Educação Especial cai de R$70 pra R$60 quando combinada com Pedagogo
-    const especialComDesconto = planoPedagogoChk.checked && planoEspecialChk.checked;
-    planoEspecialChk.dataset.price = especialComDesconto ? '60' : '70';
-    especialPriceDisplay.innerHTML = especialComDesconto
-      ? '<span class="strike-mini">R$ 70</span><span class="price-final">R$ 60</span>'
-      : 'R$ 70';
+    // regra: quando exatamente 2 dos 3 planos estão marcados, cada um dos 2 ganha R$10 de desconto
+    const planoInputs = [
+      {chk: planoBasicaChk, tipo: 'basica', display: basicaPriceDisplay},
+      {chk: planoPedagogoChk, tipo: 'pedagogo', display: pedagogoPriceDisplay},
+      {chk: planoEspecialChk, tipo: 'especial', display: especialPriceDisplay}
+    ];
+    const qtdMarcados = planoInputs.filter(p => p.chk.checked).length;
+    const comboAtivo = qtdMarcados === 2;
+
+    planoInputs.forEach(p => {
+      const base = PLANO_BASE[p.tipo];
+      const aplicaDesconto = comboAtivo && p.chk.checked;
+      const finalPrice = aplicaDesconto ? (base - PLANO_COMBO_DESCONTO) : base;
+      p.chk.dataset.price = String(finalPrice);
+      p.display.innerHTML = aplicaDesconto
+        ? '<span class="strike-mini">R$ ' + base + '</span><span class="price-final">R$ ' + finalPrice + '</span>'
+        : 'R$ ' + base;
+    });
 
     // tipo(s) de plano — é possível marcar mais de um (2 inscrições = 2 vídeos)
     planoChecks.forEach(c => {
