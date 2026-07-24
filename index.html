@@ -115,7 +115,7 @@
     text-decoration:none; letter-spacing:.01em;
   }
   .drive-text{
-    font-size:21.75px;
+    font-size:16.3px;
     animation: driveBlink 1.2s ease-in-out infinite;
   }
   @keyframes driveBlink{0%,100%{color:var(--alert);} 50%{color:var(--green);}}
@@ -123,7 +123,7 @@
     font-size:38px; line-height:1; display:inline-block;
     animation: driveHeartbeat 0.9s ease-in-out infinite;
   }
-  @keyframes driveHeartbeat{0%,100%{transform:scale(1);} 50%{transform:scale(1.25);}}
+  @keyframes driveHeartbeat{0%,100%{transform:scale(1);} 50%{transform:scale(2);}}
 
   .meters{display:flex; flex-direction:column; gap:8px; margin-top:12px;}
   .meter{background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.14); border-radius:12px; padding:10px 12px 11px;}
@@ -345,4 +345,789 @@
         <span class="store-text">Loja de<br>Matemática</span>
       </div>
       <a href="https://drive.google.com/drive/folders/1JiluMEpoN3UkmdLGysfMUL4ozdAecTm4" target="_blank" rel="noopener" class="drive-link">
-        <span class="dri
+        <span class="drive-emoji">📄</span>
+        <span class="drive-text">Provas anteriores</span>
+      </a>
+
+      <h1>Sua nota na Prova Prática não pode depender do <em>improviso</em>.</h1>
+
+      <div class="meters" id="metersWrap"></div>
+
+      <div class="live-total">
+        <span class="lt-label">Seu pacote selecionado</span>
+        <span class="lt-value" id="totalFixed">R$ 0</span>
+      </div>
+    </div>
+
+    <!-- CORPO ROLÁVEL -->
+    <div class="scroll">
+
+      <div class="section-title">O que está incluso</div>
+      <div class="section-sub">Suporte ponto a ponto, alinhado ao Anexo XIV e ao modelo do Anexo XV.</div>
+
+      <div class="card">
+        <div class="card-head">
+          <h3>📄 Plano de Aula</h3>
+          <span class="pts">5,0 pts</span>
+        </div>
+        <ul>
+          <li>Mentoria para pesquisar objetivos na BNCC</li>
+          <li>Apoio no levantamento do currículo do Paraná</li>
+          <li>Orientação de metodologia e recursos pedagógicos/digitais</li>
+          <li>Revisão no formato do modelo oficial do Anexo XV</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h3>🎥 Vídeo da Aula</h3>
+          <span class="pts">25,0 pts</span>
+        </div>
+        <ul>
+          <li>Roteiro do vídeo e estrutura da fala (10–12 min)</li>
+          <li>Slides de apoio alinhados ao Plano de Aula</li>
+          <li>Orientação para gravação: apresentação, clareza e tempo</li>
+        </ul>
+      </div>
+
+      <details class="rubric">
+        <summary>
+          <span class="summary-text">📊 Ver critérios de avaliação detalhados</span>
+          <span class="tap-hint">👉</span>
+          <span class="chev-btn"><span class="chev">▾</span></span>
+        </summary>
+        <div class="rubric-body">
+          <div class="rubric-alert">⚠️ Pelo edital (item 7.4.9), quem não envia o Plano de Aula recebe nota zero na prova prática — o vídeo sozinho não pontua.</div>
+
+          <div class="rubric-group">
+            <div class="rubric-group-title">Plano de Aula — Professor <span>5,0 pts</span></div>
+            <table class="rtable">
+              <tr><td>Quadro Organizador Curricular</td><td>1,0</td></tr>
+              <tr><td>Encaminhamentos Metodológicos</td><td>4,0</td></tr>
+            </table>
+          </div>
+
+          <div class="rubric-group">
+            <div class="rubric-group-title">Plano de Ação — Pedagogo <span>5,0 pts</span></div>
+            <table class="rtable">
+              <tr><td>Estrutura do Plano de Ação</td><td>1,0</td></tr>
+              <tr><td>Situação-problema</td><td>1,0</td></tr>
+              <tr><td>Ações a serem desenvolvidas</td><td>2,0</td></tr>
+              <tr><td>Acompanhamento das ações</td><td>1,0</td></tr>
+            </table>
+          </div>
+
+          <div class="rubric-group">
+            <div class="rubric-group-title">Vídeo — Educação Básica/Profissional <span>25,0 pts</span></div>
+            <table class="rtable">
+              <tr><td>Apresentação</td><td>2,5</td></tr>
+              <tr><td>Desenvolvimento da atividade</td><td>7,5</td></tr>
+              <tr><td>Lógica das ideias</td><td>7,5</td></tr>
+              <tr><td>Comunicação verbal e gestual</td><td>7,5</td></tr>
+            </table>
+          </div>
+
+          <div class="rubric-group">
+            <div class="rubric-group-title">Vídeo — Pedagogo <span>25,0 pts</span></div>
+            <table class="rtable">
+              <tr><td>Apresentação</td><td>2,5</td></tr>
+              <tr><td>Tema / Situação-problema</td><td>7,5</td></tr>
+              <tr><td>Lógica das ideias</td><td>7,5</td></tr>
+              <tr><td>Comunicação verbal e gestual</td><td>7,5</td></tr>
+            </table>
+          </div>
+
+          <div class="rubric-group">
+            <div class="rubric-group-title">Vídeo — Educação Especial <span>25,0 pts</span></div>
+            <table class="rtable">
+              <tr><td>Clareza de conteúdos</td><td>8,0</td></tr>
+              <tr><td>Linguagem verbal e expressão facial</td><td>8,5</td></tr>
+              <tr><td>Lógica das ideias e gestão do tempo</td><td>8,5</td></tr>
+            </table>
+          </div>
+        </div>
+      </details>
+
+      <div class="previews">
+        <div class="section-title">Veja como fica o material</div>
+        <div class="section-sub">Estrutura real do modelo do Anexo XV, fiel ao seu documento.</div>
+        <div class="swipe-hint"><span class="hand">👉</span> arraste para o lado para ver os 3 modelos</div>
+
+        <div class="previews-strip">
+
+          <!-- Plano de Aula - Professor Regente (fiel ao Anexo XV / modelo enviado) -->
+          <div class="mini-wrap">
+            <div class="a4-mini">
+              <div class="anexo">ANEXO XV</div>
+              <div class="rule-gold"></div>
+              <div class="ttl">PLANO DE AULA – PLANO DE DESENVOLVIMENTO INDIVIDUAL</div>
+              <div class="subttl">Educação Básica ou Educação Profissional, Educação Infantil e Anos Iniciais do Ensino Fundamental</div>
+
+              <div class="fld"><div class="lbl">Candidato(a):</div></div>
+
+              <div class="fld">
+                <div class="lbl">Tema:</div>
+                <div class="val">conforme ANEXO XIV – Programas de Avaliação – Prova Escrita e Prática</div>
+              </div>
+
+              <div class="fld-row">
+                <div class="col">
+                  <div class="lbl">Área do Conhecimento:</div>
+                  <div class="val">referente ao componente curricular de inscrição</div>
+                </div>
+                <div class="col">
+                  <div class="lbl">Componente Curricular:</div>
+                  <div class="val">conforme a inscrição do candidato</div>
+                </div>
+              </div>
+
+              <div class="fld">
+                <div class="lbl">Ano/Série:</div>
+                <div class="val">conforme o objetivo de aprendizagem escolhido e o documento curricular orientador da rede pública estadual e etapa de ensino</div>
+              </div>
+
+              <div class="hd">Quadro Organizador Curricular</div>
+              <div class="fld-row">
+                <div class="col">
+                  <div class="lbl">Objetos de Conhecimento:</div>
+                  <div class="val">conforme documento curricular orientador da rede pública estadual</div>
+                </div>
+                <div class="col">
+                  <div class="lbl">Conteúdos:</div>
+                  <div class="val">conforme documento curricular orientador da rede pública estadual</div>
+                </div>
+                <div class="col">
+                  <div class="lbl">Objetivos de Aprendizagem:</div>
+                  <div class="val">conforme documento curricular orientador da rede pública estadual</div>
+                </div>
+              </div>
+
+              <div class="hd">Encaminhamentos Metodológicos</div>
+              <div class="fld">
+                <div class="lbl">Encaminhamentos Metodológicos:</div>
+                <div class="val">Descrever o passo a passo para o desenvolvimento da atividade a fim de atingir o(s) objetivo(s) de aprendizagem a ser(em) desenvolvido(s)</div>
+              </div>
+
+              <div class="hd">Recursos</div>
+              <div class="fld">
+                <div class="lbl">Recursos:</div>
+                <div class="val">Relacionar todos os recursos utilizados durante o desenvolver da aula</div>
+              </div>
+
+              <div class="sig">
+                <div class="l1">Edital n.º 52/2026 – SEED | PSS Paraná 2026</div>
+                <div class="l2">Modelo elaborado a partir do Anexo XV do Edital n.º 52/2026 – SEED (PSS Paraná 2026)</div>
+              </div>
+            </div>
+            <div class="mini-caption">Plano de Aula<br>Educação Básica</div>
+          </div>
+
+          <!-- Plano de Atendimento Educacional Especializado (fiel ao modelo enviado) -->
+          <div class="mini-wrap">
+            <div class="a4-mini">
+              <div class="anexo">ANEXO XV</div>
+              <div class="rule-gold"></div>
+              <div class="ttl">PLANO DE ATENDIMENTO EDUCACIONAL ESPECIALIZADO</div>
+              <div class="subttl">Plano de Desenvolvimento Individual – Educação Especial</div>
+
+              <div class="hd">Identificação</div>
+              <div class="fld">
+                <div class="lbl">Número do Estudo de Caso:</div>
+                <div class="val">conforme ANEXO XIV – Programas de Avaliação – Prova Escrita e Prática</div>
+              </div>
+              <div class="fld"><div class="lbl">Candidato(a):</div></div>
+              <div class="fld-row">
+                <div class="col">
+                  <div class="lbl">DN.:</div>
+                  <div class="val">conforme ANEXO XIV – Estudo de Caso</div>
+                </div>
+                <div class="col">
+                  <div class="lbl">Ano/Série de Matrícula:</div>
+                  <div class="val">conforme ANEXO XIV – Estudo de Caso</div>
+                </div>
+                <div class="col">
+                  <div class="lbl">Turno:</div>
+                </div>
+              </div>
+              <div class="fld"><div class="lbl">Diagnóstico:</div></div>
+              <div class="fld">
+                <div class="lbl">Cronograma de Atendimento SRM:</div>
+                <div class="val">Tempo e número de atendimentos – conforme o Estudo de Caso</div>
+              </div>
+
+              <div class="hd">Caracterização da Aprendizagem</div>
+              <div class="fld">
+                <div class="lbl">Avaliação Pedagógica Acadêmica:</div>
+                <div class="val">Levantamento dos aspectos de conteúdo acadêmico do ano de matrícula do estudante</div>
+              </div>
+              <div class="fld">
+                <div class="lbl">Aspectos Sociais e Psicoafetivos:</div>
+                <div class="val">Descrição do comportamento esperado para a faixa etária, voltado à aprendizagem do estudante</div>
+              </div>
+
+              <div class="hd">Plano de Trabalho</div>
+              <div class="fld">
+                <div class="lbl">Organização do Atendimento:</div>
+                <div class="val">Descrever como se dá o atendimento ao estudante na SRM (individual ou em grupo), número de atendimentos por semana, carga horária, flexibilização curricular e avaliações</div>
+              </div>
+              <div class="fld">
+                <div class="lbl">Objetivo Geral:</div>
+                <div class="val">Deverá retratar o objeto do trabalho a ser desenvolvido, tomando como referência o acesso ao currículo do ano de matrícula no ensino comum</div>
+              </div>
+              <div class="fld">
+                <div class="lbl">Objetivos Específicos:</div>
+                <div class="val">Analisar o percurso de aprendizagem e o conhecimento prévio do estudante; criar situações de aprendizagem próximas do currículo e do ano de matrícula</div>
+              </div>
+
+              <div class="sig">
+                <div class="l1">Edital n.º 52/2026 – SEED | PSS Paraná 2026</div>
+                <div class="l2">Modelo elaborado a partir do Anexo XV do Edital n.º 52/2026 – SEED (PSS Paraná 2026)</div>
+              </div>
+            </div>
+            <div class="mini-caption">Plano de Atendimento<br>Educação Especial</div>
+          </div>
+
+          <!-- Plano de Ação - Pedagogo (fiel ao modelo enviado) -->
+          <div class="mini-wrap">
+            <div class="a4-mini">
+              <div class="anexo">ANEXO XV</div>
+              <div class="rule-gold"></div>
+              <div class="ttl">PLANO DE AÇÃO – PEDAGOGO</div>
+              <div class="subttl">Plano de Desenvolvimento Individual</div>
+
+              <div class="fld"><div class="lbl">Candidato(a):</div></div>
+
+              <div class="fld">
+                <div class="lbl">Tema:</div>
+                <div class="val">conforme ANEXO XIV – Programas de Avaliação – Prova Escrita e Prática</div>
+              </div>
+
+              <div class="fld">
+                <div class="lbl">Situação-problema:</div>
+                <div class="val">conforme o tema escolhido, no presente edital</div>
+              </div>
+
+              <div class="fld">
+                <div class="lbl">Público-alvo / Etapa da escolarização / Série-ano / Docente(s) e área(s) do conhecimento:</div>
+                <div class="val">conforme a situação-problema</div>
+              </div>
+
+              <div class="hd">Objetivos</div>
+              <div class="fld-row">
+                <div class="col">
+                  <div class="lbl">Objetivo Geral:</div>
+                  <div class="val">para que atenda a situação-problema ou parte dela</div>
+                </div>
+                <div class="col">
+                  <div class="lbl">Objetivos Específicos:</div>
+                  <div class="val">para atender...</div>
+                </div>
+              </div>
+
+              <div class="hd">Ações a Serem Desenvolvidas</div>
+              <div class="fld-row">
+                <div class="col">
+                  <div class="lbl">Detalhamento das Ações/Atividades:</div>
+                  <div class="val">Apontar o passo a passo a ser desenvolvido</div>
+                </div>
+                <div class="col">
+                  <div class="lbl">Cronograma:</div>
+                </div>
+                <div class="col">
+                  <div class="lbl">Acompanhamento das Ações:</div>
+                  <div class="val">São os meios para o acompanhamento dos resultados</div>
+                </div>
+              </div>
+
+              <div class="sig">
+                <div class="l1">Edital n.º 52/2026 – SEED | PSS Paraná 2026</div>
+                <div class="l2">Modelo elaborado a partir do Anexo XV do Edital n.º 52/2026 – SEED (PSS Paraná 2026)</div>
+              </div>
+            </div>
+            <div class="mini-caption">Plano de Ação<br>Pedagogo</div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="selector">
+        <div class="selector-title">Monte seu pacote</div>
+        <div class="selector-sub">Marque o que você precisa — o valor é calculado na hora.</div>
+
+        <div class="selector-subtitle">📄 Seu(s) tipo(s) de plano (Mentoria) — marque mais de um se fizer 2 inscrições</div>
+        <div class="plano-group">
+          <label class="plano-card" id="cardBasica">
+            <input type="checkbox" class="planoChk" id="planoBasicaChk" data-price="50" data-label="Plano de Aula (Mentoria) – Educação Básica" data-tipo="basica">
+            <span class="emoji">🏫</span>
+            <span class="txt">
+              <div class="name">Educação Básica</div>
+              <div class="desc">Plano de Aula (Mentoria — Word ou PDF)</div>
+            </span>
+            <span class="price" id="basicaPriceDisplay">R$ 50</span>
+          </label>
+
+          <label class="plano-card" id="cardPedagogo">
+            <input type="checkbox" class="planoChk" id="planoPedagogoChk" data-price="60" data-label="Plano de Ação (Mentoria) – Pedagogo" data-tipo="pedagogo">
+            <span class="emoji">🧑‍🏫</span>
+            <span class="txt">
+              <div class="name">Pedagogo</div>
+              <div class="desc">Plano de Ação (Mentoria — Word ou PDF)</div>
+            </span>
+            <span class="price" id="pedagogoPriceDisplay">R$ 60</span>
+          </label>
+
+          <label class="plano-card" id="cardEspecial">
+            <input type="checkbox" class="planoChk" id="planoEspecialChk" data-price="70" data-label="Plano de Atendimento (Mentoria) – Educação Especial" data-tipo="especial">
+            <span class="emoji">🧩</span>
+            <span class="txt">
+              <div class="name">Educação Especial</div>
+              <div class="desc">Plano de Atendimento (Mentoria — Word ou PDF)</div>
+            </span>
+            <span class="price" id="especialPriceDisplay">R$ 70</span>
+          </label>
+        </div>
+
+        <div class="selector-subtitle">🎬 Apoio para o vídeo</div>
+        <div id="videoOptionsWrap"></div>
+        <div class="discount-note-red" id="discountNoteRed">🔴 Desconto de R$ 30 aplicado no 2º vídeo (gravação)!</div>
+
+        <div class="selector-subtitle">🖥️ Apoio na inscrição na plataforma do NC/UFPR</div>
+
+        <label class="opt">
+          <input type="checkbox" class="chk" id="cadastroChk" data-price="20" data-label="Inscrição na plataforma do NC/UFPR" data-key="inscricao">
+          <span class="opt-emoji">📝</span>
+          <span class="opt-text">
+            <div class="name">Cadastro e inscrição na plataforma</div>
+            <div class="desc">Te ajudo a fazer o cadastro e a inscrição certinha no site da banca (NC/UFPR)</div>
+          </span>
+          <span class="opt-price">R$ 20</span>
+        </label>
+
+        <div id="uploadOptionsWrap"></div>
+
+        <div class="plan-warn" id="planWarn">⚠️ Sem o Plano de Aula, o vídeo não é avaliado (edital, item 7.4.9).</div>
+
+        <label class="confirm-risk" id="confirmRisk">
+          <input type="checkbox" id="confirmRiskChk">
+          <span class="txt">Estou ciente de que, sem o Plano de Aula, meu vídeo não será avaliado na prova prática — quero seguir só com o vídeo mesmo assim.</span>
+        </label>
+
+        <div class="total-row">
+          <span class="label">Total selecionado</span>
+          <span class="value" id="total">R$ 0</span>
+        </div>
+        <div class="bundle-note" id="bundleNote">✓ Pacote completo selecionado — Plano + Vídeo do início ao fim 🎉</div>
+      </div>
+
+      <div class="subject-box" id="subjectBox">
+        <label class="slabel">Qual componente curricular você vai dar aula?</label>
+        <select class="subject-select" id="subjectSelect">
+          <option value="">Selecione o componente curricular</option>
+
+          <optgroup label="Educação Básica (Grupos 1–5)">
+            <option>Arte</option>
+            <option>Biologia</option>
+            <option>Ciências</option>
+            <option>Educação Física</option>
+            <option>Educação Digital e Computação/Programação</option>
+            <option>Filosofia</option>
+            <option>Física</option>
+            <option>Geografia</option>
+            <option>História</option>
+            <option>Língua Espanhola</option>
+            <option>Língua Inglesa</option>
+            <option>Língua Portuguesa</option>
+            <option>Matemática</option>
+            <option>Química</option>
+            <option>Sociologia</option>
+            <option>Educação Infantil e Anos Iniciais (Séries Iniciais)</option>
+          </optgroup>
+
+          <optgroup label="Outras funções (Grupos 10–11)">
+            <option>SAREH – Atendimento Pedagógico Domiciliar (Língua Portuguesa)</option>
+            <option>Professor de Libras</option>
+          </optgroup>
+
+          <optgroup label="Educação Profissional – Ambiente e Saúde">
+            <option>AS – Análises Clínicas</option>
+            <option>AS – Cuidados de Idosos</option>
+            <option>AS – Enfermagem</option>
+            <option>AS – Enfermagem do Trabalho</option>
+            <option>AS – Estética</option>
+            <option>AS – Farmácia</option>
+            <option>AS – Meio Ambiente</option>
+            <option>AS – Nutrição e Dietética</option>
+            <option>AS – Prótese Dentária</option>
+            <option>AS – Saúde Bucal</option>
+          </optgroup>
+
+          <optgroup label="Educação Profissional – Controle e Processos Industriais">
+            <option>CI – Eletroeletrônica</option>
+            <option>CI – Eletromecânica</option>
+            <option>CI – Eletrônica</option>
+            <option>CI – Eletrotécnica</option>
+            <option>CI – Manutenção Automotiva</option>
+            <option>CI – Manutenção de Máquinas Pesadas</option>
+            <option>CI – Mecânica</option>
+            <option>CI – Mecatrônica</option>
+            <option>CI – Sistemas de Energia Renovável</option>
+          </optgroup>
+
+          <optgroup label="Educação Profissional – Formação de Docentes">
+            <option>Formação de Docentes</option>
+          </optgroup>
+
+          <optgroup label="Educação Profissional – Gestão de Negócios">
+            <option>GN – Administração</option>
+            <option>GN – Bioeconomia</option>
+            <option>GN – Contabilidade</option>
+            <option>GN – Logística</option>
+            <option>GN – Marketing</option>
+            <option>GN – Qualidade</option>
+            <option>GN – Recursos Humanos</option>
+            <option>GN – Secretariado</option>
+            <option>GN – Serviços Jurídicos</option>
+            <option>GN – Transações Imobiliárias</option>
+            <option>GN – Vendas</option>
+          </optgroup>
+
+          <optgroup label="Educação Profissional – Informação e Comunicação">
+            <option>IC – Desenvolvimento de Sistemas</option>
+            <option>IC – Informática</option>
+            <option>IC – Informática para Internet</option>
+            <option>IC – Inteligência Artificial</option>
+            <option>IC – Manutenção e Suporte em Informática</option>
+            <option>IC – Programação de Jogos Digitais</option>
+          </optgroup>
+
+          <optgroup label="Educação Profissional – Infraestrutura">
+            <option>IE – Edificações</option>
+            <option>IE – Portos</option>
+          </optgroup>
+
+          <optgroup label="Educação Profissional – Produção Alimentícia">
+            <option>PA – Agroindústria</option>
+            <option>PA – Alimentos</option>
+          </optgroup>
+
+          <optgroup label="Educação Profissional – Produção Cultural e Design">
+            <option>PD – Design de Interiores</option>
+            <option>PD – Produção de Áudio e Vídeo</option>
+            <option>PD – Teatro</option>
+          </optgroup>
+
+          <optgroup label="Educação Profissional – Produção Industrial">
+            <option>PI – Açúcar e Álcool</option>
+            <option>PI – Biotecnologia</option>
+            <option>PI – Celulose e Papel</option>
+            <option>PI – Planejamento, Controle e Produção</option>
+            <option>PI – Química</option>
+            <option>PI – Vestuário</option>
+          </optgroup>
+
+          <optgroup label="Educação Profissional – Recursos Naturais">
+            <option>RN – Agrícola CAE/CFR</option>
+            <option>RN – Agricultura</option>
+            <option>RN – Agroecologia</option>
+            <option>RN – Agronegócio</option>
+            <option>RN – Agropecuária</option>
+            <option>RN – Agrotecnologia</option>
+            <option>RN – Florestas</option>
+            <option>RN – Operações de Máquinas Florestais</option>
+            <option>RN – Pecuária</option>
+          </optgroup>
+
+          <optgroup label="Educação Profissional – Segurança">
+            <option>SE – Segurança do Trabalho</option>
+          </optgroup>
+
+          <optgroup label="Educação Profissional – Turismo, Hospitalidade e Lazer">
+            <option>THL – Agenciamento de Viagens</option>
+            <option>THL – Cozinha</option>
+            <option>THL – Gastronomia</option>
+            <option>THL – Guia de Turismo</option>
+            <option>THL – Hospedagem</option>
+            <option>THL – Lazer</option>
+          </optgroup>
+
+          <option>Outro componente curricular</option>
+        </select>
+        <input type="text" class="outro-input" id="outroInput" placeholder="Digite o componente curricular">
+      </div>
+
+      <a href="#" class="cta disabled" id="ctaBtn" target="_blank" rel="noopener">
+        <svg class="cta-icon" viewBox="0 0 32 32" width="19" height="19" fill="currentColor" aria-hidden="true">
+          <path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.34.663 4.523 1.814 6.375L4 29l7.828-1.78A11.94 11.94 0 0 0 16.001 27C22.629 27 28 21.627 28 15S22.629 3 16.001 3Zm0 21.818c-1.99 0-3.85-.58-5.414-1.578l-.388-.24-4.65 1.057 1.086-4.53-.253-.4A9.77 9.77 0 0 1 5.09 15c0-6.02 4.892-10.909 10.911-10.909S26.91 8.98 26.91 15 22.02 24.818 16.001 24.818Zm5.997-8.19c-.328-.164-1.94-.957-2.24-1.066-.301-.109-.52-.164-.738.164-.219.328-.848 1.066-1.04 1.285-.191.219-.383.246-.71.082-.328-.164-1.386-.51-2.64-1.63-.976-.87-1.635-1.945-1.827-2.273-.191-.328-.02-.505.144-.668.148-.148.328-.383.492-.574.164-.191.219-.328.328-.547.109-.219.055-.41-.027-.574-.082-.164-.738-1.777-1.012-2.434-.267-.64-.539-.554-.738-.564l-.629-.011c-.219 0-.574.082-.875.41-.301.328-1.148 1.121-1.148 2.734s1.175 3.172 1.339 3.391c.164.219 2.312 3.532 5.605 4.953.783.338 1.394.54 1.87.69.786.25 1.502.215 2.068.13.631-.094 1.94-.793 2.213-1.559.273-.766.273-1.422.191-1.559-.082-.137-.301-.219-.629-.383Z"/>
+        </svg>
+        <span>Chamar no WhatsApp</span>
+      </a>
+      <div class="cta-hint" id="ctaHint">Selecione ao menos uma opção acima para continuar</div>
+      <div class="cta-sub">Vagas limitadas por turma — atendimento até a data de inscrição do edital</div>
+
+      <div class="trust">
+        <div class="trust-item"><div class="n">1:1</div><div class="t">Atendimento</div></div>
+        <div class="trust-item"><div class="n">PR</div><div class="t">Foco SEED</div></div>
+        <div class="trust-item"><div class="n">2027</div><div class="t">PSS Atual</div></div>
+      </div>
+
+      <div class="edital-link-wrap">
+        <span class="edital-hand">👇</span>
+        <a href="https://servicos.nc.ufpr.br/PortalNC/Processos?ano=2027" target="_blank" rel="noopener" class="edital-link">Clique aqui para acessar a página do edital</a>
+      </div>
+
+      <footer>
+        <div class="name">Prof. Rodrigo G. Pereira</div>
+        <div style="font-size:10px;">Assessoria para Plano de Aula e Vídeo — Prova Prática</div>
+        <div class="disc">Serviço de mentoria e assessoria pedagógica independente, sem qualquer vínculo com a SEED-PR ou o NC/UFPR. O candidato é responsável pela elaboração, gravação e envio de seus próprios documentos.</div>
+      </footer>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  const planoChecks = document.querySelectorAll('.planoChk');
+  const planoBasicaChk = document.getElementById('planoBasicaChk');
+  const planoPedagogoChk = document.getElementById('planoPedagogoChk');
+  const planoEspecialChk = document.getElementById('planoEspecialChk');
+  const basicaPriceDisplay = document.getElementById('basicaPriceDisplay');
+  const pedagogoPriceDisplay = document.getElementById('pedagogoPriceDisplay');
+  const especialPriceDisplay = document.getElementById('especialPriceDisplay');
+  const totalEl = document.getElementById('total');
+  const totalFixedEl = document.getElementById('totalFixed');
+  const bundleNote = document.getElementById('bundleNote');
+  const discountNoteRed = document.getElementById('discountNoteRed');
+  const planWarn = document.getElementById('planWarn');
+  const confirmRisk = document.getElementById('confirmRisk');
+  const confirmRiskChk = document.getElementById('confirmRiskChk');
+  const subjectBox = document.getElementById('subjectBox');
+  const subjectSelect = document.getElementById('subjectSelect');
+  const outroInput = document.getElementById('outroInput');
+  const ctaBtn = document.getElementById('ctaBtn');
+  const ctaHint = document.getElementById('ctaHint');
+  const metersWrap = document.getElementById('metersWrap');
+  const videoOptionsWrap = document.getElementById('videoOptionsWrap');
+  const uploadOptionsWrap = document.getElementById('uploadOptionsWrap');
+  const planoCards = [document.getElementById('cardBasica'), document.getElementById('cardPedagogo'), document.getElementById('cardEspecial')];
+  const PLANO_LABELS = {basica:'Educação Básica', pedagogo:'Pedagogo', especial:'Educação Especial'};
+  const PLANO_BASE = {basica:50, pedagogo:60, especial:70};
+  const PLANO_COMBO_DESCONTO = 10; // cada plano marcado junto com exatamente mais um ganha R$10 de desconto
+  const WHATSAPP_NUMBER = "5545999699444";
+  const celebrateFlash = document.getElementById('celebrateFlash');
+  const CELEBRATE_EMOJIS = ['🎉','✨','💛','🌟','😄','🥳','👏','💫','🙌'];
+  let firstRender = true;
+
+  function triggerCelebration(){
+    const emoji = CELEBRATE_EMOJIS[Math.floor(Math.random() * CELEBRATE_EMOJIS.length)];
+    celebrateFlash.textContent = emoji;
+    celebrateFlash.classList.remove('pop');
+    void celebrateFlash.offsetWidth; // força reflow pra reiniciar a animação
+    celebrateFlash.classList.add('pop');
+  }
+  const GRAVACAO_PRICE = 90;
+  const GRAVACAO_DESCONTO = 30; // desconto fixo no 2º vídeo (gravação)
+
+  // guarda o estado marcado/desmarcado de cada checkbox dinâmico, por papel + tipo de plano
+  // ex: videoState.gravacao['pedagogo'] = true
+  const videoState = { slides: {}, gravacao: {}, anexoVideo: {}, anexoPlano: {} };
+
+  function optHtml(role, tipo, key, price, priceHtml, emoji, name, desc){
+    const checked = !!videoState[role][key];
+    return '<label class="opt">'
+      + '<input type="checkbox" class="chk dynChk" data-role="' + role + '" data-tipokey="' + key + '" data-price="' + price + '" data-label="' + name + '"' + (checked ? ' checked' : '') + '>'
+      + '<span class="opt-emoji">' + emoji + '</span>'
+      + '<span class="opt-text"><div class="name">' + name + '</div><div class="desc">' + desc + '</div></span>'
+      + '<span class="opt-price">' + priceHtml + '</span>'
+      + '</label>';
+  }
+
+  function renderDynamicOptions(planosSelecionados){
+    const tipos = planosSelecionados.length ? planosSelecionados : [null];
+
+    // quais tipos têm "gravação" marcada, na ordem fixa (básica, pedagogo, especial)
+    const gravacaoMarcados = tipos.filter(t => videoState.gravacao[t || 'none']);
+    const doisVideos = gravacaoMarcados.length >= 2;
+    const tipoComDesconto = doisVideos ? gravacaoMarcados[1] : null; // o segundo marcado ganha o desconto
+
+    let slidesHtml = '';
+    let gravacaoHtml = '';
+    let uploadVideoHtml = '';
+    let uploadPlanoHtml = '';
+
+    tipos.forEach(tipo => {
+      const key = tipo || 'none';
+      const sufixo = tipo ? ' — ' + PLANO_LABELS[tipo] : '';
+
+      // slides
+      slidesHtml += optHtml('slides', tipo, key, 50, 'R$ 50', '📽️',
+        'Slides do vídeo' + sufixo,
+        'Roteiro da fala + slides de apoio para exibir durante a gravação' + sufixo);
+
+      // gravação (com desconto dinâmico no 2º vídeo)
+      const isDiscounted = doisVideos && key === (tipoComDesconto || 'none');
+      const gravPrice = isDiscounted ? (GRAVACAO_PRICE - GRAVACAO_DESCONTO) : GRAVACAO_PRICE;
+      const gravPriceHtml = isDiscounted
+        ? '<span class="strike-mini">R$ ' + GRAVACAO_PRICE + '</span><span class="price-final">R$ ' + gravPrice + '</span>'
+        : 'R$ ' + GRAVACAO_PRICE;
+      gravacaoHtml += optHtml('gravacao', tipo, key, gravPrice, gravPriceHtml, '🎥',
+        'Apoio na gravação do vídeo' + sufixo,
+        'Estúdio com câmera e telão de apoio atrás de você — exibindo slides, ou o que for mais conveniente' + sufixo);
+
+      // upload/anexação (duplica por inscrição)
+      uploadVideoHtml += optHtml('anexoVideo', tipo, key, 5, 'R$ 5', '📤',
+        'Anexar o vídeo na plataforma' + sufixo,
+        'Faço o upload do seu vídeo na plataforma da banca (NC/UFPR)' + sufixo);
+      uploadPlanoHtml += optHtml('anexoPlano', tipo, key, 5, 'R$ 5', '📎',
+        'Anexar o Plano de Aula na plataforma' + sufixo,
+        'Faço o upload do seu plano no local certo do sistema da banca (NC/UFPR)' + sufixo);
+    });
+
+    videoOptionsWrap.innerHTML = slidesHtml + gravacaoHtml;
+    uploadOptionsWrap.innerHTML = uploadVideoHtml + uploadPlanoHtml;
+    discountNoteRed.classList.toggle('show', doisVideos);
+
+    // religa os listeners dos checkboxes recém-criados
+    document.querySelectorAll('.dynChk').forEach(el => {
+      el.addEventListener('change', function(){
+        videoState[this.dataset.role][this.dataset.tipokey] = this.checked;
+        update();
+      });
+    });
+  }
+
+  function update(){
+    let total = 0;
+    let items = [];
+    let planosSelecionados = [];
+
+    // regra: quando exatamente 2 dos 3 planos estão marcados (qualquer par, incluindo Educação Básica),
+    // cada um dos 2 marcados ganha R$10 de desconto.
+    const planoInputs = [
+      {chk: planoBasicaChk, tipo: 'basica', display: basicaPriceDisplay},
+      {chk: planoPedagogoChk, tipo: 'pedagogo', display: pedagogoPriceDisplay},
+      {chk: planoEspecialChk, tipo: 'especial', display: especialPriceDisplay}
+    ];
+    const qtdMarcados = planoInputs.filter(p => p.chk.checked).length;
+    const comboAtivo = qtdMarcados === 2;
+
+    planoInputs.forEach(p => {
+      const base = PLANO_BASE[p.tipo];
+      const aplicaDesconto = comboAtivo && p.chk.checked;
+      const finalPrice = aplicaDesconto ? (base - PLANO_COMBO_DESCONTO) : base;
+      p.chk.dataset.price = String(finalPrice);
+      p.display.innerHTML = aplicaDesconto
+        ? '<span class="strike-mini">R$ ' + base + '</span><span class="price-final">R$ ' + finalPrice + '</span>'
+        : 'R$ ' + base;
+    });
+
+    // tipo(s) de plano — é possível marcar mais de um (2 inscrições = 2 vídeos)
+    planoChecks.forEach(c => {
+      c.closest('.plano-card').classList.toggle('selected', c.checked);
+      if(c.checked){
+        planosSelecionados.push(c.dataset.tipo);
+        total += Number(c.dataset.price);
+        items.push(c.dataset.label);
+      }
+    });
+
+    // (re)desenha as opções dinâmicas de vídeo e upload de acordo com os planos marcados
+    renderDynamicOptions(planosSelecionados);
+
+    // soma tudo que está marcado: plataforma fixa (cadastro) + opções dinâmicas de vídeo/upload
+    let slidesChecked = false, gravacaoChecked = false;
+    document.querySelectorAll('.chk').forEach(c => {
+      if(c.checked){
+        total += Number(c.dataset.price);
+        items.push(c.dataset.label);
+        if(c.dataset.role === 'slides') slidesChecked = true;
+        if(c.dataset.role === 'gravacao') gravacaoChecked = true;
+      }
+    });
+    const videoChecked = slidesChecked || gravacaoChecked;
+
+    totalEl.textContent = "R$ " + total;
+    totalFixedEl.textContent = "R$ " + total;
+
+    const fullPackage = planosSelecionados.length > 0 && slidesChecked && gravacaoChecked;
+    bundleNote.classList.toggle('show', fullPackage);
+
+    // lógica: vídeo sem nenhum plano de aula -> aviso + confirmação obrigatória (edital 7.4.9)
+    const warn = videoChecked && planosSelecionados.length === 0;
+    planWarn.classList.toggle('show', warn);
+    confirmRisk.classList.toggle('show', warn);
+    planoCards.forEach(c => c.classList.toggle('alert', warn));
+    if(!warn){ confirmRiskChk.checked = false; }
+    confirmRisk.classList.toggle('checked', confirmRiskChk.checked);
+
+    // barra(s) de cobertura: uma barra por inscrição/plano marcado (5 pts plano + 25 pts vídeo = 30 pts cada)
+    const listaParaBarras = planosSelecionados.length ? planosSelecionados : [null];
+    let metersHtml = '';
+    listaParaBarras.forEach(tipo => {
+      const key = tipo || 'none';
+      const temVideo = !!videoState.slides[key] || !!videoState.gravacao[key];
+      const covered = (tipo ? 5 : 0) + (temVideo ? 25 : 0);
+      const pct = (covered / 30 * 100);
+      const nome = tipo ? PLANO_LABELS[tipo] : null;
+      const happy = covered >= 30 ? '<span class="happy">🎉</span>' : '';
+      metersHtml += '<div class="meter">'
+        + (nome ? '<div class="meter-name">' + nome + '</div>' : '')
+        + '<div class="meter-top"><span class="big">' + covered.toFixed(1).replace('.', ',') + ' <span class="unit">pts</span>' + happy + '</span>'
+        + '<span class="small">de 30,0 possíveis</span></div>'
+        + '<div class="bar"><div class="bar-fill" style="width:' + pct + '%"></div></div>'
+        + '</div>';
+    });
+    metersWrap.innerHTML = metersHtml;
+
+    // menu de componente curricular só aparece se Educação Básica estiver entre os planos marcados
+    const showSubject = planosSelecionados.includes('basica');
+    subjectBox.classList.toggle('show', showSubject);
+    if(!showSubject){
+      subjectSelect.value = "";
+      outroInput.value = "";
+      outroInput.classList.remove('show');
+    }
+    outroInput.classList.toggle('show', showSubject && subjectSelect.value === 'Outro componente curricular');
+
+    // botão do WhatsApp só libera com seleção válida
+    const hasSelection = items.length > 0;
+    const needsConfirm = warn && !confirmRiskChk.checked;
+    const canSubmit = hasSelection && !needsConfirm;
+    ctaBtn.classList.toggle('disabled', !canSubmit);
+    ctaHint.classList.toggle('show', !canSubmit);
+    ctaHint.textContent = !hasSelection
+      ? "Selecione ao menos uma opção acima para continuar"
+      : (needsConfirm ? "Confirme que está ciente para liberar o botão" : "");
+
+    // mensagem automática do WhatsApp
+    let msg = "Olá, Prof. Rodrigo! Vim pelo anúncio da assessoria para a Prova Prática do PSS SEED-PR 2027.";
+    if(items.length){
+      msg += " Tenho interesse em: " + items.join(", ") + ". Total: R$ " + total + ".";
+    }
+    if(discountNoteRed.classList.contains('show')){
+      msg += " (2 vídeos — desconto de R$ 30 no 2º já incluído no total.)";
+    }
+    if(showSubject && subjectSelect.value){
+      const comp = (subjectSelect.value === 'Outro componente curricular' && outroInput.value.trim())
+        ? outroInput.value.trim() : subjectSelect.value;
+      msg += " Componente curricular: " + comp + ".";
+    }
+    if(warn && confirmRiskChk.checked){
+      msg += " Optou por seguir só com o vídeo, ciente do item 7.4.9.";
+    }
+    ctaBtn.href = canSubmit ? ("https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(msg)) : "#";
+
+    // acolhe a pessoa com um emoji toda vez que ela marca/desmarca algo (menos na carga inicial)
+    if(!firstRender){ triggerCelebration(); }
+  }
+
+  planoChecks.forEach(c => c.addEventListener('change', update));
+  document.getElementById('cadastroChk') && document.getElementById('cadastroChk').addEventListener('change', update);
+  confirmRiskChk.addEventListener('change', update);
+  subjectSelect.addEventListener('change', update);
+  outroInput.addEventListener('input', update);
+  update();
+  firstRender = false;
+</script>
+
+</body>
+</html>
