@@ -111,12 +111,19 @@
     margin-top:10px; width:fit-content;
     background:rgba(255,255,255,.1); border:1.5px solid var(--gold-light);
     border-radius:12px; padding:9px 15px;
-    font-size:29px; font-weight:800;
+    font-weight:800;
     text-decoration:none; letter-spacing:.01em;
+  }
+  .drive-text{
+    font-size:21.75px;
     animation: driveBlink 1.2s ease-in-out infinite;
   }
   @keyframes driveBlink{0%,100%{color:var(--alert);} 50%{color:var(--green);}}
-  .drive-emoji{font-size:38px; line-height:1;}
+  .drive-emoji{
+    font-size:38px; line-height:1; display:inline-block;
+    animation: driveHeartbeat 0.9s ease-in-out infinite;
+  }
+  @keyframes driveHeartbeat{0%,100%{transform:scale(1);} 50%{transform:scale(1.25);}}
 
   .meters{display:flex; flex-direction:column; gap:8px; margin-top:12px;}
   .meter{background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.14); border-radius:12px; padding:10px 12px 11px;}
@@ -338,10 +345,4 @@
         <span class="store-text">Loja de<br>Matemática</span>
       </div>
       <a href="https://drive.google.com/drive/folders/1JiluMEpoN3UkmdLGysfMUL4ozdAecTm4" target="_blank" rel="noopener" class="drive-link">
-        <span class="drive-emoji">📄</span>
-        <span>Provas anteriores</span>
-      </a>
-
-      <h1>Sua nota na Prova Prática não pode depender do <em>improviso</em>.</h1>
-
-      <div class="meters" id="metersWrap"></d
+        <span class="dri
