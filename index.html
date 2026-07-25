@@ -216,6 +216,11 @@
   details.subject-tree summary::-webkit-details-marker{display:none;}
   details.subject-tree summary::after{content:"▾"; font-size:11px; color:var(--navy); transition:transform .2s ease; flex-shrink:0;}
   details.subject-tree[open] summary::after{transform:rotate(180deg);}
+  details.subject-tree.featured{border-color:var(--gold); border-width:1.5px;}
+  details.subject-tree.featured > summary{
+    background:linear-gradient(135deg, var(--gold), var(--gold-light)); color:var(--navy-deep);
+  }
+  details.subject-tree.featured > summary::after{color:var(--navy-deep);}
   details.subject-tree ul{list-style:none; padding:7px 10px 9px 10px;}
   details.subject-tree li{font-size:10px; line-height:1.7; color:var(--ink); padding-left:12px; position:relative;}
   details.subject-tree li::before{content:"–"; position:absolute; left:0; color:var(--gold); font-weight:700;}
@@ -550,7 +555,7 @@
             </ul>
           </details>
 
-          <details class="subject-tree">
+          <details class="subject-tree featured">
             <summary>Educação Básica (Grupos 1–5)</summary>
 
             <details class="subject-tree">
