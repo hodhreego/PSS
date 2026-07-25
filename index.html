@@ -219,6 +219,18 @@
   details.subject-tree ul{list-style:none; padding:7px 10px 9px 10px;}
   details.subject-tree li{font-size:10px; line-height:1.7; color:var(--ink); padding-left:12px; position:relative;}
   details.subject-tree li::before{content:"–"; position:absolute; left:0; color:var(--gold); font-weight:700;}
+  details.subject-tree details.subject-tree{margin:5px 0; border-color:var(--line);}
+  details.subject-tree details.subject-tree summary{font-size:10px; padding:7px 9px;}
+  .topic-list{padding:6px 10px 9px !important;}
+  .topic-list > li{padding-left:0 !important; margin-bottom:8px;}
+  .topic-list > li::before{content:none !important;}
+  .topic-list > li > b{display:block; font-size:10px; color:var(--navy); font-weight:700; margin-bottom:3px; line-height:1.4;}
+  .topic-list > li > p{font-size:9.5px; line-height:1.6; color:var(--ink); margin-top:2px;}
+  .topic-list ul{padding:2px 0 0 13px !important;}
+  .topic-list ul li{font-size:9.5px !important; line-height:1.6 !important;}
+  .case-table{width:100%; border-collapse:collapse; margin:6px 0 8px;}
+  .case-table td{font-size:9px; padding:5px 6px; border:1px solid var(--line); color:var(--ink); vertical-align:top;}
+  .case-table td:first-child{font-weight:700; color:var(--navy);}
 
   /* ---------- MINIATURAS A4 (modelo real, preto e branco) ---------- */
   .swipe-hint{display:flex; align-items:center; gap:5px; font-size:9.5px; color:#7285A0; font-weight:600; margin-bottom:8px;}
@@ -501,171 +513,532 @@
           </a>
 
           <details class="subject-tree">
-            <summary>Educação Básica (Grupos 1–5)</summary>
-            <ul>
-              <li>Arte</li>
-              <li>Biologia</li>
-              <li>Ciências</li>
-              <li>Educação Física</li>
-              <li>Educação Digital e Computação/Programação</li>
-              <li>Filosofia</li>
-              <li>Física</li>
-              <li>Geografia</li>
-              <li>História</li>
-              <li>Língua Espanhola</li>
-              <li>Língua Inglesa</li>
-              <li>Língua Portuguesa</li>
-              <li>Matemática</li>
-              <li>Química</li>
-              <li>Sociologia</li>
-              <li>Educação Infantil e Anos Iniciais (Séries Iniciais)</li>
+            <summary>Conhecimentos Básicos (comuns a todos os cargos)</summary>
+            <ul class="topic-list">
+              <li><b>Língua Portuguesa</b>
+                <ul>
+                  <li>Compreensão e interpretação de textos de gêneros variados;</li>
+                  <li>Compreensão de textos digitais e multimodais;</li>
+                  <li>Domínio da ortografia e gramática oficial;</li>
+                  <li>Emprego dos sinais de pontuação;</li>
+                  <li>Emprego de crase; regência nominal e verbal;</li>
+                  <li>Uso dos sinais de pontuação e outras notações;</li>
+                  <li>Concordância verbal e nominal;</li>
+                  <li>Reconhecimento de formas linguageiras em circulação na internet.</li>
+                </ul>
+              </li>
+              <li><b>Estatuto da Criança e do Adolescente</b>
+                <ul><li>ECA – Art. 56, 232, 245 e 249.</li></ul>
+              </li>
+              <li><b>Educação em Direitos Humanos</b>
+                <ul>
+                  <li>Plano Estadual de Educação em Direitos Humanos (PEEDH);</li>
+                  <li>Deliberação n.º 02/2015 que dispõe sobre as Normas Estaduais para a Educação em Direitos Humanos no Sistema Estadual de Ensino do Paraná.</li>
+                </ul>
+              </li>
+              <li><b>Conhecimentos Didáticos</b>
+                <ul>
+                  <li>A importância do planejamento escolar: plano de aula, relação entre o planejamento da aula e o atendimento dos objetivos de aprendizagens, relação entre o desenvolvimento das competências gerais e específicas e as estratégias/metodologias utilizadas pelo professor e a avaliação;</li>
+                  <li>A metodologia viabilizando a aprendizagem: as estratégias de ensino, sua correlação com os recursos didáticos; observação de sala de aula; estratégias de construção de parceria com o pedagogo; o uso de metodologias ativas e de recursos educacionais digitais;</li>
+                  <li>A gestão de sala de aula: a importância da organização da coletividade, o cuidado com as relações interpessoais e a mediação do conhecimento; os objetivos de aprendizagem e o desenvolvimento das competências e habilidades; o uso de técnicas de gestão de sala de aula e de estratégias de gestão do tempo e da aprendizagem; a importância do clima escolar para a construção do respeito e de um ambiente acolhedor para a formação do jovem;</li>
+                  <li>A avaliação e a recuperação da aprendizagem: avaliação interna e externa; avaliação diagnóstica, formativa e somativa; recuperação de estudos e reavaliação; critérios, instrumentos e intencionalidade da avaliação escolar;</li>
+                  <li>O acompanhamento ao estudante com dificuldades de aprendizagem: estratégias direcionadas, o desenvolvimento cognitivo e emocional na aprendizagem, a importância da integração entre o professor regente e os professores de apoio ao estudante com defasagem de aprendizagem e com deficiência;</li>
+                  <li>Documentos curriculares do Paraná e seu quadro organizador;</li>
+                  <li>Recursos educacionais digitais: plataformas digitais de aprendizagem, ferramentas de colaboração, comunicação, gerenciamento de salas virtuais.</li>
+                </ul>
+              </li>
             </ul>
+          </details>
+
+          <details class="subject-tree">
+            <summary>Educação Básica (Grupos 1–5)</summary>
+
+            <details class="subject-tree">
+              <summary>Arte</summary>
+              <ul class="topic-list">
+                <li><b>1. Artes visuais: Renascimento</b><ul><li>1.1 Características do movimento.</li></ul></li>
+                <li><b>2. Artes visuais: Modernismo brasileiro</b><ul><li>2.1 Características do período;</li><li>2.2 Semana de Arte Moderna.</li></ul></li>
+                <li><b>3. Artes visuais: Vanguardas europeias</b><ul><li>3.1 Contexto histórico;</li><li>3.2 Cubismo; 3.2.1 Características do movimento.</li></ul></li>
+                <li><b>4. Artes visuais: Arte conceitual</b><ul><li>4.1 Características;</li><li>4.2 Fluxus.</li></ul></li>
+                <li><b>5. Elementos da linguagem teatral</b><ul><li>5.1 Ator/personagem;</li><li>5.2 Espaço cênico;</li><li>5.3 Ação;</li><li>5.4 Figurino;</li><li>5.5 Cenário;</li><li>5.6 Sonoplastia.</li></ul></li>
+                <li><b>6. Teatro na antiguidade clássica</b><ul><li>6.1 Tragédia;</li><li>6.2 Comédia.</li></ul></li>
+                <li><b>7. Elementos da música e do som</b><ul><li>7.1 Timbre;</li><li>7.2 Intensidade;</li><li>7.3 Altura;</li><li>7.4 Duração.</li></ul></li>
+                <li><b>8. Elementos das Artes Visuais</b><ul><li>8.1 Ponto;</li><li>8.2 Linha;</li><li>8.3 Cor;</li><li>8.4 Textura.</li></ul></li>
+                <li><b>9. Música: MPB</b><ul><li>9.1 Tropicália; 9.1.1 Características das obras.</li></ul></li>
+                <li><b>10. Dança: elementos da linguagem</b><ul><li>10.1 Movimento corporal (peso e fluência);</li><li>10.2 Espaço (direção, nível e amplitude);</li><li>10.3 Tempo (duração e ritmo).</li></ul></li>
+              </ul>
+            </details>
+
+            <details class="subject-tree">
+              <summary>Biologia</summary>
+              <ul class="topic-list">
+                <li><b>1. Metodologia Científica</b><ul><li>1.1 Origens do pensamento científico;</li><li>1.2 Desenvolvimento e importância dos métodos científicos;</li><li>1.3 Mulheres na Ciência.</li></ul></li>
+                <li><b>2. Teorias sobre a Origem da Vida na Terra</b><ul><li>2.1 Geração espontânea;</li><li>2.2 Biogênese;</li><li>2.3 Panspermia;</li><li>2.4 Endossimbiose.</li></ul></li>
+                <li><b>3. História evolutiva humana</b><ul><li>3.1 Biologia Evolutiva.</li></ul></li>
+                <li><b>4. Doenças infecciosas (re)emergentes</b><ul><li>4.1 Fatores ambientais;</li><li>4.2 Evolução dos microrganismos;</li><li>4.3 Epidemiologia.</li></ul></li>
+                <li><b>5. Vacinas</b><ul><li>5.1 Imunologia.</li></ul></li>
+                <li><b>6. Fundamentos da Genética</b><ul><li>6.1 Genética humana;</li><li>6.2 Mutações;</li><li>6.3 Ciclo celular;</li><li>6.4 Principais conceitos.</li></ul></li>
+                <li><b>7. Síndromes Genéticas</b><ul><li>7.1 Tipos de doenças genéticas;</li><li>7.2 Sintomas, diagnósticos e tratamentos.</li></ul></li>
+                <li><b>8. Metabolismo energético</b><ul><li>8.1 Anabolismo e catabolismo;</li><li>8.2 Fotossíntese, quimiossíntese, respiração celular e fermentação.</li></ul></li>
+                <li><b>9. Fundamentos da Ecologia</b><ul><li>9.1 Economia, Sociedade e Ambiente;</li><li>9.2 Agroecologia;</li><li>9.3 Antropoceno;</li><li>9.4 Ciclos biogeoquímicos.</li></ul></li>
+                <li><b>10. Taxonomia</b><ul><li>10.1 Nomenclatura biológica.</li></ul></li>
+              </ul>
+            </details>
+
+            <details class="subject-tree">
+              <summary>Ciências</summary>
+              <ul class="topic-list">
+                <li><b>1. Características gerais e classificação dos Seres Vivos</b><ul><li>1.1 Reino dos seres vivos (Monera, Protista, Fungi, Animalia e Plantae).</li></ul></li>
+                <li><b>2. Relações ecológicas</b><ul><li>2.1 Intraespecífica harmônica;</li><li>2.2 Intraespecífica desarmônica;</li><li>2.3 Interespecífica harmônica;</li><li>2.4 Interespecífica desarmônica.</li></ul></li>
+                <li><b>3. Transferência de matéria e energia</b><ul><li>3.1 Cadeia e teia alimentar.</li></ul></li>
+                <li><b>4. Doenças causadas por microrganismos e vermes parasitas</b><ul><li>4.1 Ciclo biológico;</li><li>4.2 Contágio;</li><li>4.3 Sintomas;</li><li>4.4 Prevenção.</li></ul></li>
+                <li><b>5. Sexualidade</b><ul><li>5.1 Métodos contraceptivos;</li><li>5.2 Infecções Sexualmente Transmissíveis (IST).</li></ul></li>
+                <li><b>6. Aspectos morfofisiológicos dos Sistemas do Corpo Humano</b><ul><li>6.1 Sistemas do corpo humano.</li></ul></li>
+                <li><b>7. Ondulatória</b><ul><li>7.1 Características e propriedades de ondas;</li><li>7.2 Características e propriedades do som.</li></ul></li>
+                <li><b>8. Genética</b><ul><li>8.1 DNA, Genes e Cromossomos;</li><li>8.2 Hereditariedade;</li><li>8.3 Leis de Mendel.</li></ul></li>
+                <li><b>9. Teorias evolucionistas</b><ul><li>9.1 Lamarckismo;</li><li>9.2 Darwinismo;</li><li>9.3 Neodarwinismo.</li></ul></li>
+                <li><b>10. Funções químicas inorgânicas</b><ul><li>10.1 Propriedades funcionais;</li><li>10.2 Principais compostos;</li><li>10.3 Impactos ambientais causados por funções inorgânicas.</li></ul></li>
+                <li><b>11. Estrutura do planeta Terra</b><ul><li>11.1 Estrutura interna da Terra;</li><li>11.2 Camadas do planeta Terra: litosfera, atmosfera, hidrosfera e biosfera.</li></ul></li>
+              </ul>
+            </details>
+
+            <details class="subject-tree">
+              <summary>Educação Física</summary>
+              <ul class="topic-list">
+                <li><b>1. Danças</b><ul><li>1.1 Danças criativas;</li><li>1.2 Danças urbanas;</li><li>1.3 Danças de salão.</li></ul></li>
+                <li><b>2. Lutas</b><ul><li>2.1 Lutas do Brasil;</li><li>2.2 Lutas do mundo.</li></ul></li>
+                <li><b>3. Jogos e brincadeiras</b><ul><li>3.1 Os jogos e brincadeiras no contexto da cultura digital;</li><li>3.2 Jogos de tabuleiro;</li><li>3.3 Jogos cooperativos.</li></ul></li>
+                <li><b>4. Ginásticas</b><ul><li>4.1 Evolução histórica das ginásticas;</li><li>4.2 Ginástica circense;</li><li>4.3 Ginástica de condicionamento físico.</li></ul></li>
+                <li><b>5. Esportes</b><ul><li>5.1 Esporte como fenômeno sociocultural;</li><li>5.2 Esportes de marca: atletismo;</li><li>5.3 Esportes técnico-combinatórios;</li><li>5.4 Esportes de invasão;</li><li>5.5 Esportes de rede/parede.</li></ul></li>
+                <li><b>6. Práticas corporais de aventura</b><ul><li>6.1 Práticas corporais de aventura urbanas: parkur, skate e slackline;</li><li>6.2 Práticas corporais de aventura na natureza: orientação, escalada e mountain bike.</li></ul></li>
+                <li><b>7. Práticas corporais, mídias e culturas digitais</b><ul><li>7.1 Relação entre as mídias sociais e imagem corporal.</li></ul></li>
+                <li><b>8. Práticas corporais lazer e sociedade</b><ul><li>8.1 Preconceito e racismo nas diferentes práticas corporais;</li><li>8.2 Esporte e inclusão.</li></ul></li>
+                <li><b>9. Contextos históricos e culturais das práticas corporais</b><ul><li>9.1 Contextos históricos e culturais dos esportes;</li><li>9.2 Contextos históricos e culturais das ginásticas;</li><li>9.3 Contextos históricos e culturais dos jogos e brincadeiras.</li></ul></li>
+                <li><b>10. Influência da ciência e tecnologia nas práticas corporais</b><ul><li>10.1 Utilização de dispositivos tecnológicos nos esportes.</li></ul></li>
+              </ul>
+            </details>
+
+            <details class="subject-tree">
+              <summary>Educação Digital e Computação/Programação</summary>
+              <ul class="topic-list">
+                <li><b>1. BNCC Computação</b>
+                  <ul>
+                    <li><b>I – Pensamento computacional:</b> fundamentos (decomposição, reconhecimento de padrões, abstração e elaboração de algoritmos); lógica de programação (algoritmos, fluxogramas, tabelas-verdade, teste de mesa, noções de autômatos, estruturas de controle sequenciais/condicionais/repetição); desenvolvimento de código (variáveis, tipos de dados, operadores, entrada/saída, modularização); estrutura de dados (listas/arrays, inserção, busca e contagem); resolução de problemas (depuração, análise de erros, recursão).</li>
+                    <li><b>II – Mundo Digital:</b> hardware (arquitetura básica, processador, memórias, barramentos, dispositivos de E/S); redes e comunicação (internet, protocolos IP/DNS, transmissão em pacotes); sistemas físicos e robótica (Arduino, sensores, atuadores, circuitos, automação); dados e arquivos (armazenamento local/nuvem, metadados, compactação, diretórios); computação avançada (paralelismo, concorrência, processamento distribuído).</li>
+                    <li><b>III – Cultura Digital:</b> cidadania e ética digital; segurança e privacidade (LGPD, criptografia, malwares); sociedade e tecnologia (impactos no trabalho, saúde, sustentabilidade); informação e mídia (fake news, direitos autorais, uso de imagem).</li>
+                  </ul>
+                </li>
+                <li><b>2. Linguagens de programação</b><ul><li>2.1 Programação em blocos (Scratch, MBlock);</li><li>2.2 Programação para WEB (HTML5, CSS, JavaScript);</li><li>2.3 Python; C++ aplicado a Arduino.</li></ul></li>
+                <li><b>3. Ciência de Dados</b><ul><li>3.1 Planilhas: análise e visualização de dados, formatação condicional, funções e operadores lógicos, leitura e criação de gráficos.</li></ul></li>
+                <li><b>4. Inteligência Artificial</b><ul><li>4.1 Princípios básicos: engenharia de prompt, IA generativa, uso ético da IA.</li></ul></li>
+                <li><b>5. Ambientes virtuais de aprendizagem</b><ul><li>5.1 Elementos básicos;</li><li>5.2 Organização;</li><li>5.3 Avaliação de aprendizagem.</li></ul></li>
+              </ul>
+            </details>
+
+            <details class="subject-tree">
+              <summary>Filosofia</summary>
+              <ul class="topic-list">
+                <li><b>1. A passagem do mito à Filosofia</b><ul><li>1.1 Mito e logos.</li></ul></li>
+                <li><b>2. Os pensadores Pré-socráticos</b><ul><li>2.1 A Physis como princípio de todas as coisas.</li></ul></li>
+                <li><b>3. Contexto histórico do surgimento da Filosofia</b><ul><li>3.1 A invenção da política e da vida urbana;</li><li>3.2 O comércio, as navegações e a diversidade cultural;</li><li>3.3 O surgimento da pólis e da política.</li></ul></li>
+                <li><b>4. O que é a Filosofia?</b><ul><li>4.1 Conceito de definição de Filosofia;</li><li>4.2 Campos de investigação da Filosofia.</li></ul></li>
+                <li><b>5. Lógica</b><ul><li>5.1 Conceito e definição de lógica;</li><li>5.2 Aristóteles e a lógica.</li></ul></li>
+                <li><b>6. Filosofia Ética</b><ul><li>6.1 Ética e Moral.</li></ul></li>
+                <li><b>7. Filosofia Política</b><ul><li>7.1 O surgimento da política na Grécia Antiga;</li><li>7.2 Política e democracia;</li><li>7.3 Política em Aristóteles;</li><li>7.4 Desafios da Política contemporânea.</li></ul></li>
+                <li><b>8. Teoria do conhecimento</b><ul><li>8.1 Epistemologia;</li><li>8.2 O que é o conhecimento?;</li><li>8.3 Doxa e episteme.</li></ul></li>
+                <li><b>9. Filosofia da Ciência</b><ul><li>9.1 O que é ciência;</li><li>9.2 Métodos científicos;</li><li>9.3 Paradigmas.</li></ul></li>
+                <li><b>10. Estética</b><ul><li>10.1 Arte e beleza;</li><li>10.2 Estética entre os gregos;</li><li>10.2 Estética medieval;</li><li>10.3 Estética moderna.</li></ul></li>
+              </ul>
+            </details>
+
+            <details class="subject-tree">
+              <summary>Física</summary>
+              <ul class="topic-list">
+                <li><b>1. Tópicos de Astronomia e Cosmologia</b><ul><li>1.1 Teoria do Big Bang;</li><li>1.2 Geocentrismo e Heliocentrismo;</li><li>1.3 Composição do Universo e Sistema Solar.</li></ul></li>
+                <li><b>2. Gravitação Universal e Leis de Kepler</b><ul><li>2.1 Campo gravitacional;</li><li>2.2 Corpos em órbita.</li></ul></li>
+                <li><b>3. Cinemática</b><ul><li>3.1 Movimento uniforme;</li><li>3.2 Movimento uniformemente variado; 3.2.1 Queda livre e plano inclinado.</li></ul></li>
+                <li><b>4. Dinâmica</b><ul><li>4.1 Leis de Newton;</li><li>4.2 Aplicações das 3 leis de Newton;</li><li>4.3 Tipos de força.</li></ul></li>
+                <li><b>5. Física térmica</b><ul><li>5.1 Termometria;</li><li>5.2 Calorimetria;</li><li>5.3 Leis da Termodinâmica;</li><li>5.4 Máquinas térmicas;</li><li>5.5 Entropia.</li></ul></li>
+                <li><b>6. Ondulatória</b><ul><li>6.1 Características e propriedades de ondas;</li><li>6.2 Fenômenos ondulatórios.</li></ul></li>
+                <li><b>7. Óptica</b><ul><li>7.1 Princípios da óptica geométrica;</li><li>7.2 Leis da reflexão;</li><li>7.3 Espelhos planos e esféricos;</li><li>7.4 Leis da refração;</li><li>7.5 Lentes;</li><li>7.6 Óptica do olho humano.</li></ul></li>
+                <li><b>8. Eletricidade</b><ul><li>8.1 Processos de eletrização;</li><li>8.2 Campo elétrico;</li><li>8.3 Lei de Coulomb;</li><li>8.4 1ª lei de Ohm;</li><li>8.5 Circuitos elétricos.</li></ul></li>
+                <li><b>9. Eletromagnetismo</b><ul><li>9.1 Magnetismo;</li><li>9.2 Ondas eletromagnéticas;</li><li>9.3 Campo eletromagnético;</li><li>9.4 Equações de Maxwell.</li></ul></li>
+                <li><b>10. Física Moderna</b><ul><li>10.1 Introdução à Física Quântica (efeito fotoelétrico, dualidade onda-partícula);</li><li>10.2 Teoria da Relatividade restrita (dilatação do tempo, contração do espaço, massa e energia relativística).</li></ul></li>
+              </ul>
+            </details>
+
+            <details class="subject-tree">
+              <summary>Geografia</summary>
+              <ul class="topic-list">
+                <li><b>1. Conhecimento cartográfico</b><ul><li>1.1 Orientação e localização no espaço geográfico;</li><li>1.2 Representações do espaço geográfico (croqui, carta, mapa, planta, maquete, bloco diagrama);</li><li>1.3 Conceitos básicos de Geotecnologias.</li></ul></li>
+                <li><b>2. Industrialização do espaço mundial e brasileiro</b><ul><li>2.1 Fases das revoluções industriais;</li><li>2.2 Características da industrialização brasileira (evolução histórica e situação atual);</li><li>2.3 Fontes de energia (renováveis e não renováveis).</li></ul></li>
+                <li><b>3. Globalização e as relações geopolíticas</b><ul><li>3.1 Nova ordem mundial;</li><li>3.2 Globalização, mundialização e as transnacionais;</li><li>3.3 Blocos econômicos.</li></ul></li>
+                <li><b>4. Dinâmica demográfica e o processo de urbanização no Brasil e no mundo</b><ul><li>4.1 Taxas demográficas (densidade demográfica, natalidade, mortalidade, mortalidade infantil, crescimento populacional, expectativa de vida, taxa de fecundidade);</li><li>4.2 Análise socioeconômica da população (PIB per capita, concentração de renda, IDH, Índice de Gini);</li><li>4.3 Redes e hierarquia urbana;</li><li>4.4 Processo de urbanização nos países desenvolvidos e subdesenvolvidos;</li><li>4.5 Fluxos migratórios contemporâneos.</li></ul></li>
+                <li><b>5. O espaço agrário</b><ul><li>5.1 Sistemas de produção agropecuários;</li><li>5.2 Produção agropecuária brasileira e paranaense.</li></ul></li>
+                <li><b>6. A geopolítica dos conflitos internacionais</b><ul><li>6.1 Conflitos atuais em escala global.</li></ul></li>
+                <li><b>7. Problemas socioambientais no Brasil e no mundo</b><ul><li>7.1 Problemas socioambientais urbanos;</li><li>7.2 Desenvolvimento sustentável;</li><li>7.3 Aquecimento global e as mudanças climáticas.</li></ul></li>
+                <li><b>8. O estudo do espaço geográfico</b><ul><li>8.1 Conceito de espaço geográfico;</li><li>8.2 O trabalho e a transformação do espaço geográfico;</li><li>8.3 Paisagem;</li><li>8.4 Lugar;</li><li>8.5 Território, país, Estado e nação;</li><li>8.6 Região e regionalização.</li></ul></li>
+                <li><b>9. O planeta Terra</b><ul><li>9.1 Movimentos da Terra;</li><li>9.2 Zonas térmicas.</li></ul></li>
+                <li><b>10. Aspectos físicos do Brasil e do mundo</b><ul><li>10.1 Formas do relevo terrestre;</li><li>10.2 Classificação do relevo brasileiro;</li><li>10.3 O relevo do Paraná;</li><li>10.4 O tempo atmosférico e o clima;</li><li>10.5 Domínios morfoclimáticos do Brasil e do Paraná;</li><li>10.6 Hidrografia brasileira.</li></ul></li>
+              </ul>
+            </details>
+
+            <details class="subject-tree">
+              <summary>História</summary>
+              <ul class="topic-list">
+                <li><b>1. Reinos e Sociedades africanas e do Crescente Fértil</b><ul><li>1.1 Egito Antigo;</li><li>1.2 Povos Mesopotâmicos.</li></ul></li>
+                <li><b>2. Antiguidade Clássica</b><ul><li>2.1 Formas de governo na Grécia Antiga;</li><li>2.2 Império romano.</li></ul></li>
+                <li><b>3. Europa Medieval</b><ul><li>3.1 Feudalismo;</li><li>3.2 Igreja Medieval;</li><li>3.3 Crise do século XIV.</li></ul></li>
+                <li><b>4. Idade Moderna</b><ul><li>4.1 Reformas Religiosas;</li><li>4.2 Grandes Navegações;</li><li>4.3 Iluminismo.</li></ul></li>
+                <li><b>5. Colonização do Brasil</b><ul><li>5.1 Povos indígenas;</li><li>5.2 Sistema colonial;</li><li>5.3 Trabalho escravo.</li></ul></li>
+                <li><b>6. Ocupação e conquista da América</b><ul><li>6.1 Maias, Astecas e Incas.</li></ul></li>
+                <li><b>7. Revoluções Burguesas</b><ul><li>7.1 Revolução Francesa;</li><li>7.2 Revolução Industrial;</li><li>7.3 Independência dos EUA.</li></ul></li>
+                <li><b>8. Brasil Império</b><ul><li>8.1 Processo de Independência;</li><li>8.2 Segundo Reinado;</li><li>8.3 Movimento abolicionista.</li></ul></li>
+                <li><b>9. Conflitos e revoluções do século XX</b><ul><li>9.1 Primeira Guerra Mundial;</li><li>9.2 Segunda Guerra Mundial;</li><li>9.3 Guerra Fria;</li><li>9.4 Globalização e os desafios do mundo contemporâneo.</li></ul></li>
+                <li><b>10. Brasil Republicano</b><ul><li>10.1 Primeira República;</li><li>10.2 Era Vargas;</li><li>10.3 Regime Militar;</li><li>10.4 Redemocratização.</li></ul></li>
+                <li><b>11. História do Paraná</b><ul><li>11.1 Ocupação do território: ouro, tropeirismo, erva-mate e café;</li><li>11.2 Povos imigrantes no Paraná.</li></ul></li>
+              </ul>
+            </details>
+
+            <details class="subject-tree">
+              <summary>Língua Espanhola</summary>
+              <ul class="topic-list">
+                <li><b>1. Interculturalidade</b><ul><li>1.1 O conhecimento sistêmico e de mundo de uma língua estrangeira;</li><li>1.2 O processo de ensinar e aprender língua estrangeira.</li></ul></li>
+                <li><b>2. Compreensão e interpretação de textos</b></li>
+                <li><b>3. Análise do contexto de produção textual</b><ul><li>3.1 Características composicionais de gêneros textuais e discursivos;</li><li>3.2 Infraestrutura do texto (tipos de discurso e sequências textuais).</li></ul></li>
+                <li><b>4. Textualização</b><ul><li>4.1 Coesão nominal e verbal;</li><li>4.2 Léxico.</li></ul></li>
+                <li><b>5. Intertextualidade</b></li>
+                <li><b>6. Fonética e fonologia</b><ul><li>6.1 Acentuação;</li><li>6.2 Entonação (pronúncia).</li></ul></li>
+                <li><b>7. Morfologia</b><ul><li>7.1 Classes gramaticais;</li><li>7.2 Estrutura e formação das palavras;</li><li>7.3 Tempos verbais.</li></ul></li>
+                <li><b>8. Sintaxe</b></li>
+                <li><b>9. Semântica</b></li>
+                <li><b>10. Variações Linguísticas</b><ul><li>10.1 Regionalismos;</li><li>10.2 Polissemia.</li></ul></li>
+              </ul>
+            </details>
+
+            <details class="subject-tree">
+              <summary>Língua Inglesa</summary>
+              <ul class="topic-list">
+                <li><b>1. Interculturalidade</b><ul><li>1.1 O conhecimento sistêmico e de mundo adquirido por meio de uma língua estrangeira;</li><li>1.2 O processo de ensinar e aprender língua estrangeira.</li></ul></li>
+                <li><b>2. Compreensão e interpretação de textos</b><ul><li>2.1 Gêneros textuais e discursivos.</li></ul></li>
+                <li><b>3. Análise do contexto de produção textual</b><ul><li>3.1 Características composicionais de gêneros textuais e discursivos;</li><li>3.2 Infraestrutura do texto (tipos de discurso e sequências textuais).</li></ul></li>
+                <li><b>4. Textualização</b><ul><li>4.1 Coesão nominal e verbal;</li><li>4.2 Léxico.</li></ul></li>
+                <li><b>5. Intertextualidade</b></li>
+                <li><b>6. Fonética e fonologia</b><ul><li>6.1 Entonação (pronúncia).</li></ul></li>
+                <li><b>7. Morfologia</b><ul><li>7.1 Classes gramaticais;</li><li>7.2 Estrutura e formação das palavras;</li><li>7.3 Tempos verbais.</li></ul></li>
+                <li><b>8. Sintaxe</b></li>
+                <li><b>9. Semântica</b></li>
+                <li><b>10. Variações Linguísticas</b><ul><li>10.1 Regionalismos;</li><li>10.2 Polissemia.</li></ul></li>
+              </ul>
+            </details>
+
+            <details class="subject-tree">
+              <summary>Língua Portuguesa</summary>
+              <ul class="topic-list">
+                <li><b>1. Gêneros textuais/discursivos</b><ul><li>1.1 Elementos composicionais (conteúdo temático, construção composicional e estilo) de diferentes gêneros;</li><li>1.2 Função social dos gêneros;</li><li>1.3 Esfera/campo de atividade humana;</li><li>1.4 Tipologia textual/discursiva.</li></ul></li>
+                <li><b>2. Leitura e interpretação textual</b><ul><li>2.1 Estratégia de leitura: apreender os sentidos globais do texto;</li><li>2.2 Distinção de fato e opinião;</li><li>2.3 Reconstrução da textualidade e compreensão dos efeitos de sentidos provocados pelos usos de recursos linguísticos e multissemióticos;</li><li>2.4 Estratégia de leitura: identificação de teses e argumentos;</li><li>2.5 Identificação de manifestações distintas de diferentes linguagens.</li></ul></li>
+                <li><b>3. Análise linguística/semiótica</b><ul><li>3.1 Fonética e Fonologia; 3.1.2 Relações entre tonicidade e acentuação;</li><li>3.2 Ortografia oficial; 3.2.1 Efeitos de sentido produzidos pela equivocidade ortográfica; 3.2.2 Elementos notacionais da escrita;</li><li>3.3 Morfologia; 3.3.1 Efeitos de sentido produzidos pela morfossintaxe e pontuação no texto;</li><li>3.4 Sintaxe; 3.4.1 Concordância verbal e nominal; 3.4.2 Regência verbal e nominal;</li><li>3.5 Semântica; 3.5.1 Efeitos de sentido de acordo com relações semânticas das palavras; 3.5.2 Figuras de linguagem.</li></ul></li>
+                <li><b>4. Linguística Textual</b><ul><li>4.1 Coesão e coerência;</li><li>4.2 Informatividade, articulação e progressão textual.</li></ul></li>
+                <li><b>5. Teoria Literária</b><ul><li>5. Literatura: 5.1 Elementos da narrativa: características e funções;</li><li>5.2 Estilística;</li><li>5.3 Movimentos Literários;</li><li>5.4 Funções da literatura.</li></ul></li>
+              </ul>
+            </details>
+
+            <details class="subject-tree">
+              <summary>Matemática</summary>
+              <ul class="topic-list">
+                <li><b>1. Progressão aritmética e geométrica</b><ul><li>1.1 Cálculo do termo geral;</li><li>1.2 Soma dos termos de uma progressão.</li></ul></li>
+                <li><b>2. Funções</b><ul><li>2.1 Definição;</li><li>2.2 Gráfico e raízes;</li><li>2.3 Máximos e mínimos de funções quadráticas;</li><li>2.4 Função exponencial e função logarítmica;</li><li>2.5 Funções trigonométricas.</li></ul></li>
+                <li><b>3. Triângulo retângulo</b><ul><li>3.1 Relações métricas;</li><li>3.2 Razões trigonométricas.</li></ul></li>
+                <li><b>4. Geometria</b><ul><li>4.1 Cálculo de perímetro;</li><li>4.2 Cálculo de área de figuras planas;</li><li>4.3 Cálculo do volume de sólidos geométricos.</li></ul></li>
+                <li><b>5. Sistemas lineares e matrizes</b><ul><li>5.1 Resolução de sistemas lineares por escalonamento.</li></ul></li>
+                <li><b>6. Matemática Financeira</b><ul><li>6.1 Porcentagem;</li><li>6.2 Juros simples;</li><li>6.3 Juros compostos.</li></ul></li>
+                <li><b>7. Análise combinatória</b><ul><li>7.1 Princípio fundamental da contagem;</li><li>7.2 Permutação simples;</li><li>7.3 Arranjo simples;</li><li>7.4 Combinação simples.</li></ul></li>
+                <li><b>8. Estatística</b><ul><li>8.1 Medidas de tendência central;</li><li>8.2 Medidas de dispersão;</li><li>8.3 Gráficos estatísticos.</li></ul></li>
+                <li><b>9. Probabilidade</b><ul><li>9.1 Probabilidade de um evento.</li></ul></li>
+                <li><b>10. Educação Financeira</b><ul><li>10.1 Gestão Financeira: ferramentas de controle do orçamento, consumo e consumismo, endividamento e inadimplência;</li><li>10.2 Investimentos;</li><li>10.3 Crédito: uso do crédito, serviços de proteção ao crédito;</li><li>10.4 Mercado de trabalho e empreendedorismo: CLT, previdência, perfil e atribuições de um empreendedor, plano de negócios;</li><li>10.5 Economia: moeda nacional e estrangeira, tributação, associativismo e cooperativismo, orçamento público, gestão pública e suas funções.</li></ul></li>
+              </ul>
+            </details>
+
+            <details class="subject-tree">
+              <summary>Química</summary>
+              <ul class="topic-list">
+                <li><b>1. Estrutura da Matéria</b><ul><li>1.1 Estudo do átomo e seus modelos;</li><li>1.2 O núcleo do átomo (emissões alfa, beta e gama) e as leis da radioatividade.</li></ul></li>
+                <li><b>2. Classificação Periódica dos Elementos</b><ul><li>2.1 Organização dos elementos químicos.</li></ul></li>
+                <li><b>3. Ligações Químicas</b><ul><li>3.1 Interações interatômicas (ligações iônica, covalente e metálica);</li><li>3.2 Ligações intermoleculares (dipolo-dipolo, dipolo induzido e ligação de hidrogênio) e as aplicações no cotidiano;</li><li>3.4 Geometria Molecular;</li><li>3.5 Polaridade.</li></ul></li>
+                <li><b>4. Funções Químicas</b><ul><li>4.1 Funções Químicas Inorgânicas (ácidos, bases, sais e óxidos);</li><li>4.2 Funções Orgânicas;</li><li>4.3 Reações orgânicas.</li></ul></li>
+                <li><b>5. Cálculos Químicos</b><ul><li>5.1 Leis Ponderais;</li><li>5.2 Grandezas químicas (massa atômica, massa molar, mol, massa molecular);</li><li>5.3 Equações químicas;</li><li>5.4 Estequiometria.</li></ul></li>
+                <li><b>6. Termoquímica</b><ul><li>6.1 Reações exotérmicas e endotérmicas;</li><li>6.2 Gráficos.</li></ul></li>
+                <li><b>7. Solução</b><ul><li>7.1 Solução;</li><li>7.2 Solubilidade;</li><li>7.3 Diluição;</li><li>7.4 Unidades de concentração.</li></ul></li>
+                <li><b>8. Equilíbrio Químico</b><ul><li>8.1 Reações reversíveis;</li><li>8.2 Princípio de Le Chatelier;</li><li>8.3 Constante de equilíbrio (concentração e pressão).</li></ul></li>
+                <li><b>9. Cinética Química</b><ul><li>9.1 Fatores que alteram a velocidade de uma reação química;</li><li>9.2 Lei da Velocidade.</li></ul></li>
+                <li><b>10. Eletroquímica</b><ul><li>10.1 Reações de oxirredução;</li><li>10.2 Pilhas;</li><li>10.3 Eletrólise.</li></ul></li>
+              </ul>
+            </details>
+
+            <details class="subject-tree">
+              <summary>Sociologia</summary>
+              <ul class="topic-list">
+                <li><b>1. O Surgimento da Sociologia</b><ul><li>1.1 Formação e consolidação da sociedade moderna capitalista;</li><li>1.2 Positivismo em Auguste Comte.</li></ul></li>
+                <li><b>2. Teoria Sociológica Clássica – Émile Durkheim</b><ul><li>2.1 As Regras do Método Sociológico;</li><li>2.2 O Fato Social;</li><li>2.3 Solidariedade Mecânica e Solidariedade Orgânica.</li></ul></li>
+                <li><b>3. Teoria Sociológica Clássica – Karl Marx</b><ul><li>3.1 Materialismo Histórico e Dialético;</li><li>3.2 Mais-valia; Capitalismo e Luta de Classes.</li></ul></li>
+                <li><b>4. Teoria Sociológica Clássica – Max Weber</b><ul><li>4.1 Ação Social;</li><li>4.2 A Sociologia compreensiva;</li><li>4.3 A Ética Protestante e o Espírito do Capitalismo.</li></ul></li>
+                <li><b>5. Processo de Socialização e as Instituições Sociais</b><ul><li>5.1 Socialização Primária e Socialização Secundária;</li><li>5.2 As Instituições Sociais: familiares, escolares e religiosas.</li></ul></li>
+                <li><b>6. Desenvolvimento antropológico do conceito de Cultura</b><ul><li>6.1 Evolucionismo Social;</li><li>6.2 Relativismo Cultural;</li><li>6.3 O Método Etnográfico.</li></ul></li>
+                <li><b>7. Cultura, Diversidade e Indústria Cultural</b><ul><li>7.1 Etnocentrismo e Alteridade;</li><li>7.2 Diversidade e Identidade Brasileira;</li><li>7.3 Conceito de Indústria Cultural;</li><li>7.4 Indústria Cultural no Brasil.</li></ul></li>
+                <li><b>8. Poder, Política e Estado</b><ul><li>8.1 Conceitos de Poder;</li><li>8.2 Formação e desenvolvimento do Estado Moderno;</li><li>8.3 Cidadania no Brasil;</li><li>8.4 Movimentos sociais.</li></ul></li>
+                <li><b>9. Trabalho e Sociedade</b><ul><li>9.1 Transformações no mundo do Trabalho;</li><li>9.2 Trabalho para os clássicos da Sociologia;</li><li>9.3 Direitos trabalhistas.</li></ul></li>
+                <li><b>10. Sociologia Brasileira</b><ul><li>10.1 Autores, seus contextos e obras: Gilberto Freyre, Darcy Ribeiro, Octavio Ianni, Florestan Fernandes;</li><li>10.2 Diferenças e Desigualdades;</li><li>10.3 Relações étnico-raciais no Brasil.</li></ul></li>
+              </ul>
+            </details>
+
+            <details class="subject-tree">
+              <summary>Educação Infantil e Anos Iniciais (Séries Iniciais)</summary>
+              <ul class="topic-list">
+                <li><b>Base comum</b>
+                  <ul>
+                    <li>Ensino Fundamental de nove anos, estrutura, funcionamento e currículo;</li>
+                    <li>Aspectos psicológicos do desenvolvimento humano e teorias da aprendizagem;</li>
+                    <li>Psicogênese e aquisição da leitura e da escrita;</li>
+                    <li>Referencial Curricular do Paraná – Campos de Experiência na Educação Infantil;</li>
+                    <li>Diretrizes Curriculares Nacionais para a Educação Infantil;</li>
+                    <li>Referencial Curricular do Paraná e Quadro Organizador Curricular nos anos iniciais: direitos e objetivos de aprendizagem;</li>
+                    <li>Fundamentos da alfabetização;</li>
+                    <li>Métodos de alfabetização: sintéticos e analíticos;</li>
+                    <li>Concepções teóricas: alfabetização e letramento;</li>
+                    <li>Avaliação da aprendizagem.</li>
+                  </ul>
+                </li>
+                <li><b>Língua Portuguesa</b><ul><li>Compreensão e interpretação de textos de gêneros variados; diferenciação entre fato e opinião; reconhecimento da tese e argumentos textuais; reconhecimento de efeitos de sentido de palavras, expressões, pontuação e outras notações; informações implícitas nos textos; acentuação e tonicidade; emprego do sinal indicativo de crase; estrutura morfossintática e emprego dos sinais de pontuação; concordância e regência verbal e nominal; emprego de elementos de referenciação, substituição e repetição, de conectores e de outros elementos de sequenciação textual; emprego de tempos e modos verbais.</li></ul></li>
+                <li><b>Matemática</b><ul><li>Números naturais: operações (adição, subtração, multiplicação, divisão); números racionais: frações, decimais, porcentagem; medidas de comprimento, tempo, temperatura, capacidade e volume; sistema monetário; geometria plana: figuras planas, simetria, cálculo de área e perímetro; geometria espacial: sólidos geométricos e corpos redondos; gráficos pictóricos e gráficos de linhas; tratamento de informação.</li></ul></li>
+                <li><b>Geografia</b><ul><li>O processo de ocupação do território paranaense; elementos da paisagem paranaense (clima, solo, relevo e hidrografia) e sua relação com a sociedade paranaense; aspectos populacionais e processos migratórios no Paraná; contribuições da cultura indígena para o Paraná; distribuição das atividades econômicas no espaço paranaense.</li></ul></li>
+                <li><b>História</b><ul><li>Emancipação Política do Paraná; cultura dos povos indígenas paranaenses (Kaingang, Guarani e Xetá); principais festas e manifestações artísticas no Paraná; símbolos oficiais do Paraná; nomadismo e sedentarismo; ciclos econômicos.</li></ul></li>
+                <li><b>Ciências</b><ul><li>Propriedades físicas dos materiais (densidade, solubilidade, condutibilidade térmica e elétrica, características magnéticas e mecânicas); consumo consciente e reciclagem; ciclo hidrológico; fontes de energia (renováveis e não renováveis) e seus impactos no ambiente; sistemas do corpo humano e integração entre os sistemas digestório, respiratório e circulatório; hábitos alimentares e distúrbios nutricionais; saúde física e mental; movimentos da Terra (rotação e translação); periodicidade das fases da Lua.</li></ul></li>
+                <li><b>Educação Física</b><ul><li>Brincadeiras e jogos da cultura popular no contexto comunitário local e regional, jogos de matrizes indígena e africana, jogos populares e tradicionais do Brasil e do mundo; jogos esportivos de precisão, de campo, de taco, de rede/parede e invasão; ginástica geral e o reconhecimento do corpo; brincadeiras cantadas e cantigas de roda, danças do Brasil e de matrizes indígena, africana e do mundo; jogos de luta e lutas do contexto comunitário local e regional e de matrizes indígena e africana; jogos de aventura.</li></ul></li>
+                <li><b>Arte</b><ul><li>Artes Visuais: elementos da linguagem, processos de criação, matrizes estéticas culturais; Artes Integradas: patrimônio cultural, arte e tecnologia; Dança: elementos da linguagem, processos de criação, materialidades; Música: elementos da linguagem, materialidades; Teatro: contextos práticos.</li></ul></li>
+                <li><b>Libras</b><ul><li>Aquisição de vocabulário (saudações, alfabeto, higiene pessoal em Libras); pronomes demonstrativos e advérbios em Libras; tipos de frases em Libras; adjetivos em Libras.</li></ul></li>
+              </ul>
+            </details>
           </details>
 
           <details class="subject-tree">
             <summary>Outras funções (Grupos 10–11)</summary>
-            <ul>
-              <li>SAREH – Atendimento Pedagógico Domiciliar (Língua Portuguesa)</li>
-              <li>Professor de Libras</li>
+            <ul class="topic-list">
+              <li><b>SAREH – Atendimento Pedagógico Domiciliar (Língua Portuguesa)</b><p>Mesmo conteúdo específico de Língua Portuguesa listado acima, em Educação Básica.</p></li>
+              <li><b>Professor de Libras</b><p>Mesmo conteúdo de Libras listado acima (Educação Infantil e Anos Iniciais). A prova prática segue estudo de caso (ver grupo "Educação Especial" abaixo, Estudo de Caso 02 – Área Surdez).</p></li>
             </ul>
           </details>
 
           <details class="subject-tree">
-            <summary>Educação Profissional – Ambiente e Saúde</summary>
-            <ul>
-              <li>AS – Análises Clínicas</li>
-              <li>AS – Cuidados de Idosos</li>
-              <li>AS – Enfermagem</li>
-              <li>AS – Enfermagem do Trabalho</li>
-              <li>AS – Estética</li>
-              <li>AS – Farmácia</li>
-              <li>AS – Meio Ambiente</li>
-              <li>AS – Nutrição e Dietética</li>
-              <li>AS – Prótese Dentária</li>
-              <li>AS – Saúde Bucal</li>
+            <summary>Educação Especial</summary>
+            <ul class="topic-list">
+              <li><b>Prova Objetiva (mesmo conteúdo para todos os grupos)</b>
+                <ul>
+                  <li>Normativas e aporte legal da educação especial (legislação nacional e estadual do Paraná);</li>
+                  <li>Plano de Atendimento Educacional Especializado;</li>
+                  <li>Língua Brasileira de Sinais;</li>
+                  <li>Recursos Tecnológicos de Comunicação Alternativa e Tecnologia Assistiva;</li>
+                  <li>Os diferentes atendimentos nas salas de recursos multifuncionais na área auditiva, visual, intelectual, altas habilidades/superdotação;</li>
+                  <li>Adaptação/Diferenciação Curricular.</li>
+                </ul>
+              </li>
+              <li><b>Prova Prática — como varia por função</b>
+                <ul>
+                  <li>Prof. Reg. Anos Iniciais Surdez e Prof. Regente Ed. Infantil Surdez (Grupo 3): conteúdos de "Educação Infantil e Anos Iniciais";</li>
+                  <li>Demais áreas do Grupo 3: conteúdos da respectiva disciplina em "Educação Básica";</li>
+                  <li>Grupo 7 (Escolas Estaduais Especializadas / CAEE Natalie Barraga): conforme referência de cada função; Arte e Educação Física seguem os conteúdos dessas disciplinas em "Educação Básica";</li>
+                  <li>Professor Regente – Educação Especial: conteúdos de "Educação Infantil e Anos Iniciais";</li>
+                  <li>Professor Pedagogo – Educação Especial, Pedagogo CAEE e Regente CAEE: com base em Estudo de Caso (tabela abaixo).</li>
+                </ul>
+              </li>
+              <li><b>Grupo → Estudo de Caso</b>
+                <table class="case-table">
+                  <tr><td>Grupo 06 – Atend. Educ. Especializado / PDI</td><td>Estudo de Caso 01, 02, 03 ou 04</td></tr>
+                  <tr><td>Grupo 07 – Escolas Est. Especializadas (Pedagogo Ed. Especial, Pedagogo CAEE, Regente CAEE)</td><td>Estudo de Caso 03</td></tr>
+                  <tr><td>Grupo 08 – Professor Ouvinte de Sala de Recursos da Surdez</td><td>Estudo de Caso 02</td></tr>
+                  <tr><td>Grupo 09 – Professor Surdo (Sala de Recursos / Colégios Bilíngues)</td><td>Estudo de Caso 02</td></tr>
+                  <tr><td>Grupo 11 – Professor de Libras</td><td>Estudo de Caso 02</td></tr>
+                  <tr><td>Grupo 12 – Professor CAEE Surdocegueira</td><td>Estudo de Caso 03</td></tr>
+                </table>
+              </li>
+              <li><b>Perfis dos Estudos de Caso (resumo)</b>
+                <ul>
+                  <li>Estudo de Caso 1 – Área DI/TGD/DFN: estudante do 6.º ano, deficiência intelectual, com defasagem de aprendizagem e dificuldades de leitura, escrita e operações de multiplicação/divisão;</li>
+                  <li>Estudo de Caso 2 – Área Surdez: estudante do 8.º ano, surdo, usuário de Libras, comunicativo, com vocabulário mais restrito em humanas/linguagem e dificuldade de abstração em matemática;</li>
+                  <li>Estudo de Caso 3 – Área Visual: estudante do 7.º ano, cega, domínio do sorobã, em apropriação do sistema Braille, facilidade com as quatro operações até a centena;</li>
+                  <li>Estudo de Caso 4 – Área AH/SD: estudante do 6.º ano, altas habilidades/superdotação, forte em linguística e lógico-matemática, vocabulário rebuscado, com dificuldades ortográficas e de concentração.</li>
+                </ul>
+              </li>
             </ul>
           </details>
 
           <details class="subject-tree">
-            <summary>Educação Profissional – Controle e Processos Industriais</summary>
-            <ul>
-              <li>CI – Eletroeletrônica</li>
-              <li>CI – Eletromecânica</li>
-              <li>CI – Eletrônica</li>
-              <li>CI – Eletrotécnica</li>
-              <li>CI – Manutenção Automotiva</li>
-              <li>CI – Manutenção de Máquinas Pesadas</li>
-              <li>CI – Mecânica</li>
-              <li>CI – Mecatrônica</li>
-              <li>CI – Sistemas de Energia Renovável</li>
+            <summary>Pedagogo</summary>
+            <ul class="topic-list">
+              <li><b>Prova Objetiva</b>
+                <ul>
+                  <li>1. O pedagogo e o acompanhamento da hora-atividade;</li>
+                  <li>2. O papel do pedagogo junto ao professor na gestão de sala de aula e do clima escolar;</li>
+                  <li>3. O planejamento, a análise conjunta do plano de aula e o registro de classe on-line/físico, bem como os instrumentos avaliativos e o feedback formativo;</li>
+                  <li>4. As etapas da observação de sala de aula: acompanhamento de hora-atividade para definição dos critérios de observação, em parceria com o professor; observação e registro; acompanhamento da hora-atividade para feedback formativo;</li>
+                  <li>5. As técnicas de Lemov como estratégia para a orientação da gestão de sala de aula;</li>
+                  <li>6. Gestão de sala de aula e processo de ensino e de aprendizagem: currículo, metodologias, recursos educacionais digitais e avaliação;</li>
+                  <li>7. Avaliação da e para a aprendizagem: interna e externa (SAEB, IDEB, SAEP – Prova Paraná, Prova Paraná Mais);</li>
+                  <li>8. Conselho de Classe: instrumento de acompanhamento da aprendizagem dos estudantes;</li>
+                  <li>9. Legislação da educação básica (Lei Federal n.º 9.394/1996 e suas alterações, Referencial Curricular do Paraná, Referencial Curricular para o Ensino Médio do Paraná);</li>
+                  <li>10. Programa de Combate ao Abandono Escolar do Paraná;</li>
+                  <li>11. Educação em Direitos Humanos e mediação de conflitos;</li>
+                  <li>12. O papel do pedagogo junto aos estudantes e famílias.</li>
+                </ul>
+              </li>
+              <li><b>Prova Prática — escolher 1 dos 5 temas para o Plano de Ação</b>
+                <ul>
+                  <li>1. Etapas da Observação de sala de aula;</li>
+                  <li>2. Acompanhamento da hora-atividade: plano de aula, metodologias ativas, recursos educacionais digitais e avaliação;</li>
+                  <li>3. Avaliação da e para a aprendizagem: interna (recuperação de estudos e Conselho de Classe) e externa (Prova Paraná, Prova Paraná Mais, SAEB e IDEB);</li>
+                  <li>4. Gestão de sala de aula: técnicas de Lemov, currículo, metodologias, recursos educacionais digitais e avaliação;</li>
+                  <li>5. A frequência escolar para a aprendizagem significativa: a importância da prática docente.</li>
+                </ul>
+              </li>
             </ul>
           </details>
 
           <details class="subject-tree">
-            <summary>Educação Profissional – Formação de Docentes</summary>
-            <ul>
-              <li>Formação de Docentes</li>
-            </ul>
-          </details>
+            <summary>Educação Profissional (todos os eixos)</summary>
+            <p style="font-size:9.5px; color:#5A6B85; padding:8px 10px 0;">Conteúdo comum + específico por eixo — toque no PDF completo acima para ver ponto a ponto. Grupos disponíveis:</p>
 
-          <details class="subject-tree">
-            <summary>Educação Profissional – Gestão de Negócios</summary>
-            <ul>
-              <li>GN – Administração</li>
-              <li>GN – Bioeconomia</li>
-              <li>GN – Contabilidade</li>
-              <li>GN – Logística</li>
-              <li>GN – Marketing</li>
-              <li>GN – Qualidade</li>
-              <li>GN – Recursos Humanos</li>
-              <li>GN – Secretariado</li>
-              <li>GN – Serviços Jurídicos</li>
-              <li>GN – Transações Imobiliárias</li>
-              <li>GN – Vendas</li>
-            </ul>
-          </details>
+            <details class="subject-tree">
+              <summary>Ambiente e Saúde</summary>
+              <ul>
+                <li>AS – Análises Clínicas</li>
+                <li>AS – Cuidados de Idosos</li>
+                <li>AS – Enfermagem</li>
+                <li>AS – Enfermagem do Trabalho</li>
+                <li>AS – Estética</li>
+                <li>AS – Farmácia</li>
+                <li>AS – Meio Ambiente</li>
+                <li>AS – Nutrição e Dietética</li>
+                <li>AS – Prótese Dentária</li>
+                <li>AS – Saúde Bucal</li>
+              </ul>
+            </details>
 
-          <details class="subject-tree">
-            <summary>Educação Profissional – Informação e Comunicação</summary>
-            <ul>
-              <li>IC – Desenvolvimento de Sistemas</li>
-              <li>IC – Informática</li>
-              <li>IC – Informática para Internet</li>
-              <li>IC – Inteligência Artificial</li>
-              <li>IC – Manutenção e Suporte em Informática</li>
-              <li>IC – Programação de Jogos Digitais</li>
-            </ul>
-          </details>
+            <details class="subject-tree">
+              <summary>Controle e Processos Industriais</summary>
+              <ul>
+                <li>CI – Eletroeletrônica</li>
+                <li>CI – Eletromecânica</li>
+                <li>CI – Eletrônica</li>
+                <li>CI – Eletrotécnica</li>
+                <li>CI – Manutenção Automotiva</li>
+                <li>CI – Manutenção de Máquinas Pesadas</li>
+                <li>CI – Mecânica</li>
+                <li>CI – Mecatrônica</li>
+                <li>CI – Sistemas de Energia Renovável</li>
+              </ul>
+            </details>
 
-          <details class="subject-tree">
-            <summary>Educação Profissional – Infraestrutura</summary>
-            <ul>
-              <li>IE – Edificações</li>
-              <li>IE – Portos</li>
-            </ul>
-          </details>
+            <details class="subject-tree">
+              <summary>Formação de Docentes</summary>
+              <ul><li>Formação de Docentes</li></ul>
+            </details>
 
-          <details class="subject-tree">
-            <summary>Educação Profissional – Produção Alimentícia</summary>
-            <ul>
-              <li>PA – Agroindústria</li>
-              <li>PA – Alimentos</li>
-            </ul>
-          </details>
+            <details class="subject-tree">
+              <summary>Gestão de Negócios</summary>
+              <ul>
+                <li>GN – Administração</li>
+                <li>GN – Bioeconomia</li>
+                <li>GN – Contabilidade</li>
+                <li>GN – Logística</li>
+                <li>GN – Marketing</li>
+                <li>GN – Qualidade</li>
+                <li>GN – Recursos Humanos</li>
+                <li>GN – Secretariado</li>
+                <li>GN – Serviços Jurídicos</li>
+                <li>GN – Transações Imobiliárias</li>
+                <li>GN – Vendas</li>
+              </ul>
+            </details>
 
-          <details class="subject-tree">
-            <summary>Educação Profissional – Produção Cultural e Design</summary>
-            <ul>
-              <li>PD – Design de Interiores</li>
-              <li>PD – Produção de Áudio e Vídeo</li>
-              <li>PD – Teatro</li>
-            </ul>
-          </details>
+            <details class="subject-tree">
+              <summary>Informação e Comunicação</summary>
+              <ul>
+                <li>IC – Desenvolvimento de Sistemas</li>
+                <li>IC – Informática</li>
+                <li>IC – Informática para Internet</li>
+                <li>IC – Inteligência Artificial</li>
+                <li>IC – Manutenção e Suporte em Informática</li>
+                <li>IC – Programação de Jogos Digitais</li>
+              </ul>
+            </details>
 
-          <details class="subject-tree">
-            <summary>Educação Profissional – Produção Industrial</summary>
-            <ul>
-              <li>PI – Açúcar e Álcool</li>
-              <li>PI – Biotecnologia</li>
-              <li>PI – Celulose e Papel</li>
-              <li>PI – Planejamento, Controle e Produção</li>
-              <li>PI – Química</li>
-              <li>PI – Vestuário</li>
-            </ul>
-          </details>
+            <details class="subject-tree">
+              <summary>Infraestrutura</summary>
+              <ul>
+                <li>IE – Edificações</li>
+                <li>IE – Portos</li>
+              </ul>
+            </details>
 
-          <details class="subject-tree">
-            <summary>Educação Profissional – Recursos Naturais</summary>
-            <ul>
-              <li>RN – Agrícola CAE/CFR</li>
-              <li>RN – Agricultura</li>
-              <li>RN – Agroecologia</li>
-              <li>RN – Agronegócio</li>
-              <li>RN – Agropecuária</li>
-              <li>RN – Agrotecnologia</li>
-              <li>RN – Florestas</li>
-              <li>RN – Operações de Máquinas Florestais</li>
-              <li>RN – Pecuária</li>
-            </ul>
-          </details>
+            <details class="subject-tree">
+              <summary>Produção Alimentícia</summary>
+              <ul>
+                <li>PA – Agroindústria</li>
+                <li>PA – Alimentos</li>
+              </ul>
+            </details>
 
-          <details class="subject-tree">
-            <summary>Educação Profissional – Segurança</summary>
-            <ul>
-              <li>SE – Segurança do Trabalho</li>
-            </ul>
-          </details>
+            <details class="subject-tree">
+              <summary>Produção Cultural e Design</summary>
+              <ul>
+                <li>PD – Design de Interiores</li>
+                <li>PD – Produção de Áudio e Vídeo</li>
+                <li>PD – Teatro</li>
+              </ul>
+            </details>
 
-          <details class="subject-tree">
-            <summary>Educação Profissional – Turismo, Hospitalidade e Lazer</summary>
-            <ul>
-              <li>THL – Agenciamento de Viagens</li>
-              <li>THL – Cozinha</li>
-              <li>THL – Gastronomia</li>
-              <li>THL – Guia de Turismo</li>
-              <li>THL – Hospedagem</li>
-              <li>THL – Lazer</li>
-            </ul>
+            <details class="subject-tree">
+              <summary>Produção Industrial</summary>
+              <ul>
+                <li>PI – Açúcar e Álcool</li>
+                <li>PI – Biotecnologia</li>
+                <li>PI – Celulose e Papel</li>
+                <li>PI – Planejamento, Controle e Produção</li>
+                <li>PI – Química</li>
+                <li>PI – Vestuário</li>
+              </ul>
+            </details>
+
+            <details class="subject-tree">
+              <summary>Recursos Naturais</summary>
+              <ul>
+                <li>RN – Agrícola CAE/CFR</li>
+                <li>RN – Agricultura</li>
+                <li>RN – Agroecologia</li>
+                <li>RN – Agronegócio</li>
+                <li>RN – Agropecuária</li>
+                <li>RN – Agrotecnologia</li>
+                <li>RN – Florestas</li>
+                <li>RN – Operações de Máquinas Florestais</li>
+                <li>RN – Pecuária</li>
+              </ul>
+            </details>
+
+            <details class="subject-tree">
+              <summary>Segurança</summary>
+              <ul><li>SE – Segurança do Trabalho</li></ul>
+            </details>
+
+            <details class="subject-tree">
+              <summary>Turismo, Hospitalidade e Lazer</summary>
+              <ul>
+                <li>THL – Agenciamento de Viagens</li>
+                <li>THL – Cozinha</li>
+                <li>THL – Gastronomia</li>
+                <li>THL – Guia de Turismo</li>
+                <li>THL – Hospedagem</li>
+                <li>THL – Lazer</li>
+              </ul>
+            </details>
           </details>
         </div>
       </details>
