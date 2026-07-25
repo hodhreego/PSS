@@ -221,6 +221,11 @@
     background:linear-gradient(135deg, var(--gold), var(--gold-light)); color:var(--navy-deep);
   }
   details.subject-tree.featured > summary::after{color:var(--navy-deep);}
+  details.subject-tree.featured-math{border-color:var(--navy); border-width:1.5px;}
+  details.subject-tree.featured-math > summary{
+    background:linear-gradient(135deg, var(--navy), var(--navy-deep)); color:var(--gold-light);
+  }
+  details.subject-tree.featured-math > summary::after{color:var(--gold-light);}
   details.subject-tree ul{list-style:none; padding:7px 10px 9px 10px;}
   details.subject-tree li{font-size:10px; line-height:1.7; color:var(--ink); padding-left:12px; position:relative;}
   details.subject-tree li::before{content:"–"; position:absolute; left:0; color:var(--gold); font-weight:700;}
@@ -558,6 +563,22 @@
           <details class="subject-tree featured">
             <summary>Educação Básica (Grupos 1–5)</summary>
 
+            <details class="subject-tree featured-math">
+              <summary>Matemática</summary>
+              <ul class="topic-list">
+                <li><b>1. Progressão aritmética e geométrica</b><ul><li>1.1 Cálculo do termo geral;</li><li>1.2 Soma dos termos de uma progressão.</li></ul></li>
+                <li><b>2. Funções</b><ul><li>2.1 Definição;</li><li>2.2 Gráfico e raízes;</li><li>2.3 Máximos e mínimos de funções quadráticas;</li><li>2.4 Função exponencial e função logarítmica;</li><li>2.5 Funções trigonométricas.</li></ul></li>
+                <li><b>3. Triângulo retângulo</b><ul><li>3.1 Relações métricas;</li><li>3.2 Razões trigonométricas.</li></ul></li>
+                <li><b>4. Geometria</b><ul><li>4.1 Cálculo de perímetro;</li><li>4.2 Cálculo de área de figuras planas;</li><li>4.3 Cálculo do volume de sólidos geométricos.</li></ul></li>
+                <li><b>5. Sistemas lineares e matrizes</b><ul><li>5.1 Resolução de sistemas lineares por escalonamento.</li></ul></li>
+                <li><b>6. Matemática Financeira</b><ul><li>6.1 Porcentagem;</li><li>6.2 Juros simples;</li><li>6.3 Juros compostos.</li></ul></li>
+                <li><b>7. Análise combinatória</b><ul><li>7.1 Princípio fundamental da contagem;</li><li>7.2 Permutação simples;</li><li>7.3 Arranjo simples;</li><li>7.4 Combinação simples.</li></ul></li>
+                <li><b>8. Estatística</b><ul><li>8.1 Medidas de tendência central;</li><li>8.2 Medidas de dispersão;</li><li>8.3 Gráficos estatísticos.</li></ul></li>
+                <li><b>9. Probabilidade</b><ul><li>9.1 Probabilidade de um evento.</li></ul></li>
+                <li><b>10. Educação Financeira</b><ul><li>10.1 Gestão Financeira: ferramentas de controle do orçamento, consumo e consumismo, endividamento e inadimplência;</li><li>10.2 Investimentos;</li><li>10.3 Crédito: uso do crédito, serviços de proteção ao crédito;</li><li>10.4 Mercado de trabalho e empreendedorismo: CLT, previdência, perfil e atribuições de um empreendedor, plano de negócios;</li><li>10.5 Economia: moeda nacional e estrangeira, tributação, associativismo e cooperativismo, orçamento público, gestão pública e suas funções.</li></ul></li>
+              </ul>
+            </details>
+
             <details class="subject-tree">
               <summary>Arte</summary>
               <ul class="topic-list">
@@ -745,22 +766,6 @@
                 <li><b>3. Análise linguística/semiótica</b><ul><li>3.1 Fonética e Fonologia; 3.1.2 Relações entre tonicidade e acentuação;</li><li>3.2 Ortografia oficial; 3.2.1 Efeitos de sentido produzidos pela equivocidade ortográfica; 3.2.2 Elementos notacionais da escrita;</li><li>3.3 Morfologia; 3.3.1 Efeitos de sentido produzidos pela morfossintaxe e pontuação no texto;</li><li>3.4 Sintaxe; 3.4.1 Concordância verbal e nominal; 3.4.2 Regência verbal e nominal;</li><li>3.5 Semântica; 3.5.1 Efeitos de sentido de acordo com relações semânticas das palavras; 3.5.2 Figuras de linguagem.</li></ul></li>
                 <li><b>4. Linguística Textual</b><ul><li>4.1 Coesão e coerência;</li><li>4.2 Informatividade, articulação e progressão textual.</li></ul></li>
                 <li><b>5. Teoria Literária</b><ul><li>5. Literatura: 5.1 Elementos da narrativa: características e funções;</li><li>5.2 Estilística;</li><li>5.3 Movimentos Literários;</li><li>5.4 Funções da literatura.</li></ul></li>
-              </ul>
-            </details>
-
-            <details class="subject-tree">
-              <summary>Matemática</summary>
-              <ul class="topic-list">
-                <li><b>1. Progressão aritmética e geométrica</b><ul><li>1.1 Cálculo do termo geral;</li><li>1.2 Soma dos termos de uma progressão.</li></ul></li>
-                <li><b>2. Funções</b><ul><li>2.1 Definição;</li><li>2.2 Gráfico e raízes;</li><li>2.3 Máximos e mínimos de funções quadráticas;</li><li>2.4 Função exponencial e função logarítmica;</li><li>2.5 Funções trigonométricas.</li></ul></li>
-                <li><b>3. Triângulo retângulo</b><ul><li>3.1 Relações métricas;</li><li>3.2 Razões trigonométricas.</li></ul></li>
-                <li><b>4. Geometria</b><ul><li>4.1 Cálculo de perímetro;</li><li>4.2 Cálculo de área de figuras planas;</li><li>4.3 Cálculo do volume de sólidos geométricos.</li></ul></li>
-                <li><b>5. Sistemas lineares e matrizes</b><ul><li>5.1 Resolução de sistemas lineares por escalonamento.</li></ul></li>
-                <li><b>6. Matemática Financeira</b><ul><li>6.1 Porcentagem;</li><li>6.2 Juros simples;</li><li>6.3 Juros compostos.</li></ul></li>
-                <li><b>7. Análise combinatória</b><ul><li>7.1 Princípio fundamental da contagem;</li><li>7.2 Permutação simples;</li><li>7.3 Arranjo simples;</li><li>7.4 Combinação simples.</li></ul></li>
-                <li><b>8. Estatística</b><ul><li>8.1 Medidas de tendência central;</li><li>8.2 Medidas de dispersão;</li><li>8.3 Gráficos estatísticos.</li></ul></li>
-                <li><b>9. Probabilidade</b><ul><li>9.1 Probabilidade de um evento.</li></ul></li>
-                <li><b>10. Educação Financeira</b><ul><li>10.1 Gestão Financeira: ferramentas de controle do orçamento, consumo e consumismo, endividamento e inadimplência;</li><li>10.2 Investimentos;</li><li>10.3 Crédito: uso do crédito, serviços de proteção ao crédito;</li><li>10.4 Mercado de trabalho e empreendedorismo: CLT, previdência, perfil e atribuições de um empreendedor, plano de negócios;</li><li>10.5 Economia: moeda nacional e estrangeira, tributação, associativismo e cooperativismo, orçamento público, gestão pública e suas funções.</li></ul></li>
               </ul>
             </details>
 
