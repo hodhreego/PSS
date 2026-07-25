@@ -199,6 +199,27 @@
   table.rtable td{font-size:9px; padding:4px 6px; border:1px solid var(--line); color:var(--ink);}
   table.rtable td:last-child{text-align:right; font-weight:700; color:var(--navy); white-space:nowrap; width:36px;}
 
+  /* ---------- ÁRVORE DE CONTEÚDOS POR DISCIPLINA ---------- */
+  .content-pdf-link{
+    display:flex; align-items:center; gap:6px; font-size:10.5px; font-weight:700; color:var(--navy);
+    background:var(--bg); border:1px dashed var(--navy); border-radius:8px; padding:9px 10px;
+    margin-bottom:12px; text-decoration:none;
+  }
+  .content-pdf-link .tap-hint{font-size:14px; margin:0;}
+  details.subject-tree{
+    border:1px solid var(--line); border-radius:8px; margin-bottom:6px; overflow:hidden;
+  }
+  details.subject-tree summary{
+    list-style:none; cursor:pointer; padding:8px 10px; display:flex; align-items:center; justify-content:space-between; gap:6px;
+    font-size:10.5px; font-weight:700; color:var(--navy); background:var(--bg);
+  }
+  details.subject-tree summary::-webkit-details-marker{display:none;}
+  details.subject-tree summary::after{content:"▾"; font-size:11px; color:var(--navy); transition:transform .2s ease; flex-shrink:0;}
+  details.subject-tree[open] summary::after{transform:rotate(180deg);}
+  details.subject-tree ul{list-style:none; padding:7px 10px 9px 10px;}
+  details.subject-tree li{font-size:10px; line-height:1.7; color:var(--ink); padding-left:12px; position:relative;}
+  details.subject-tree li::before{content:"–"; position:absolute; left:0; color:var(--gold); font-weight:700;}
+
   /* ---------- MINIATURAS A4 (modelo real, preto e branco) ---------- */
   .swipe-hint{display:flex; align-items:center; gap:5px; font-size:9.5px; color:#7285A0; font-weight:600; margin-bottom:8px;}
   .swipe-hint .hand{display:inline-block; font-size:13px; animation:swipeMove 1.5s ease-in-out infinite;}
@@ -465,6 +486,187 @@
               <tr><td>Lógica das ideias e gestão do tempo</td><td>8,5</td></tr>
             </table>
           </div>
+        </div>
+      </details>
+
+      <details class="rubric">
+        <summary>
+          <span class="summary-text">📚 Ver conteúdos por disciplina</span>
+          <span class="tap-hint">👉</span>
+          <span class="chev-btn"><span class="chev">▾</span></span>
+        </summary>
+        <div class="rubric-body">
+          <a href="https://drive.google.com/open?id=1tXvT9opcc0Ej04aH_xkaFpoZz6LN2-Ku&usp=drive_fs" target="_blank" rel="noopener" class="content-pdf-link">
+            <span class="tap-hint">👉</span> Ver o documento completo com os conteúdos de todas as disciplinas
+          </a>
+
+          <details class="subject-tree">
+            <summary>Educação Básica (Grupos 1–5)</summary>
+            <ul>
+              <li>Arte</li>
+              <li>Biologia</li>
+              <li>Ciências</li>
+              <li>Educação Física</li>
+              <li>Educação Digital e Computação/Programação</li>
+              <li>Filosofia</li>
+              <li>Física</li>
+              <li>Geografia</li>
+              <li>História</li>
+              <li>Língua Espanhola</li>
+              <li>Língua Inglesa</li>
+              <li>Língua Portuguesa</li>
+              <li>Matemática</li>
+              <li>Química</li>
+              <li>Sociologia</li>
+              <li>Educação Infantil e Anos Iniciais (Séries Iniciais)</li>
+            </ul>
+          </details>
+
+          <details class="subject-tree">
+            <summary>Outras funções (Grupos 10–11)</summary>
+            <ul>
+              <li>SAREH – Atendimento Pedagógico Domiciliar (Língua Portuguesa)</li>
+              <li>Professor de Libras</li>
+            </ul>
+          </details>
+
+          <details class="subject-tree">
+            <summary>Educação Profissional – Ambiente e Saúde</summary>
+            <ul>
+              <li>AS – Análises Clínicas</li>
+              <li>AS – Cuidados de Idosos</li>
+              <li>AS – Enfermagem</li>
+              <li>AS – Enfermagem do Trabalho</li>
+              <li>AS – Estética</li>
+              <li>AS – Farmácia</li>
+              <li>AS – Meio Ambiente</li>
+              <li>AS – Nutrição e Dietética</li>
+              <li>AS – Prótese Dentária</li>
+              <li>AS – Saúde Bucal</li>
+            </ul>
+          </details>
+
+          <details class="subject-tree">
+            <summary>Educação Profissional – Controle e Processos Industriais</summary>
+            <ul>
+              <li>CI – Eletroeletrônica</li>
+              <li>CI – Eletromecânica</li>
+              <li>CI – Eletrônica</li>
+              <li>CI – Eletrotécnica</li>
+              <li>CI – Manutenção Automotiva</li>
+              <li>CI – Manutenção de Máquinas Pesadas</li>
+              <li>CI – Mecânica</li>
+              <li>CI – Mecatrônica</li>
+              <li>CI – Sistemas de Energia Renovável</li>
+            </ul>
+          </details>
+
+          <details class="subject-tree">
+            <summary>Educação Profissional – Formação de Docentes</summary>
+            <ul>
+              <li>Formação de Docentes</li>
+            </ul>
+          </details>
+
+          <details class="subject-tree">
+            <summary>Educação Profissional – Gestão de Negócios</summary>
+            <ul>
+              <li>GN – Administração</li>
+              <li>GN – Bioeconomia</li>
+              <li>GN – Contabilidade</li>
+              <li>GN – Logística</li>
+              <li>GN – Marketing</li>
+              <li>GN – Qualidade</li>
+              <li>GN – Recursos Humanos</li>
+              <li>GN – Secretariado</li>
+              <li>GN – Serviços Jurídicos</li>
+              <li>GN – Transações Imobiliárias</li>
+              <li>GN – Vendas</li>
+            </ul>
+          </details>
+
+          <details class="subject-tree">
+            <summary>Educação Profissional – Informação e Comunicação</summary>
+            <ul>
+              <li>IC – Desenvolvimento de Sistemas</li>
+              <li>IC – Informática</li>
+              <li>IC – Informática para Internet</li>
+              <li>IC – Inteligência Artificial</li>
+              <li>IC – Manutenção e Suporte em Informática</li>
+              <li>IC – Programação de Jogos Digitais</li>
+            </ul>
+          </details>
+
+          <details class="subject-tree">
+            <summary>Educação Profissional – Infraestrutura</summary>
+            <ul>
+              <li>IE – Edificações</li>
+              <li>IE – Portos</li>
+            </ul>
+          </details>
+
+          <details class="subject-tree">
+            <summary>Educação Profissional – Produção Alimentícia</summary>
+            <ul>
+              <li>PA – Agroindústria</li>
+              <li>PA – Alimentos</li>
+            </ul>
+          </details>
+
+          <details class="subject-tree">
+            <summary>Educação Profissional – Produção Cultural e Design</summary>
+            <ul>
+              <li>PD – Design de Interiores</li>
+              <li>PD – Produção de Áudio e Vídeo</li>
+              <li>PD – Teatro</li>
+            </ul>
+          </details>
+
+          <details class="subject-tree">
+            <summary>Educação Profissional – Produção Industrial</summary>
+            <ul>
+              <li>PI – Açúcar e Álcool</li>
+              <li>PI – Biotecnologia</li>
+              <li>PI – Celulose e Papel</li>
+              <li>PI – Planejamento, Controle e Produção</li>
+              <li>PI – Química</li>
+              <li>PI – Vestuário</li>
+            </ul>
+          </details>
+
+          <details class="subject-tree">
+            <summary>Educação Profissional – Recursos Naturais</summary>
+            <ul>
+              <li>RN – Agrícola CAE/CFR</li>
+              <li>RN – Agricultura</li>
+              <li>RN – Agroecologia</li>
+              <li>RN – Agronegócio</li>
+              <li>RN – Agropecuária</li>
+              <li>RN – Agrotecnologia</li>
+              <li>RN – Florestas</li>
+              <li>RN – Operações de Máquinas Florestais</li>
+              <li>RN – Pecuária</li>
+            </ul>
+          </details>
+
+          <details class="subject-tree">
+            <summary>Educação Profissional – Segurança</summary>
+            <ul>
+              <li>SE – Segurança do Trabalho</li>
+            </ul>
+          </details>
+
+          <details class="subject-tree">
+            <summary>Educação Profissional – Turismo, Hospitalidade e Lazer</summary>
+            <ul>
+              <li>THL – Agenciamento de Viagens</li>
+              <li>THL – Cozinha</li>
+              <li>THL – Gastronomia</li>
+              <li>THL – Guia de Turismo</li>
+              <li>THL – Hospedagem</li>
+              <li>THL – Lazer</li>
+            </ul>
+          </details>
         </div>
       </details>
 
