@@ -1581,159 +1581,113 @@
         <div class="disc">Serviço de mentoria e assessoria pedagógica independente, sem qualquer vínculo com a SEED-PR ou o NC/UFPR. O candidato é responsável pela elaboração, gravação e envio de seus próprios documentos.</div>
       </footer>
 
+      <!-- Seção de Serviço de Sites - PROPAGANDA PRINCIPAL (AMARELA) -->
+      <div style="background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 100%); padding: 40px 20px; margin-top: 40px; border-radius: 12px; text-align: center;">
+        <div style="max-width: 600px; margin: 0 auto;">
+          <h2 style="color: var(--navy-deep); font-size: 28px; margin-bottom: 15px; font-family: 'Playfair Display', serif;">🚀 Eu Vendo Páginas HTML Simples</h2>
+
+          <p style="color: var(--ink); font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
+            <strong>Sem complicação. Sem programação. Sem perder tempo.</strong>
+          </p>
+
+          <div style="background: white; padding: 25px; border-radius: 8px; margin-bottom: 25px; text-align: left;">
+            <h3 style="color: var(--navy); font-size: 18px; margin-bottom: 15px; text-align: center;">📌 Ideal para:</h3>
+            <ul style="color: var(--ink); font-size: 15px; line-height: 1.8; list-style: none; padding: 0;">
+              <li>✓ <strong>Cursos e Mentorias:</strong> Ofereça seus serviços com uma página profissional</li>
+              <li>✓ <strong>Consultoria:</strong> Qualifique seus clientes antes do contato</li>
+              <li>✓ <strong>Agendamentos:</strong> Reduza triagem manual e economia tempo</li>
+              <li>✓ <strong>Precificação Dinâmica:</strong> Personalize ofertas por cliente</li>
+              <li>✓ <strong>Geração de Leads:</strong> Integrado com WhatsApp automático</li>
+              <li>✓ <strong>Profissionalismo:</strong> Transmita confiança e credibilidade</li>
+            </ul>
+          </div>
+
+          <p style="color: var(--ink); font-size: 15px; line-height: 1.6; margin-bottom: 25px;">
+            Crio sites <strong>simples, funcionais e diretos ao ponto</strong> que qualificam clientes, economizam tempo e aumentam conversões. <strong>Sem dependência de programadores.</strong> Veja exemplos abaixo!
+          </p>
+        </div>
+      </div>
+
       <!-- Seção de Portfólio - Tipos de Páginas que Consigo Criar -->
       <div style="padding: 40px 20px; margin-top: 40px;">
         <div style="max-width: 700px; margin: 0 auto;">
-          <h2 style="color: var(--navy-deep); font-size: 28px; margin-bottom: 10px; font-family: 'Playfair Display', serif; text-align: center;">📱 Páginas HTML que Consigo Criar</h2>
-          <p style="color: var(--ink); font-size: 15px; text-align: center; margin-bottom: 30px;">Clique para ver exemplos práticos de cada tipo</p>
+          <h2 style="color: var(--navy-deep); font-size: 28px; margin-bottom: 10px; font-family: 'Playfair Display', serif; text-align: center;">📱 Tipos de Páginas - Exemplos Funcionais</h2>
+          <p style="color: var(--ink); font-size: 15px; text-align: center; margin-bottom: 30px;">Clique em cada um para TESTAR como funciona</p>
 
-          <!-- Acordeões de Exemplos -->
+          <!-- Acordeões de Exemplos FUNCIONAIS -->
           <div style="display: flex; flex-direction: column; gap: 15px;">
 
-            <!-- Exemplo 1: Landing Page -->
+            <!-- Exemplo 1: Calculadora Interativa -->
             <div style="border: 2px solid var(--line); border-radius: 8px; overflow: hidden;">
               <button onclick="document.getElementById('demo1').style.display = document.getElementById('demo1').style.display === 'none' ? 'block' : 'none';" style="width: 100%; padding: 15px; background: var(--navy); color: white; border: none; text-align: left; font-weight: 600; cursor: pointer; font-size: 16px;">
-                ▶ Landing Page de Serviço/Produto
+                ▶ Calculadora Interativa (como a sua de PSS!)
               </button>
               <div id="demo1" style="display: none; padding: 20px; background: #f9f9f9;">
-                <p style="color: var(--ink); margin-bottom: 15px;"><strong>Como funciona:</strong> Página simples para vender um serviço ou produto. Mostra benefícios, preço, e botão WhatsApp para contato.</p>
-                <div style="background: white; border: 1px solid var(--line); border-radius: 6px; padding: 15px; font-size: 13px; overflow: auto; max-height: 300px;">
-                  <pre style="margin: 0; color: #333;">&#x3C;h1&#x3E;Seu Serviço Aqui&#x3C;/h1&#x3E;
-✓ Benefício 1
-✓ Benefício 2
-✓ Benefício 3
+                <p style="color: var(--ink); margin-bottom: 15px;"><strong>⭐ Como funciona:</strong> Selecione opções e o preço calcula automaticamente em tempo real. Teste abaixo!</p>
 
-Preço: R$ XX
+                <div style="background: white; border: 1px solid var(--line); border-radius: 6px; padding: 20px; margin-bottom: 15px;">
+                  <h4 style="color: var(--navy); margin-top: 0;">Exemplo: Assessoria de Consultoria</h4>
+                  <label style="display: block; margin: 12px 0; color: var(--ink);">
+                    <input type="checkbox" onchange="calcDemo1()" data-price="150"> Consultoria Estratégica - R$ 150
+                  </label>
+                  <label style="display: block; margin: 12px 0; color: var(--ink);">
+                    <input type="checkbox" onchange="calcDemo1()" data-price="100"> Análise de Mercado - R$ 100
+                  </label>
+                  <label style="display: block; margin: 12px 0; color: var(--ink);">
+                    <input type="checkbox" onchange="calcDemo1()" data-price="80"> Relatório Executivo - R$ 80
+                  </label>
+                  <label style="display: block; margin: 12px 0; color: var(--ink);">
+                    <input type="checkbox" onchange="calcDemo1()" data-price="120"> Treinamento da Equipe - R$ 120
+                  </label>
 
-[BOTÃO WHATSAPP]</pre>
+                  <div style="background: var(--bg); padding: 15px; border-radius: 6px; margin-top: 20px; border: 2px solid var(--gold);">
+                    <div style="font-size: 14px; color: var(--ink); margin-bottom: 10px;">Total selecionado:</div>
+                    <div id="totalDemo1" style="font-size: 24px; font-weight: 700; color: var(--navy); margin-bottom: 15px;">R$ 0</div>
+                    <input type="text" id="whatsappDemo1" placeholder="Seu número de WhatsApp (opcional)" style="width: 100%; padding: 10px; border: 1px solid var(--line); border-radius: 6px; margin-bottom: 10px; font-size: 14px;">
+                    <button onclick="enviarDemo1()" style="width: 100%; padding: 12px; background: #25D366; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">
+                      💬 Ver no WhatsApp
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <!-- Exemplo 2: Calculadora -->
+            <!-- Exemplo 2: Formulário de Agendamento -->
             <div style="border: 2px solid var(--line); border-radius: 8px; overflow: hidden;">
               <button onclick="document.getElementById('demo2').style.display = document.getElementById('demo2').style.display === 'none' ? 'block' : 'none';" style="width: 100%; padding: 15px; background: var(--navy); color: white; border: none; text-align: left; font-weight: 600; cursor: pointer; font-size: 16px;">
-                ▶ Calculadora Interativa (como a sua!)
-              </button>
-              <div id="demo2" style="display: none; padding: 20px; background: #f9f9f9;">
-                <p style="color: var(--ink); margin-bottom: 15px;"><strong>Como funciona:</strong> Formulário com checkboxes/radio buttons que calcula preço automaticamente. Resultado vai direto no WhatsApp.</p>
-                <div style="background: white; border: 1px solid var(--line); border-radius: 6px; padding: 15px; font-size: 13px; overflow: auto; max-height: 300px;">
-                  <pre style="margin: 0; color: #333;">Selecione suas opções:
-☐ Opção A - R$ 50
-☐ Opção B - R$ 30
-☐ Opção C - R$ 20
-
-Total: R$ XX
-
-[Enviar WhatsApp]</pre>
-                </div>
-              </div>
-            </div>
-
-            <!-- Exemplo 3: Catálogo -->
-            <div style="border: 2px solid var(--line); border-radius: 8px; overflow: hidden;">
-              <button onclick="document.getElementById('demo3').style.display = document.getElementById('demo3').style.display === 'none' ? 'block' : 'none';" style="width: 100%; padding: 15px; background: var(--navy); color: white; border: none; text-align: left; font-weight: 600; cursor: pointer; font-size: 16px;">
-                ▶ Catálogo de Produtos/Serviços
-              </button>
-              <div id="demo3" style="display: none; padding: 20px; background: #f9f9f9;">
-                <p style="color: var(--ink); margin-bottom: 15px;"><strong>Como funciona:</strong> Mostra lista de produtos com foto, descrição e preço. Botão para cada um ir ao WhatsApp.</p>
-                <div style="background: white; border: 1px solid var(--line); border-radius: 6px; padding: 15px; font-size: 13px; overflow: auto; max-height: 300px;">
-                  <pre style="margin: 0; color: #333;">[Produto 1] - R$ XX
-Descrição breve
-[Interessado?]
-
-[Produto 2] - R$ XX
-Descrição breve
-[Interessado?]</pre>
-                </div>
-              </div>
-            </div>
-
-            <!-- Exemplo 4: Agendamento -->
-            <div style="border: 2px solid var(--line); border-radius: 8px; overflow: hidden;">
-              <button onclick="document.getElementById('demo4').style.display = document.getElementById('demo4').style.display === 'none' ? 'block' : 'none';" style="width: 100%; padding: 15px; background: var(--navy); color: white; border: none; text-align: left; font-weight: 600; cursor: pointer; font-size: 16px;">
                 ▶ Formulário de Agendamento
               </button>
-              <div id="demo4" style="display: none; padding: 20px; background: #f9f9f9;">
-                <p style="color: var(--ink); margin-bottom: 15px;"><strong>Como funciona:</strong> Captura nome, email, horário desejado. Envia tudo para WhatsApp de forma formatada.</p>
-                <div style="background: white; border: 1px solid var(--line); border-radius: 6px; padding: 15px; font-size: 13px; overflow: auto; max-height: 300px;">
-                  <pre style="margin: 0; color: #333;">Nome: [campo]
-Email: [campo]
-Horário: [seletor]
-Especialidade: [seletor]
+              <div id="demo2" style="display: none; padding: 20px; background: #f9f9f9;">
+                <p style="color: var(--ink); margin-bottom: 15px;"><strong>⭐ Como funciona:</strong> Pessoa preenche dados e seleciona horário. Tudo vai automaticamente pro WhatsApp dela!</p>
 
-[Confirmar Agendamento]</pre>
-                </div>
-              </div>
-            </div>
+                <div style="background: white; border: 1px solid var(--line); border-radius: 6px; padding: 20px; margin-bottom: 15px;">
+                  <h4 style="color: var(--navy); margin-top: 0;">Agendar Sessão de Coaching</h4>
 
-            <!-- Exemplo 5: Portfólio -->
-            <div style="border: 2px solid var(--line); border-radius: 8px; overflow: hidden;">
-              <button onclick="document.getElementById('demo5').style.display = document.getElementById('demo5').style.display === 'none' ? 'block' : 'none';" style="width: 100%; padding: 15px; background: var(--navy); color: white; border: none; text-align: left; font-weight: 600; cursor: pointer; font-size: 16px;">
-                ▶ Portfólio Profissional
-              </button>
-              <div id="demo5" style="display: none; padding: 20px; background: #f9f9f9;">
-                <p style="color: var(--ink); margin-bottom: 15px;"><strong>Como funciona:</strong> Mostra seus trabalhos, experiências, skills. Com foto, descrição e link para cada projeto.</p>
-                <div style="background: white; border: 1px solid var(--line); border-radius: 6px; padding: 15px; font-size: 13px; overflow: auto; max-height: 300px;">
-                  <pre style="margin: 0; color: #333;">Sobre Mim
-Experiência: 10 anos
-Especialidades: X, Y, Z
+                  <input type="text" id="nomeDemo2" placeholder="Seu Nome" style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid var(--line); border-radius: 6px;">
+                  <input type="email" id="emailDemo2" placeholder="Seu Email" style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid var(--line); border-radius: 6px;">
 
-Trabalhos Recentes
-[Projeto 1] - descrição
-[Projeto 2] - descrição
-[Projeto 3] - descrição
+                  <label style="display: block; margin: 15px 0; color: var(--ink);"><strong>Prefira horário:</strong></label>
+                  <select id="horarioDemo2" style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid var(--line); border-radius: 6px;">
+                    <option>Selecione um horário</option>
+                    <option>09:00 - Manhã</option>
+                    <option>13:00 - Tarde</option>
+                    <option>17:00 - Fim de Tarde</option>
+                    <option>19:00 - Noite</option>
+                  </select>
 
-[Entre em Contato]</pre>
-                </div>
-              </div>
-            </div>
+                  <label style="display: block; margin: 15px 0; color: var(--ink);"><strong>Especialidade:</strong></label>
+                  <select id="especialidadeDemo2" style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid var(--line); border-radius: 6px;">
+                    <option>Selecione</option>
+                    <option>Gestão Empresarial</option>
+                    <option>Marketing Digital</option>
+                    <option>Desenvolvimento Pessoal</option>
+                  </select>
 
-            <!-- Exemplo 6: Formulário Qualificação -->
-            <div style="border: 2px solid var(--line); border-radius: 8px; overflow: hidden;">
-              <button onclick="document.getElementById('demo6').style.display = document.getElementById('demo6').style.display === 'none' ? 'block' : 'none';" style="width: 100%; padding: 15px; background: var(--navy); color: white; border: none; text-align: left; font-weight: 600; cursor: pointer; font-size: 16px;">
-                ▶ Formulário de Qualificação de Leads
-              </button>
-              <div id="demo6" style="display: none; padding: 20px; background: #f9f9f9;">
-                <p style="color: var(--ink); margin-bottom: 15px;"><strong>Como funciona:</strong> Faz perguntas sobre o cliente antes de passar para WhatsApp. Qualifica melhor quem vira cliente.</p>
-                <div style="background: white; border: 1px solid var(--line); border-radius: 6px; padding: 15px; font-size: 13px; overflow: auto; max-height: 300px;">
-                  <pre style="margin: 0; color: #333;">Qual é seu maior desafio?
-☐ Opção A
-☐ Opção B
-☐ Opção C
+                  <input type="text" id="whatsappDemo2" placeholder="Seu número de WhatsApp (opcional)" style="width: 100%; padding: 10px; margin: 15px 0; border: 1px solid var(--line); border-radius: 6px;">
 
-Orçamento disponível?
-☐ até R$ 1000
-☐ até R$ 5000
-☐ acima de R$ 5000
-
-[Próximo Passo]</pre>
-                </div>
-              </div>
-            </div>
-
-            <!-- Exemplo 7: Lista de Cursos -->
-            <div style="border: 2px solid var(--line); border-radius: 8px; overflow: hidden;">
-              <button onclick="document.getElementById('demo7').style.display = document.getElementById('demo7').style.display === 'none' ? 'block' : 'none';" style="width: 100%; padding: 15px; background: var(--navy); color: white; border: none; text-align: left; font-weight: 600; cursor: pointer; font-size: 16px;">
-                ▶ Página de Cursos/Mentorias com Preço
-              </button>
-              <div id="demo7" style="display: none; padding: 20px; background: #f9f9f9;">
-                <p style="color: var(--ink); margin-bottom: 15px;"><strong>Como funciona:</strong> Lista de cursos com descrição, duração, preço. Botão individual para cada um.</p>
-                <div style="background: white; border: 1px solid var(--line); border-radius: 6px; padding: 15px; font-size: 13px; overflow: auto; max-height: 300px;">
-                  <pre style="margin: 0; color: #333;">CURSO 1: Introdução
-Duração: 4 semanas
-Preço: R$ 297
-[Quero Este]
-
-CURSO 2: Avançado
-Duração: 8 semanas
-Preço: R$ 497
-[Quero Este]
-
-COMBO: Todos
-Duração: 12 semanas
-Preço: R$ 697 (10% desc)
-[Quero Combo]</pre>
+                  <button onclick="enviarDemo2()" style="width: 100%; padding: 12px; background: #25D366; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">
+                    💬 Confirmar Agendamento
+                  </button>
                 </div>
               </div>
             </div>
@@ -2132,6 +2086,68 @@ Preço: R$ 697 (10% desc)
 
   update();
   firstRender = false;
+
+  // ===== FUNÇÕES DOS EXEMPLOS FUNCIONAIS =====
+
+  // Exemplo 1: Calculadora Interativa
+  function calcDemo1() {
+    const checkboxes = document.querySelectorAll('#demo1 input[type="checkbox"]');
+    let total = 0;
+    checkboxes.forEach(cb => {
+      if(cb.checked) {
+        total += parseInt(cb.getAttribute('data-price')) || 0;
+      }
+    });
+    document.getElementById('totalDemo1').textContent = 'R$ ' + total;
+  }
+
+  function enviarDemo1() {
+    const checkboxes = document.querySelectorAll('#demo1 input[type="checkbox"]:checked');
+    const whatsapp = document.getElementById('whatsappDemo1').value.trim() || '5541999999999';
+
+    if(checkboxes.length === 0) {
+      alert('Selecione pelo menos uma opção!');
+      return;
+    }
+
+    let msg = 'Olá! Estou interessado nos seguintes serviços de consultoria:\n\n';
+    let total = 0;
+    checkboxes.forEach(cb => {
+      const price = parseInt(cb.getAttribute('data-price')) || 0;
+      const label = cb.parentElement.textContent.split('-')[0].trim();
+      msg += '✓ ' + label + ' - R$ ' + price + '\n';
+      total += price;
+    });
+    msg += '\nTotal: R$ ' + total + '\n\nPodemos conversar sobre isso?';
+
+    const waLink = 'https://wa.me/' + whatsapp.replace(/\D/g, '') + '?text=' + encodeURIComponent(msg);
+    window.open(waLink, '_blank');
+  }
+
+  // Exemplo 2: Agendamento
+  function enviarDemo2() {
+    const nome = document.getElementById('nomeDemo2').value.trim();
+    const email = document.getElementById('emailDemo2').value.trim();
+    const horario = document.getElementById('horarioDemo2').value;
+    const especialidade = document.getElementById('especialidadeDemo2').value;
+    const whatsapp = document.getElementById('whatsappDemo2').value.trim() || '5541999999999';
+
+    if(!nome || !email || horario === 'Selecione um horário' || especialidade === 'Selecione') {
+      alert('Preencha todos os campos!');
+      return;
+    }
+
+    let msg = 'Olá! Gostaria de agendar uma sessão de coaching.\n\n';
+    msg += 'Nome: ' + nome + '\n';
+    msg += 'Email: ' + email + '\n';
+    msg += 'Horário preferido: ' + horario + '\n';
+    msg += 'Especialidade: ' + especialidade + '\n\n';
+    msg += 'Por favor, confirmar disponibilidade!';
+
+    const waLink = 'https://wa.me/' + whatsapp.replace(/\D/g, '') + '?text=' + encodeURIComponent(msg);
+    window.open(waLink, '_blank');
+  }
+
 </script>
 
 </body>
