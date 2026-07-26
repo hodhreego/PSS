@@ -385,6 +385,26 @@
     padding:9px 14px; text-decoration:none;
   }
 
+  /* Radio buttons para tópicos */
+  .topico-label{
+    display:flex; align-items:center; gap:10px; padding:8px 10px; margin-bottom:6px;
+    cursor:pointer; border-radius:8px; transition:background .2s;
+  }
+  .topico-label:hover{background:rgba(201,162,39,.08);}
+  .topico-label input[type="radio"]{
+    accent-color:var(--navy); cursor:pointer; flex-shrink:0;
+    width:18px; height:18px;
+  }
+  .topico-label .topico-text{
+    font-size:11px; color:var(--ink); font-weight:500; flex:1;
+  }
+  .topico-label input[type="radio"]:checked + .topico-text{
+    font-weight:700; color:var(--navy);
+  }
+
+  /* Remove subtópicos aninhados */
+  .topic-list ul{display:none !important;}
+
   footer{background:var(--navy-deep); color:#B9C4D6; padding:15px 20px 22px; text-align:center; margin:0 -20px;}
   footer .name{font-family:'Playfair Display', serif; color:var(--white); font-size:12.5px; font-weight:700; margin-bottom:3px;}
   footer .disc{font-size:8.5px; line-height:1.5; color:#8CA0BF; margin-top:7px; max-width:34ch; margin-left:auto; margin-right:auto;}
@@ -560,50 +580,50 @@
 
             <details class="subject-tree featured-math">
               <summary>Matemática</summary>
-              <ul class="topic-list">
-                <li><b>1. Progressão aritmética e geométrica</b><ul><li>1.1 Cálculo do termo geral;</li><li>1.2 Soma dos termos de uma progressão.</li></ul></li>
-                <li><b>2. Funções</b><ul><li>2.1 Definição;</li><li>2.2 Gráfico e raízes;</li><li>2.3 Máximos e mínimos de funções quadráticas;</li><li>2.4 Função exponencial e função logarítmica;</li><li>2.5 Funções trigonométricas.</li></ul></li>
-                <li><b>3. Triângulo retângulo</b><ul><li>3.1 Relações métricas;</li><li>3.2 Razões trigonométricas.</li></ul></li>
-                <li><b>4. Geometria</b><ul><li>4.1 Cálculo de perímetro;</li><li>4.2 Cálculo de área de figuras planas;</li><li>4.3 Cálculo do volume de sólidos geométricos.</li></ul></li>
-                <li><b>5. Sistemas lineares e matrizes</b><ul><li>5.1 Resolução de sistemas lineares por escalonamento.</li></ul></li>
-                <li><b>6. Matemática Financeira</b><ul><li>6.1 Porcentagem;</li><li>6.2 Juros simples;</li><li>6.3 Juros compostos.</li></ul></li>
-                <li><b>7. Análise combinatória</b><ul><li>7.1 Princípio fundamental da contagem;</li><li>7.2 Permutação simples;</li><li>7.3 Arranjo simples;</li><li>7.4 Combinação simples.</li></ul></li>
-                <li><b>8. Estatística</b><ul><li>8.1 Medidas de tendência central;</li><li>8.2 Medidas de dispersão;</li><li>8.3 Gráficos estatísticos.</li></ul></li>
-                <li><b>9. Probabilidade</b><ul><li>9.1 Probabilidade de um evento.</li></ul></li>
-                <li><b>10. Educação Financeira</b><ul><li>10.1 Gestão Financeira: ferramentas de controle do orçamento, consumo e consumismo, endividamento e inadimplência;</li><li>10.2 Investimentos;</li><li>10.3 Crédito: uso do crédito, serviços de proteção ao crédito;</li><li>10.4 Mercado de trabalho e empreendedorismo: CLT, previdência, perfil e atribuições de um empreendedor, plano de negócios;</li><li>10.5 Economia: moeda nacional e estrangeira, tributação, associativismo e cooperativismo, orçamento público, gestão pública e suas funções.</li></ul></li>
-              </ul>
+              <div style="padding:10px;">
+                <label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer;"><input type="radio" name="topico-matematica" data-disciplina="Matemática" value="1. Progressão aritmética e geométrica" class="topico-radio"> <span>1. Progressão aritmética e geométrica</span></label>
+                <label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer;"><input type="radio" name="topico-matematica" data-disciplina="Matemática" value="2. Funções" class="topico-radio"> <span>2. Funções</span></label>
+                <label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer;"><input type="radio" name="topico-matematica" data-disciplina="Matemática" value="3. Triângulo retângulo" class="topico-radio"> <span>3. Triângulo retângulo</span></label>
+                <label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer;"><input type="radio" name="topico-matematica" data-disciplina="Matemática" value="4. Geometria" class="topico-radio"> <span>4. Geometria</span></label>
+                <label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer;"><input type="radio" name="topico-matematica" data-disciplina="Matemática" value="5. Sistemas lineares e matrizes" class="topico-radio"> <span>5. Sistemas lineares e matrizes</span></label>
+                <label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer;"><input type="radio" name="topico-matematica" data-disciplina="Matemática" value="6. Matemática Financeira" class="topico-radio"> <span>6. Matemática Financeira</span></label>
+                <label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer;"><input type="radio" name="topico-matematica" data-disciplina="Matemática" value="7. Análise combinatória" class="topico-radio"> <span>7. Análise combinatória</span></label>
+                <label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer;"><input type="radio" name="topico-matematica" data-disciplina="Matemática" value="8. Estatística" class="topico-radio"> <span>8. Estatística</span></label>
+                <label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer;"><input type="radio" name="topico-matematica" data-disciplina="Matemática" value="9. Probabilidade" class="topico-radio"> <span>9. Probabilidade</span></label>
+                <label style="display:flex; align-items:center; gap:10px; margin-bottom:0; cursor:pointer;"><input type="radio" name="topico-matematica" data-disciplina="Matemática" value="10. Educação Financeira" class="topico-radio"> <span>10. Educação Financeira</span></label>
+              </div>
             </details>
 
             <details class="subject-tree">
               <summary>Arte</summary>
-              <ul class="topic-list">
-                <li><b>1. Artes visuais: Renascimento</b><ul><li>1.1 Características do movimento.</li></ul></li>
-                <li><b>2. Artes visuais: Modernismo brasileiro</b><ul><li>2.1 Características do período;</li><li>2.2 Semana de Arte Moderna.</li></ul></li>
-                <li><b>3. Artes visuais: Vanguardas europeias</b><ul><li>3.1 Contexto histórico;</li><li>3.2 Cubismo; 3.2.1 Características do movimento.</li></ul></li>
-                <li><b>4. Artes visuais: Arte conceitual</b><ul><li>4.1 Características;</li><li>4.2 Fluxus.</li></ul></li>
-                <li><b>5. Elementos da linguagem teatral</b><ul><li>5.1 Ator/personagem;</li><li>5.2 Espaço cênico;</li><li>5.3 Ação;</li><li>5.4 Figurino;</li><li>5.5 Cenário;</li><li>5.6 Sonoplastia.</li></ul></li>
-                <li><b>6. Teatro na antiguidade clássica</b><ul><li>6.1 Tragédia;</li><li>6.2 Comédia.</li></ul></li>
-                <li><b>7. Elementos da música e do som</b><ul><li>7.1 Timbre;</li><li>7.2 Intensidade;</li><li>7.3 Altura;</li><li>7.4 Duração.</li></ul></li>
-                <li><b>8. Elementos das Artes Visuais</b><ul><li>8.1 Ponto;</li><li>8.2 Linha;</li><li>8.3 Cor;</li><li>8.4 Textura.</li></ul></li>
-                <li><b>9. Música: MPB</b><ul><li>9.1 Tropicália; 9.1.1 Características das obras.</li></ul></li>
-                <li><b>10. Dança: elementos da linguagem</b><ul><li>10.1 Movimento corporal (peso e fluência);</li><li>10.2 Espaço (direção, nível e amplitude);</li><li>10.3 Tempo (duração e ritmo).</li></ul></li>
-              </ul>
+              <div style="padding:10px;">
+                <label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer;"><input type="radio" name="topico-arte" data-disciplina="Arte" value="1. Artes visuais: Renascimento" class="topico-radio"> <span>1. Artes visuais: Renascimento</span></label>
+                <label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer;"><input type="radio" name="topico-arte" data-disciplina="Arte" value="2. Artes visuais: Modernismo brasileiro" class="topico-radio"> <span>2. Artes visuais: Modernismo brasileiro</span></label>
+                <label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer;"><input type="radio" name="topico-arte" data-disciplina="Arte" value="3. Artes visuais: Vanguardas europeias" class="topico-radio"> <span>3. Artes visuais: Vanguardas europeias</span></label>
+                <label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer;"><input type="radio" name="topico-arte" data-disciplina="Arte" value="4. Artes visuais: Arte conceitual" class="topico-radio"> <span>4. Artes visuais: Arte conceitual</span></label>
+                <label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer;"><input type="radio" name="topico-arte" data-disciplina="Arte" value="5. Elementos da linguagem teatral" class="topico-radio"> <span>5. Elementos da linguagem teatral</span></label>
+                <label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer;"><input type="radio" name="topico-arte" data-disciplina="Arte" value="6. Teatro na antiguidade clássica" class="topico-radio"> <span>6. Teatro na antiguidade clássica</span></label>
+                <label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer;"><input type="radio" name="topico-arte" data-disciplina="Arte" value="7. Elementos da música e do som" class="topico-radio"> <span>7. Elementos da música e do som</span></label>
+                <label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer;"><input type="radio" name="topico-arte" data-disciplina="Arte" value="8. Elementos das Artes Visuais" class="topico-radio"> <span>8. Elementos das Artes Visuais</span></label>
+                <label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer;"><input type="radio" name="topico-arte" data-disciplina="Arte" value="9. Música: MPB" class="topico-radio"> <span>9. Música: MPB</span></label>
+                <label style="display:flex; align-items:center; gap:10px; margin-bottom:0; cursor:pointer;"><input type="radio" name="topico-arte" data-disciplina="Arte" value="10. Dança: elementos da linguagem" class="topico-radio"> <span>10. Dança: elementos da linguagem</span></label>
+              </div>
             </details>
 
             <details class="subject-tree">
               <summary>Biologia</summary>
-              <ul class="topic-list">
-                <li><b>1. Metodologia Científica</b><ul><li>1.1 Origens do pensamento científico;</li><li>1.2 Desenvolvimento e importância dos métodos científicos;</li><li>1.3 Mulheres na Ciência.</li></ul></li>
-                <li><b>2. Teorias sobre a Origem da Vida na Terra</b><ul><li>2.1 Geração espontânea;</li><li>2.2 Biogênese;</li><li>2.3 Panspermia;</li><li>2.4 Endossimbiose.</li></ul></li>
-                <li><b>3. História evolutiva humana</b><ul><li>3.1 Biologia Evolutiva.</li></ul></li>
-                <li><b>4. Doenças infecciosas (re)emergentes</b><ul><li>4.1 Fatores ambientais;</li><li>4.2 Evolução dos microrganismos;</li><li>4.3 Epidemiologia.</li></ul></li>
-                <li><b>5. Vacinas</b><ul><li>5.1 Imunologia.</li></ul></li>
-                <li><b>6. Fundamentos da Genética</b><ul><li>6.1 Genética humana;</li><li>6.2 Mutações;</li><li>6.3 Ciclo celular;</li><li>6.4 Principais conceitos.</li></ul></li>
-                <li><b>7. Síndromes Genéticas</b><ul><li>7.1 Tipos de doenças genéticas;</li><li>7.2 Sintomas, diagnósticos e tratamentos.</li></ul></li>
-                <li><b>8. Metabolismo energético</b><ul><li>8.1 Anabolismo e catabolismo;</li><li>8.2 Fotossíntese, quimiossíntese, respiração celular e fermentação.</li></ul></li>
-                <li><b>9. Fundamentos da Ecologia</b><ul><li>9.1 Economia, Sociedade e Ambiente;</li><li>9.2 Agroecologia;</li><li>9.3 Antropoceno;</li><li>9.4 Ciclos biogeoquímicos.</li></ul></li>
-                <li><b>10. Taxonomia</b><ul><li>10.1 Nomenclatura biológica.</li></ul></li>
-              </ul>
+              <div style="padding:10px;">
+                <label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer;"><input type="radio" name="topico-biologia" data-disciplina="Biologia" value="1. Metodologia Científica" class="topico-radio"> <span>1. Metodologia Científica</span></label>
+                <label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer;"><input type="radio" name="topico-biologia" data-disciplina="Biologia" value="2. Teorias sobre a Origem da Vida na Terra" class="topico-radio"> <span>2. Teorias sobre a Origem da Vida na Terra</span></label>
+                <label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer;"><input type="radio" name="topico-biologia" data-disciplina="Biologia" value="3. História evolutiva humana" class="topico-radio"> <span>3. História evolutiva humana</span></label>
+                <label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer;"><input type="radio" name="topico-biologia" data-disciplina="Biologia" value="4. Doenças infecciosas (re)emergentes" class="topico-radio"> <span>4. Doenças infecciosas (re)emergentes</span></label>
+                <label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer;"><input type="radio" name="topico-biologia" data-disciplina="Biologia" value="5. Vacinas" class="topico-radio"> <span>5. Vacinas</span></label>
+                <label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer;"><input type="radio" name="topico-biologia" data-disciplina="Biologia" value="6. Fundamentos da Genética" class="topico-radio"> <span>6. Fundamentos da Genética</span></label>
+                <label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer;"><input type="radio" name="topico-biologia" data-disciplina="Biologia" value="7. Síndromes Genéticas" class="topico-radio"> <span>7. Síndromes Genéticas</span></label>
+                <label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer;"><input type="radio" name="topico-biologia" data-disciplina="Biologia" value="8. Metabolismo energético" class="topico-radio"> <span>8. Metabolismo energético</span></label>
+                <label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; cursor:pointer;"><input type="radio" name="topico-biologia" data-disciplina="Biologia" value="9. Fundamentos da Ecologia" class="topico-radio"> <span>9. Fundamentos da Ecologia</span></label>
+                <label style="display:flex; align-items:center; gap:10px; margin-bottom:0; cursor:pointer;"><input type="radio" name="topico-biologia" data-disciplina="Biologia" value="10. Taxonomia" class="topico-radio"> <span>10. Taxonomia</span></label>
+              </div>
             </details>
 
             <details class="subject-tree">
@@ -1786,6 +1806,15 @@
       ? "Selecione ao menos uma opção acima para continuar"
       : (needsConfirm ? "Confirme que está ciente para liberar o botão" : "");
 
+    // Captura tópicos selecionados
+    const topicosMap = {};
+    document.querySelectorAll('.topico-radio:checked').forEach(radio => {
+      const disciplina = radio.dataset.disciplina;
+      const topico = radio.value;
+      if(!topicosMap[disciplina]) topicosMap[disciplina] = [];
+      topicosMap[disciplina].push(topico);
+    });
+
     // mensagem automática do WhatsApp
     let msg = "Olá, Prof. Rodrigo! Vim pelo anúncio da assessoria para a Prova Prática do PSS SEED-PR 2027.";
     if(items.length){
@@ -1795,26 +1824,12 @@
       msg += " (2 vídeos — desconto de R$ 30 no 2º já incluído no total.)";
     }
 
-    // Captura disciplina
-    if(disciplinaSelect.value){
-      const disciplina = (disciplinaSelect.value === 'Outro componente curricular' && outraDisciplinaInput.value.trim())
-        ? outraDisciplinaInput.value.trim() : disciplinaSelect.value;
-      msg += " 📚 Disciplina: " + disciplina + ".";
-    }
-
-    // Captura tipo de vídeo
-    if(tipoVideoSelect.value){
-      const tipoVideo = (tipoVideoSelect.value === 'Outro tipo' && outroTipoVideoInput.value.trim())
-        ? outroTipoVideoInput.value.trim() : tipoVideoSelect.value;
-      msg += " 🎬 Tipo de vídeo: " + tipoVideo + ".";
-    }
-
-    // Captura tema do plano
-    if(temaPlanoSelect.value){
-      const temaPlano = (temaPlanoSelect.value === 'Outro tema' && outroTemaPlanoInput.value.trim())
-        ? outroTemaPlanoInput.value.trim() : temaPlanoSelect.value;
-      msg += " 🎓 Tema do plano: " + temaPlano + ".";
-    }
+    // Inclui tópicos selecionados
+    Object.keys(topicosMap).forEach(disciplina => {
+      topicosMap[disciplina].forEach(topico => {
+        msg += " 📌 " + disciplina + ": " + topico + ".";
+      });
+    });
 
     if(showSubject && subjectSelect.value){
       const comp = (subjectSelect.value === 'Outro componente curricular' && outroInput.value.trim())
@@ -1830,33 +1845,45 @@
     if(!firstRender){ triggerCelebration(); }
   }
 
+  // Transforma tópicos em radio buttons
+  function initializeTopicRadios(){
+    document.querySelectorAll('details.subject-tree').forEach(detail => {
+      const summary = detail.querySelector('summary');
+      const disciplina = summary ? summary.textContent.trim() : 'Disciplina';
+      const topicList = detail.querySelector('ul.topic-list');
+
+      if(!topicList) return;
+
+      const radioName = 'topico-' + disciplina.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+      let radioHtml = '';
+
+      topicList.querySelectorAll('li > b').forEach((boldTag, idx) => {
+        const topicText = boldTag.textContent.trim();
+        const id = radioName + '-' + idx;
+        radioHtml += '<label class="topico-label">'
+          + '<input type="radio" id="' + id + '" name="' + radioName + '" value="' + topicText + '" class="topico-radio" data-disciplina="' + disciplina + '">'
+          + '<span class="topico-text">' + topicText + '</span>'
+          + '</label>';
+      });
+
+      if(radioHtml){
+        topicList.innerHTML = radioHtml;
+      }
+    });
+
+    // Adiciona listeners a todos os radio buttons
+    document.querySelectorAll('.topico-radio').forEach(radio => {
+      radio.addEventListener('change', update);
+    });
+  }
+
+  initializeTopicRadios();
+
   planoChecks.forEach(c => c.addEventListener('change', update));
   document.getElementById('cadastroChk') && document.getElementById('cadastroChk').addEventListener('change', update);
   confirmRiskChk.addEventListener('change', update);
   subjectSelect.addEventListener('change', update);
   outroInput.addEventListener('input', update);
-
-  // Listeners para os novos campos de disciplina, tipo de vídeo e tema do plano
-  disciplinaSelect.addEventListener('change', function(){
-    outraDisciplinaInput.style.display = (this.value === 'Outro componente curricular') ? 'block' : 'none';
-    if(this.value !== 'Outro componente curricular') outraDisciplinaInput.value = '';
-    update();
-  });
-  outraDisciplinaInput.addEventListener('input', update);
-
-  tipoVideoSelect.addEventListener('change', function(){
-    outroTipoVideoInput.style.display = (this.value === 'Outro tipo') ? 'block' : 'none';
-    if(this.value !== 'Outro tipo') outroTipoVideoInput.value = '';
-    update();
-  });
-  outroTipoVideoInput.addEventListener('input', update);
-
-  temaPlanoSelect.addEventListener('change', function(){
-    outroTemaPlanoInput.style.display = (this.value === 'Outro tema') ? 'block' : 'none';
-    if(this.value !== 'Outro tema') outroTemaPlanoInput.value = '';
-    update();
-  });
-  outroTemaPlanoInput.addEventListener('input', update);
 
   update();
   firstRender = false;
