@@ -1319,7 +1319,86 @@
         <div class="bundle-note" id="bundleNote">✓ Pacote completo selecionado — Plano + Vídeo do início ao fim 🎉</div>
       </div>
 
-      <div class="subject-box" id="subjectBox">
+      <!-- SEÇÃO: Ver conteúdos por disciplina -->
+      <details class="rubric" style="margin:16px 0; background:var(--white); border:1.5px solid var(--navy); border-radius:14px;">
+        <summary style="padding:14px; font-family:'Playfair Display', serif; font-size:14px; font-weight:700; color:var(--navy); cursor:pointer;">
+          <span class="summary-text">🎓 Ver conteúdos por disciplina e configurar seu vídeo</span>
+          <span class="tap-hint">👉</span>
+          <span class="chev-btn"><span class="chev">▾</span></span>
+        </summary>
+        <div style="padding:14px; border-top:1px solid var(--line);">
+
+          <!-- Disciplina -->
+          <div style="margin-bottom:16px;">
+            <label style="display:block; font-size:11.5px; font-weight:700; color:var(--navy); margin-bottom:8px; font-family:'Playfair Display', serif;">Qual componente curricular você vai trabalhar?</label>
+            <select class="subject-select" id="disciplinaSelect">
+              <option value="">Selecione a disciplina</option>
+              <optgroup label="Educação Básica (Grupos 1–5)">
+                <option>Arte</option>
+                <option>Biologia</option>
+                <option>Ciências</option>
+                <option>Educação Física</option>
+                <option>Educação Digital e Computação/Programação</option>
+                <option>Filosofia</option>
+                <option>Física</option>
+                <option>Geografia</option>
+                <option>História</option>
+                <option>Língua Espanhola</option>
+                <option>Língua Inglesa</option>
+                <option>Língua Portuguesa</option>
+                <option>Matemática</option>
+                <option>Química</option>
+                <option>Sociologia</option>
+                <option>Educação Infantil e Anos Iniciais (Séries Iniciais)</option>
+              </optgroup>
+              <optgroup label="Educação Profissional">
+                <option>Educação Profissional</option>
+              </optgroup>
+              <optgroup label="Outras funções (Grupos 10–11)">
+                <option>SAREH – Atendimento Pedagógico Domiciliar (Língua Portuguesa)</option>
+                <option>Professor de Libras</option>
+              </optgroup>
+              <option>Outro componente curricular</option>
+            </select>
+            <input type="text" style="display:none; width:100%; margin-top:8px; font-size:12px; font-family:'Source Sans 3', sans-serif; padding:10px 11px; border-radius:9px; border:1px solid var(--line); background:var(--bg); color:var(--ink);" id="outraDisciplinaInput" placeholder="Digite o componente curricular">
+          </div>
+
+          <!-- Tipo de Vídeo -->
+          <div style="margin-bottom:16px;">
+            <label style="display:block; font-size:11.5px; font-weight:700; color:var(--navy); margin-bottom:8px; font-family:'Playfair Display', serif;">Qual tipo de vídeo você vai fazer?</label>
+            <select class="subject-select" id="tipoVideoSelect">
+              <option value="">Selecione o tipo de vídeo</option>
+              <option value="Vídeo de demonstração">Vídeo de demonstração (aula expositiva)</option>
+              <option value="Vídeo de conceito">Vídeo de conceito (explicação teórica)</option>
+              <option value="Vídeo prático">Vídeo prático (resolução de problemas)</option>
+              <option value="Vídeo com recursos digitais">Vídeo com recursos digitais</option>
+              <option value="Vídeo com metodologia ativa">Vídeo com metodologia ativa</option>
+              <option value="Vídeo de situação-problema">Vídeo de situação-problema</option>
+              <option value="Outro tipo">Outro tipo</option>
+            </select>
+            <input type="text" style="display:none; width:100%; margin-top:8px; font-size:12px; font-family:'Source Sans 3', sans-serif; padding:10px 11px; border-radius:9px; border:1px solid var(--line); background:var(--bg); color:var(--ink);" id="outroTipoVideoInput" placeholder="Descreva o tipo de vídeo">
+          </div>
+
+          <!-- Tema do Plano -->
+          <div style="margin-bottom:0;">
+            <label style="display:block; font-size:11.5px; font-weight:700; color:var(--navy); margin-bottom:8px; font-family:'Playfair Display', serif;">Qual tema o seu plano vai explorar?</label>
+            <select class="subject-select" id="temaPlanoSelect">
+              <option value="">Selecione o tema</option>
+              <option value="Situação-problema">Situação-problema</option>
+              <option value="Estudo de caso">Estudo de caso</option>
+              <option value="Tema pedagógico específico">Tema pedagógico específico</option>
+              <option value="Projeto integrador">Projeto integrador</option>
+              <option value="Tema interdisciplinar">Tema interdisciplinar</option>
+              <option value="Tema de inclusão/diversidade">Tema de inclusão/diversidade</option>
+              <option value="Outro tema">Outro tema</option>
+            </select>
+            <input type="text" style="display:none; width:100%; margin-top:8px; font-size:12px; font-family:'Source Sans 3', sans-serif; padding:10px 11px; border-radius:9px; border:1px solid var(--line); background:var(--bg); color:var(--ink);" id="outroTemaPlanoInput" placeholder="Descreva o tema do seu plano">
+          </div>
+
+        </div>
+      </details>
+
+      <div class="subject-box" id="subjectBox" style="display:none;">
         <label class="slabel">Qual componente curricular você vai dar aula?</label>
         <select class="subject-select" id="subjectSelect">
           <option value="">Selecione o componente curricular</option>
@@ -1515,6 +1594,15 @@
   const WHATSAPP_NUMBER = "5545999699444";
   const celebrateFlash = document.getElementById('celebrateFlash');
   const CELEBRATE_EMOJIS = ['🎉','✨','💛','🌟','😄','🥳','👏','💫','🙌'];
+
+  // Novos elementos para disciplina, tipo de vídeo e tema do plano
+  const disciplinaSelect = document.getElementById('disciplinaSelect');
+  const outraDisciplinaInput = document.getElementById('outraDisciplinaInput');
+  const tipoVideoSelect = document.getElementById('tipoVideoSelect');
+  const outroTipoVideoInput = document.getElementById('outroTipoVideoInput');
+  const temaPlanoSelect = document.getElementById('temaPlanoSelect');
+  const outroTemaPlanoInput = document.getElementById('outroTemaPlanoInput');
+
   let firstRender = true;
 
   function triggerCelebration(){
@@ -1706,6 +1794,28 @@
     if(discountNoteRed.classList.contains('show')){
       msg += " (2 vídeos — desconto de R$ 30 no 2º já incluído no total.)";
     }
+
+    // Captura disciplina
+    if(disciplinaSelect.value){
+      const disciplina = (disciplinaSelect.value === 'Outro componente curricular' && outraDisciplinaInput.value.trim())
+        ? outraDisciplinaInput.value.trim() : disciplinaSelect.value;
+      msg += " 📚 Disciplina: " + disciplina + ".";
+    }
+
+    // Captura tipo de vídeo
+    if(tipoVideoSelect.value){
+      const tipoVideo = (tipoVideoSelect.value === 'Outro tipo' && outroTipoVideoInput.value.trim())
+        ? outroTipoVideoInput.value.trim() : tipoVideoSelect.value;
+      msg += " 🎬 Tipo de vídeo: " + tipoVideo + ".";
+    }
+
+    // Captura tema do plano
+    if(temaPlanoSelect.value){
+      const temaPlano = (temaPlanoSelect.value === 'Outro tema' && outroTemaPlanoInput.value.trim())
+        ? outroTemaPlanoInput.value.trim() : temaPlanoSelect.value;
+      msg += " 🎓 Tema do plano: " + temaPlano + ".";
+    }
+
     if(showSubject && subjectSelect.value){
       const comp = (subjectSelect.value === 'Outro componente curricular' && outroInput.value.trim())
         ? outroInput.value.trim() : subjectSelect.value;
@@ -1725,6 +1835,29 @@
   confirmRiskChk.addEventListener('change', update);
   subjectSelect.addEventListener('change', update);
   outroInput.addEventListener('input', update);
+
+  // Listeners para os novos campos de disciplina, tipo de vídeo e tema do plano
+  disciplinaSelect.addEventListener('change', function(){
+    outraDisciplinaInput.style.display = (this.value === 'Outro componente curricular') ? 'block' : 'none';
+    if(this.value !== 'Outro componente curricular') outraDisciplinaInput.value = '';
+    update();
+  });
+  outraDisciplinaInput.addEventListener('input', update);
+
+  tipoVideoSelect.addEventListener('change', function(){
+    outroTipoVideoInput.style.display = (this.value === 'Outro tipo') ? 'block' : 'none';
+    if(this.value !== 'Outro tipo') outroTipoVideoInput.value = '';
+    update();
+  });
+  outroTipoVideoInput.addEventListener('input', update);
+
+  temaPlanoSelect.addEventListener('change', function(){
+    outroTemaPlanoInput.style.display = (this.value === 'Outro tema') ? 'block' : 'none';
+    if(this.value !== 'Outro tema') outroTemaPlanoInput.value = '';
+    update();
+  });
+  outroTemaPlanoInput.addEventListener('input', update);
+
   update();
   firstRender = false;
 </script>
