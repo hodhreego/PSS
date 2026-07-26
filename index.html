@@ -409,6 +409,7 @@
   footer .name{font-family:'Playfair Display', serif; color:var(--white); font-size:12.5px; font-weight:700; margin-bottom:3px;}
   footer .disc{font-size:8.5px; line-height:1.5; color:#8CA0BF; margin-top:7px; max-width:34ch; margin-left:auto; margin-right:auto;}
 </style>
+<script src="dados_conhecimentos.js"></script>
 </head>
 <body>
 
@@ -1845,7 +1846,7 @@
     if(!firstRender){ triggerCelebration(); }
   }
 
-  // Transforma tópicos em radio buttons
+  // Transforma tópicos em radio buttons (existentes no HTML)
   function initializeTopicRadios(){
     document.querySelectorAll('details.subject-tree').forEach(detail => {
       const summary = detail.querySelector('summary');
@@ -1870,6 +1871,38 @@
         topicList.innerHTML = radioHtml;
       }
     });
+
+    // Renderiza tópicos do Edital (do arquivo dados_conhecimentos.js)
+    if(typeof conhecimentosEducacaoBasica !== 'undefined') {
+      const sectionBody = document.querySelector('details.rubric > div.rubric-body');
+      if(sectionBody) {
+        let editalHtml = '';
+        Object.keys(conhecimentosEducacaoBasica).forEach(disciplina => {
+          const topicos = conhecimentosEducacaoBasica[disciplina];
+          const radioName = 'topico-' + disciplina.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+
+          editalHtml += '<details class="subject-tree">'
+            + '<summary>' + disciplina + '</summary>'
+            + '<div style="padding:10px;">';
+
+          topicos.forEach((topico, idx) => {
+            const id = radioName + '-' + idx;
+            editalHtml += '<label class="topico-label">'
+              + '<input type="radio" id="' + id + '" name="' + radioName + '" value="' + topico + '" class="topico-radio" data-disciplina="' + disciplina + '">'
+              + '<span class="topico-text">' + topico + '</span>'
+              + '</label>';
+          });
+
+          editalHtml += '</div></details>';
+        });
+
+        // Insere após o link do Drive
+        const driveLink = sectionBody.querySelector('.content-pdf-link');
+        if(driveLink) {
+          driveLink.insertAdjacentHTML('afterend', editalHtml);
+        }
+      }
+    }
 
     // Adiciona listeners a todos os radio buttons
     document.querySelectorAll('.topico-radio').forEach(radio => {

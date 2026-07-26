@@ -1,0 +1,175 @@
+// Dados dos Conhecimentos Específicos - Educação Básica (Edital 93 - PSS 2027)
+const conhecimentosEducacaoBasica = {
+  'Arte': [
+    '1. Artes visuais: Renascimento',
+    '2. Artes visuais: Modernismo brasileiro',
+    '3. Artes visuais: Vanguardas europeias',
+    '4. Artes visuais: Arte conceitual',
+    '5. Elementos da linguagem teatral',
+    '6. Teatro na antiguidade clássica',
+    '7. Elementos da música e do som',
+    '8. Elementos das Artes Visuais',
+    '9. Música: MPB',
+    '10. Dança: elementos da linguagem'
+  ],
+  'Educação Física': [
+    '1. Danças',
+    '2. Lutas',
+    '3. Jogos e brincadeiras',
+    '4. Ginásticas',
+    '5. Esportes',
+    '6. Práticas corporais de aventura',
+    '7. Práticas corporais, mídias e culturas digitais',
+    '8. Práticas corporais lazer e sociedade',
+    '9. Contextos históricos e culturais das práticas corporais',
+    '10. Influência da ciência e tecnologia nas práticas corporais'
+  ],
+  'Língua Inglesa': [
+    '1. Interculturalidade',
+    '2. Compreensão e interpretação de textos',
+    '3. Análise do contexto de produção textual',
+    '4. Textualização',
+    '5. Intertextualidade',
+    '6. Fonética e fonologia',
+    '7. Morfologia',
+    '8. Sintaxe',
+    '9. Semântica',
+    '10. Variações Linguísticas'
+  ],
+  'Língua Espanhola': [
+    '1. Interculturalidade',
+    '2. Compreensão e interpretação de textos',
+    '3. Análise do contexto de produção textual',
+    '4. Textualização',
+    '5. Intertextualidade',
+    '6. Fonética e fonologia',
+    '7. Morfologia',
+    '8. Sintaxe',
+    '9. Semântica',
+    '10. Variações Linguísticas'
+  ],
+  'Língua Portuguesa': [
+    '1. Gêneros textuais/discursivos',
+    '2. Leitura e interpretação textual',
+    '3. Análise linguística/semiótica',
+    '4. Linguística Textual',
+    '5. Teoria Literária'
+  ],
+  'Matemática': [
+    '1. Progressão aritmética e geométrica',
+    '2. Funções',
+    '3. Triângulo retângulo',
+    '4. Geometria',
+    '5. Sistemas lineares e matrizes',
+    '6. Matemática Financeira',
+    '7. Análise combinatória',
+    '8. Estatística',
+    '9. Probabilidade',
+    '10. Educação Financeira'
+  ],
+  'Ciências': [
+    '1. Características gerais e classificação dos Seres Vivos',
+    '2. Relações ecológicas',
+    '3. Transferência de matéria e energia',
+    '4. Doenças causadas por microrganismos e vermes parasitas',
+    '5. Sexualidade',
+    '6. Aspectos morfofisiológicos dos Sistemas do Corpo Humano',
+    '7. Ondulatória',
+    '8. Genética',
+    '9. Teorias evolucionistas',
+    '10. Funções químicas inorgânicas',
+    '11. Estrutura do planeta Terra'
+  ],
+  'Biologia': [
+    '1. Metodologia Científica',
+    '2. Teorias sobre a Origem da Vida na Terra',
+    '3. História evolutiva humana',
+    '4. Doenças infecciosas (re)emergentes',
+    '5. Vacinas',
+    '6. Fundamentos da Genética',
+    '7. Síndromes Genéticas',
+    '8. Metabolismo energético',
+    '9. Fundamentos da Ecologia',
+    '10. Taxonomia'
+  ],
+  'Física': [
+    '1. Tópicos de Astronomia e Cosmologia',
+    '2. Gravitação Universal e Leis de Kepler',
+    '3. Cinemática',
+    '4. Dinâmica',
+    '5. Física térmica',
+    '6. Ondulatória',
+    '7. Óptica',
+    '8. Eletricidade',
+    '9. Eletromagnetismo',
+    '10. Física Moderna'
+  ],
+  'Química': [
+    '1. Estrutura da Matéria',
+    '2. Classificação Periódica dos Elementos',
+    '3. Ligações Químicas',
+    '4. Funções Químicas',
+    '5. Cálculos Químicos',
+    '6. Termoquímica',
+    '7. Solução',
+    '8. Equilíbrio Químico',
+    '9. Cinética Química',
+    '10. Eletroquímica'
+  ],
+  'Filosofia': [
+    '1. A passagem do mito à Filosofia',
+    '2. Os pensadores Pré-socráticos',
+    '3. Contexto histórico do surgimento da Filosofia',
+    '4. O que é a Filosofia?',
+    '5. Lógica',
+    '6. Filosofia Ética',
+    '7. Filosofia Política',
+    '8. Teoria do conhecimento',
+    '9. Filosofia da Ciência',
+    '10. Estética'
+  ],
+  'Geografia': [
+    '1. Conhecimento cartográfico',
+    '2. Industrialização do espaço mundial e brasileiro',
+    '3. Globalização e as relações geopolíticas',
+    '4. Dinâmica demográfica e o processo de urbanização',
+    '5. O espaço agrário',
+    '6. A geopolítica dos conflitos internacionais',
+    '7. Problemas socioambientais no Brasil e no mundo',
+    '8. O estudo do espaço geográfico',
+    '9. O planeta Terra',
+    '10. Aspectos físicos do Brasil e do mundo'
+  ],
+  'História': [
+    '1. Reinos e Sociedades africanas e do Crescente Fértil',
+    '2. Antiguidade Clássica',
+    '3. Europa Medieval',
+    '4. Idade Moderna',
+    '5. Colonização do Brasil',
+    '6. Ocupação e conquista da América',
+    '7. Revoluções Burguesas',
+    '8. Brasil Império',
+    '9. Conflitos e revoluções do século XX',
+    '10. Brasil Republicano',
+    '11. História do Paraná'
+  ],
+  'Sociologia': [
+    '1. O Surgimento da Sociologia',
+    '2. Teoria Sociológica Clássica - Émile Durkheim',
+    '3. Teoria Sociológica Clássica - Karl Marx',
+    '4. Teoria Sociológica Clássica - Max Weber',
+    '5. Processo de Socialização e as Instituições Sociais',
+    '6. Desenvolvimento antropológico do conceito de Cultura',
+    '7. Cultura, Diversidade e Indústria Cultural',
+    '8. Poder, Política e Estado',
+    '9. Trabalho e Sociedade',
+    '10. Sociologia Brasileira'
+  ],
+  'Educação Digital e Computação/Programação': [
+    '1. BNCC Computação',
+    '2. Linguagens de programação',
+    '3. Ciência de Dados',
+    '4. Inteligência Artificial',
+    '5. Ambientes virtuais de aprendizagem'
+  ]
+};
