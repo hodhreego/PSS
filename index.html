@@ -1689,6 +1689,119 @@
               </div>
             </div>
 
+            <!-- Exemplo 3: Landing Page de Serviço -->
+            <div style="border: 2px solid var(--line); border-radius: 8px; overflow: hidden;">
+              <button onclick="document.getElementById('demo3').style.display = document.getElementById('demo3').style.display === 'none' ? 'block' : 'none';" style="width: 100%; padding: 15px; background: var(--navy); color: white; border: none; text-align: left; font-weight: 600; cursor: pointer; font-size: 16px;">
+                ▶ Landing Page de Serviço/Produto
+              </button>
+              <div id="demo3" style="display: none; padding: 20px; background: #f9f9f9;">
+                <p style="color: var(--ink); margin-bottom: 15px;"><strong>⭐ Como funciona:</strong> Página simples para vender um serviço. Seleciona benefício, vê preço e envia pro WhatsApp!</p>
+                <div style="background: white; border: 1px solid var(--line); border-radius: 6px; padding: 20px;">
+                  <h4 style="color: var(--navy); margin-top: 0;">Consultoria Empresarial</h4>
+                  <p style="color: var(--ink); font-size: 14px; margin: 15px 0;">✓ Análise estratégica de negócios<br/>✓ Planeja crescimento<br/>✓ Mentoria dedicada<br/>✓ Suporte 6 meses</p>
+                  <div style="background: var(--bg); padding: 12px; border-radius: 6px; margin: 15px 0; border: 2px solid var(--gold);">
+                    <div style="font-size: 18px; font-weight: 700; color: var(--navy);">R$ 1.500</div>
+                  </div>
+                  <button onclick="enviarDemo3()" style="width: 100%; padding: 12px; background: #25D366; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">
+                    💬 Quero Este Serviço
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Exemplo 4: Catálogo de Produtos -->
+            <div style="border: 2px solid var(--line); border-radius: 8px; overflow: hidden;">
+              <button onclick="document.getElementById('demo4').style.display = document.getElementById('demo4').style.display === 'none' ? 'block' : 'none';" style="width: 100%; padding: 15px; background: var(--navy); color: white; border: none; text-align: left; font-weight: 600; cursor: pointer; font-size: 16px;">
+                ▶ Catálogo de Produtos/Serviços
+              </button>
+              <div id="demo4" style="display: none; padding: 20px; background: #f9f9f9;">
+                <p style="color: var(--ink); margin-bottom: 15px;"><strong>⭐ Como funciona:</strong> Clica no produto e envia interesse pelo WhatsApp!</p>
+                <div style="background: white; border: 1px solid var(--line); border-radius: 6px; padding: 20px;">
+                  <div style="margin-bottom: 15px;">
+                    <h5 style="color: var(--navy); margin: 0 0 8px 0;">Produto 1 - Consultoria - R$ 299</h5>
+                    <p style="color: var(--ink); font-size: 13px; margin: 0;">Sessão de 1 hora focada em sua necessidade</p>
+                    <button onclick="enviarProduto('Consultoria - R$ 299')" style="width: 100%; padding: 10px; margin-top: 10px; background: #25D366; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 14px;">Interessado</button>
+                  </div>
+                  <div style="margin-bottom: 15px; border-top: 1px solid var(--line); padding-top: 15px;">
+                    <h5 style="color: var(--navy); margin: 0 0 8px 0;">Produto 2 - Treinamento - R$ 599</h5>
+                    <p style="color: var(--ink); font-size: 13px; margin: 0;">Treinamento completo (4 sessões)</p>
+                    <button onclick="enviarProduto('Treinamento - R$ 599')" style="width: 100%; padding: 10px; margin-top: 10px; background: #25D366; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 14px;">Interessado</button>
+                  </div>
+                  <div style="border-top: 1px solid var(--line); padding-top: 15px;">
+                    <h5 style="color: var(--navy); margin: 0 0 8px 0;">Produto 3 - Combo Anual - R$ 999</h5>
+                    <p style="color: var(--ink); font-size: 13px; margin: 0;">Acesso ilimitado por 12 meses (MELHOR VALOR)</p>
+                    <button onclick="enviarProduto('Combo Anual - R$ 999')" style="width: 100%; padding: 10px; margin-top: 10px; background: #25D366; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 14px;">Interessado</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Exemplo 5: Qualificação de Leads -->
+            <div style="border: 2px solid var(--line); border-radius: 8px; overflow: hidden;">
+              <button onclick="document.getElementById('demo5').style.display = document.getElementById('demo5').style.display === 'none' ? 'block' : 'none';" style="width: 100%; padding: 15px; background: var(--navy); color: white; border: none; text-align: left; font-weight: 600; cursor: pointer; font-size: 16px;">
+                ▶ Qualificação de Leads
+              </button>
+              <div id="demo5" style="display: none; padding: 20px; background: #f9f9f9;">
+                <p style="color: var(--ink); margin-bottom: 15px;"><strong>⭐ Como funciona:</strong> Responde 3 perguntas e envia tudo formatado pro WhatsApp!</p>
+                <div style="background: white; border: 1px solid var(--line); border-radius: 6px; padding: 20px;">
+                  <label style="display: block; margin: 15px 0; color: var(--ink);"><strong>1. Qual seu maior desafio?</strong></label>
+                  <select id="desafioDemo5" style="width: 100%; padding: 10px; border: 1px solid var(--line); border-radius: 6px;">
+                    <option>Selecione</option>
+                    <option>Falta de Leads</option>
+                    <option>Conversão Baixa</option>
+                    <option>Falta de Estratégia</option>
+                  </select>
+
+                  <label style="display: block; margin: 15px 0; color: var(--ink);"><strong>2. Qual seu orçamento?</strong></label>
+                  <select id="orcamentoDemo5" style="width: 100%; padding: 10px; border: 1px solid var(--line); border-radius: 6px;">
+                    <option>Selecione</option>
+                    <option>até R$ 500</option>
+                    <option>R$ 500 a 2000</option>
+                    <option>acima de R$ 2000</option>
+                  </select>
+
+                  <label style="display: block; margin: 15px 0; color: var(--ink);"><strong>3. Quando precisa?</strong></label>
+                  <select id="prazoDemo5" style="width: 100%; padding: 10px; border: 1px solid var(--line); border-radius: 6px;">
+                    <option>Selecione</option>
+                    <option>Urgente (essa semana)</option>
+                    <option>Próximo mês</option>
+                    <option>Sem pressa</option>
+                  </select>
+
+                  <button onclick="enviarDemo5()" style="width: 100%; padding: 12px; margin-top: 15px; background: #25D366; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">
+                    💬 Enviar Respostas
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Exemplo 6: Página de Cursos -->
+            <div style="border: 2px solid var(--line); border-radius: 8px; overflow: hidden;">
+              <button onclick="document.getElementById('demo6').style.display = document.getElementById('demo6').style.display === 'none' ? 'block' : 'none';" style="width: 100%; padding: 15px; background: var(--navy); color: white; border: none; text-align: left; font-weight: 600; cursor: pointer; font-size: 16px;">
+                ▶ Página de Cursos/Mentorias
+              </button>
+              <div id="demo6" style="display: none; padding: 20px; background: #f9f9f9;">
+                <p style="color: var(--ink); margin-bottom: 15px;"><strong>⭐ Como funciona:</strong> Clica no curso que quer e já envia a mensagem!</p>
+                <div style="background: white; border: 1px solid var(--line); border-radius: 6px; padding: 20px;">
+                  <div style="margin-bottom: 15px; padding: 15px; background: var(--bg); border-radius: 6px;">
+                    <h5 style="color: var(--navy); margin: 0 0 8px 0;">🎓 Curso Básico</h5>
+                    <p style="color: var(--ink); font-size: 13px; margin: 8px 0;">4 semanas | R$ 297</p>
+                    <button onclick="enviarCurso('Curso Básico - R$ 297')" style="width: 100%; padding: 10px; background: #25D366; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">Quero Este</button>
+                  </div>
+                  <div style="margin-bottom: 15px; padding: 15px; background: var(--bg); border-radius: 6px;">
+                    <h5 style="color: var(--navy); margin: 0 0 8px 0;">🎓 Curso Avançado</h5>
+                    <p style="color: var(--ink); font-size: 13px; margin: 8px 0;">8 semanas | R$ 497</p>
+                    <button onclick="enviarCurso('Curso Avançado - R$ 497')" style="width: 100%; padding: 10px; background: #25D366; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">Quero Este</button>
+                  </div>
+                  <div style="padding: 15px; background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 100%); border-radius: 6px;">
+                    <h5 style="color: var(--navy); margin: 0 0 8px 0;">⭐ COMBO (MELHOR PREÇO!)</h5>
+                    <p style="color: var(--ink); font-size: 13px; margin: 8px 0;">Básico + Avançado + Mentoria | <s>R$ 794</s> <strong>R$ 697</strong></p>
+                    <button onclick="enviarCurso('COMBO Completo - R$ 697')" style="width: 100%; padding: 10px; background: #25D366; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">Quero Este!</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
 
           <div style="background: var(--alert-bg); padding: 20px; border-radius: 8px; margin-top: 30px; text-align: center; border-left: 4px solid var(--alert);">
@@ -2146,6 +2259,56 @@
     msg += 'Especialidade: ' + especialidade + '\n\n';
     msg += 'Por favor, confirmar disponibilidade!';
 
+    const waLink = 'https://wa.me/' + whatsapp.replace(/\D/g, '') + '?text=' + encodeURIComponent(msg);
+    window.open(waLink, '_blank');
+  }
+
+  // Exemplo 3: Landing Page
+  function enviarDemo3() {
+    const whatsapp = document.getElementById('whatsappGlobal').value.trim() || '5541999999999';
+    let msg = 'Olá! Tenho interesse na Consultoria Empresarial - R$ 1.500\n\n';
+    msg += '✓ Análise estratégica de negócios\n';
+    msg += '✓ Planeja crescimento\n';
+    msg += '✓ Mentoria dedicada\n';
+    msg += '✓ Suporte 6 meses\n\n';
+    msg += 'Gostaria de mais informações!';
+    const waLink = 'https://wa.me/' + whatsapp.replace(/\D/g, '') + '?text=' + encodeURIComponent(msg);
+    window.open(waLink, '_blank');
+  }
+
+  // Exemplo 4: Catálogo
+  function enviarProduto(produto) {
+    const whatsapp = document.getElementById('whatsappGlobal').value.trim() || '5541999999999';
+    let msg = 'Olá! Tenho interesse em: ' + produto + '\n\nPoderia me enviar mais detalhes?';
+    const waLink = 'https://wa.me/' + whatsapp.replace(/\D/g, '') + '?text=' + encodeURIComponent(msg);
+    window.open(waLink, '_blank');
+  }
+
+  // Exemplo 5: Qualificação de Leads
+  function enviarDemo5() {
+    const desafio = document.getElementById('desafioDemo5').value;
+    const orcamento = document.getElementById('orcamentoDemo5').value;
+    const prazo = document.getElementById('prazoDemo5').value;
+    const whatsapp = document.getElementById('whatsappGlobal').value.trim() || '5541999999999';
+
+    if(desafio === 'Selecione' || orcamento === 'Selecione' || prazo === 'Selecione') {
+      alert('Responda todas as perguntas!');
+      return;
+    }
+
+    let msg = 'Olá! Aqui estão minhas respostas:\n\n';
+    msg += '1. Maior desafio: ' + desafio + '\n';
+    msg += '2. Orçamento: ' + orcamento + '\n';
+    msg += '3. Prazo: ' + prazo + '\n\n';
+    msg += 'Gostaria de uma proposta customizada!';
+    const waLink = 'https://wa.me/' + whatsapp.replace(/\D/g, '') + '?text=' + encodeURIComponent(msg);
+    window.open(waLink, '_blank');
+  }
+
+  // Exemplo 6: Cursos
+  function enviarCurso(curso) {
+    const whatsapp = document.getElementById('whatsappGlobal').value.trim() || '5541999999999';
+    let msg = 'Olá! Quero me inscrever em: ' + curso + '\n\nQual é o próximo passo?';
     const waLink = 'https://wa.me/' + whatsapp.replace(/\D/g, '') + '?text=' + encodeURIComponent(msg);
     window.open(waLink, '_blank');
   }
