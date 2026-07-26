@@ -1,0 +1,193 @@
+// Edital 93 - PSS 2027 - CONHECIMENTOS ESPECÍFICOS - EDUCAÇÃO BÁSICA
+// Páginas 302-318 - Todos os tópicos, sub-tópicos e sub-sub-tópicos completos
+
+const conhecimentosEducacaoBasica = {
+  'ARTE': [
+    '1. Artes visuais: Renascimento - 1.1 Características do movimento',
+    '2. Artes visuais: Modernismo brasileiro - 2.1 Características do período; 2.2 Semana de Arte Moderna',
+    '3. Artes visuais: Vanguardas europeias - 3.1 Contexto histórico; 3.2 Cubismo - 3.2.1 Características do movimento',
+    '4. Artes visuais: Arte conceitual - 4.1 Características; 4.2 Fluxus',
+    '5. Elementos da linguagem teatral - 5.1 Ator/personagem; 5.2 Espaço cênico; 5.3 Ação; 5.4 Figurino; 5.5 Cenário; 5.6 Sonoplastia',
+    '6. Teatro na antiguidade clássica - 6.1 Tragédia; 6.2 Comédia',
+    '7. Elementos da música e do som - 7.1 Timbre; 7.2 Intensidade; 7.3 Altura; 7.4 Duração',
+    '8. Elementos das Artes Visuais - 8.1 Ponto; 8.2 Linha; 8.3 Cor; 8.4 Textura',
+    '9. Música: MPB - 9.1 Tropicália - 9.1.1 Características das obras',
+    '10. Dança: elementos da linguagem - 10.1 Movimento corporal (peso e fluência); 10.2 Espaço (direção, nível e amplitude); 10.3 Tempo (duração e ritmo)'
+  ],
+
+  'EDUCAÇÃO FÍSICA': [
+    '1. Danças - 1.1 Danças criativas; 1.2 Danças urbanas; 1.3 Danças de salão',
+    '2. Lutas - 2.1 Lutas do Brasil; 2.2 Lutas do mundo',
+    '3. Jogos e brincadeiras - 3.1 Os jogos e brincadeiras no contexto da cultura digital; 3.2 Jogos de tabuleiro; 3.3 Jogos cooperativos',
+    '4. Ginásticas - 4.1 Evolução histórica das ginásticas; 4.2 Ginástica circense; 4.3 Ginástica de condicionamento físico',
+    '5. Esportes - 5.1 Esporte como fenômeno sociocultural; 5.2 Esportes de marca: atletismo; 5.3 Esportes técnico-combinatórios; 5.4 Esportes de invasão; 5.5 Esportes de rede/parede',
+    '6. Práticas corporais de aventura - 6.1 Práticas corporais de aventura urbanas: parkur, skate e slackline; 6.2 Práticas corporais de aventura na natureza: orientação, escalada e mountain bike',
+    '7. Práticas corporais, mídias e culturas digitais - 7.1 Relação entre as mídias sociais e imagem corporal',
+    '8. Práticas corporais lazer e sociedade - 8.1 Preconceito e racismo nas diferentes práticas corporais; 8.2 Esporte e inclusão',
+    '9. Contextos históricos e culturais das práticas corporais - 9.1 Contextos históricos e culturais dos esportes; 9.2 Contextos históricos e culturais das ginásticas; 9.3 Contextos históricos e culturais dos jogos e brincadeiras',
+    '10. Influência da ciência e tecnologia nas práticas corporais - 10.1 Utilização de dispositivos tecnológicos nos esportes'
+  ],
+
+  'LÍNGUA INGLESA': [
+    '1. Interculturalidade - 1.1 O conhecimento sistêmico e de mundo adquirido por meio de uma língua estrangeira; 1.2 O processo de ensinar e aprender língua estrangeira',
+    '2. Compreensão e interpretação de textos - 2.1 Gêneros textuais e discursivos',
+    '3. Análise do contexto de produção textual - 3.1 Características composicionais de gêneros textuais e discursivos; 3.2 Infraestrutura do texto (tipos de discurso e sequências textuais)',
+    '4. Textualização - 4.1 Coesão nominal e verbal; 4.2 Léxico',
+    '5. Intertextualidade',
+    '6. Fonética e fonologia - 6.1 Entonação (pronúncia)',
+    '7. Morfologia - 7.1 Classes gramaticais; 7.2 Estrutura e formação das palavras; 7.3 Tempos verbais',
+    '8. Sintaxe',
+    '9. Semântica',
+    '10. Variações Linguísticas - 10.1 Regionalismos; 10.2 Polissemia'
+  ],
+
+  'LÍNGUA ESPANHOLA': [
+    '1. Interculturalidade - 1.1 O conhecimento sistêmico e de mundo de uma língua estrangeira; 1.2 O processo de ensinar e aprender língua estrangeira',
+    '2. Compreensão e interpretação de textos',
+    '3. Análise do contexto de produção textual - 3.1 Características composicionais de gêneros textuais e discursivos; 3.2 Infraestrutura do texto (tipos de discurso e sequências textuais)',
+    '4. Textualização - 4.1 Coesão nominal e verbal; 4.2 Léxico',
+    '5. Intertextualidade',
+    '6. Fonética e fonologia - 6.1 Acentuação; 6.2 Entonação (pronúncia)',
+    '7. Morfologia - 7.1 Classes gramaticais; 7.2 Estrutura e formação das palavras; 7.3 Tempos verbais',
+    '8. Sintaxe',
+    '9. Semântica',
+    '10. Variações Linguísticas - 10.1 Regionalismos; 10.2 Polissemia'
+  ],
+
+  'LÍNGUA PORTUGUESA': [
+    '1. Gêneros textuais/discursivos - 1.1 Elementos composicionais (conteúdo temático, construção composicional e estilo) de diferentes Gêneros; 1.2 Função social dos gêneros; 1.3 Esfera/campo de atividade humana; 1.4 Tipologia textual/discursiva',
+    '2. Leitura e interpretação textual - 2.1 Estratégia de leitura: apreender os sentidos globais do texto; 2.2 Distinção de fato e opinião; 2.3 Reconstrução da textualidade e compreensão dos efeitos de sentidos provocados pelos usos de recursos linguísticos e multissemióticos; 2.4 Estratégia de leitura: identificação de teses e argumentos; 2.5 Identificação de manifestações distintas de diferentes linguagens',
+    '3. Análise linguística/semiótica - 3.1 Fonética e Fonologia - 3.1.2 Relações entre tonicidade e acentuação; 3.2 Ortografia oficial - 3.2.1 Efeitos de sentido produzidos pela equivocidade ortográfica; 3.2.2 Elementos notacionais da escrita; 3.3 Morfologia - 3.3.1 Efeitos de sentido produzidos pela morfossintaxe e pontuação no texto; 3.4 Sintaxe - 3.4.1 Concordância verbal e nominal; 3.4.2 Regência verbal e nominal; 3.5 Semântica - 3.5.1 Efeitos de sentido de acordo com relações semânticas das palavras; 3.5.2 Figuras de linguagem',
+    '4. Linguística Textual - 4.1 Coesão e coerência; 4.2 Informatividade, articulação e progressão textual',
+    '5. Teoria Literária - 5. Literatura - 5.1 Elementos da narrativa: características e funções; 5.2 Estilística; 5.3 Movimentos Literários; 5.4 Funções da literatura'
+  ],
+
+  'MATEMÁTICA': [
+    '1. Progressão aritmética e geométrica - 1.1 Cálculo do termo geral; 1.2 Soma dos termos de uma progressão',
+    '2. Funções - 2.1 Definição; 2.2 Gráfico e raízes; 2.3 Máximos e mínimos de funções quadráticas; 2.4 Função exponencial e função logarítmica; 2.5 Funções trigonométricas',
+    '3. Triângulo retângulo - 3.1 Relações métricas; 3.2 Razões trigonométricas',
+    '4. Geometria - 4.1 Cálculo de perímetro; 4.2 Cálculo de área de figuras planas; 4.3 Cálculo do volume de sólidos geométricos',
+    '5. Sistemas lineares e matrizes - 5.1 Resolução de sistemas lineares por escalonamento',
+    '6. Matemática Financeira - 6.1 Porcentagem; 6.2 Juros simples; 6.3 Juros compostos',
+    '7. Análise combinatória - 7.1 Princípio fundamental da contagem; 7.2 Permutação simples; 7.3 Arranjo simples; 7.4 Combinação simples',
+    '8. Estatística - 8.1 Medidas de tendência central; 8.2 Medidas de dispersão; 8.3 Gráficos estatísticos',
+    '9. Probabilidade - 9.1 Probabilidade de um evento',
+    '10. Educação Financeira - 10.1 Gestão Financeira - 10.1.1 Ferramentas de controle do orçamento; 10.1.2 Consumo e consumismo; 10.1.3 Endividamento e inadimplência; 10.2 Investimentos; 10.3 Crédito - 10.3.1 Uso do crédito; 10.3.2 Serviços de proteção ao crédito; 10.4 Mercado de trabalho e empreendedorismo - 10.4.1 CLT; 10.4.2 Previdência; 10.4.3 Perfil e atribuições de um empreendedor; 10.4.4 Plano de negócios; 10.5 Economia - 10.5.1 Moeda nacional e estrangeira; 10.5.2 Tributação; 10.5.3 Associativismo e Cooperativismo; 10.5.4 Orçamento público; 10.5.5 Gestão pública e suas funções'
+  ],
+
+  'CIÊNCIAS': [
+    '1. Características gerais e classificação dos Seres Vivos - 1.1 Reino dos seres vivos (Monera, Protista, Fungi, Animalia e Plantae)',
+    '2. Relações ecológicas - 2.1 Intraespecífica harmônica; 2.2 Intraespecífica desarmônica; 2.3 Interespecífica harmônica; 2.4 Interespecífica desarmônica',
+    '3. Transferência de matéria e energia - 3.1 Cadeia e teia alimentar',
+    '4. Doenças causadas por microrganismos e vermes parasitas - 4.1 Ciclo biológico; 4.2 Contágio; 4.3 Sintomas; 4.4 Prevenção',
+    '5. Sexualidade - 5.1 Métodos contraceptivos; 5.2 Infecções Sexualmente Transmissíveis (IST)',
+    '6. Aspectos morfofisiológicos dos Sistemas do Corpo Humano - 6.1 Sistemas do corpo humano',
+    '7. Ondulatória - 7.1 Características e propriedades de ondas; 7.2 Características e propriedades do som',
+    '8. Genética - 8.1 DNA, Genes e Cromossomos; 8.2 Hereditariedade; 8.3 Leis de Mendel',
+    '9. Teorias evolucionistas - 9.1 Lamarckismo; 9.2 Darwinismo; 9.3 Neodarwinismo',
+    '10. Funções químicas inorgânicas - 10.1 Propriedades funcionais; 10.2 Principais compostos; 10.3 Impactos ambientais causados por funções inorgânicas',
+    '11. Estrutura do planeta Terra - 11.1 Estrutura interna da Terra; 11.2 Camadas do planeta Terra: litosfera, atmosfera, hidrosfera e biosfera'
+  ],
+
+  'BIOLOGIA': [
+    '1. Metodologia Científica - 1.1 Origens do pensamento científico; 1.2 Desenvolvimento e importância dos métodos científicos; 1.3 Mulheres na Ciência',
+    '2. Teorias sobre a Origem da Vida na Terra - 2.1 Geração espontânea; 2.2 Biogênese; 2.3 Panspermia; 2.4 Endossimbiose',
+    '3. História evolutiva humana - 3.1 Biologia Evolutiva',
+    '4. Doenças infecciosas (re)emergentes - 4.1 Fatores ambientais; 4.2 Evolução dos microrganismos; 4.3 Epidemiologia',
+    '5. Vacinas - 5.1 Imunologia',
+    '6. Fundamentos da Genética - 6.1 Genética humana; 6.2 Mutações; 6.3 Ciclo celular; 6.4 Principais conceitos',
+    '7. Síndromes Genéticas - 7.1 Tipos de doenças genéticas; 7.2 Sintomas, diagnósticos e tratamentos',
+    '8. Metabolismo energético - 8.1 Anabolismo e catabolismo; 8.2 Fotossíntese, quimiossíntese, respiração celular e fermentação',
+    '9. Fundamentos da Ecologia - 9.1 Economia, Sociedade e Ambiente; 9.2 Agroecologia; 9.3 Antropoceno; 9.4 Ciclos biogeoquímicos',
+    '10. Taxonomia - 10.1 Nomenclatura biológica'
+  ],
+
+  'FÍSICA': [
+    '1. Tópicos de Astronomia e Cosmologia - 1.1 Teoria do Big Bang; 1.2 Geocentrismo e Heliocentrismo; 1.3 Composição do Universo e Sistema Solar',
+    '2. Gravitação Universal e Leis de Kepler - 2.1 Campo gravitacional; 2.2 Corpos em órbita',
+    '3. Cinemática - 3.1 Movimento uniforme; 3.2 Movimento uniformemente variado - 3.2.1 Queda livre e plano inclinado',
+    '4. Dinâmica - 4.1 Leis de Newton; 4.2 Aplicações das 3 leis de Newton; 4.3 Tipos de força',
+    '5. Física térmica - 5.1 Termometria; 5.2 Calorimetria; 5.3 Leis da Termodinâmica; 5.4 Máquinas térmicas; 5.5 Entropia',
+    '6. Ondulatória - 6.1 Características e propriedades de ondas; 6.2 Fenômenos ondulatórios',
+    '7. Óptica - 7.1 Princípios da óptica geométrica; 7.2 Leis da reflexão; 7.3 Espelhos planos e esféricos; 7.4 Leis da refração; 7.5 Lentes; 7.6 Óptica do olho humano',
+    '8. Eletricidade - 8.1 Processos de eletrização; 8.2 Campo elétrico; 8.3 Lei de Coulomb; 8.4 1ª lei de Ohm; 8.5 Circuitos elétricos',
+    '9. Eletromagnetismo - 9.1 Magnetismo; 9.2 Ondas eletromagnéticas; 9.3 Campo eletromagnético; 9.4 Equações de Maxwell',
+    '10. Física Moderna - 10.1 Introdução à Física Quântica - 10.1.1 Efeito fotoelétrico; 10.1.2 Dualidade onda partícula; 10.2 Teoria da Relatividade restrita - 10.2.1 Dilatação do tempo; 10.2.2 Contração do espaço; 10.2.3 Massa e energia relativística'
+  ],
+
+  'QUÍMICA': [
+    '1. Estrutura da Matéria - 1.1 Estudo do átomo e seus modelos; 1.2 O núcleo do átomo (emissões alfa, beta e gama) e as leis da radioatividade',
+    '2. Classificação Periódica dos Elementos - 2.1 Organização dos elementos químicos',
+    '3. Ligações Químicas - 3.1 Interações interatômicas (ligações iônica, covalente e metálica); 3.2 Ligações intermoleculares (dipolo-dipolo, dipolo induzido e ligação de hidrogênio) e as aplicações no cotidiano; 3.4 Geometria Molecular; 3.5 Polaridade',
+    '4. Funções Químicas - 4.1 Funções Químicas Inorgânicas (ácidos, bases, sais e óxidos); 4.2 Funções Orgânicas; 4.3 Reações orgânicas',
+    '5. Cálculos Químicos - 5.1 Leis Ponderais; 5.2 Grandezas químicas (massa atômica, massa molar, mol, massa molecular); 5.3 Equações químicas; 5.4 Estequiometria',
+    '6. Termoquímica - 6.1 Reações exotérmicas e endotérmicas; 6.2 Gráficos',
+    '7. Solução - 7.1 Solução; 7.2 Solubilidade; 7.3 Diluição; 7.4 Unidades de concentração',
+    '8. Equilíbrio Químico - 8.1 Reações reversíveis; 8.2 Princípio de Le Chatelier; 8.3 Constante de equilíbrio (concentração e pressão)',
+    '9. Cinética Química - 9.1 Fatores que alteram a velocidade de uma reação química; 9.2 Lei da Velocidade',
+    '10. Eletroquímica - 10.1 Reações de oxirredução; 10.2 Pilhas; 10.3 Eletrólise'
+  ],
+
+  'FILOSOFIA': [
+    '1. A passagem do mito à Filosofia - 1.1 Mito e logos',
+    '2. Os pensadores Pré-socráticos - 2.1 A Physis como princípio de todas as coisas',
+    '3. Contexto histórico do surgimento da Filosofia - 3.1 A invenção da política e da vida urbana; 3.2 O comércio, as navegações e a diversidade cultural; 3.3 O surgimento da pólis e da política',
+    '4. O que é a Filosofia - 4.1 Conceito de definição de Filosofia; 4.2 Campos de investigação da Filosofia',
+    '5. Lógica - 5.1 Conceito e definição de lógica; 5.2 Aristóteles e a lógica',
+    '6. Filosofia Ética - 6.1 Ética e Moral',
+    '7. Filosofia Política - 7.1 O surgimento da política na Grécia Antiga; 7.2 Política democracia; 7.3 Política em Aristóteles; 7.4 Desafios da Política contemporânea',
+    '8. Teoria do conhecimento - 8.1 Epistemologia; 8.2 O que é o conhecimento; 8.3 Doxa e episteme',
+    '9. Filosofia da Ciência - 9.1 O que é ciência; 9.2 Métodos científicos; 9.3 Paradigmas',
+    '10. Estética - 10.1 Arte e beleza; 10.2 Estética entre os gregos; 10.2 Estética medieval; 10.3 Estética moderna'
+  ],
+
+  'GEOGRAFIA': [
+    '1. Conhecimento cartográfico - 1.1 Orientação e localização no espaço geográfico; 1.2 Representações do espaço geográfico (croqui, carta, mapa, planta, maquete, bloco diagrama); 1.3 Conceitos básicos de Geotecnologias',
+    '2. Industrialização do espaço mundial e brasileiro - 2.1 Fases das revoluções industriais; 2.2 Características da industrialização brasileira (evolução histórica e situação atual); 2.3 Fontes de energia (renováveis e não renováveis)',
+    '3. Globalização e as relações geopolíticas - 3.1 Nova ordem mundial; 3.2 Globalização, mundialização e as transnacionais; 3.3 Blocos econômicos',
+    '4. Dinâmica demográfica e o processo de urbanização no Brasil e no mundo - 4.1 Taxas demográficas (densidade demográficas, natalidade, mortalidade, mortalidade infantil, crescimento populacional, expectativa de vida, taxa de fecundidade); 4.2 Análise socioeconômica da população (PIB per capita, concentração de renda, IDH, Índice de Gini); 4.3 Redes e hierarquia urbana; 4.4 Processo de urbanização nos países desenvolvidos e subdesenvolvidos; 4.5 Fluxos migratórios contemporâneos',
+    '5. O espaço agrário - 5.1 Sistemas de produção agropecuários; 5.2 Produção agropecuária brasileira e paranaense',
+    '6. A geopolítica dos conflitos internacionais - 6.1 Conflitos atuais em escala global',
+    '7. Problemas socioambientais no Brasil e no mundo - 7.1 Problemas socioambientais urbanos; 7.2 Desenvolvimento sustentável; 7.3 Aquecimento global e as mudanças climáticas',
+    '8. O estudo do espaço geográfico - 8.1 Conceito de espaço geográfico; 8.2 O trabalho e a transformação do espaço geográfico; 8.3 Paisagem; 8.4 Lugar; 8.5 Território, país, Estado e nação; 8.6 Região e regionalização',
+    '9. O planeta Terra - 9.1 Movimentos da Terra; 9.2 Zonas térmicas',
+    '10. Aspectos físicos do Brasil e do mundo - 10.1 Formas do relevo terrestre; 10.2 Classificação do relevo brasileiro; 10.3 O relevo do Paraná; 10.4 O tempo atmosférico e o clima; 10.5 Domínios morfoclimáticos do Brasil e do Paraná; 10.6 Hidrografia brasileira'
+  ],
+
+  'HISTÓRIA': [
+    '1. Reinos e Sociedades africanas e do Crescente Fértil - 1.1 Egito Antigo; 1.2 Povos Mesopotâmicos',
+    '2. Antiguidade Clássica - 2.1 Formas de governo na Grécia Antiga; 2.2 Império romano',
+    '3. Europa Medieval - 3.1 Feudalismo; 3.2 Igreja Medieval; 3.3 Crise do século XIV',
+    '4. Idade Moderna - 4.1 Reformas Religiosas; 4.2 Grandes Navegações; 4.3 Iluminismo',
+    '5. Colonização do Brasil - 5.1 Povos indígenas; 5.2 Sistema colonial; 5.3 Trabalho escravo',
+    '6. Ocupação e conquista da América - 6.1 Maias, Astecas e Incas',
+    '7. Revoluções Burguesas - 7.1 Revolução Francesa; 7.2 Revolução Industrial; 7.3 Independência dos EUA',
+    '8. Brasil Império - 8.1 Processo de Independência; 8.2 Segundo Reinado; 8.3 Movimento abolicionista',
+    '9. Conflitos e revoluções do século XX - 9.1 Primeira Guerra Mundial; 9.2 Segunda Guerra Mundial; 9.3 Guerra Fria; 9.4 Globalização e os desafios do mundo contemporâneo',
+    '10. Brasil Republicano - 10.1 Primeira República; 10.2 Era Vargas; 10.3 Regime Militar; 10.4 Redemocratização',
+    '11. História do Paraná - 11.1 Ocupação do território: ouro, tropeirismo, erva-mate e café; 11.2 Povos imigrantes no Paraná'
+  ],
+
+  'SOCIOLOGIA': [
+    '1. O Surgimento da Sociologia - 1.1 Formação e consolidação da sociedade moderna capitalista; 1.2 Positivismo em Auguste Comte',
+    '2. Teoria Sociológica Clássica - Émile Durkheim - 2.1 As Regras do Método Sociológico; 2.2 O Fato Social; 2.3 Solidariedade Mecânica e Solidariedade Orgânica',
+    '3. Teoria Sociológica Clássica - Karl Marx - 3.1 Materialismo Histórico e Dialético; 3.2 Mais-valia; 3.5 Capitalismo e Luta de Classes',
+    '4. Teoria Sociológica Clássica - Max Weber - 4.1 Ação Social; 4.2 A Sociologia compreensiva; 4.3 A Ética Protestante e o Espírito do Capitalismo',
+    '5. Processo de Socialização e as Instituições Sociais - 5.1 Socialização Primária e Socialização Secundária; 5.2 As Instituições Sociais: familiares, escolares e religiosas',
+    '6. Desenvolvimento antropológico do conceito de Cultura - 6.1 Evolucionismo Social; 6.2 Relativismo Cultural; 6.3 O Método Etnográfico',
+    '7. Cultura, Diversidade e Indústria Cultural - 7.1 Etnocentrismo e Alteridade; 7.2 Diversidade e Identidade Brasileira; 7.3 Conceito de Indústria Cultural; 7.4 Indústria Cultural no Brasil',
+    '8. Poder, Política e Estado - 8.1 Conceitos de Poder; 8.2 Formação e desenvolvimento do Estado Moderno; 8.3 Cidadania no Brasil; 8.4 Movimentos sociais',
+    '9. Trabalho e Sociedade - 9.1 Transformações no mundo do Trabalho; 9.2 Trabalho para os clássicos da Sociologia; 9.3 Direitos trabalhistas',
+    '10. Sociologia Brasileira - 10.1 Autores, seus contextos e obras: Gilberto Freyre, Darcy Ribeiro, Octavio Ianni, Florestan Fernandes; 10.2 Diferenças e Desigualdades; 10.3 Relações étnico-raciais no Brasil'
+  ],
+
+  'EDUCAÇÃO DIGITAL E COMPUTAÇÃO/PROGRAMAÇÃO': [
+    '1. BNCC Computação - I - Pensamento computacional - Fundamentos: definição e aplicação dos quatro pilares: decomposição, reconhecimento de padrões, abstração e elaboração de algoritmos; Lógica de programação: algoritmos, fluxogramas, tabelas-verdade e teste de mesa e noções introdutórias de autômatos. Estruturas de controle: instruções sequenciais, estruturas de seleção/condicionais (if/else) e de repetição (for/while); Desenvolvimentos de código: variáveis, tipos de dados (int, str, list), operadores lógicos e aritméticos, entrada e saída de dados (input/print) e modularização (funções com definição, parâmetros e retorno); Estrutura de Dados: utilização de listas (arrays) para organização de múltiplos valores, incluindo algoritmos clássicos de manipulação (inserção, busca e contagem); Resolução de problemas: estratégias de resolução, depuração (debugging), análise de erros de execução e técnica de recursão',
+    '2. BNCC Computação - II - Mundo Digital - Hardware: arquitetura básica de computadores, componentes internos (processador, memórias e barramentos) e interfaces físicas (dispositivos de entrada e saída); Redes e comunicação: estrutura de funcionamento da internet, protocolos (IP, DNS) e o processo de transmissão de dados em pacotes (fragmentação e reconstrução no destino); Sistemas físicos e robótica: microcontroladores (Arduino), sensores, atuadores, fundamentos de eletrônica básica (circuitos, resistores e protoboard) e automação de sistemas; Dados e arquivos: armazenamento local e em nuvem, manipulação de metadados e técnicas de compactação/descompactação de arquivos e organização de diretórios; Computação avançada: noções de paralelismo, concorrência e armazenamento/processamento distribuído',
+    '3. BNCC Computação - III - Cultura Digital - Cidadania e ética: letramento digital, direitos e deveres no espaço virtual, conduta ética e participação social; Segurança e privacidade: Lei Geral de Proteção de Dados (LGPD), distinção entre dados pessoais e sensíveis, noções de criptografia, segurança cibernética e ameaças digitais (malwares e ataques); Sociedade e tecnologia: impactos da revolução digital no mundo do trabalho, saúde física e mental do usuário, ergonomia e sustentabilidade (impactos ambientais do descarte de resíduos eletrônicos); Informação e mídia: análise crítica da informação, verificação de fontes e confiabilidade, combate a desinformação (fake news), direitos autorais, direito do uso de imagem e análise de termos de uso de plataformas digitais',
+    '2. Linguagens de programação - 2.1 Programação em blocos - 2.1.1 Scratch; 2.1.2 MBlock; 2.2 Programação para WEB - 2.2.1 Elementos básicos da linguagem - 2.2.1.1 HTML5; 2.2.1.2 CSS; 2.2.1.3 Javascript; 2.3 Elementos básicos das linguagens - 2.3.1 Python; 2.3.2 C++ aplicado a Arduíno',
+    '3. Ciência de Dados - 3.1 Planilhas - 3.1.1 Análise e visualização dados; 3.1.2 Formatação condicional; 3.1.3 Funções e operadores lógicos; 3.1.4 Leitura e criação de gráficos',
+    '4. Inteligência Artificial - 4.1 Princípios básicos - 4.1.1 Engenharia de prompt; 4.1.2 IA generativa; 4.1.3 Uso ético da IA',
+    '5. Ambientes virtuais de aprendizagem - 5.1 Elementos básicos; 5.2 Organização; 5.3 Avaliação de aprendizagem'
+  ]
+};
