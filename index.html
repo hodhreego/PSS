@@ -1874,12 +1874,23 @@
 
     // Renderiza tópicos do Edital (do arquivo dados_conhecimentos.js)
     if(typeof conhecimentosEducacaoBasica !== 'undefined') {
-      const sectionBody = document.querySelector('details.rubric > div.rubric-body');
+      // Procura especificamente pela seção "Ver conteúdos por disciplina"
+      const allRubrics = document.querySelectorAll('details.rubric');
+      let sectionBody = null;
+
+      for(let rubric of allRubrics) {
+        const summary = rubric.querySelector('summary');
+        if(summary && summary.textContent.includes('Ver conteúdos')) {
+          sectionBody = rubric.querySelector('div.rubric-body');
+          break;
+        }
+      }
+
       if(sectionBody) {
         let editalHtml = '';
         Object.keys(conhecimentosEducacaoBasica).forEach(disciplina => {
           const topicos = conhecimentosEducacaoBasica[disciplina];
-          const radioName = 'topico-' + disciplina.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+          const radioName = 'topico-edital-' + disciplina.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
 
           editalHtml += '<details class="subject-tree">'
             + '<summary>' + disciplina + '</summary>'
