@@ -1643,7 +1643,6 @@
                   <div style="background: var(--bg); padding: 15px; border-radius: 6px; margin-top: 20px; border: 2px solid var(--gold);">
                     <div style="font-size: 14px; color: var(--ink); margin-bottom: 10px;">Total selecionado:</div>
                     <div id="totalDemo1" style="font-size: 24px; font-weight: 700; color: var(--navy); margin-bottom: 15px;">R$ 0</div>
-                    <input type="text" id="whatsappDemo1" placeholder="Seu número de WhatsApp (opcional)" style="width: 100%; padding: 10px; border: 1px solid var(--line); border-radius: 6px; margin-bottom: 10px; font-size: 14px;">
                     <button onclick="enviarDemo1()" style="width: 100%; padding: 12px; background: #25D366; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">
                       💬 Ver no WhatsApp
                     </button>
@@ -1683,9 +1682,7 @@
                     <option>Desenvolvimento Pessoal</option>
                   </select>
 
-                  <input type="text" id="whatsappDemo2" placeholder="Seu número de WhatsApp (opcional)" style="width: 100%; padding: 10px; margin: 15px 0; border: 1px solid var(--line); border-radius: 6px;">
-
-                  <button onclick="enviarDemo2()" style="width: 100%; padding: 12px; background: #25D366; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">
+                  <button onclick="enviarDemo2()" style="width: 100%; padding: 12px; margin-top: 15px; background: #25D366; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">
                     💬 Confirmar Agendamento
                   </button>
                 </div>
@@ -1724,9 +1721,14 @@
             </ul>
           </div>
 
-          <p style="color: var(--ink); font-size: 15px; line-height: 1.6; margin-bottom: 25px;">
+          <p style="color: var(--ink); font-size: 15px; line-height: 1.6; margin-bottom: 20px;">
             O Prof. Rodrigo cria sites <strong>simples, funcionais e diretos ao ponto</strong> — exatamente como este. Ideais para qualificar clientes, economizar tempo e aumentar conversões. <strong>Sem dependência de programadores.</strong>
           </p>
+
+          <div style="margin-bottom: 20px;">
+            <input type="text" id="whatsappGlobal" placeholder="Seu WhatsApp (para testar os exemplos acima)" style="width: 100%; padding: 10px; border: 1px solid rgba(255,255,255,0.5); border-radius: 6px; background: rgba(255,255,255,0.1); color: var(--ink); font-size: 14px;" />
+            <div style="font-size: 12px; color: var(--ink); margin-top: 5px; opacity: 0.8;">Digite seu número para testar os exemplos funcionais acima</div>
+          </div>
 
           <a href="https://wa.me/5541987654321?text=Olá%20Prof.%20Rodrigo%21%20Gostaria%20de%20saber%20mais%20sobre%20criar%20um%20site%20como%20o%20que%20você%20tem%20de%20assessoria.%20Estou%20interessado%20em%20uma%20solução%20simples%20para%20minha%20consultoria%2Fcurso%2Fserviço%20de%20marketing.%20Quais%20são%20as%20opções%3F"
              target="_blank" rel="noopener"
@@ -2103,7 +2105,7 @@
 
   function enviarDemo1() {
     const checkboxes = document.querySelectorAll('#demo1 input[type="checkbox"]:checked');
-    const whatsapp = document.getElementById('whatsappDemo1').value.trim() || '5541999999999';
+    const whatsapp = document.getElementById('whatsappGlobal').value.trim() || '5541999999999';
 
     if(checkboxes.length === 0) {
       alert('Selecione pelo menos uma opção!');
@@ -2130,7 +2132,7 @@
     const email = document.getElementById('emailDemo2').value.trim();
     const horario = document.getElementById('horarioDemo2').value;
     const especialidade = document.getElementById('especialidadeDemo2').value;
-    const whatsapp = document.getElementById('whatsappDemo2').value.trim() || '5541999999999';
+    const whatsapp = document.getElementById('whatsappGlobal').value.trim() || '5541999999999';
 
     if(!nome || !email || horario === 'Selecione um horário' || especialidade === 'Selecione') {
       alert('Preencha todos os campos!');
