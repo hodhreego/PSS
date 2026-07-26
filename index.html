@@ -2612,6 +2612,7 @@
 
   // Exemplo 1: Calculadora Interativa
   // Função para coletar o número de WhatsApp dos formulários
+  // Retorna o número preenchido do usuário ou o padrão (Prof. Rodrigo)
   function getWhatsappNumber(isCTA = false) {
     const suffix = isCTA ? 'CTA' : '';
     const pais = document.getElementById('whatsappPais' + suffix).value;
@@ -2619,14 +2620,14 @@
     const numero = document.getElementById('whatsappNumero' + suffix).value.replace(/\D/g, '');
     const nove = document.getElementById('whatsappNove' + suffix).value.trim();
 
-    if(!ddd || !numero || !nove) {
-      alert('Preencha todos os campos de WhatsApp!');
-      return null;
+    // Se preencheu TUDO, usa o número do usuário
+    if(ddd && numero && nove) {
+      const whatsapp = pais + ddd + nove + numero;
+      return whatsapp.replace(/\D/g, '');
     }
 
-    // Monta: +55 11 9 9999-9999 → 5511999999999
-    const whatsapp = pais + ddd + nove + numero;
-    return whatsapp.replace(/\D/g, '');
+    // Caso contrário, usa o número padrão (Prof. Rodrigo)
+    return '554599699444';
   }
 
   // Função para enviar contato via CTA
