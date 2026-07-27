@@ -384,6 +384,14 @@
     background:var(--bg); border:1.5px solid var(--navy); border-radius:10px;
     padding:9px 14px; text-decoration:none;
   }
+  .edital-link-blink{
+    color:#fff !important; background:#dc2626 !important; border-color:#dc2626 !important;
+    animation:blinkRed 0.8s infinite;
+  }
+  @keyframes blinkRed{
+    0%, 49%{opacity:1;}
+    50%, 100%{opacity:0.4;}
+  }
 
   /* Radio buttons para tópicos */
   .topico-label{
@@ -1596,7 +1604,7 @@
 
       <div class="edital-link-wrap">
         <span class="edital-hand">👇</span>
-        <a href="https://servicos.nc.ufpr.br/PortalNC/Processos?ano=2027" target="_blank" rel="noopener" class="edital-link">Clique aqui para acessar a página do edital</a>
+        <a href="https://servicos.nc.ufpr.br/PortalNC/Concurso?concurso=SEED2026" target="_blank" rel="noopener" class="edital-link edital-link-blink">Clique aqui para acessar a página do edital</a>
       </div>
 
       <footer>
