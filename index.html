@@ -1707,7 +1707,7 @@
 
   // guarda o estado marcado/desmarcado de cada checkbox dinâmico, por papel + tipo de plano
   // ex: videoState.gravacao['pedagogo'] = true
-  const videoState = { slides: {}, gravacao: {}, anexoVideo: {}, anexoPlano: {} };
+  const videoState = { roteiro: {}, slides: {}, gravacao: {}, anexoVideo: {}, anexoPlano: {} };
 
   function optHtml(role, tipo, key, price, priceHtml, emoji, name, desc){
     const checked = !!videoState[role][key];
@@ -1727,6 +1727,7 @@
     const doisVideos = gravacaoMarcados.length >= 2;
     const tipoComDesconto = doisVideos ? gravacaoMarcados[1] : null; // o segundo marcado ganha o desconto
 
+    let roteiroHtml = '';
     let slidesHtml = '';
     let gravacaoHtml = '';
     let uploadVideoHtml = '';
@@ -1735,6 +1736,11 @@
     tipos.forEach(tipo => {
       const key = tipo || 'none';
       const sufixo = tipo ? ' — ' + PLANO_LABELS[tipo] : '';
+
+      // roteiro para a gravação do vídeo
+      roteiroHtml += optHtml('roteiro', tipo, key, 30, 'R$ 30', '📝',
+        'Roteiro para a gravação do vídeo' + sufixo,
+        'Escrevo o roteiro completo da fala, pronto para você narrar durante a gravação' + sufixo);
 
       // slides
       slidesHtml += optHtml('slides', tipo, key, 50, 'R$ 50', '📽️',
@@ -1760,7 +1766,7 @@
         'Faço o upload do seu plano no local certo do sistema da banca (NC/UFPR)' + sufixo);
     });
 
-    videoOptionsWrap.innerHTML = slidesHtml + gravacaoHtml;
+    videoOptionsWrap.innerHTML = roteiroHtml + slidesHtml + gravacaoHtml;
     uploadOptionsWrap.innerHTML = uploadVideoHtml + uploadPlanoHtml;
     discountNoteRed.classList.toggle('show', doisVideos);
 
