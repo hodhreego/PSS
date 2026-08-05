@@ -1715,12 +1715,12 @@
     void celebrateFlash.offsetWidth; // força reflow pra reiniciar a animação
     celebrateFlash.classList.add('pop');
   }
-  const GRAVACAO_PRICE = 90;
+  const GRAVACAO_PRICE = 100;
   const GRAVACAO_DESCONTO = 30; // desconto fixo no 2º vídeo (gravação)
 
   // guarda o estado marcado/desmarcado de cada checkbox dinâmico, por papel + tipo de plano
   // ex: videoState.gravacao['pedagogo'] = true
-  const videoState = { roteiro: {}, slides: {}, gravacao: {}, anexoVideo: {}, anexoPlano: {} };
+  const videoState = { roteiro: {}, slides: {}, slidesLado: {}, gravacao: {}, anexoVideo: {}, anexoPlano: {} };
 
   function optHtml(role, tipo, key, price, priceHtml, emoji, name, desc){
     const checked = !!videoState[role][key];
@@ -1742,6 +1742,7 @@
 
     let roteiroHtml = '';
     let slidesHtml = '';
+    let slidesLadoHtml = '';
     let gravacaoHtml = '';
     let uploadVideoHtml = '';
     let uploadPlanoHtml = '';
@@ -1759,6 +1760,11 @@
       slidesHtml += optHtml('slides', tipo, key, 50, 'R$ 50', '📽️',
         'Slides do vídeo' + sufixo,
         'Roteiro da fala + slides de apoio para exibir durante a gravação' + sufixo);
+
+      // configurar o vídeo com os slides ao lado de você na gravação
+      slidesLadoHtml += optHtml('slidesLado', tipo, key, 50, 'R$ 50', '🖥️',
+        'Configurar o vídeo com os slides ao lado de você na gravação' + sufixo,
+        'Monto a tela dividida com os slides ao seu lado durante a gravação, pronta para narrar' + sufixo);
 
       // gravação (com desconto dinâmico no 2º vídeo)
       const isDiscounted = doisVideos && key === (tipoComDesconto || 'none');
@@ -1779,7 +1785,7 @@
         'Faço o upload do seu plano no local certo do sistema da banca (NC/UFPR)' + sufixo);
     });
 
-    videoOptionsWrap.innerHTML = roteiroHtml + slidesHtml + gravacaoHtml;
+    videoOptionsWrap.innerHTML = roteiroHtml + slidesHtml + slidesLadoHtml + gravacaoHtml;
     uploadOptionsWrap.innerHTML = uploadVideoHtml + uploadPlanoHtml;
     discountNoteRed.classList.toggle('show', doisVideos);
 
