@@ -1729,7 +1729,7 @@
     void celebrateFlash.offsetWidth; // força reflow pra reiniciar a animação
     celebrateFlash.classList.add('pop');
   }
-  const GRAVACAO_PRICE = 200;
+  const GRAVACAO_PRICE_BY_TIPO = {basica:150, pedagogo:200, especial:200, none:200};
   const GRAVACAO_DESCONTO_PCT = 0.4; // 40% de desconto no 2º vídeo (gravação)
 
   // guarda o estado marcado/desmarcado de cada checkbox dinâmico, por papel + tipo de plano
@@ -1780,12 +1780,13 @@
         'Configurar o vídeo com os slides ao lado de você na gravação' + sufixo,
         'Monto a tela dividida com os slides ao seu lado durante a gravação, pronta para narrar' + sufixo);
 
-      // gravação (com desconto dinâmico no 2º vídeo)
+      // gravação (com desconto dinâmico no 2º vídeo; preço varia por tipo de plano)
+      const gravBasePrice = GRAVACAO_PRICE_BY_TIPO[key] ?? GRAVACAO_PRICE_BY_TIPO.none;
       const isDiscounted = doisVideos && key === (tipoComDesconto || 'none');
-      const gravPrice = isDiscounted ? Math.round(GRAVACAO_PRICE * (1 - GRAVACAO_DESCONTO_PCT)) : GRAVACAO_PRICE;
+      const gravPrice = isDiscounted ? Math.round(gravBasePrice * (1 - GRAVACAO_DESCONTO_PCT)) : gravBasePrice;
       const gravPriceHtml = isDiscounted
-        ? '<span class="strike-mini">R$ ' + GRAVACAO_PRICE + '</span><span class="price-final">R$ ' + gravPrice + '</span>'
-        : 'R$ ' + GRAVACAO_PRICE;
+        ? '<span class="strike-mini">R$ ' + gravBasePrice + '</span><span class="price-final">R$ ' + gravPrice + '</span>'
+        : 'R$ ' + gravBasePrice;
       gravacaoHtml += optHtml('gravacao', tipo, key, gravPrice, gravPriceHtml, '🎥',
         'Apoio na gravação do vídeo' + sufixo,
         'Estúdio com câmera e telão de apoio atrás de você — exibindo slides, ou o que for mais conveniente' + sufixo);
