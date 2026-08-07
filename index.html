@@ -1787,9 +1787,14 @@
       const gravPriceHtml = isDiscounted
         ? '<span class="strike-mini">R$ ' + gravBasePrice + '</span><span class="price-final">R$ ' + gravPrice + '</span>'
         : 'R$ ' + gravBasePrice;
+      const gravDesc = (key === 'pedagogo')
+        ? 'Estúdio com câmera e telão de apoio atrás de você — aqui não é necessário slides, só a apresentação do seu Plano de Ação' + sufixo
+        : (key === 'especial')
+          ? 'Estúdio com câmera e telão de apoio atrás de você — aqui não é necessário slides, só a apresentação do seu Plano de Atendimento Especializado' + sufixo
+          : 'Estúdio com câmera e telão de apoio atrás de você — exibindo slides, ou o que for mais conveniente' + sufixo;
       gravacaoHtml += optHtml('gravacao', tipo, key, gravPrice, gravPriceHtml, '🎥',
         'Apoio na gravação do vídeo' + sufixo,
-        'Estúdio com câmera e telão de apoio atrás de você — exibindo slides, ou o que for mais conveniente' + sufixo);
+        gravDesc);
 
       // upload/anexação (duplica por inscrição)
       uploadVideoHtml += optHtml('anexoVideo', tipo, key, 15, 'R$ 15', '📤',
