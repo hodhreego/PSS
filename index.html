@@ -1433,14 +1433,7 @@
 
         <label class="confirm-risk" id="confirmRisk">
           <input type="checkbox" id="confirmRiskChk">
-          <span class="txt">Estou ciente de que, sem o Plano de Aula, meu vídeo não será avaliado na prova prática — quero seguir só com o vídeo mesmo assim.</span>
-        </label>
-
-        <div class="plan-warn" id="gravSemSlidesWarn">⚠️ Nesse plano, a gravação é sem slides — apenas a apresentação do seu plano.</div>
-
-        <label class="confirm-risk" id="confirmGravSemSlides">
-          <input type="checkbox" id="confirmGravSemSlidesChk">
-          <span class="txt">Estou ciente de que a gravação desse plano é sem slides, apenas a apresentação do meu plano — quero seguir mesmo assim.</span>
+          <span class="txt">Estou ciente de que, sem o Plano de Aula, meu vídeo não será avaliado na prova prática — QUERO SEGUIR SÓ COM O VÍDEO MESMO ASSIM.</span>
         </label>
 
         <div class="total-row">
@@ -1711,9 +1704,6 @@
   const planWarn = document.getElementById('planWarn');
   const confirmRisk = document.getElementById('confirmRisk');
   const confirmRiskChk = document.getElementById('confirmRiskChk');
-  const gravSemSlidesWarn = document.getElementById('gravSemSlidesWarn');
-  const confirmGravSemSlides = document.getElementById('confirmGravSemSlides');
-  const confirmGravSemSlidesChk = document.getElementById('confirmGravSemSlidesChk');
   const subjectBox = document.getElementById('subjectBox');
   const subjectSelect = document.getElementById('subjectSelect');
   const outroInput = document.getElementById('outroInput');
@@ -1752,7 +1742,7 @@
 
   // guarda o estado marcado/desmarcado de cada checkbox dinâmico, por papel + tipo de plano
   // ex: videoState.gravacao['pedagogo'] = true
-  const videoState = { roteiro: {}, slides: {}, slidesLado: {}, gravacao: {}, anexoVideo: {}, anexoPlano: {} };
+  const videoState = { roteiro: {}, slides: {}, slidesLado: {}, gravacao: {}, anexoVideo: {}, anexoPlano: {}, confirmGravSemSlides: {} };
 
   function optHtml(role, tipo, key, price, priceHtml, emoji, name, desc){
     const checked = !!videoState[role][key];
@@ -1813,6 +1803,18 @@
       gravacaoHtml += optHtml('gravacao', tipo, key, gravPrice, gravPriceHtml, '🎥',
         'Apoio na gravação do vídeo' + sufixo,
         gravDesc);
+
+      // aviso + confirmação obrigatória, logo abaixo da opção de gravação sem slides (Pedagogo/Educação Especial)
+      if((key === 'pedagogo' || key === 'especial') && videoState.gravacao[key]){
+        const gravConfirmed = !!videoState.confirmGravSemSlides[key];
+        gravacaoHtml += '<div class="plan-warn show">⚠️ Nesse plano, a gravação é sem slides — apenas a apresentação do seu plano.</div>'
+          + '<label class="confirm-risk show' + (gravConfirmed ? ' checked' : '') + '">'
+          + '<input type="checkbox" class="dynChk" data-role="confirmGravSemSlides" data-tipokey="' + key + '" data-price="0" data-label=""' + (gravConfirmed ? ' checked' : '') + '>'
+          + '<span class="txt">Estou ciente de que a gravação desse plano é sem slides, apenas a apresentação do meu plano — QUERO SEGUIR MESMO ASSIM.</span>'
+          + '</label>';
+      } else {
+        videoState.confirmGravSemSlides[key] = false;
+      }
 
       // upload/anexação (duplica por inscrição)
       uploadVideoHtml += optHtml('anexoVideo', tipo, key, 15, 'R$ 15', '📤',
@@ -1875,14 +1877,17 @@
     renderDynamicOptions(planosSelecionados);
 
     // soma tudo que está marcado: plataforma fixa (cadastro) + opções dinâmicas de vídeo/upload
-    let slidesChecked = false, gravacaoChecked = false, gravSemSlidesChecked = false;
+    let slidesChecked = false, gravacaoChecked = false;
+    const gravSemSlidesPendentes = new Set();
     document.querySelectorAll('.chk').forEach(c => {
       if(c.checked){
         total += Number(c.dataset.price);
-        items.push(c.dataset.label);
+        if(c.dataset.label){ items.push(c.dataset.label); }
         if(c.dataset.role === 'slides') slidesChecked = true;
         if(c.dataset.role === 'gravacao') gravacaoChecked = true;
-        if(c.dataset.role === 'gravacao' && (c.dataset.tipokey === 'pedagogo' || c.dataset.tipokey === 'especial')) gravSemSlidesChecked = true;
+      }
+      if(c.dataset.role === 'gravacao' && (c.dataset.tipokey === 'pedagogo' || c.dataset.tipokey === 'especial') && c.checked){
+        if(!videoState.confirmGravSemSlides[c.dataset.tipokey]) gravSemSlidesPendentes.add(c.dataset.tipokey);
       }
     });
     const videoChecked = slidesChecked || gravacaoChecked;
@@ -1908,12 +1913,6 @@
     planoCards.forEach(c => c.classList.toggle('alert', warn));
     if(!warn){ confirmRiskChk.checked = false; }
     confirmRisk.classList.toggle('checked', confirmRiskChk.checked);
-
-    // aviso + confirmação: gravação sem slides (Pedagogo/Educação Especial)
-    gravSemSlidesWarn.classList.toggle('show', gravSemSlidesChecked);
-    confirmGravSemSlides.classList.toggle('show', gravSemSlidesChecked);
-    if(!gravSemSlidesChecked){ confirmGravSemSlidesChk.checked = false; }
-    confirmGravSemSlides.classList.toggle('checked', confirmGravSemSlidesChk.checked);
 
     // barra(s) de cobertura: uma barra por inscrição/plano marcado (5 pts plano + 25 pts vídeo = 30 pts cada)
     const listaParaBarras = planosSelecionados.length ? planosSelecionados : [null];
@@ -1947,7 +1946,7 @@
     // botão do WhatsApp só libera com seleção válida
     const hasSelection = items.length > 0;
     const needsConfirm = warn && !confirmRiskChk.checked;
-    const needsGravConfirm = gravSemSlidesChecked && !confirmGravSemSlidesChk.checked;
+    const needsGravConfirm = gravSemSlidesPendentes.size > 0;
     const canSubmit = hasSelection && !needsConfirm && !needsGravConfirm;
     ctaBtn.classList.toggle('disabled', !canSubmit);
     ctaHint.classList.toggle('show', !canSubmit);
@@ -2075,7 +2074,6 @@
   planoChecks.forEach(c => c.addEventListener('change', update));
   document.getElementById('cadastroChk') && document.getElementById('cadastroChk').addEventListener('change', update);
   confirmRiskChk.addEventListener('change', update);
-  confirmGravSemSlidesChk.addEventListener('change', update);
   subjectSelect.addEventListener('change', update);
   outroInput.addEventListener('input', update);
 
