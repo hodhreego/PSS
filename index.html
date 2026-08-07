@@ -1730,7 +1730,7 @@
     celebrateFlash.classList.add('pop');
   }
   const GRAVACAO_PRICE = 190;
-  const GRAVACAO_DESCONTO = 30; // desconto fixo no 2º vídeo (gravação)
+  const GRAVACAO_DESCONTO_PCT = 0.5; // 50% de desconto no 2º vídeo (gravação)
 
   // guarda o estado marcado/desmarcado de cada checkbox dinâmico, por papel + tipo de plano
   // ex: videoState.gravacao['pedagogo'] = true
@@ -1782,7 +1782,7 @@
 
       // gravação (com desconto dinâmico no 2º vídeo)
       const isDiscounted = doisVideos && key === (tipoComDesconto || 'none');
-      const gravPrice = isDiscounted ? (GRAVACAO_PRICE - GRAVACAO_DESCONTO) : GRAVACAO_PRICE;
+      const gravPrice = isDiscounted ? Math.round(GRAVACAO_PRICE * (1 - GRAVACAO_DESCONTO_PCT)) : GRAVACAO_PRICE;
       const gravPriceHtml = isDiscounted
         ? '<span class="strike-mini">R$ ' + GRAVACAO_PRICE + '</span><span class="price-final">R$ ' + gravPrice + '</span>'
         : 'R$ ' + GRAVACAO_PRICE;
