@@ -198,9 +198,12 @@
   .bar-fill{height:100%; width:0%; border-radius:6px; background:linear-gradient(90deg, var(--gold), var(--gold-light)); transition:width .45s cubic-bezier(.34,1.4,.64,1);}
   .meters-legend{font-size:8.5px; color:#C7D3E3; text-align:center; margin-top:2px; letter-spacing:.02em;}
 
-  .live-total{margin-top:9px; display:flex; align-items:center; justify-content:space-between; background:rgba(255,255,255,.08); border:1px dashed rgba(233,212,142,.5); border-radius:10px; padding:7px 11px;}
+  .live-total{margin-top:9px; display:flex; flex-direction:column; gap:3px; background:rgba(255,255,255,.08); border:1px dashed rgba(233,212,142,.5); border-radius:10px; padding:7px 11px;}
+  .live-total .lt-main{display:flex; align-items:center; justify-content:space-between;}
   .live-total .lt-label{font-size:9.5px; color:#D8E2F2;}
   .live-total .lt-value{font-family:'Playfair Display', serif; font-size:18px; font-weight:800; color:#FFD700;}
+  .live-total .lt-note{font-size:9px; color:#D8E2F2; text-align:right;}
+  .live-total .lt-note b{color:var(--gold-light); font-weight:700;}
 
   /* ---------- CORPO ROLÁVEL ---------- */
   .scroll{flex:1 1 auto; min-height:0; overflow-y:auto; overflow-x:hidden; padding:16px 20px 8px; scrollbar-width:none;}
@@ -529,8 +532,11 @@
       <div class="meters" id="metersWrap"></div>
 
       <div class="live-total">
-        <span class="lt-label">Seu pacote selecionado</span>
-        <span class="lt-value" id="totalFixed">R$ 0</span>
+        <div class="lt-main">
+          <span class="lt-label">Seu pacote selecionado</span>
+          <span class="lt-value" id="totalFixed">R$ 0</span>
+        </div>
+        <div class="lt-note" id="totalNote"></div>
       </div>
     </div>
 
@@ -1691,6 +1697,7 @@
   const especialPriceDisplay = document.getElementById('especialPriceDisplay');
   const totalEl = document.getElementById('total');
   const totalFixedEl = document.getElementById('totalFixed');
+  const totalNoteEl = document.getElementById('totalNote');
   const bundleNote = document.getElementById('bundleNote');
   const discountNoteRed = document.getElementById('discountNoteRed');
   const planWarn = document.getElementById('planWarn');
@@ -1870,6 +1877,14 @@
 
     totalEl.textContent = "R$ " + total;
     totalFixedEl.textContent = "R$ " + total;
+    if(total > 0){
+      const parcela = (total / 12).toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2});
+      const avista = Math.round(total * 0.9 * 100) / 100;
+      const avistaFmt = avista.toLocaleString('pt-BR', {minimumFractionDigits: avista % 1 === 0 ? 0 : 2});
+      totalNoteEl.innerHTML = 'em 12x sem juros no cartão, ou <b>R$ ' + avistaFmt + '</b> à vista (10% de desconto)';
+    } else {
+      totalNoteEl.innerHTML = '';
+    }
 
     const fullPackage = planosSelecionados.length > 0 && slidesChecked && gravacaoChecked;
     bundleNote.classList.toggle('show', fullPackage);
