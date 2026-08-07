@@ -118,9 +118,17 @@
 
   h1{
     font-family:'Playfair Display', serif; font-weight:700; font-size:13px; line-height:1.2;
-    margin-top:10px; letter-spacing:.2px;
+    margin-top:0; letter-spacing:.2px;
   }
   h1 em{font-style:italic; color:var(--gold-light);}
+
+  .h1-row{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:10px; flex-wrap:wrap;}
+  .agenda-cta{display:flex; flex-direction:column; align-items:center; gap:3px; text-decoration:none; flex-shrink:0;}
+  .agenda-cta-btn{
+    background:linear-gradient(135deg, var(--gold), var(--gold-light)); color:var(--navy-deep);
+    font-weight:800; font-size:10.5px; padding:7px 12px; border-radius:10px; white-space:nowrap;
+  }
+  .agenda-cta-note{font-size:8px; color:#C7D3E3; white-space:nowrap;}
 
   .drive-link{
     display:flex; align-items:center; gap:8px;
@@ -385,6 +393,10 @@
   .bundle-note{margin-top:8px; font-size:9.5px; color:var(--gold); background:#FBF6E7; border:1px solid var(--gold-light); padding:6px 10px; border-radius:8px; display:none; text-align:center; font-weight:600;}
   .bundle-note.show{display:block;}
 
+  .agenda-box{margin-top:16px;}
+  .agenda-title{font-size:9.5px; font-weight:800; color:var(--navy); margin-bottom:8px; text-align:center;}
+  .agenda-embed{width:100%; height:420px; border-radius:12px; border:1px solid rgba(15,37,71,.15); display:block;}
+
   /* menu de componente curricular — só aparece para Educação Básica */
   .subject-box{background:var(--white); border:1px solid var(--line); border-radius:14px; padding:0; margin-bottom:0; max-height:0; opacity:0; overflow:hidden; transition:max-height .3s ease, opacity .25s ease, padding .3s ease, margin .3s ease;}
   .subject-box.show{padding:13px 14px; margin-bottom:14px; max-height:220px; opacity:1;}
@@ -509,7 +521,13 @@
         <span class="drive-emoji">📄</span>
         <span class="drive-text">Modelos e provas anteriores</span>
       </a>
-      <h1>Sua nota na Prova Prática<br>não pode depender do <em>improviso</em>.</h1>
+      <div class="h1-row">
+        <h1>Sua nota na Prova Prática<br>não pode depender do <em>improviso</em>.</h1>
+        <a href="#agendaBox" class="agenda-cta">
+          <span class="agenda-cta-btn">📅 Verificar Agenda</span>
+          <span class="agenda-cta-note">Atualizado às 22 horas</span>
+        </a>
+      </div>
 
       <details class="apostilas-box">
         <summary class="apostilas-summary">
@@ -1656,6 +1674,11 @@
           <option>Outro componente curricular</option>
         </select>
         <input type="text" class="outro-input" id="outroInput" placeholder="Digite o componente curricular">
+      </div>
+
+      <div class="agenda-box" id="agendaBox">
+        <div class="agenda-title">📅 Confira os horários disponíveis antes de chamar no WhatsApp</div>
+        <iframe class="agenda-embed" src="https://calendar.google.com/calendar/embed?src=classroom105363922757250898258%40group.calendar.google.com&ctz=America%2FSao_Paulo&mode=WEEK&showTitle=0&showPrint=0&showTabs=0&showCalendars=0" style="border:0" loading="lazy"></iframe>
       </div>
 
       <a href="#" class="cta disabled" id="ctaBtn" target="_blank" rel="noopener">
