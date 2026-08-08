@@ -395,6 +395,13 @@
 
   .agenda-box{margin-top:16px;}
   .agenda-title{font-size:9.5px; font-weight:800; color:var(--navy); margin-bottom:8px; text-align:center;}
+  .agenda-title-row{display:flex; align-items:center; justify-content:center; gap:6px;}
+  .agenda-title-row .agenda-title{margin-bottom:8px;}
+  .agenda-owner-link{
+    font-size:12px; text-decoration:none; opacity:.35; line-height:1; margin-bottom:8px;
+    transition:opacity .15s ease;
+  }
+  .agenda-owner-link:hover{opacity:1;}
   .agenda-embed{width:100%; height:420px; border-radius:12px; border:1px solid rgba(15,37,71,.15); display:block;}
 
   /* menu de componente curricular — só aparece para Educação Básica */
@@ -1677,7 +1684,10 @@
       </div>
 
       <div class="agenda-box" id="agendaBox">
-        <div class="agenda-title">📅 Confira os horários disponíveis antes de chamar no WhatsApp</div>
+        <div class="agenda-title-row">
+          <div class="agenda-title">📅 Confira os horários disponíveis antes de chamar no WhatsApp</div>
+          <a href="https://calendar.google.com/calendar/u/0/r?cid=classroom105363922757250898258@group.calendar.google.com" target="_blank" rel="noopener" class="agenda-owner-link" title="Ver detalhes completos (só você, logado)">🔒</a>
+        </div>
         <iframe class="agenda-embed" src="https://calendar.google.com/calendar/embed?src=classroom105363922757250898258%40group.calendar.google.com&ctz=America%2FSao_Paulo&mode=AGENDA&showTitle=0&showPrint=0&showTabs=0&showCalendars=0" style="border:0" loading="lazy"></iframe>
       </div>
 
