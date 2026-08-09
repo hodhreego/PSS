@@ -1770,7 +1770,7 @@
     void celebrateFlash.offsetWidth; // força reflow pra reiniciar a animação
     celebrateFlash.classList.add('pop');
   }
-  const GRAVACAO_PRICE_BY_TIPO = {basica:150, pedagogo:200, especial:200, none:200};
+  const GRAVACAO_PRICE_BY_TIPO = {basica:150, pedagogo:200, especial:200, none:150};
   const GRAVACAO_DESCONTO_PCT = 0.4; // 40% de desconto no 2º vídeo (gravação)
 
   // guarda o estado marcado/desmarcado de cada checkbox dinâmico, por papel + tipo de plano
@@ -1804,7 +1804,7 @@
 
     tipos.forEach(tipo => {
       const key = tipo || 'none';
-      const sufixo = tipo ? ' — ' + PLANO_LABELS[tipo] : '';
+      const sufixo = tipo ? ' — ' + PLANO_LABELS[tipo] : ' — Educação Básica';
 
       // roteiro para a gravação do vídeo
       roteiroHtml += optHtml('roteiro', tipo, key, 30, 'R$ 30', '📝',
