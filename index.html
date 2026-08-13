@@ -1858,6 +1858,23 @@
         'Faço o upload do seu plano no local certo do sistema da banca (NC/UFPR)' + sufixo);
     });
 
+    // gravação do Pedagogo sempre visível, mesmo sem marcar o Plano de Ação do Pedagogo
+    if(!planosSelecionados.includes('pedagogo')){
+      const pedKey = 'pedagogo';
+      const pedConfirmed = !!videoState.confirmGravSemSlides[pedKey];
+      const pedChecked = !!videoState.gravacao[pedKey];
+      gravacaoHtml += optHtml('gravacao', 'pedagogo', pedKey, GRAVACAO_PRICE_BY_TIPO.pedagogo, 'R$ ' + GRAVACAO_PRICE_BY_TIPO.pedagogo, '🎥',
+        'Apoio na gravação do vídeo — Pedagogo',
+        'Estúdio com câmera — <span class="red-note">aqui não é necessário slides, só a apresentação do seu Plano de Ação</span> — Pedagogo');
+      if(pedChecked){
+        gravacaoHtml += '<div class="plan-warn show">⚠️ Nesse plano, a gravação é sem slides — apenas a apresentação do seu plano.</div>'
+          + '<label class="confirm-risk show' + (pedConfirmed ? ' checked' : '') + '">'
+          + '<input type="checkbox" class="dynChk" data-role="confirmGravSemSlides" data-tipokey="' + pedKey + '" data-price="0" data-label=""' + (pedConfirmed ? ' checked' : '') + '>'
+          + '<span class="txt">Estou ciente de que a gravação desse plano é sem slides, apenas a apresentação do meu plano — QUERO SEGUIR MESMO ASSIM.</span>'
+          + '</label>';
+      }
+    }
+
     videoOptionsWrap.innerHTML = roteiroHtml + slidesHtml + slidesLadoHtml + gravacaoHtml;
     uploadOptionsWrap.innerHTML = uploadVideoHtml + uploadPlanoHtml;
     discountNoteRed.classList.toggle('show', doisVideos);
