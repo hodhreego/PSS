@@ -106,11 +106,16 @@
     border-radius:13px; padding:10px 15px;
     text-decoration:none; cursor:pointer;
   }
+  .store-badge .temple-row{display:flex; align-items:center; gap:4px;}
   .store-badge .temple{
     font-size:45px; line-height:1; display:inline-block;
     animation:templeWobble 2.4s ease-in-out infinite;
   }
   @keyframes templeWobble{0%,100%{transform:rotate(-45deg);} 50%{transform:rotate(45deg);}}
+  .store-badge .whats-icon{
+    font-size:20px; line-height:1; display:inline-block;
+    animation:apostilaBlink 1s ease-in-out infinite;
+  }
   .store-badge .store-text{
     font-size:11.9px; font-weight:800; color:var(--gold-light); text-align:center;
     line-height:1.2; text-transform:uppercase; letter-spacing:.03em; white-space:nowrap;
@@ -521,7 +526,10 @@
       <div class="celebrate-flash" id="celebrateFlash"></div>
       <span class="eyebrow"><span class="dot"></span>PSS SEED-PR 2027 · Prova Prática</span>
       <a href="https://wa.me/c/554599699444" target="_blank" rel="noopener" class="store-badge">
-        <span class="temple">🏛️</span>
+        <span class="temple-row">
+          <span class="temple">🏛️</span>
+          <span class="whats-icon">💬</span>
+        </span>
         <span class="store-text">Loja de<br>Matemática</span>
       </a>
       <a href="https://drive.google.com/drive/folders/1JiluMEpoN3UkmdLGysfMUL4ozdAecTm4" target="_blank" rel="noopener" class="drive-link">
