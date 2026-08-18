@@ -449,22 +449,30 @@
   .trust-item .n{font-family:'Playfair Display', serif; font-weight:800; font-size:14px; color:var(--navy);}
   .trust-item .t{font-size:8.5px; color:#5A6B85; text-transform:uppercase; letter-spacing:.04em; margin-top:2px;}
 
-  .edital-link-wrap{display:flex; flex-direction:column; align-items:center; gap:2px; margin-bottom:16px;}
+  .edital-link-wrap{display:flex; flex-direction:column; align-items:center; gap:4px; margin-bottom:16px;}
   .edital-hand{font-size:17px; animation:handDown 1.3s ease-in-out infinite;}
   @keyframes handDown{0%,100%{transform:translateY(0);} 50%{transform:translateY(4px);}}
+  .edital-official{
+    font-size:9.5px; font-weight:700; color:#5A6B85; text-transform:uppercase; letter-spacing:.05em;
+    display:flex; align-items:center; gap:4px;
+  }
   .edital-link{
-    display:block; text-align:center; font-size:17px; font-weight:700; color:var(--navy);
-    background:var(--bg); border:2.3px solid var(--navy); border-radius:15px;
-    padding:13.5px 21px; text-decoration:none;
+    display:flex; align-items:center; justify-content:center; gap:9px;
+    text-align:center; font-size:16px; font-weight:800; color:#fff;
+    background:linear-gradient(135deg, var(--navy), var(--navy-deep));
+    border:1.5px solid var(--gold-light); border-radius:15px;
+    padding:14px 22px; text-decoration:none;
+    box-shadow:0 3px 14px rgba(30,39,97,.25);
+    animation:editalGlow 2.6s ease-in-out infinite;
+    transition:transform .15s ease;
   }
-  .edital-link-blink{
-    color:#fff !important; background:#dc2626 !important; border-color:#dc2626 !important;
-    animation:blinkRed 0.8s infinite;
+  .edital-link:hover{transform:translateY(-1px);}
+  .edital-link .lock{font-size:15px;}
+  @keyframes editalGlow{
+    0%,100%{box-shadow:0 3px 14px rgba(30,39,97,.25);}
+    50%{box-shadow:0 3px 20px rgba(233,212,142,.55);}
   }
-  @keyframes blinkRed{
-    0%, 49%{opacity:1;}
-    50%, 100%{opacity:0.4;}
-  }
+  .edital-domain{font-size:9px; color:#8892A6; letter-spacing:.02em;}
 
   /* Radio buttons para tópicos */
   .topico-label{
@@ -1716,7 +1724,12 @@
 
       <div class="edital-link-wrap">
         <span class="edital-hand">👇</span>
-        <a href="https://servicos.nc.ufpr.br/PortalNC/Concurso?concurso=SEED2026" target="_blank" rel="noopener" class="edital-link edital-link-blink">Clique aqui para acessar o link de inscrição e editais</a>
+        <span class="edital-official">🔒 Link oficial da banca — NC/UFPR</span>
+        <a href="https://servicos.nc.ufpr.br/PortalNC/Concurso?concurso=SEED2026" target="_blank" rel="noopener" class="edital-link">
+          <span class="lock">🔗</span>
+          Acessar inscrição e editais
+        </a>
+        <span class="edital-domain">servicos.nc.ufpr.br</span>
       </div>
 
       <footer>
