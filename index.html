@@ -136,11 +136,11 @@
   .agenda-cta-note{font-size:8px; color:#C7D3E3; white-space:nowrap;}
 
   .drive-link{
-    display:flex; align-items:center; gap:9px;
-    margin-top:10px; width:fit-content;
+    display:flex; align-items:center; gap:7px;
+    margin-top:10px; width:fit-content; max-width:200px;
     background:linear-gradient(135deg, var(--navy), var(--navy-deep));
     border:1.5px solid var(--gold-light);
-    border-radius:12px; padding:9px 16px;
+    border-radius:11px; padding:7px 12px;
     font-weight:800;
     text-decoration:none; letter-spacing:.01em;
     box-shadow:0 2px 10px rgba(15,37,71,.3);
@@ -153,11 +153,11 @@
     50%{box-shadow:0 2px 16px rgba(233,212,142,.5);}
   }
   .drive-text{
-    font-size:13.5px; color:var(--gold-light);
+    font-size:11px; line-height:1.25; color:var(--gold-light); white-space:normal;
   }
-  .drive-arrow{font-size:12px; color:var(--gold-light); margin-left:1px;}
+  .drive-arrow{font-size:11px; color:var(--gold-light); margin-left:1px; flex-shrink:0;}
   .drive-emoji{
-    font-size:18px; line-height:1; display:inline-block;
+    font-size:15px; line-height:1; display:inline-block; flex-shrink:0;
     animation: driveHeartbeat 0.9s ease-in-out infinite;
   }
   @keyframes driveHeartbeat{0%,100%{transform:scale(1);} 50%{transform:scale(1.12);}}
@@ -165,16 +165,25 @@
   /* ---------- APOSTILAS PSS PR ---------- */
   .apostilas-box{margin-top:12px;}
   .apostilas-summary{
-    list-style:none; cursor:pointer; display:flex; align-items:center; gap:8px;
-    width:fit-content; background:rgba(255,255,255,.1); border:1.5px solid var(--gold-light);
-    border-radius:12px; padding:9px 15px; font-weight:800; letter-spacing:.01em;
+    list-style:none; cursor:pointer; display:flex; align-items:center; gap:9px;
+    width:fit-content; background:linear-gradient(135deg, var(--gold), var(--gold-light));
+    border:none;
+    border-radius:12px; padding:10px 16px; font-weight:800; letter-spacing:.01em;
+    box-shadow:0 2px 10px rgba(15,37,71,.25);
+    animation:apostilasGlow 2.8s ease-in-out infinite;
+    transition:transform .15s ease;
+  }
+  .apostilas-box[open] .apostilas-summary{transform:none;}
+  .apostilas-summary:hover{transform:translateY(-1px);}
+  @keyframes apostilasGlow{
+    0%,100%{box-shadow:0 2px 10px rgba(15,37,71,.25);}
+    50%{box-shadow:0 2px 16px rgba(255,255,255,.45);}
   }
   .apostilas-summary::-webkit-details-marker{display:none;}
-  .apostilas-icon{font-size:24px; line-height:1; display:inline-block; animation:apostilaBlink 1s ease-in-out infinite;}
-  @keyframes apostilaBlink{0%,100%{opacity:1;} 50%{opacity:.25;}}
+  .apostilas-icon{font-size:20px; line-height:1; display:inline-block;}
   @keyframes colorBlink{0%{color:#FF0000;} 33%{color:#00FF00;} 66%{color:#FFD700;} 100%{color:#FF0000;}}
-  .apostilas-summary .apostilas-text{font-size:16.8px; color:var(--gold-light); display:inline-block;}
-  .apostilas-summary .chev{font-size:12px; color:var(--gold-light); transition:transform .2s ease; margin-left:2px;}
+  .apostilas-summary .apostilas-text{font-size:13.5px; color:var(--navy-deep); display:inline-block;}
+  .apostilas-summary .chev{font-size:12px; color:var(--navy-deep); transition:transform .2s ease; margin-left:2px;}
   .apostilas-box[open] .apostilas-summary .chev{transform:rotate(180deg);}
   .apostilas-list{display:flex; flex-direction:column; gap:8px; margin-top:8px;}
   .apostila-link{
