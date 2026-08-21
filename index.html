@@ -93,6 +93,9 @@
     padding:4px 9px; border-radius:20px;
     background:rgba(255,255,255,.04);
   }
+  .eyebrow-link{text-decoration:none; cursor:pointer; transition:transform .15s ease, background .15s ease;}
+  .eyebrow-link:hover{background:rgba(255,255,255,.1); transform:translateY(-1px);}
+  .eyebrow-arrow{font-size:9px; opacity:.85;}
   .eyebrow span.dot{
     width:10px; height:10px; border-radius:50%; background:var(--gold); flex-shrink:0;
     animation:dotBlink 1.2s ease-in-out infinite;
@@ -541,7 +544,7 @@
     <!-- CABEÇALHO FIXO: pontuação e total sempre visíveis -->
     <div class="hero">
       <div class="celebrate-flash" id="celebrateFlash"></div>
-      <span class="eyebrow"><span class="dot"></span>PSS SEED-PR 2027 · Prova Prática</span>
+      <a href="https://servicos.nc.ufpr.br/PortalNC/Concurso?concurso=SEED2026" target="_blank" rel="noopener" class="eyebrow eyebrow-link"><span class="dot"></span>PSS SEED-PR 2027 · Prova Prática <span class="eyebrow-arrow">↗</span></a>
       <a href="https://wa.me/c/554599699444" target="_blank" rel="noopener" class="store-badge">
         <span class="temple-row">
           <span class="temple">🏛️</span>
@@ -1730,16 +1733,6 @@
         <div class="trust-item"><div class="n">1:1</div><div class="t">Atendimento</div></div>
         <div class="trust-item"><div class="n">PR</div><div class="t">Foco SEED</div></div>
         <div class="trust-item"><div class="n">2027</div><div class="t">PSS Atual</div></div>
-      </div>
-
-      <div class="edital-link-wrap">
-        <span class="edital-hand">👇</span>
-        <span class="edital-official">🔒 Link oficial da banca — NC/UFPR</span>
-        <a href="https://servicos.nc.ufpr.br/PortalNC/Concurso?concurso=SEED2026" target="_blank" rel="noopener" class="edital-link">
-          <span class="lock">🔗</span>
-          Acessar inscrição e editais
-        </a>
-        <span class="edital-domain">servicos.nc.ufpr.br</span>
       </div>
 
       <footer>
