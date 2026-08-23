@@ -195,16 +195,24 @@
     padding:11px 12px; font-size:13px; font-weight:800; color:#FF0000; line-height:1.3;
     animation:colorBlink 2s ease-in-out infinite; text-align:center;
   }
-  .apostila-link .book{font-size:14px; flex-shrink:0;}
-  .apostila-link .subj{font-size:14px; flex-shrink:0; display:inline-block; animation:apostilaBlink 1.2s ease-in-out infinite;}
-  .apostilas-list a:nth-child(1) .subj{animation-delay:0s;}
-  .apostilas-list a:nth-child(2) .subj{animation-delay:.15s;}
-  .apostilas-list a:nth-child(3) .subj{animation-delay:.3s;}
-  .apostilas-list a:nth-child(4) .subj{animation-delay:.45s;}
-  .apostilas-list a:nth-child(5) .subj{animation-delay:.6s;}
-  .apostilas-list a:nth-child(6) .subj{animation-delay:.75s;}
-  .apostilas-list a:nth-child(7) .subj{animation-delay:.9s;}
-  .apostilas-list a:nth-child(8) .subj{animation-delay:1.05s;}
+  .apostila-link .book, .apostila-link .subj{
+    font-size:14px; flex-shrink:0; display:inline-block;
+    animation:iconDance 1.1s ease-in-out infinite;
+  }
+  @keyframes iconDance{
+    0%,100%{transform:translateY(0) rotate(0deg);}
+    25%{transform:translateY(-3px) rotate(-10deg);}
+    50%{transform:translateY(0) rotate(0deg);}
+    75%{transform:translateY(-3px) rotate(10deg);}
+  }
+  .apostilas-list a:nth-child(1) .book, .apostilas-list a:nth-child(1) .subj{animation-delay:0s;}
+  .apostilas-list a:nth-child(2) .book, .apostilas-list a:nth-child(2) .subj{animation-delay:.15s;}
+  .apostilas-list a:nth-child(3) .book, .apostilas-list a:nth-child(3) .subj{animation-delay:.3s;}
+  .apostilas-list a:nth-child(4) .book, .apostilas-list a:nth-child(4) .subj{animation-delay:.45s;}
+  .apostilas-list a:nth-child(5) .book, .apostilas-list a:nth-child(5) .subj{animation-delay:.6s;}
+  .apostilas-list a:nth-child(6) .book, .apostilas-list a:nth-child(6) .subj{animation-delay:.75s;}
+  .apostilas-list a:nth-child(7) .book, .apostilas-list a:nth-child(7) .subj{animation-delay:.9s;}
+  .apostilas-list a:nth-child(8) .book, .apostilas-list a:nth-child(8) .subj{animation-delay:1.05s;}
 
   .meters{display:flex; flex-direction:column; gap:8px; margin-top:12px;}
   .meter{background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.14); border-radius:12px; padding:10px 12px 11px;}
