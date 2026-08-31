@@ -93,6 +93,49 @@
     text-align:center;
   }
 
+  /* Mini prévia da capa e do índice reais das apostilas */
+  .apostilas-preview{margin-top:14px; padding-top:12px; border-top:1px dashed rgba(233,212,142,.35);}
+  .apostilas-preview-caption{font-size:9.5px; color:var(--gold-light); text-align:center; margin-bottom:8px; font-weight:700;}
+  .apostilas-preview-row{display:flex; justify-content:center; gap:12px;}
+
+  .capa-mini{
+    width:118px; height:167px; flex-shrink:0; position:relative; overflow:hidden;
+    background:linear-gradient(160deg, var(--navy-deep) 0%, var(--navy) 62%, #274A82 100%);
+    border-radius:6px; box-shadow:0 4px 12px rgba(0,0,0,.3);
+    padding:7px 7px 5px; display:flex; flex-direction:column;
+    border:1px solid rgba(233,212,142,.3);
+  }
+  .capa-mini::after{
+    content:""; position:absolute; left:50%; top:40%; width:130px; height:130px;
+    transform:translate(-50%,-50%); border-radius:50%; background:rgba(255,255,255,.055);
+  }
+  .capa-mini .badge{
+    position:relative; z-index:1; background:#B23A3A; color:#fff;
+    font-size:4.4px; font-weight:800; text-align:center; border-radius:3px; padding:2px 3px; line-height:1.25;
+  }
+  .capa-mini .prog{position:relative; z-index:1; font-size:4px; letter-spacing:.1em; color:var(--gold-light); font-weight:700; margin-top:7px;}
+  .capa-mini .pss{position:relative; z-index:1; font-family:'Playfair Display', serif; font-weight:800; font-size:6.6px; color:#fff;}
+  .capa-mini .yr{position:relative; z-index:1; font-size:4px; color:var(--gold-light); letter-spacing:.08em;}
+  .capa-mini .title{position:relative; z-index:1; font-family:'Playfair Display', serif; font-weight:800; font-size:8px; color:#FFD700; line-height:1.15; margin-top:auto;}
+  .capa-mini .subttl{position:relative; z-index:1; font-size:4.4px; color:#fff; margin-top:3px; line-height:1.3;}
+  .capa-mini .badge-bottom{position:relative; z-index:1; margin-top:6px; background:#B23A3A; color:#fff; font-size:3.4px; font-weight:700; text-align:center; border-radius:3px; padding:2px 3px; line-height:1.25;}
+
+  .indice-mini{
+    width:118px; height:167px; flex-shrink:0;
+    background:#fff; border:1.5px solid #B9B9B9; border-radius:6px;
+    padding:7px 8px 6px; box-shadow:0 4px 12px rgba(0,0,0,.18);
+    display:flex; flex-direction:column;
+  }
+  .indice-mini .hd{font-family:'Playfair Display', serif; font-weight:800; font-size:6.6px; color:var(--navy); text-align:center;}
+  .indice-mini .rule{height:1.2px; background:var(--gold); margin:3px 0 5px;}
+  .indice-mini .item{
+    display:flex; justify-content:space-between; align-items:baseline; gap:3px;
+    font-size:4.4px; color:var(--ink); line-height:1.3;
+    border-bottom:1px dotted #CFCFCF; padding-bottom:2.4px; margin-bottom:3px;
+  }
+  .indice-mini .item span:first-child{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .indice-mini .item .pg{color:var(--gold); font-weight:800; flex-shrink:0;}
+
   footer{margin-top:18px; text-align:center; font-size:9.5px; color:#C7D3E3;}
   footer a{color:var(--gold-light);}
 </style>
@@ -118,6 +161,31 @@
     <a href="https://chk.eduzz.com/89AXR1860D" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🏛️</span> Apostila HISTÓRIA PSS SEED-PR 2027</a>
     <a href="https://chk.eduzz.com/G96RA585W1" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🎨</span> Apostila ARTES PSS SEED-PR 2027</a>
     <div class="apostila-coming-soon"><span>🚀</span> Em breve mais disciplinas</div>
+  </div>
+
+  <div class="apostilas-preview">
+    <div class="apostilas-preview-caption">👀 Assim ficam a capa e o índice reais das suas apostilas</div>
+    <div class="apostilas-preview-row">
+      <div class="capa-mini">
+        <div class="badge">🚫 Proibido compartilhar</div>
+        <div class="prog">PROGRAMA</div>
+        <div class="pss">PSS SEED-PR</div>
+        <div class="yr">2027</div>
+        <div class="title">CONHECIMENTOS<br>BÁSICOS</div>
+        <div class="subttl">Língua Portuguesa · ECA · Direitos Humanos · Conhecimentos Didáticos</div>
+        <div class="badge-bottom">© Rodrigo G. Pereira — Todos os direitos reservados</div>
+      </div>
+      <div class="indice-mini">
+        <div class="hd">ÍNDICE</div>
+        <div class="rule"></div>
+        <div class="item"><span>1.1 Língua Portuguesa</span><span class="pg">05</span></div>
+        <div class="item"><span>1.2 ECA</span><span class="pg">18</span></div>
+        <div class="item"><span>1.3 Direitos Humanos</span><span class="pg">22</span></div>
+        <div class="item"><span>1.4 Conh. Didáticos</span><span class="pg">27</span></div>
+        <div class="item"><span>Resumo (Memorex)</span><span class="pg">41</span></div>
+        <div class="item"><span>Gabarito</span><span class="pg">47</span></div>
+      </div>
+    </div>
   </div>
 
   <footer>
