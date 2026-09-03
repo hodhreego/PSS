@@ -7,7 +7,9 @@
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
 <style>
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -371,87 +373,184 @@ html,body{margin:0; padding:0; background:#fff;}
 </head>
 <body>
 <div class="main-content" id="mainContent">
-<div class="page" style="background: linear-gradient(135deg, #f9f9f9 0%, #f0f5ff 100%);">
-<h2 id="progressoes">2.1 PROGRESSÃO ARITMÉTICA (PA)</h2>
+<div class="page" style="background: linear-gradient(135deg, #e8f5e9 0%, #f5f5f5 100%);">
+<h2 id="geometria-plana">2.4 GEOMETRIA PLANA - PERÍMETROS E ÁREAS</h2>
 <p style="margin:2px 0 12px 0;"><a href="#indice" style="font-size:10.5px; color:#3498db; text-decoration:none; font-weight:600;">📄</a></p>
-<p><strong>DEFINIÇÃO:</strong> Sequência numérica onde a diferença entre termos consecutivos é CONSTANTE.</p>
-<svg style="width:100%; max-height:130px; margin:8px 0;" viewbox="0 0 500 120">
-<!-- Linhas conectando os pontos -->
-<line stroke="#95a5a6" stroke-dasharray="4,3" stroke-width="2" x1="52" x2="128" y1="40" y2="40"></line>
-<line stroke="#95a5a6" stroke-dasharray="4,3" stroke-width="2" x1="152" x2="228" y1="40" y2="40"></line>
-<line stroke="#95a5a6" stroke-dasharray="4,3" stroke-width="2" x1="252" x2="328" y1="40" y2="40"></line>
-<line stroke="#95a5a6" stroke-dasharray="4,3" stroke-width="2" x1="352" x2="428" y1="40" y2="40"></line>
-<!-- Rótulos +r acima das linhas -->
-<text fill="#34495e" font-size="13" font-weight="bold" text-anchor="middle" x="90" y="28">+r</text>
-<text fill="#34495e" font-size="13" font-weight="bold" text-anchor="middle" x="190" y="28">+r</text>
-<text fill="#34495e" font-size="13" font-weight="bold" text-anchor="middle" x="290" y="28">+r</text>
-<text fill="#34495e" font-size="13" font-weight="bold" text-anchor="middle" x="390" y="28">+r</text>
-<!-- Pontos (círculos) -->
-<circle cx="40" cy="40" fill="#3498db" r="14" stroke="#2c3e50" stroke-width="2"></circle>
-<circle cx="140" cy="40" fill="#e74c3c" r="14" stroke="#2c3e50" stroke-width="2"></circle>
-<circle cx="240" cy="40" fill="#f39c12" r="14" stroke="#2c3e50" stroke-width="2"></circle>
-<circle cx="340" cy="40" fill="#27ae60" r="14" stroke="#2c3e50" stroke-width="2"></circle>
-<circle cx="440" cy="40" fill="#9b59b6" r="14" stroke="#2c3e50" stroke-width="2"></circle>
-<!-- Rótulos a1..a5 abaixo dos círculos, com espaço adequado -->
-<text fill="#2c3e50" font-size="14" font-weight="bold" text-anchor="middle" x="40" y="74">a₁</text>
-<text fill="#2c3e50" font-size="14" font-weight="bold" text-anchor="middle" x="140" y="74">a₂</text>
-<text fill="#2c3e50" font-size="14" font-weight="bold" text-anchor="middle" x="240" y="74">a₃</text>
-<text fill="#2c3e50" font-size="14" font-weight="bold" text-anchor="middle" x="340" y="74">a₄</text>
-<text fill="#2c3e50" font-size="14" font-weight="bold" text-anchor="middle" x="440" y="74">a₅</text>
-<!-- Legenda -->
-<text fill="#34495e" font-size="12" x="10" y="98">Razão r = diferença constante entre termos consecutivos</text>
-<text fill="#34495e" font-size="12" x="10" y="114">Exemplo: 2, 5, 8, 11, 14... onde r = 3</text>
+<p><strong style="color:#2c3e50;">PERÍMETRO: Soma de TODOS os lados (contorno)</strong></p>
+<svg style="width:100%; max-height:110px; margin:8px 0; margin:4px 0;" viewbox="0 0 480 100">
+<!-- Quadrado -->
+<rect fill="#3498db" height="50" opacity="0.3" stroke="#3498db" stroke-width="2" width="50" x="20" y="20"></rect>
+<text fill="#2c3e50" font-size="12" font-weight="bold" x="40" y="50">l</text>
+<text fill="#2c3e50" font-size="12" x="20" y="85">P = 4l</text>
+<!-- Retângulo -->
+<rect fill="#e74c3c" height="40" opacity="0.3" stroke="#e74c3c" stroke-width="2" width="70" x="100" y="20"></rect>
+<text fill="#2c3e50" font-size="11" x="125" y="50">c</text>
+<text fill="#2c3e50" font-size="11" x="105" y="30">l</text>
+<text fill="#2c3e50" font-size="12" x="100" y="85">P = 2(c+l)</text>
+<!-- Triângulo -->
+<polygon fill="#27ae60" opacity="0.3" points="220,60 250,20 280,60" stroke="#27ae60" stroke-width="2"></polygon>
+<text fill="#2c3e50" font-size="11" x="240" y="50">a,b,c</text>
+<text fill="#2c3e50" font-size="12" x="200" y="85">P = a+b+c</text>
+<!-- Círculo -->
+<circle cx="360" cy="45" fill="#f39c12" opacity="0.3" r="30" stroke="#f39c12" stroke-width="2"></circle>
+<text fill="#2c3e50" font-size="11" x="350" y="50">r</text>
+<text fill="#2c3e50" font-size="12" x="320" y="85">C = 2πr</text>
 </svg>
-<p><strong>ELEMENTOS DA PA:</strong></p>
-<p>• <strong>a₁</strong> = primeiro termo</p>
-<p>• <strong>r</strong> = razão (diferença entre termos consecutivos)</p>
-<p>• <strong>aₙ</strong> = enésimo termo (termo qualquer)</p>
-<p>• <strong>n</strong> = posição do termo</p>
-<p><strong style="color:#e74c3c; font-size:15px;">📐 FÓRMULA DO TERMO GERAL:</strong></p>
-<div style="background:#ecf0f1; padding:12px; border-left:4px solid #3498db; margin:8px 0; font-size:18px; text-align:center;">
-                $$a_n = a_1 + (n-1) \cdot r$$
-            </div>
-<p><strong>SIGNIFICADO:</strong> Qualquer termo = primeiro termo + (quantos passos) × (tamanho do passo)</p>
-<p style="margin-top:10px;"><strong style="color:#e74c3c; font-size:14px;">📊 CLASSIFICAÇÃO DA PA (segundo a razão r):</strong></p>
-<div style="display:grid; gap:6px;">
-<div style="background:#e8f5e9; padding:8px; border-left:4px solid #4caf50; border-radius:4px;"><p style="margin:0; color:#2e7d32;"><strong>Crescente (r &gt; 0):</strong> cada termo é maior que o anterior. Ex: 2, 5, 8, 11... (r=3)</p></div>
-<div style="background:#ffe8e8; padding:8px; border-left:4px solid #e74c3c; border-radius:4px;"><p style="margin:0; color:#c0392b;"><strong>Decrescente (r &lt; 0):</strong> cada termo é menor que o anterior. Ex: 10, 7, 4, 1... (r=-3)</p></div>
-<div style="background:#e3f2fd; padding:8px; border-left:4px solid #2196F3; border-radius:4px;"><p style="margin:0; color:#1565c0;"><strong>Constante (r = 0):</strong> todos os termos são iguais. Ex: 5, 5, 5, 5...</p></div>
+<p><strong style="color:#e74c3c; font-size:15px;">📐 ÁREA = ESPAÇO INTERNO</strong></p>
+<div style="background:#ecf0f1; padding:8px; border-left:4px solid #3498db; margin:6px 0;">
+<p><strong>TRIÂNGULO:</strong> A = (base × altura) / 2 | Heron: A = √(s(s-a)(s-b)(s-c)) onde s=(a+b+c)/2</p>
+<p><strong>QUADRADO:</strong> A = l²</p>
+<p><strong>RETÂNGULO:</strong> A = comprimento × largura</p>
+<p><strong>PARALELOGRAMO:</strong> A = base × altura</p>
+<p><strong>TRAPÉZIO:</strong> A = (B + b) × h / 2  (B=base maior, b=base menor, h=altura)</p>
+<p><strong>LOSANGO:</strong> A = (D × d) / 2  (D e d = diagonais)</p>
+<p><strong>CÍRCULO:</strong> A = πr²</p>
+<p><strong>SETOR CIRCULAR:</strong> A = (θ/360°) × πr²  (θ em graus)</p>
+<p><strong>COROA CIRCULAR:</strong> A = π(R² - r²)  (R=raio maior, r=raio menor)</p>
 </div>
-<p style="margin-top:10px;"><strong style="color:#e74c3c; font-size:14px;">🔗 PROPRIEDADE DOS TERMOS EQUIDISTANTES:</strong></p>
-<p>Numa PA finita, a soma de dois termos equidistantes dos extremos é sempre igual à soma dos extremos: $a_1 + a_n = a_2 + a_{n-1} = a_3 + a_{n-2} = ...$</p>
-<p>📌 <strong>Termo médio (interpolação):</strong> se três números estão em PA, o termo do meio é a MÉDIA ARITMÉTICA dos outros dois: $b = \dfrac{a+c}{2}$</p>
-<p><strong style="color:#27ae60;">✓ EXEMPLO PRÁTICO:</strong></p>
-<p>PA: 2, 5, 8, 11, 14, 17... onde r = 3</p>
-<p>• Encontre a₅ (5º termo): a₅ = 2 + (5-1)·3 = 2 + 12 = <strong>14</strong> ✓</p>
-<p>• Encontre a₁₀ (10º termo): a₁₀ = 2 + (10-1)·3 = 2 + 27 = <strong>29</strong></p>
-<p><strong style="color:#e74c3c; font-size:15px;">📐 SOMA DE n PRIMEIROS TERMOS (Sₙ):</strong></p>
-<div style="background:#ecf0f1; padding:12px; border-left:4px solid #27ae60; margin:8px 0; font-size:17px; text-align:center;">
-                $$S_n = \frac{(a_1 + a_n) \cdot n}{2} \quad \text{ou} \quad S_n = n \cdot a_1 + \frac{n(n-1)}{2} \cdot r$$
-            </div>
-<p><strong style="color:#27ae60;">✓ EXEMPLO:</strong> Soma dos 10 primeiros termos da PA: 2, 5, 8, 11...</p>
-<p>• a₁ = 2, r = 3, n = 10, a₁₀ = 29</p>
-<p>• S₁₀ = (2 + 29) · 10 / 2 = 31 · 5 = <strong>155</strong></p>
-<p><strong style="color:#9b59b6;">🎓 EXERCÍCIO RESOLVIDO (Razão a partir de dois termos):</strong></p>
+<p><strong style="color:#27ae60;">✓ EXEMPLOS PRÁTICOS:</strong></p>
+<p>• <strong>Retângulo 5×8:</strong> P = 2(5+8) = 26 | A = 5×8 = 40</p>
+<p>• <strong>Círculo r=3:</strong> C = 2π(3) ≈ 18,85 | A = π(3²) ≈ 28,27</p>
+<p>• <strong>Trapézio B=10, b=6, h=4:</strong> A = (10+6)×4/2 = 32</p>
+<p><strong style="color:#e74c3c; font-size:15px; margin-top:12px;">LEMBRETE IMPORTANTE:</strong></p>
+<p>📌 Perímetro é em UNIDADES lineares (cm, m) | Área é em UNIDADES quadradas (cm², m²)</p>
+<p style="margin-top:12px;"><strong style="color:#e74c3c; font-size:13px;">✓ EXERCÍCIO RESOLVIDO 9 (Página 2 - Perímetro Retângulo):</strong></p>
+<div style="background:#f0f8ff; padding:10px; border-left:4px solid #2196F3; margin:8px 0; border-radius:4px;">
+<p style="margin:4px 0;"><strong>Questão:</strong> Um retângulo tem comprimento 12 cm e largura 8 cm. Calcule perímetro e área.</p>
+<p style="margin:4px 0;"><strong>Solução:</strong></p>
+<p style="margin:4px 0;">• P = 2(c + l) = 2(12 + 8) = 2(20) = <strong>40 cm</strong></p>
+<p style="margin:4px 0;">• A = c × l = 12 × 8 = <strong>96 cm²</strong></p>
+</div>
+<p style="margin-top:10px;"><strong style="color:#e74c3c; font-size:13px;">✓ EXERCÍCIO RESOLVIDO 10 (Página 2 - Área Círculo):</strong></p>
+<div style="background:#fff3e0; padding:10px; border-left:4px solid #ff9800; margin:8px 0; border-radius:4px;">
+<p style="margin:4px 0;"><strong>Questão:</strong> Um círculo tem raio 5 cm. Calcule circunferência e área.</p>
+<p style="margin:4px 0;"><strong>Solução:</strong></p>
+<p style="margin:4px 0;">• C = 2πr = 2π(5) = <strong>10π ≈ 31,4 cm</strong></p>
+<p style="margin:4px 0;">• A = πr² = π(5²) = <strong>25π ≈ 78,5 cm²</strong></p>
+</div>
+<p style="margin-top:10px;"><strong style="color:#e74c3c; font-size:13px;">✓ EXERCÍCIO RESOLVIDO 11 (Página 2 - Área Trapézio):</strong></p>
+<div style="background:#e8f5e9; padding:10px; border-left:4px solid #4caf50; margin:8px 0; border-radius:4px;">
+<p style="margin:4px 0;"><strong>Questão:</strong> Um trapézio tem base maior 10 cm, base menor 6 cm, altura 4 cm. Calcule área.</p>
+<p style="margin:4px 0;"><strong>Solução:</strong></p>
+<p style="margin:4px 0;">• A = (B + b) × h / 2 = (10 + 6) × 4 / 2 = 16 × 4 / 2 = <strong>32 cm²</strong></p>
+</div>
+<p style="margin-top:10px;"><strong style="color:#9b59b6; font-size:13px;">🎓 EXERCÍCIO RESOLVIDO 26 (Quadrado):</strong></p>
 <div style="background:#f0e8f5; padding:10px; border-left:4px solid #9b59b6; margin:8px 0; border-radius:4px;">
-<p><strong>Questão:</strong> Numa PA, a₃ = 11 e a₇ = 27. Calcule a razão r e o primeiro termo a₁.</p>
-<p><strong>Solução:</strong> De a₃ a a₇ são 4 "passos" (7-3=4): a₇ = a₃ + 4r → 27 = 11 + 4r → 4r = 16 → <strong>r = 4</strong></p>
-<p>Para achar a₁: a₃ = a₁ + 2r → 11 = a₁ + 2(4) → a₁ = 11 - 8 = <strong>3</strong></p>
+<p><strong>Questão:</strong> Um quadrado tem lado 6 cm. Calcule perímetro e área.</p>
+<p><strong>Solução:</strong></p>
+<p>• P = 4l = 4(6) = <strong>24 cm</strong></p>
+<p>• A = l² = 6² = <strong>36 cm²</strong></p>
 </div>
-<p><strong style="color:#9b59b6;">🎓 EXERCÍCIO RESOLVIDO (Interpolação Aritmética):</strong></p>
+<p style="margin-top:10px;"><strong style="color:#9b59b6; font-size:13px;">🎓 EXERCÍCIO RESOLVIDO 27 (Triângulo):</strong></p>
 <div style="background:#f0e8f5; padding:10px; border-left:4px solid #9b59b6; margin:8px 0; border-radius:4px;">
-<p><strong>Questão:</strong> Interpole 3 meios aritméticos entre 5 e 25 (ou seja, forme uma PA de 5 termos começando em 5 e terminando em 25).</p>
-<p><strong>Solução:</strong> a₁=5, a₅=25, n=5 → a₅ = a₁ + 4r → 25 = 5 + 4r → r = <strong>5</strong></p>
-<p>PA completa: <strong>5, 10, 15, 20, 25</strong></p>
+<p><strong>Questão:</strong> Um triângulo tem base 8 cm e altura 5 cm. Calcule área.</p>
+<p><strong>Solução:</strong></p>
+<p>• A = (base × altura) / 2 = (8 × 5) / 2 = 40 / 2 = <strong>20 cm²</strong></p>
 </div>
-<p style="margin-top:12px;"><strong style="color:#e74c3c; font-size:14px;">📝 ATIVIDADES PARA PRATICAR:</strong></p>
-<div style="background:#f9f9f9; padding:10px; border-left:4px solid #3498db; margin:8px 0; border-radius:4px;">
-<p><strong>Atividade 1:</strong> Numa PA, a₁ = 4 e r = 6. Calcule a₈ e a soma dos 8 primeiros termos.</p>
-<p><strong>Atividade 2:</strong> Classifique a PA (-3, -7, -11, -15...) quanto à razão (crescente/decrescente/constante) e encontre o 10º termo.</p>
+<p style="margin-top:10px;"><strong style="color:#9b59b6; font-size:13px;">🎓 EXERCÍCIO RESOLVIDO 28 (Losango):</strong></p>
+<div style="background:#f0e8f5; padding:10px; border-left:4px solid #9b59b6; margin:8px 0; border-radius:4px;">
+<p><strong>Questão:</strong> Um losango tem diagonais D = 12 cm e d = 8 cm. Calcule área.</p>
+<p><strong>Solução:</strong></p>
+<p>• A = (D × d) / 2 = (12 × 8) / 2 = 96 / 2 = <strong>48 cm²</strong></p>
 </div>
-<p><strong style="color:#9b59b6; margin-top:15px;">📝 ESPAÇO PARA CÁLCULOS:</strong></p>
-<div style="border:2px dashed #bdc3c7; padding:20px; background:#f9f9f9; height:60px; margin:10px 0;"></div>
+<p style="margin-top:10px;"><strong style="color:#9b59b6; font-size:13px;">🎓 EXERCÍCIO RESOLVIDO 29 (Setor Circular):</strong></p>
+<div style="background:#f0e8f5; padding:10px; border-left:4px solid #9b59b6; margin:8px 0; border-radius:4px;">
+<p><strong>Questão:</strong> Um setor circular tem raio 6 cm e ângulo central de 60°. Calcule sua área.</p>
+<p><strong>Solução:</strong> A = (θ/360°) × πr² = (60/360) × π(6²) = (1/6) × 36π = <strong>6π ≈ 18,85 cm²</strong></p>
+</div>
+<p style="margin-top:10px;"><strong style="color:#9b59b6; font-size:13px;">🎓 EXERCÍCIO RESOLVIDO 30 (Coroa Circular):</strong></p>
+<div style="background:#f0e8f5; padding:10px; border-left:4px solid #9b59b6; margin:8px 0; border-radius:4px;">
+<p><strong>Questão:</strong> Uma coroa circular tem raio maior R = 8 cm e raio menor r = 5 cm. Calcule sua área.</p>
+<p><strong>Solução:</strong> A = π(R² - r²) = π(64 - 25) = <strong>39π ≈ 122,5 cm²</strong></p>
+</div>
+<h2 style="margin-top:20px;">2.4.4 POLÍGONOS - ÂNGULOS INTERNOS</h2>
+<p style="margin:2px 0 12px 0;"><a href="#indice" style="font-size:10.5px; color:#3498db; text-decoration:none; font-weight:600;">📄</a></p>
+<p><strong style="color:#2c3e50;">POLÍGONO:</strong> figura plana fechada formada por segmentos de reta (lados). Classifica-se pelo número de lados.</p>
+<table style="width:100%; border-collapse:collapse; margin:8px 0; font-size:12px;">
+<tr style="background:#2c3e50; color:#fff;">
+<td style="padding:6px; text-align:center;"><strong>Nome</strong></td>
+<td style="padding:6px; text-align:center;"><strong>Lados (n)</strong></td>
+<td style="padding:6px; text-align:center;"><strong>Soma ângulos internos</strong></td>
+<td style="padding:6px; text-align:center;"><strong>Ângulo interno (regular)</strong></td>
+</tr>
+<tr style="background:#ecf0f1;">
+<td style="padding:6px; text-align:center; border:1px solid #ddd;">Triângulo</td>
+<td style="padding:6px; text-align:center; border:1px solid #ddd;">3</td>
+<td style="padding:6px; text-align:center; border:1px solid #ddd;">180°</td>
+<td style="padding:6px; text-align:center; border:1px solid #ddd;">60°</td>
+</tr>
+<tr>
+<td style="padding:6px; text-align:center; border:1px solid #ddd;">Quadrilátero</td>
+<td style="padding:6px; text-align:center; border:1px solid #ddd;">4</td>
+<td style="padding:6px; text-align:center; border:1px solid #ddd;">360°</td>
+<td style="padding:6px; text-align:center; border:1px solid #ddd;">90°</td>
+</tr>
+<tr style="background:#ecf0f1;">
+<td style="padding:6px; text-align:center; border:1px solid #ddd;">Pentágono</td>
+<td style="padding:6px; text-align:center; border:1px solid #ddd;">5</td>
+<td style="padding:6px; text-align:center; border:1px solid #ddd;">540°</td>
+<td style="padding:6px; text-align:center; border:1px solid #ddd;">108°</td>
+</tr>
+<tr>
+<td style="padding:6px; text-align:center; border:1px solid #ddd;">Hexágono</td>
+<td style="padding:6px; text-align:center; border:1px solid #ddd;">6</td>
+<td style="padding:6px; text-align:center; border:1px solid #ddd;">720°</td>
+<td style="padding:6px; text-align:center; border:1px solid #ddd;">120°</td>
+</tr>
+<tr style="background:#ecf0f1;">
+<td style="padding:6px; text-align:center; border:1px solid #ddd;">Octógono</td>
+<td style="padding:6px; text-align:center; border:1px solid #ddd;">8</td>
+<td style="padding:6px; text-align:center; border:1px solid #ddd;">1080°</td>
+<td style="padding:6px; text-align:center; border:1px solid #ddd;">135°</td>
+</tr>
+</table>
+<div style="background:#ecf0f1; padding:10px; border-left:4px solid #3498db; margin:8px 0; text-align:center;">
+                $$S_i = (n-2) \times 180° \qquad a_i = \frac{S_i}{n} \text{ (polígono regular)}$$
+            </div>
+<p><strong style="color:#9b59b6;">🎓 EXERCÍCIO RESOLVIDO 31 (Ângulos de Polígono):</strong></p>
+<div style="background:#f0e8f5; padding:10px; border-left:4px solid #9b59b6; margin:8px 0; border-radius:4px;">
+<p><strong>Questão:</strong> Calcule a soma dos ângulos internos e o ângulo interno de um hexágono regular.</p>
+<p><strong>Solução:</strong> $S_i = (6-2) \times 180° = 4 \times 180° = 720°$</p>
+<p>Ângulo interno: $a_i = 720°/6 = \textbf{120°}$</p>
+</div>
+<h2 style="margin-top:20px;">2.4.5 SEMELHANÇA DE TRIÂNGULOS E TEOREMA DE TALES</h2>
+<p style="margin:2px 0 12px 0;"><a href="#indice" style="font-size:10.5px; color:#3498db; text-decoration:none; font-weight:600;">📄</a></p>
+<p><strong style="color:#2c3e50;">TEOREMA DE TALES:</strong> Um feixe de retas paralelas cortado por duas retas transversais determina segmentos proporcionais.</p>
+<div style="background:#e8f4f8; padding:10px; border-left:4px solid #3498db; margin:6px 0; text-align:center;">
+                $$\frac{AB}{A'B'} = \frac{BC}{B'C'}$$
+            </div>
+<p><strong style="color:#2c3e50;">TRIÂNGULOS SEMELHANTES:</strong> mesma forma, tamanhos proporcionais. Ângulos correspondentes iguais, lados correspondentes proporcionais (razão de semelhança k).</p>
+<div style="background:#e8f4f8; padding:10px; border-left:4px solid #3498db; margin:6px 0; text-align:center;">
+                $$k = \frac{\text{lado do triângulo maior}}{\text{lado correspondente do triângulo menor}}$$
+            </div>
+<p>📌 Se a razão de semelhança é k, a razão entre as ÁREAS é k² (área escala com o quadrado da razão linear).</p>
+<p><strong style="color:#9b59b6;">🎓 EXERCÍCIO RESOLVIDO 32 (Semelhança de Triângulos):</strong></p>
+<div style="background:#f0e8f5; padding:10px; border-left:4px solid #9b59b6; margin:8px 0; border-radius:4px;">
+<p><strong>Questão:</strong> Dois triângulos são semelhantes com razão k = 3. Se o menor tem área 5 cm², qual a área do maior?</p>
+<p><strong>Solução:</strong> Razão entre áreas = k² = 3² = 9. Área maior = 5 × 9 = <strong>45 cm²</strong></p>
 </div>
 </div>
+</div>
+<script>
+function __renderKatexNow(){
+  if (typeof renderMathInElement === "function") {
+    renderMathInElement(document.body, {
+      delimiters: [
+        {left: "$$", right: "$$", display: true},
+        {left: "$", right: "$", display: false}
+      ],
+      throwOnError: false
+    });
+  } else {
+    setTimeout(__renderKatexNow, 60);
+  }
+}
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", __renderKatexNow);
+} else {
+  __renderKatexNow();
+}
+window.addEventListener("load", __renderKatexNow);
+</script>
 </body>
 </html>

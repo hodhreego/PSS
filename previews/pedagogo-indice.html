@@ -7,7 +7,9 @@
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
 <style>
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -408,5 +410,26 @@ html,body{margin:0; padding:0; background:#fff;}
 </div>
 </div>
 </div>
+<script>
+function __renderKatexNow(){
+  if (typeof renderMathInElement === "function") {
+    renderMathInElement(document.body, {
+      delimiters: [
+        {left: "$$", right: "$$", display: true},
+        {left: "$", right: "$", display: false}
+      ],
+      throwOnError: false
+    });
+  } else {
+    setTimeout(__renderKatexNow, 60);
+  }
+}
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", __renderKatexNow);
+} else {
+  __renderKatexNow();
+}
+window.addEventListener("load", __renderKatexNow);
+</script>
 </body>
 </html>
