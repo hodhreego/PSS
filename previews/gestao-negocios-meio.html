@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>preview</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<style>
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { height: 100%; }
+        body { height: 100%; font-family: 'Noto Sans', Arial, 'Segoe UI', sans-serif; background-color: #f0f2f5; display: flex; overflow: hidden; }
+
+        /* PAINEL LATERAL */
+        .sidebar {
+            width: 300px;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: #ecf0f1;
+            padding: 20px;
+            overflow-y: auto;
+            box-shadow: 4px 0 12px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+        .sidebar h2 { font-size: 15px; margin-bottom: 12px; border-bottom: 3px solid #3498db; padding-bottom: 8px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+        .control-group { margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid #445a6f; }
+        .control-group:last-child { border-bottom: none; }
+        .control-group label { display: block; font-size: 10px; margin-bottom: 4px; text-transform: uppercase; color: #bdc3c7; font-weight: 600; letter-spacing: 0.5px; }
+        .control-group input[type="text"] { width: 100%; padding: 6px 10px; background-color: #1f3a52; color: #ecf0f1; border: 1px solid #3498db; border-radius: 4px; font-size: 12px; font-family: 'Noto Sans', Arial, sans-serif; transition: all 0.3s ease; }
+        .control-group input[type="text"]:focus { outline: none; background-color: #254a68; border-color: #2ecc71; box-shadow: 0 0 8px rgba(46, 204, 113, 0.3); }
+        .control-group input[type="range"] { width: 100%; height: 6px; border-radius: 3px; background: linear-gradient(to right, #2980b9, #3498db); outline: none; -webkit-appearance: none; cursor: pointer; margin-bottom: 4px; }
+        .control-group input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: #f39c12; cursor: pointer; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); }
+        .control-group input[type="range"]::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: #f39c12; cursor: pointer; border: none; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); }
+        .value-display { display: inline-block; background-color: #1f3a52; padding: 4px 8px; border-radius: 3px; font-size: 10px; color: #f39c12; font-weight: 700; border: 1px solid #3498db; }
+        .control-group select { width: 100%; padding: 6px 10px; background-color: #1f3a52; color: #ecf0f1; border: 1px solid #3498db; border-radius: 4px; font-size: 12px; cursor: pointer; transition: all 0.3s ease; }
+        .control-group select:focus { outline: none; border-color: #2ecc71; }
+        button { border: none; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.3s ease; }
+        #generatePdfBtn { width: 100%; padding: 9px; background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; margin-bottom: 6px; }
+        #printBtn { width: 100%; padding: 9px; background: linear-gradient(135deg, #3498db, #2980b9); color: white; margin-bottom: 6px; }
+        #resetBtn { width: 100%; padding: 9px; background: linear-gradient(135deg, #95a5a6, #7f8c8d); color: white; }
+        .status-message { padding: 6px; border-radius: 3px; font-size: 11px; text-align: center; margin-bottom: 8px; display: none; }
+        .status-message.success { background-color: #27ae60; color: white; display: block; }
+
+        /* Painel colapsável — ajustes de fonte exclusivos das capas/divisórias.
+           Fica fechado por padrão pra não atrapalhar os controles do dia a dia. */
+        .capa-fonts-details { margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid #445a6f; }
+        .capa-fonts-details summary {
+            cursor: pointer; font-size: 12px; font-weight: 700; color: #f39c12;
+            text-transform: uppercase; letter-spacing: 0.5px; padding: 6px 0;
+            list-style: none; user-select: none;
+        }
+        .capa-fonts-details summary::-webkit-details-marker { display: none; }
+        .capa-fonts-details summary::before { content: "▸ "; }
+        .capa-fonts-details[open] summary::before { content: "▾ "; }
+        .capa-fonts-details .capa-fonts-body { padding-top: 4px; }
+        .capa-fonts-details .control-group { margin-bottom: 6px; padding-bottom: 4px; }
+        #resetCapaFontsBtn { width: 100%; padding: 7px; margin-top: 2px; background: linear-gradient(135deg, #95a5a6, #7f8c8d); color: #fff; font-size: 10px; }
+
+        /* CONTEÚDO PRINCIPAL - fluxo HTML normal, sem altura fixa de A4.
+           A paginação real acontece no momento da impressão (Ctrl+P), feita pelo
+           proprio motor do Chrome, guiado pela regra @page abaixo. */
+        .main-content { flex: 1; overflow-y: auto; padding: 30px; background: linear-gradient(135deg, #ecf0f1 0%, #f5f7fa 100%); }
+        /* No navegador, so as paginas "fixas" (capa/contracapa/divisorias de
+           secao) mantem o formato A4 rigido - elas dependem disso pro layout
+           visual (circulo decorativo, texto centralizado etc.). As paginas de
+           conteudo comum ficam com layout livre/responsivo na tela, ocupando
+           o espaco disponivel da janela, o que facilita muito a leitura e
+           revisao no navegador. No PDF/impressao (@media print, mais abaixo)
+           TODAS as paginas continuam sendo forcadas para o tamanho A4 exato -
+           isso aqui afeta so a visualizacao em tela. */
+        .page { background-color: white; width: 210mm; max-width: 100%; margin: 0 auto 20px; padding: 20mm 15mm; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); position: relative; }
+        /* @media screen (nao @media print) - isso garante que essa regra
+           NUNCA seja considerada na hora de imprimir/exportar PDF, mesmo que
+           a especificidade dela seja maior que a da regra .page dentro do
+           @media print mais abaixo. Sem o @media screen aqui, a maior
+           especificidade desta regra venceria por cima da regra de impressao
+           e quebraria o tamanho A4 fixo no PDF. */
+        @media screen {
+            .page:not(.cover-page):not(.divider-page) {
+                width: 100%;
+                max-width: 1100px;
+                padding: 32px 40px;
+            }
+        }
+        .cover-page {
+          background: linear-gradient(160deg, #1c4c8c 0%, #0f3c78 55%, #071f42 100%);
+          color: #fff;
+          min-height: 297mm;
+          box-sizing: border-box;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          padding: 30mm var(--capa-padding-h, 70px);
+          text-align: center;
+          position: relative;
+          overflow: hidden;
+        }
+        .cover-page::before {
+          content: "";
+          position: absolute;
+          top: 10%;
+          left: 50%;
+          width: 84%;
+          padding-bottom: 84%;
+          transform: translateX(-50%);
+          border-radius: 50%;
+          background: rgba(255,255,255,0.07);
+        }
+        .cover-topo, .cover-titulo, .cover-rodape { position: relative; z-index: 1; }
+        .cover-titulo { margin-top: 55px; }
+        .cover-rodape { margin-top: auto; padding-top: 40px; }
+        .cover-topo .cp-programa {
+          font-family: Georgia, 'Times New Roman', serif;
+          font-size: 13pt; letter-spacing: 0.35em; color: #f6c453; margin: 0 0 6px 0;
+        }
+        .cover-topo .cp-instituicao {
+          font-family: Georgia, 'Times New Roman', serif; font-weight: bold;
+          font-size: 22pt; letter-spacing: 0.04em; color: #fff; margin: 0;
+        }
+        .cover-topo .cp-ano {
+          font-family: Georgia, 'Times New Roman', serif; font-size: 14pt;
+          letter-spacing: 0.3em; color: #f6c453; margin: 6px 0 0 0;
+        }
+        .cover-topo .cp-linha { width: 200px; height: 2px; background: #e8794a; margin: 14px auto 0; position: relative; }
+        .cover-topo .cp-linha::after {
+          content: ""; position: absolute; top: 50%; left: 50%; width: 9px; height: 9px;
+          border-radius: 50%; background: #f6c453; transform: translate(-50%,-50%);
+        }
+        .cover-topo .cp-programa { font-size: var(--fs-programa, 13pt); }
+        .cover-topo .cp-instituicao { font-size: var(--fs-instituicao, 22pt); }
+        .cover-topo .cp-ano { font-size: var(--fs-ano, 14pt); }
+        .cover-topo .cp-aviso-topo {
+          display: inline-block; margin: 32px auto 0; font-size: var(--fs-avisotopo, 13.1pt); font-weight: bold;
+          line-height: 1.4; color: #fff; background: rgba(200,60,50,0.92); border: 1px solid rgba(255,255,255,0.6);
+          padding: 8px 16px; border-radius: 0; text-align: center;
+        }
+        .cover-titulo .cp-materia {
+          font-family: Georgia, 'Times New Roman', serif; font-weight: 900;
+          font-size: var(--fs-titulo-nowrap, 37pt); color: #ffe135; margin: 0; line-height: 1.05;
+          text-shadow: 0 2px 18px rgba(0,0,0,0.35);
+          white-space: nowrap;
+        }
+        .cover-titulo .cp-materia.cp-materia-wrap {
+          /* font-size 100% controlado pelo painel (--fs-titulo). O ajuste fino
+             para NUNCA estourar a margem (janela estreita, titulo longo) e feito
+             via JS (fitCapaTitle), que encolhe so o necessario, mantendo o
+             valor do slider como teto normal em telas largas. */
+          font-size: var(--fs-titulo, 48pt);
+          white-space: normal; line-height: 1.15; color: #ffe135; text-align: left;
+        }
+        .cover-titulo .cp-subtitulo1 {
+          font-family: Georgia, 'Times New Roman', serif; font-weight: bold;
+          font-size: var(--fs-subtitulo1, 22pt); color: #fff; margin: 14px 0 0 0; line-height: 1.15;
+        }
+        .cover-titulo .cp-subtitulo2 {
+          font-family: Georgia, 'Times New Roman', serif; font-size: var(--fs-subtitulo2, 12pt);
+          letter-spacing: 0.1em; color: #cfe0f4; margin: 16px auto 0; max-width: 80%;
+          text-transform: uppercase;
+        }
+        .cover-rodape .cp-linha-fina { width: 60%; height: 1px; background: rgba(255,255,255,0.35); margin: 0 auto 12px; }
+        .cover-rodape .cp-copyright { font-size: var(--fs-copyright, 10.5pt); font-weight: bold; color: #fff; margin: 0 0 8px 0; white-space: nowrap; text-align: center; }
+        .cover-rodape .cp-aviso {
+          display: inline-block; font-size: var(--fs-avisorodape, 10.5pt); font-weight: bold; color: #fff;
+          background: rgba(200,60,50,0.85); border: 1px solid rgba(255,255,255,0.5);
+          padding: 6px 14px; margin: 0;
+        }
+        /* Capas de secao (PARTE N) - mesmas variaveis CSS controlaveis pelo painel colapsavel */
+        .divider-page .dv-header { font-size: var(--fs-dv-header, 17px); letter-spacing: 0.18em; color: #fff; font-weight: bold; margin: 0 0 22px 0; text-align: center; }
+        .divider-page .dv-parte { font-size: var(--fs-dv-parte, 14px); letter-spacing: 0.3em; color: #f39c12; margin: 0 0 10px 0; }
+        .divider-page .dv-titulo { font-size: var(--fs-dv-titulo, 40px); color: #fff; border: none; padding: 0; margin: 0 0 14px 0; }
+        .divider-page .dv-linha { width: 120px; height: 3px; margin: 0 0 18px 0; }
+        .divider-page .dv-subtitulo { font-size: var(--fs-dv-subtitulo, 14px); color: #bdc3c7; max-width: 70%; text-align: center; }
+
+        /* TIPOGRAFIA - HIERARQUIA CLARA */
+        .page h1 { text-align: center; font-size: 26px; font-weight: 800; margin-bottom: 20px; margin-top: 0; color: #1a252f; border-bottom: 4px solid #3498db; padding-bottom: 12px; letter-spacing: 0.5px; }
+        .page h2 { font-size: 18px; font-weight: 700; color: #2c3e50; margin-top: 18px; margin-bottom: 12px; border-left: 5px solid #3498db; padding-left: 12px; }
+        .page h3 { font-size: 14px; font-weight: 600; color: #34495e; margin-top: 12px; margin-bottom: 8px; margin-left: 0; }
+        .page h4 { font-size: 12px; font-weight: 600; color: #555; margin-top: 10px; margin-bottom: 6px; margin-left: 0; }
+        .page p { text-align: justify; font-size: 13px; line-height: 1.5; color: #2c3e50; margin: 6px 0; }
+        .page strong { font-weight: 700; color: #1a252f; }
+        .page em { font-style: italic; }
+        .page ul, .page ol { margin: 8px 0; padding-left: 20px; }
+
+        /* ÍNDICE — estilo padrão de sumário impresso: hierarquia clara por
+           tamanho/peso (sem saltos desproporcionais), numeração alinhada à
+           esquerda, linha pontilhada guia até a margem direita (como em
+           livros/apostilas tradicionais), cores em degradê de cinza-azulado. */
+        .toc-container { margin-top: 15px; font-family: 'Noto Sans', Arial, 'Segoe UI', sans-serif; }
+        .toc-level-1 { margin-bottom: 12px; }
+        .toc-level-1 > .toc-title {
+            font-size: 14pt; font-weight: 700; color: #1a252f; text-transform: uppercase;
+            letter-spacing: 0.03em; margin-bottom: 6px; padding: 4px 0 4px 10px;
+            border-left: 4px solid #3498db; display: flex; align-items: baseline;
+        }
+        .toc-level-2 { margin-left: 18px; margin-bottom: 3px; }
+        .toc-level-2 > .toc-title { font-size: 11.5pt; font-weight: 600; color: #2c3e50; display: flex; align-items: baseline; }
+        .toc-level-3 { margin-left: 34px; margin-bottom: 2px; }
+        .toc-level-3 > .toc-title { font-size: 10.5pt; font-weight: 400; color: #5d6d7e; display: flex; align-items: baseline; }
+        .toc-level-4 { margin-left: 48px; margin-bottom: 2px; }
+        .toc-level-4 > .toc-title { font-size: 9.5pt; font-weight: 400; color: #85929e; font-style: italic; display: flex; align-items: baseline; }
+        .toc-title { cursor: pointer; transition: color 0.15s ease; }
+        .toc-title:hover { color: #3498db; }
+        .toc-link {
+            color: inherit; text-decoration: none; display: flex; align-items: baseline;
+            flex-wrap: wrap; width: 100%; overflow: visible; white-space: normal;
+        }
+        .toc-link:hover { color: #3498db; }
+        /* linha pontilhada guia, no estilo classico de sumario de livro */
+        .toc-link::after {
+            content: ""; flex: 1 1 auto; margin: 0 6px; order: 1;
+            border-bottom: 1.5px dotted #b8c2cc; height: 0; align-self: baseline;
+            transform: translateY(-3px);
+        }
+        .toc-link > span, .toc-link > *:not(:first-child) { order: 2; flex-shrink: 0; }
+        html { scroll-behavior: smooth; }
+        .page[id], h1[id], h2[id], p[id] { scroll-margin-top: 20px; }
+
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #ecf0f1; }
+        ::-webkit-scrollbar-thumb { background: #3498db; border-radius: 5px; }
+
+        /* Tamanho de folha para impressão/PDF - quem decide onde cada pagina
+           comeca e termina agora e o motor de impressao do Chrome, nao mais
+           divs de altura fixa. "size: auto" (em vez de forçar A4) deixa a
+           folha se ajustar automaticamente ao papel que a pessoa escolher no
+           dialogo de impressao (A4, Carta/Letter, Ofício etc.) - as regras
+           abaixo usam % e vh em vez de mm fixo, entao acompanham esse
+           tamanho escolhido. */
+        @page {
+            margin: 0;
+        }
+
+        @media print {
+            html, body {
+                height: auto;
+                overflow: visible;
+                display: block;
+            }
+            .sidebar { display: none; }
+            .main-content {
+                flex: none;
+                overflow: visible;
+                padding: 0;
+                background: white;
+            }
+            .page {
+                width: 100%;
+                max-width: 100%;
+                margin: 0;
+                padding: 20mm 15mm;
+                box-shadow: none;
+                break-after: page;
+                page-break-after: always;
+            }
+            .page:last-child {
+                break-after: auto;
+                page-break-after: auto;
+            }
+            /* Capa deve ocupar exatamente 1 folha A4 inteira (sangria total).
+               @page agora tem margin:0, entao a propria .cover-page (com seu
+               padding interno de 30mm 18mm, ja definido fora do @media print)
+               preenche a folha inteira sem precisar de nenhum truque de
+               margem negativa - abordagem mais robusta e previsivel entre
+               diferentes configuracoes de impressao/exportacao de PDF. */
+            .cover-page, .divider-page {
+                width: 100%;
+                height: 100%;
+                min-height: 100vh;
+                margin: 0;
+            }
+            .cover-page {
+                padding: 30mm var(--capa-padding-h, 70px);
+                page-break-after: always;
+            }
+            /* Capas de secao (PARTE N) tambem devem ocupar exatamente 1 folha
+               inteira - sem isso, o padding:20mm 15mm da regra .page generica
+               soma com o min-height:297mm do estilo inline da divisoria e
+               estoura pra uma segunda folha em branco. */
+            .divider-page {
+                min-height: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            /* Evita que o navegador corte no meio de tabelas, ilustracoes e
+               caixas de exercicio/formula - cada uma pula para a proxima
+               folha inteira se nao couber no espaco restante. */
+            svg, table, .toc-container,
+            .page > div[style*="border-left"],
+            .page > div[style*="border:2px dashed"],
+            .page > div[style*="border: 2px dashed"] {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+            h1, h2, h3 {
+                break-after: avoid;
+                page-break-after: avoid;
+            }
+            /* Nem h1 nem h2 forcam quebra de pagina sozinhos - a quebra
+               acontece SOMENTE entre capitulos (cada .page ja quebra pra
+               folha nova via a regra .page { break-before: page } acima).
+               Titulos de nivel 2 dentro do mesmo capitulo ficam junto do
+               conteudo deles, sem isolar o titulo sozinho numa folha. */
+            /* Cada .capitulo (cada Simulado/Apendice inteiro) comeca em
+               folha nova na impressao - isso permite ao professor imprimir
+               um simulado especifico sozinho, sabendo que ele sempre comeca
+               numa pagina redonda, sem conteudo de outro simulado antes. */
+            .capitulo {
+                break-before: page;
+                page-break-before: always;
+            }
+        }
+
+        /* ===== ESTILOS DOS SIMULADOS (portados da apostila de matematica) ===== */
+        .capitulo { margin-bottom: 44px; }
+        .subsecao { margin-bottom: 26px; }
+        .conceito { background:#eef7ff; border-left:4px solid #1976d2; padding:10px 14px; margin:12px 0; font-size:12.5px; }
+        .conteudo p { margin: 8px 0; }
+        .exercicios-ufpr { background: #ffffff; padding: 15px; margin: 18px 0; border: 1px solid #ccc; border-radius: 4px; font-size: 12.5px; }
+        .exercicios-ufpr h5 { margin: 0 0 10px 0; }
+        .questao-ufpr { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
+        .questao-ufpr:last-child { border-bottom: none; }
+        .questao-numero { font-weight: bold; color: #1976d2; margin: 0 0 6px 0; }
+        .questao-enunciado { margin: 0 0 8px 0; }
+        .questao-opcoes { margin-left: 10px; }
+        .opcao { margin: 6px 0; }
+        .tipo-questao { font-weight: normal; font-style: italic; color: #777; font-size: 10.5pt; }
+        .questao-ce .opcao { display: inline-block; margin-right: 24px; }
+        .itens-somatoria { margin: 8px 0 8px 10px; list-style: none; padding-left: 0; }
+        .itens-somatoria li { margin: 6px 0; }
+        .instrucao-somatoria { color: #777; font-size: 10.5pt; margin: 6px 0 0 0; }
+        .colunas-associacao { display: flex; gap: 24px; margin: 10px 0; flex-wrap: wrap; }
+        .coluna-a, .coluna-b { flex: 1; min-width: 180px; }
+        .coluna-a ol, .coluna-b ol { margin: 6px 0 0 0; padding-left: 20px; }
+        .texto-lacunas { line-height: 1.9; }
+        .banco-palavras { background: #fff8e1; border-left: 3px solid #f9a825; padding: 8px 12px; margin: 8px 0 0 0; font-size: 11.5pt; }
+        .itens-ordenacao { margin: 8px 0 8px 10px; }
+        .itens-ordenacao li { margin: 6px 0; padding: 4px 10px; background: #fff; border: 1px dashed #bbb; border-radius: 3px; list-style: none; }
+        .linha-resposta { margin-top: 10px; color: #555; }
+        .linhas-discursiva { margin-top: 10px; }
+        .linha-pontilhada { border-bottom: 1px dotted #999; height: 24px; }
+        .exercicios-ufpr .questao-ufpr { page-break-inside: avoid; }
+        .gabarito-cap-titulo { font-size: 15px; color: #1976d2; margin: 18px 0 8px 0; border-bottom: 1px solid #ccc; padding-bottom: 4px; font-weight:700; }
+        .gabarito-tabela { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+        .gabarito-item { background: #eef7ff; border: 1px solid #b8d8f5; border-radius: 6px; padding: 6px 12px; font-size: 11.5px; }
+        .gabarito-item .resp { font-weight: bold; color: #1565c0; }
+        .gabarito-item .indisponivel { font-style: italic; color: #999; }
+        .gabarito-tipo { font-weight: normal; font-style: italic; font-size: 10px; color: #888; }
+
+        /* Correção automática de fórmulas/linhas que "estouram" a largura da
+           página quando o tamanho da fonte é aumentado no painel de ajustes.
+           Em vez de vazar pra fora da página, quebra a linha e marca a
+           continuação com uma seta, deixando claro que é a mesma fórmula. */
+        .formula-overflow-fix {
+            white-space: normal !important;
+            overflow-wrap: break-word;
+            word-break: break-word;
+            display: block;
+            padding-left: 1.4em;
+            text-indent: -1.4em;
+        }
+        .formula-overflow-fix::before {
+            content: "↳ ";
+            color: #1976d2;
+            font-weight: bold;
+        }
+    
+html,body{margin:0; padding:0; background:#fff;}
+</style>
+</head>
+<body>
+<div class="main-content" id="mainContent">
+<div class="page">
+<h2 id="comportamento-organizacional">1. COMPORTAMENTO ORGANIZACIONAL</h2>
+<p style="margin:2px 0 12px 0;"><a href="#indice" style="font-size:10.5px; color:#3498db; text-decoration:none; font-weight:600;">📄</a></p>
+<p><strong>COMPORTAMENTO ORGANIZACIONAL:</strong> é o campo de estudo que investiga o impacto que indivíduos, grupos e a estrutura organizacional têm sobre o comportamento dentro das organizações, com o objetivo de aplicar esse conhecimento para melhorar a eficácia organizacional. Envolve três níveis de análise: individual, grupal e organizacional (sistêmico).</p>
+<div style="background:#eef7ff; border-left:4px solid #1976d2; padding:10px 14px; margin:12px 0; font-size:12.5px;">
+<strong>Atenção:</strong> em provas UFPR, o comportamento organizacional costuma ser cobrado em blocos temáticos: motivação, liderança, cultura/clima, comunicação, equipes e mudança. Domine as teorias clássicas de motivação — são as mais recorrentes.
+    </div>
+<h3 style="color:#1976d2; margin-top:16px;">1.1 Teorias da Motivação</h3>
+<p><strong>HIERARQUIA DAS NECESSIDADES DE MASLOW:</strong> propõe que as necessidades humanas se organizam em uma pirâmide de cinco níveis, dos mais básicos aos mais elevados: (1) fisiológicas, (2) segurança, (3) sociais (afeto/pertencimento), (4) estima e (5) autorrealização. Segundo a teoria, uma necessidade satisfeita deixa de ser motivadora, e o indivíduo busca satisfazer o nível seguinte.</p>
+<table style="width:100%; border-collapse:collapse; margin:10px 0; font-size:12px;">
+<tr style="background:#1976d2; color:#fff;">
+<th style="padding:6px; border:1px solid #ccc;">Nível</th>
+<th style="padding:6px; border:1px solid #ccc;">Exemplo prático no trabalho</th>
+</tr>
+<tr><td style="padding:6px; border:1px solid #ccc;">Fisiológicas</td><td style="padding:6px; border:1px solid #ccc;">Salário para alimentação, moradia</td></tr>
+<tr style="background:#f5f5f5;"><td style="padding:6px; border:1px solid #ccc;">Segurança</td><td style="padding:6px; border:1px solid #ccc;">Estabilidade no emprego, plano de saúde</td></tr>
+<tr><td style="padding:6px; border:1px solid #ccc;">Sociais</td><td style="padding:6px; border:1px solid #ccc;">Bom relacionamento com colegas</td></tr>
+<tr style="background:#f5f5f5;"><td style="padding:6px; border:1px solid #ccc;">Estima</td><td style="padding:6px; border:1px solid #ccc;">Reconhecimento, promoção, status</td></tr>
+<tr><td style="padding:6px; border:1px solid #ccc;">Autorrealização</td><td style="padding:6px; border:1px solid #ccc;">Desenvolvimento pleno do potencial</td></tr>
+</table>
+<p><strong>TEORIA DOS DOIS FATORES DE HERZBERG:</strong> distingue fatores higiênicos (extrínsecos, ligados ao ambiente — salário, condições físicas, políticas da empresa, relações interpessoais) de fatores motivacionais (intrínsecos, ligados ao conteúdo do trabalho — reconhecimento, responsabilidade, crescimento). Fatores higiênicos, quando ausentes, geram insatisfação, mas sua presença apenas evita a insatisfação, não motiva por si só. Já os fatores motivacionais é que efetivamente geram satisfação e engajamento.</p>
+<p><strong>TEORIA X E TEORIA Y DE McGREGOR:</strong> descreve duas visões opostas sobre a natureza humana no trabalho. A Teoria X pressupõe que o trabalhador é naturalmente avesso ao trabalho, precisa ser controlado e coagido, evitando responsabilidades. A Teoria Y pressupõe que o trabalho é algo natural, que as pessoas podem se autodirigir e buscar responsabilidades quando comprometidas com os objetivos, exercendo criatividade.</p>
+<div style="background:#eef7ff; border-left:4px solid #1976d2; padding:10px 14px; margin:12px 0; font-size:12.5px;">
+<strong>Outras teorias cobradas em prova:</strong> Teoria da Expectativa (Vroom) — motivação depende da expectativa de que o esforço leve ao desempenho e este a recompensas valorizadas; Teoria da Equidade (Adams) — o indivíduo compara sua relação esforço/recompensa com a de outros; Teoria ERC (Alderfer) — Existência, Relacionamento e Crescimento, versão simplificada de Maslow, sem hierarquia rígida.
+    </div>
+<h3 style="color:#1976d2; margin-top:16px;">1.1 TEORIA DO REFORÇO DE SKINNER APLICADA AO TRABALHO</h3>
+<p><strong>Behaviorismo organizacional:</strong> B. F. Skinner defende que o comportamento humano no ambiente de trabalho é moldado por suas consequências, e não apenas por traços internos ou motivações psicológicas. A gestão pode, portanto, direcionar comportamentos desejados por meio do condicionamento operante.</p>
+<div style="background:#eef7ff; border-left:4px solid #1976d2; padding:10px 14px; margin:12px 0; font-size:12.5px;">
+<strong>As quatro estratégias de modificação do comportamento organizacional:</strong>
+<ul>
+<li><strong>Reforço positivo:</strong> apresentação de um estímulo agradável após o comportamento desejado, aumentando sua frequência (ex.: elogio público, bônus por meta atingida).</li>
+<li><strong>Reforço negativo:</strong> retirada de um estímulo desagradável quando o comportamento desejado ocorre, também aumentando sua frequência (ex.: dispensar reuniões de acompanhamento extra quando as entregas passam a ser feitas no prazo).</li>
+<li><strong>Punição:</strong> aplicação de um estímulo aversivo (ou retirada de um benefício) após um comportamento indesejado, com objetivo de reduzir sua frequência (ex.: advertência formal por atraso reiterado).</li>
+<li><strong>Extinção:</strong> interrupção do reforço que mantinha um comportamento indesejado, fazendo-o desaparecer gradualmente por falta de estímulo (ex.: deixar de dar atenção a reclamações infundadas repetitivas).</li>
+</ul>
+</div>
+<p>É comum bancas cobrarem a distinção entre reforço negativo e punição: <strong>reforço sempre aumenta a frequência de um comportamento</strong> (seja adicionando algo bom, seja retirando algo ruim); <strong>punição e extinção sempre diminuem</strong> a frequência de um comportamento.</p>
+<h3 style="color:#1976d2; margin-top:16px;">1.2 MODELO DOS CINCO GRANDES FATORES DE PERSONALIDADE (BIG FIVE)</h3>
+<p><strong>Big Five (OCEAN):</strong> modelo mais aceito atualmente na psicologia organizacional para descrever a personalidade humana a partir de cinco dimensões, cada uma em um contínuo entre polos opostos.</p>
+<table style="width:100%; border-collapse:collapse; margin:10px 0; font-size:12px;">
+<tr style="background:#1976d2; color:#fff;">
+<td style="padding:6px; border:1px solid #ccc;"><strong>Fator</strong></td>
+<td style="padding:6px; border:1px solid #ccc;"><strong>Características</strong></td>
+<td style="padding:6px; border:1px solid #ccc;"><strong>Relação com desempenho</strong></td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Abertura à experiência (Openness)</td>
+<td style="padding:6px; border:1px solid #ccc;">Curiosidade, criatividade, gosto por novidade</td>
+<td style="padding:6px; border:1px solid #ccc;">Prediz adaptação à mudança e desempenho em treinamentos</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Conscienciosidade (Conscientiousness)</td>
+<td style="padding:6px; border:1px solid #ccc;">Disciplina, organização, responsabilidade</td>
+<td style="padding:6px; border:1px solid #ccc;">Melhor preditor isolado de desempenho no trabalho em quase todas as ocupações</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Extroversão (Extraversion)</td>
+<td style="padding:6px; border:1px solid #ccc;">Sociabilidade, assertividade, energia</td>
+<td style="padding:6px; border:1px solid #ccc;">Associada a bom desempenho em cargos de liderança e vendas</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Amabilidade (Agreeableness)</td>
+<td style="padding:6px; border:1px solid #ccc;">Cooperação, confiança, empatia</td>
+<td style="padding:6px; border:1px solid #ccc;">Favorece trabalho em equipe e atendimento ao público</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Neuroticismo/Estabilidade emocional</td>
+<td style="padding:6px; border:1px solid #ccc;">Ansiedade, instabilidade emocional (polo negativo)</td>
+<td style="padding:6px; border:1px solid #ccc;">Baixo neuroticismo associado a maior resiliência e menor absenteísmo</td>
+</tr>
+</table>
+<h3 style="color:#1976d2; margin-top:16px;">1.3 ESTILOS COMPORTAMENTAIS DISC</h3>
+<p><strong>Modelo DISC:</strong> ferramenta de mapeamento comportamental amplamente usada em gestão de pessoas, baseada em quatro estilos que descrevem como o indivíduo tende a agir diante de desafios e do ambiente de trabalho.</p>
+<table style="width:100%; border-collapse:collapse; margin:10px 0; font-size:12px;">
+<tr style="background:#1976d2; color:#fff;">
+<td style="padding:6px; border:1px solid #ccc;"><strong>Estilo</strong></td>
+<td style="padding:6px; border:1px solid #ccc;"><strong>Foco</strong></td>
+<td style="padding:6px; border:1px solid #ccc;"><strong>Comportamento típico</strong></td>
+<td style="padding:6px; border:1px solid #ccc;"><strong>Ponto de atenção</strong></td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Dominância (D)</td>
+<td style="padding:6px; border:1px solid #ccc;">Resultados e desafios</td>
+<td style="padding:6px; border:1px solid #ccc;">Direto, decidido, competitivo</td>
+<td style="padding:6px; border:1px solid #ccc;">Pode ser visto como impaciente ou autoritário</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Influência (I)</td>
+<td style="padding:6px; border:1px solid #ccc;">Pessoas e reconhecimento</td>
+<td style="padding:6px; border:1px solid #ccc;">Comunicativo, entusiasta, persuasivo</td>
+<td style="padding:6px; border:1px solid #ccc;">Pode negligenciar detalhes e prazos</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Estabilidade (S)</td>
+<td style="padding:6px; border:1px solid #ccc;">Cooperação e segurança</td>
+<td style="padding:6px; border:1px solid #ccc;">Paciente, leal, bom ouvinte</td>
+<td style="padding:6px; border:1px solid #ccc;">Resistência a mudanças bruscas</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Conformidade (C)</td>
+<td style="padding:6px; border:1px solid #ccc;">Qualidade e precisão</td>
+<td style="padding:6px; border:1px solid #ccc;">Analítico, cauteloso, detalhista</td>
+<td style="padding:6px; border:1px solid #ccc;">Tendência à perfeição excessiva e lentidão decisória</td>
+</tr>
+</table>
+<h3 style="color:#1976d2; margin-top:16px;">1.4 EMPLOYEE EXPERIENCE E ENGAJAMENTO</h3>
+<p><strong>Employee experience (experiência do colaborador):</strong> conceito que trata a jornada do funcionário na organização — do recrutamento ao desligamento — de forma análoga à experiência do cliente, considerando ambiente físico, tecnológico e cultural como determinantes da percepção do trabalhador sobre a empresa.</p>
+<div style="background:#eef7ff; border-left:4px solid #1976d2; padding:10px 14px; margin:12px 0; font-size:12.5px;">
+<strong>Engajamento</strong> é o estado psicológico de conexão do colaborador com seu trabalho, caracterizado por vigor, dedicação e absorção (conceito de William Kahn e consolidado por Schaufeli). Diferencia-se de satisfação: um colaborador satisfeito pode não ser engajado, mas um engajado dificilmente é insatisfeito. Empresas com alto engajamento apresentam menor turnover, maior produtividade e melhores indicadores de clima organizacional.
+</div>
+<h3 style="color:#1976d2; margin-top:16px;">1.7 Clima Organizacional — Métodos de Pesquisa</h3>
+<p>O clima organizacional é a percepção coletiva e compartilhada que os colaboradores têm sobre o ambiente de trabalho, refletindo — de forma mais imediata e mutável do que a cultura — a satisfação com políticas, relacionamentos, liderança, condições físicas e práticas de gestão em um determinado momento. Enquanto a cultura organizacional é o conjunto profundo de valores, crenças e pressupostos compartilhados (mais estável e de mudança lenta), o clima é a "temperatura" percebida do ambiente, sujeita a variações conforme eventos recentes (uma reestruturação, uma crise, uma mudança de liderança). Mapear esse clima com rigor metodológico é essencial para a gestão de pessoas, pois direciona ações corretivas antes que a insatisfação evolua para turnover, absenteísmo ou queda de produtividade.</p>
+<p>Existem diversos métodos, cada um com vantagens e limitações que a banca costuma explorar:</p>
+<table style="width:100%; border-collapse:collapse; margin:10px 0; font-size:12px;">
+<tr style="background:#1976d2; color:#fff;">
+<td style="padding:6px; border:1px solid #ccc;"><strong>Método</strong></td>
+<td style="padding:6px; border:1px solid #ccc;"><strong>Características</strong></td>
+<td style="padding:6px; border:1px solid #ccc;"><strong>Vantagens</strong></td>
+<td style="padding:6px; border:1px solid #ccc;"><strong>Limitações</strong></td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Survey (questionário estruturado)</td>
+<td style="padding:6px; border:1px solid #ccc;">Aplicação de escalas fechadas (ex.: Likert de 1 a 5) sobre dimensões como liderança, remuneração, comunicação, condições de trabalho</td>
+<td style="padding:6px; border:1px solid #ccc;">Permite grande abrangência, comparabilidade estatística e sigilo/anonimato</td>
+<td style="padding:6px; border:1px solid #ccc;">Pouca profundidade qualitativa; risco de respostas socialmente desejáveis</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Grupos focais (focus groups)</td>
+<td style="padding:6px; border:1px solid #ccc;">Discussão guiada com pequenos grupos (6 a 12 pessoas) mediada por um facilitador</td>
+<td style="padding:6px; border:1px solid #ccc;">Capta nuances, causas subjacentes e sugestões de melhoria; permite interação entre participantes</td>
+<td style="padding:6px; border:1px solid #ccc;">Baixa representatividade estatística; risco de conformidade em grupo (efeito manada) e de participantes inibidos</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Entrevistas individuais</td>
+<td style="padding:6px; border:1px solid #ccc;">Conversas one-on-one, estruturadas, semiestruturadas ou abertas</td>
+<td style="padding:6px; border:1px solid #ccc;">Profundidade máxima; boa para temas sensíveis</td>
+<td style="padding:6px; border:1px solid #ccc;">Alto custo de tempo; difícil de escalar para toda a organização</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">NPS interno / eNPS (Employee Net Promoter Score)</td>
+<td style="padding:6px; border:1px solid #ccc;">Pergunta única — "De 0 a 10, o quanto você recomendaria esta organização como lugar para trabalhar?" — seguida de campo aberto opcional</td>
+<td style="padding:6px; border:1px solid #ccc;">Rápido, fácil de aplicar com frequência (pulse surveys), fácil de comparar ao longo do tempo</td>
+<td style="padding:6px; border:1px solid #ccc;">Métrica única, superficial; não diagnostica causas específicas sozinha</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Observação direta / etnografia organizacional</td>
+<td style="padding:6px; border:1px solid #ccc;">Observação do comportamento real no ambiente de trabalho, sem depender do autorrelato</td>
+<td style="padding:6px; border:1px solid #ccc;">Revela comportamentos não verbalizados ou não conscientes</td>
+<td style="padding:6px; border:1px solid #ccc;">Sujeita ao "efeito Hawthorne" (mudança de comportamento por se saber observado); demanda tempo e treinamento do observador</td>
+</tr>
+</table>
+<p>No eNPS, os respondentes são classificados em três grupos, tal como no NPS de clientes: <strong>promotores</strong> (notas 9-10, defendem ativamente a organização), <strong>neutros/passivos</strong> (notas 7-8, satisfeitos mas não engajados a ponto de recomendar) e <strong>detratores</strong> (notas 0-6, insatisfeitos e potenciais disseminadores de má reputação). O índice final é calculado por: <strong>eNPS = % Promotores − % Detratores</strong>, podendo variar de -100 a +100.</p>
+<p>Uma prática recomendada é a triangulação metodológica: combinar métodos quantitativos (survey, eNPS) com métodos qualitativos (grupos focais, entrevistas) para obter tanto abrangência estatística quanto profundidade explicativa — os números indicam "o quê" está acontecendo, e os relatos qualitativos explicam "por quê".</p>
+<div style="background:#eef7ff; border-left:4px solid #1976d2; padding:10px 14px; margin:12px 0; font-size:12.5px;">
+<strong>Dica de prova / Cuidado:</strong> Não confunda clima com cultura organizacional: clima é percepção mais superficial e volátil (fotografia de um momento); cultura é o conjunto profundo e mais estável de valores compartilhados (o "DNA" da organização). Pesquisas de clima frequentes (pulse surveys) monitoram variações de curto prazo; a cultura só é percebida e alterada em prazos mais longos.
+</div>
+<h3 style="color:#1976d2; margin-top:16px;">1.8 Poder nas Organizações — Tipologia de French e Raven</h3>
+<p>Poder organizacional é a capacidade de um indivíduo ou grupo de influenciar o comportamento de outros, mesmo contra sua vontade inicial, fazendo com que ajam de determinada forma. Diferencia-se de <strong>autoridade</strong> (poder legitimado formalmente pela estrutura hierárquica) e de <strong>liderança</strong> (capacidade de influenciar e mobilizar pessoas rumo a objetivos, que pode ou não se apoiar em poder formal). Os pesquisadores John French e Bertram Raven (1959) desenvolveram a tipologia clássica de bases do poder social, ainda hoje referência obrigatória em concursos e na literatura de comportamento organizacional. Originalmente propuseram cinco bases, e posteriormente Raven acrescentou uma sexta (poder de informação).</p>
+<table style="width:100%; border-collapse:collapse; margin:10px 0; font-size:12px;">
+<tr style="background:#1976d2; color:#fff;">
+<td style="padding:6px; border:1px solid #ccc;"><strong>Tipo de poder</strong></td>
+<td style="padding:6px; border:1px solid #ccc;"><strong>Fonte</strong></td>
+<td style="padding:6px; border:1px solid #ccc;"><strong>Exemplo prático</strong></td>
+<td style="padding:6px; border:1px solid #ccc;"><strong>Risco/limitação</strong></td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Coercitivo</td>
+<td style="padding:6px; border:1px solid #ccc;">Capacidade de punir, advertir, demitir ou aplicar sanções</td>
+<td style="padding:6px; border:1px solid #ccc;">Chefe ameaça advertência por atrasos recorrentes</td>
+<td style="padding:6px; border:1px solid #ccc;">Gera obediência por medo, não engajamento; corrói confiança e clima a médio prazo</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">De recompensa</td>
+<td style="padding:6px; border:1px solid #ccc;">Capacidade de conceder benefícios: bônus, promoções, elogios, folgas</td>
+<td style="padding:6px; border:1px solid #ccc;">Gestor oferece bonificação por meta atingida</td>
+<td style="padding:6px; border:1px solid #ccc;">Eficaz no curto prazo, mas pode gerar dependência extrínseca e comportamento oportunista ("só faço se ganhar algo")</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Legítimo (ou de posição)</td>
+<td style="padding:6px; border:1px solid #ccc;">Decorre do cargo/posição formal na hierarquia</td>
+<td style="padding:6px; border:1px solid #ccc;">Diretor determina prioridades da equipe por ocupar o cargo</td>
+<td style="padding:6px; border:1px solid #ccc;">Poder "emprestado" pelo cargo; se a pessoa deixa a posição, perde esse poder imediatamente</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">De referência (carisma)</td>
+<td style="padding:6px; border:1px solid #ccc;">Identificação, admiração e desejo de imitar a pessoa</td>
+<td style="padding:6px; border:1px solid #ccc;">Colaborador segue as orientações de um colega admirado por seus valores e postura</td>
+<td style="padding:6px; border:1px solid #ccc;">Difícil de construir deliberadamente; muito ligado à personalidade individual</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">De competência (expert/perito)</td>
+<td style="padding:6px; border:1px solid #ccc;">Conhecimento técnico, expertise reconhecida em determinada área</td>
+<td style="padding:6px; border:1px solid #ccc;">Equipe segue a orientação técnica de um engenheiro sênior mesmo sem ele ser chefe formal</td>
+<td style="padding:6px; border:1px solid #ccc;">Restrito à área de expertise; pode se perder se o conhecimento ficar desatualizado</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">De informação (acrescentado depois por Raven)</td>
+<td style="padding:6px; border:1px solid #ccc;">Controle sobre o acesso e o fluxo de informações relevantes</td>
+<td style="padding:6px; border:1px solid #ccc;">Pessoa que centraliza dados estratégicos e os libera seletivamente</td>
+<td style="padding:6px; border:1px solid #ccc;">Pode gerar dependência informacional e comportamentos de retenção de informação (silos)</td>
+</tr>
+</table>
+<p>Uma distinção importante cobrada em provas: coercitivo, de recompensa e legítimo são classificados como <strong>poder de posição</strong> (dependem do cargo ocupado na estrutura formal — desaparecem quando a pessoa muda de cargo); já de referência e de competência são classificados como <strong>poder pessoal</strong> (pertencem ao indivíduo, independem do cargo, e tendem a gerar maior comprometimento genuíno e menor resistência do que os poderes de posição).</p>
+<div style="background:#eef7ff; border-left:4px solid #1976d2; padding:10px 14px; margin:12px 0; font-size:12.5px;">
+<strong>Dica de prova / Cuidado:</strong> A banca pode pedir a associação correta entre o exemplo descrito e o tipo de poder. Memorize a regra prática: se a influência decorre do "cargo que a pessoa ocupa", é poder de posição (coercitivo, recompensa, legítimo); se decorre de "quem a pessoa é ou sabe", é poder pessoal (referência, competência). Poder de informação é frequentemente esquecido — cuidado com questões que cobrem apenas "os cinco tipos clássicos" versus questões que já incorporam a sexta base.
+</div>
+<div class="page"></div>
+<h3 style="color:#1976d2; margin-top:16px;">1.9 Diversidade, Equidade e Inclusão (DEI) no Ambiente de Trabalho</h3>
+<p>Diversidade, Equidade e Inclusão (DEI, do inglês <em>Diversity, Equity and Inclusion</em>) tornou-se um eixo estratégico da gestão de pessoas contemporânea, tanto no setor privado quanto no público, refletindo-se em políticas de recrutamento, ambientes de trabalho e práticas de liderança. É fundamental distinguir com precisão os três conceitos, pois bancas exploram exatamente essa diferenciação:</p>
+<table style="width:100%; border-collapse:collapse; margin:10px 0; font-size:12px;">
+<tr style="background:#1976d2; color:#fff;">
+<td style="padding:6px; border:1px solid #ccc;"><strong>Conceito</strong></td>
+<td style="padding:6px; border:1px solid #ccc;"><strong>Definição</strong></td>
+<td style="padding:6px; border:1px solid #ccc;"><strong>Metáfora explicativa</strong></td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Diversidade</td>
+<td style="padding:6px; border:1px solid #ccc;">Presença de diferenças entre as pessoas: gênero, raça/etnia, idade, orientação sexual, deficiência, origem socioeconômica, religião, neurodivergência, formação</td>
+<td style="padding:6px; border:1px solid #ccc;">"Ser convidado para a festa" — apenas estar presente/representado</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Equidade</td>
+<td style="padding:6px; border:1px solid #ccc;">Oferecer a cada pessoa os recursos e ajustes específicos de que ela precisa para ter as mesmas oportunidades de sucesso, reconhecendo que as pessoas partem de pontos de partida desiguais (diferente de igualdade, que trata todos de forma idêntica independentemente do ponto de partida)</td>
+<td style="padding:6px; border:1px solid #ccc;">Dar a cada pessoa a "caixa" de altura que ela precisa para alcançar o mesmo muro (não a mesma caixa para todos)</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Inclusão</td>
+<td style="padding:6px; border:1px solid #ccc;">Criar um ambiente em que as diferenças sejam genuinamente valorizadas, e as pessoas se sintam seguras para participar plenamente, contribuir e expressar sua identidade sem medo de retaliação ou exclusão</td>
+<td style="padding:6px; border:1px solid #ccc;">"Ser convidado a dançar na festa" — participação ativa e valorizada, não apenas presença passiva</td>
+</tr>
+</table>
+<p>Uma organização pode ser diversa sem ser inclusiva — por exemplo, contratar pessoas de perfis variados, mas mantê-las silenciadas, sem voz em decisões ou sujeitas a microagressões. É a inclusão que transforma a diversidade em valor organizacional efetivo (maior inovação, melhor tomada de decisão por múltiplas perspectivas, maior capacidade de atender públicos diversos).</p>
+<p>Principais instrumentos e práticas de DEI nas organizações:</p>
+<ul>
+<li><strong>Recrutamento e seleção inclusivos:</strong> uso de linguagem neutra em vagas, remoção de vieses inconscientes em entrevistas (ex.: entrevistas estruturadas e cegas), programas de estágio afirmativo, cotas.</li>
+<li><strong>Acessibilidade:</strong> adaptação física (rampas, banheiros adaptados), tecnológica (leitores de tela, softwares assistivos) e comunicacional (Libras, materiais em formatos acessíveis) para pessoas com deficiência (PcD).</li>
+<li><strong>Grupos de afinidade / ERGs (Employee Resource Groups):</strong> grupos voluntários formados por colaboradores com características ou experiências em comum (mulheres, pessoas negras, LGBTQIA+, PcD), que atuam como espaço de apoio mútuo e de aconselhamento para políticas internas.</li>
+<li><strong>Treinamento de vieses inconscientes (unconscious bias training):</strong> capacitações voltadas a identificar e mitigar preconceitos automáticos que afetam decisões de contratação, promoção e avaliação.</li>
+<li><strong>Métricas e transparência:</strong> divulgação de indicadores de representatividade por cargo/nível hierárquico e de equidade salarial (gender pay gap, racial pay gap).</li>
+</ul>
+<p>No setor público, a diversidade e a inclusão também se relacionam com o princípio constitucional da isonomia e com políticas de ação afirmativa, como a Lei de Cotas Raciais em concursos públicos federais (Lei nº 12.990/2014) e a reserva de vagas para pessoas com deficiência (Lei nº 8.112/1990, art. 5º, §2º, e Decreto nº 9.508/2018), que buscam corrigir desigualdades históricas de acesso a cargos públicos.</p>
+<div style="background:#eef7ff; border-left:4px solid #1976d2; padding:10px 14px; margin:12px 0; font-size:12.5px;">
+<strong>Dica de prova / Cuidado:</strong> Questões costumam trocar as definições de "equidade" e "igualdade" propositalmente. Igualdade = tratar todos da mesma forma; Equidade = tratar cada um conforme sua necessidade específica para alcançar o mesmo resultado. E lembre-se: diversidade é sobre representação (números/presença); inclusão é sobre pertencimento e participação efetiva (qualidade da experiência).
+</div>
+<p><strong style="color:#9b59b6;">🎓 EXERCÍCIO RESOLVIDO (Teorias da motivação):</strong></p>
+<div style="background:#f0e8f5; padding:10px; border-left:4px solid #9b59b6; margin:8px 0; border-radius:4px;">
+<p><strong>Questão:</strong> Segundo a Teoria dos Dois Fatores de Herzberg, assinale a alternativa correta:</p>
+<p>a) Salário e condições de trabalho são fatores motivacionais que geram satisfação duradoura.<br/>
+        b) Fatores higiênicos, quando presentes de forma adequada, produzem motivação intensa nos colaboradores.<br/>
+        c) Fatores higiênicos evitam a insatisfação, mas não são suficientes para motivar; fatores motivacionais é que geram satisfação real.<br/>
+        d) A teoria não distingue fatores extrínsecos de intrínsecos, tratando todos como equivalentes.<br/>
+        e) Reconhecimento e responsabilidade são classificados como fatores higiênicos na teoria de Herzberg.</p>
+<p><strong>Resposta comentada:</strong> A alternativa correta é a (c). Herzberg distingue claramente dois grupos: os fatores higiênicos (extrínsecos ao trabalho, como salário e condições físicas) que apenas previnem a insatisfação, e os fatores motivacionais (intrínsecos, como reconhecimento e responsabilidade) que efetivamente motivam. As alternativas (a), (b) e (e) invertem essa lógica, e a (d) nega a própria essência da teoria, que é justamente essa distinção.</p>
+</div>
+<h3 style="color:#1976d2; margin-top:16px;">1.2 Liderança</h3>
+<p><strong>LIDERANÇA:</strong> é a capacidade de influenciar um grupo em direção ao alcance de metas. Difere da autoridade formal (poder de posição), pois pode ser exercida sem cargo hierárquico.</p>
+<table style="width:100%; border-collapse:collapse; margin:10px 0; font-size:12px;">
+<tr style="background:#1976d2; color:#fff;">
+<th style="padding:6px; border:1px solid #ccc;">Estilo</th>
+<th style="padding:6px; border:1px solid #ccc;">Características</th>
+</tr>
+<tr><td style="padding:6px; border:1px solid #ccc;">Autocrático</td><td style="padding:6px; border:1px solid #ccc;">Centraliza decisões, pouca participação da equipe</td></tr>
+<tr style="background:#f5f5f5;"><td style="padding:6px; border:1px solid #ccc;">Democrático</td><td style="padding:6px; border:1px solid #ccc;">Compartilha decisões, estimula participação</td></tr>
+<tr><td style="padding:6px; border:1px solid #ccc;">Liberal (laissez-faire)</td><td style="padding:6px; border:1px solid #ccc;">Delega totalmente, pouca intervenção do líder</td></tr>
+<tr style="background:#f5f5f5;"><td style="padding:6px; border:1px solid #ccc;">Transacional</td><td style="padding:6px; border:1px solid #ccc;">Baseado em trocas: recompensas por desempenho</td></tr>
+<tr><td style="padding:6px; border:1px solid #ccc;">Transformacional</td><td style="padding:6px; border:1px solid #ccc;">Inspira, motiva mudanças e visão compartilhada</td></tr>
+</table>
+</div>
+</div>
+<script>
+function __renderKatexNow(){
+  if (typeof renderMathInElement === "function") {
+    renderMathInElement(document.body, {
+      delimiters: [
+        {left: "$$", right: "$$", display: true},
+        {left: "$", right: "$", display: false}
+      ],
+      throwOnError: false
+    });
+  } else {
+    setTimeout(__renderKatexNow, 60);
+  }
+}
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", __renderKatexNow);
+} else {
+  __renderKatexNow();
+}
+window.addEventListener("load", __renderKatexNow);
+</script>
+</body>
+</html>
