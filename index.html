@@ -282,6 +282,22 @@
   .scroll{flex:1 1 auto; min-height:0; overflow-y:auto; overflow-x:hidden; padding:16px 20px 8px; scrollbar-width:none;}
   .scroll::-webkit-scrollbar{display:none;}
 
+  /* Menu fixo de âncoras — gruda no topo do corpo rolável */
+  .anchor-nav{
+    position:sticky; top:0; z-index:6;
+    display:flex; justify-content:space-between; gap:4px;
+    margin:-16px -20px 14px; padding:9px 10px;
+    background:rgba(238,243,251,.94); backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .anchor-nav a{
+    flex:1 1 0; text-align:center; text-decoration:none;
+    font-size:9.5px; font-weight:800; color:var(--navy); text-transform:uppercase; letter-spacing:.02em;
+    padding:6px 4px; border-radius:8px; white-space:nowrap;
+    transition:background .15s ease;
+  }
+  .anchor-nav a:hover, .anchor-nav a:active{background:rgba(27,58,107,.08);}
+
   .section-title{font-family:'Playfair Display', serif; font-size:14px; font-weight:700; color:var(--navy); margin-bottom:3px;}
   .section-sub{font-size:10.5px; color:#5A6B85; margin-bottom:10px;}
 
@@ -626,7 +642,7 @@
         <span class="drive-arrow">↗</span>
       </a>
 
-      <details class="apostilas-box">
+      <details class="apostilas-box" id="sec-apostilas">
         <summary class="apostilas-summary">
           <span class="apostilas-icon">📖</span>
           <span class="apostilas-text">APOSTILAS de acordo com o edital 52/2026 PSS-SEED-PR</span>
@@ -694,10 +710,17 @@
     <!-- CORPO ROLÁVEL -->
     <div class="scroll">
 
+      <nav class="anchor-nav">
+        <a href="#sec-apostilas">Apostilas</a>
+        <a href="#sec-plano">Plano de Aula</a>
+        <a href="#sec-video">Vídeo</a>
+        <a href="#sec-contato">Contato</a>
+      </nav>
+
       <div class="section-title">O que está incluso</div>
       <div class="section-sub">Suporte ponto a ponto, alinhado ao Anexo XIV e ao modelo do Anexo XV.</div>
 
-      <div class="card">
+      <div class="card" id="sec-plano">
         <div class="card-head">
           <h3>📄 Plano de Aula</h3>
           <span class="pts">5,0 pts</span>
@@ -710,7 +733,7 @@
         </ul>
       </div>
 
-      <div class="card">
+      <div class="card" id="sec-video">
         <div class="card-head">
           <h3>🎥 Vídeo da Aula</h3>
           <span class="pts">25,0 pts</span>
@@ -982,7 +1005,7 @@
         </div>
       </div>
 
-      <div class="selector">
+      <div class="selector" id="sec-contato">
         <div class="selector-title">Monte seu pacote</div>
         <div class="selector-sub">Marque o que você precisa — o valor é calculado na hora.</div>
 
