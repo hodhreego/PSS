@@ -94,6 +94,14 @@
     padding:11px 12px; font-size:13px; font-weight:800; color:#FF6B6B; line-height:1.3;
     text-align:center;
   }
+  .ask-availability{
+    display:flex; align-items:center; justify-content:center; gap:8px; text-decoration:none;
+    background:rgba(52,211,153,.14); border:1.5px solid rgba(52,211,153,.6); border-radius:10px;
+    padding:11px 12px; margin-top:8px; font-size:12.5px; font-weight:700; color:#fff; line-height:1.3;
+    text-align:center; transition:transform .15s ease, background .15s ease;
+  }
+  .ask-availability:hover{background:rgba(52,211,153,.22); transform:translateY(-1px);}
+  .ask-availability .em{font-size:16px; flex-shrink:0;}
 
   /* Mini prévia da capa, índice e uma página de conteúdo — HTML/CSS reais das
      apostilas, renderizados ao vivo num iframe e reduzidos via transform:scale
@@ -301,6 +309,10 @@
       </a>
     </div>
     <div class="apostila-coming-soon"><span>🚀</span> Em breve mais disciplinas</div>
+    <a href="https://wa.me/554599699444?text=Ol%C3%A1%21%20Quero%20saber%20se%20j%C3%A1%20est%C3%A1%20dispon%C3%ADvel%20a%20apostila%20da%20minha%20disciplina%20de%20interesse%20para%20o%20PSS%20SEED-PR%202027." target="_blank" rel="noopener" class="ask-availability">
+      <span class="em">💬</span>
+      <span>Não achou sua disciplina? Pergunte se já está disponível</span>
+    </a>
   </div>
 
   <a href="https://hodhreego.github.io/PSS/" class="back-btn">
