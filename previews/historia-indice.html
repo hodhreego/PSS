@@ -1,0 +1,2600 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>preview</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet"/>
+<style>
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { height: 100%; }
+        body { height: 100%; font-family: 'Noto Sans', Arial, 'Segoe UI', sans-serif; background-color: #f0f2f5; display: flex; overflow: hidden; }
+
+        /* PAINEL LATERAL */
+        .sidebar {
+            width: 300px;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: #ecf0f1;
+            padding: 20px;
+            overflow-y: auto;
+            box-shadow: 4px 0 12px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+        .sidebar h2 { font-size: 15px; margin-bottom: 12px; border-bottom: 3px solid #3498db; padding-bottom: 8px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+        .control-group { margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid #445a6f; }
+        .control-group:last-child { border-bottom: none; }
+        .control-group label { display: block; font-size: 10px; margin-bottom: 4px; text-transform: uppercase; color: #bdc3c7; font-weight: 600; letter-spacing: 0.5px; }
+        .control-group input[type="text"] { width: 100%; padding: 6px 10px; background-color: #1f3a52; color: #ecf0f1; border: 1px solid #3498db; border-radius: 4px; font-size: 12px; font-family: 'Noto Sans', Arial, sans-serif; transition: all 0.3s ease; }
+        .control-group input[type="text"]:focus { outline: none; background-color: #254a68; border-color: #2ecc71; box-shadow: 0 0 8px rgba(46, 204, 113, 0.3); }
+        .control-group input[type="range"] { width: 100%; height: 6px; border-radius: 3px; background: linear-gradient(to right, #2980b9, #3498db); outline: none; -webkit-appearance: none; cursor: pointer; margin-bottom: 4px; }
+        .control-group input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: #f39c12; cursor: pointer; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); }
+        .control-group input[type="range"]::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: #f39c12; cursor: pointer; border: none; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); }
+        .value-display { display: inline-block; background-color: #1f3a52; padding: 4px 8px; border-radius: 3px; font-size: 10px; color: #f39c12; font-weight: 700; border: 1px solid #3498db; }
+        .control-group select { width: 100%; padding: 6px 10px; background-color: #1f3a52; color: #ecf0f1; border: 1px solid #3498db; border-radius: 4px; font-size: 12px; cursor: pointer; transition: all 0.3s ease; }
+        .control-group select:focus { outline: none; border-color: #2ecc71; }
+        button { border: none; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.3s ease; }
+        #generatePdfBtn { width: 100%; padding: 9px; background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; margin-bottom: 6px; }
+        #printBtn { width: 100%; padding: 9px; background: linear-gradient(135deg, #3498db, #2980b9); color: white; margin-bottom: 6px; }
+        #resetBtn { width: 100%; padding: 9px; background: linear-gradient(135deg, #95a5a6, #7f8c8d); color: white; }
+        .status-message { padding: 6px; border-radius: 3px; font-size: 11px; text-align: center; margin-bottom: 8px; display: none; }
+        .status-message.success { background-color: #27ae60; color: white; display: block; }
+
+        /* Painel colapsável — ajustes de fonte exclusivos das capas/divisórias.
+           Fica fechado por padrão pra não atrapalhar os controles do dia a dia. */
+        .capa-fonts-details { margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid #445a6f; }
+        .capa-fonts-details summary {
+            cursor: pointer; font-size: 12px; font-weight: 700; color: #f39c12;
+            text-transform: uppercase; letter-spacing: 0.5px; padding: 6px 0;
+            list-style: none; user-select: none;
+        }
+        .capa-fonts-details summary::-webkit-details-marker { display: none; }
+        .capa-fonts-details summary::before { content: "▸ "; }
+        .capa-fonts-details[open] summary::before { content: "▾ "; }
+        .capa-fonts-details .capa-fonts-body { padding-top: 4px; }
+        .capa-fonts-details .control-group { margin-bottom: 6px; padding-bottom: 4px; }
+        #resetCapaFontsBtn { width: 100%; padding: 7px; margin-top: 2px; background: linear-gradient(135deg, #95a5a6, #7f8c8d); color: #fff; font-size: 10px; }
+
+        /* CONTEÚDO PRINCIPAL - fluxo HTML normal, sem altura fixa de A4.
+           A paginação real acontece no momento da impressão (Ctrl+P), feita pelo
+           proprio motor do Chrome, guiado pela regra @page abaixo. */
+        .main-content { flex: 1; overflow-y: auto; padding: 30px; background: linear-gradient(135deg, #ecf0f1 0%, #f5f7fa 100%); }
+        /* No navegador, so as paginas "fixas" (capa/contracapa/divisorias de
+           secao) mantem o formato A4 rigido - elas dependem disso pro layout
+           visual (circulo decorativo, texto centralizado etc.). As paginas de
+           conteudo comum ficam com layout livre/responsivo na tela, ocupando
+           o espaco disponivel da janela, o que facilita muito a leitura e
+           revisao no navegador. No PDF/impressao (@media print, mais abaixo)
+           TODAS as paginas continuam sendo forcadas para o tamanho A4 exato -
+           isso aqui afeta so a visualizacao em tela. */
+        .page { background-color: white; width: 210mm; max-width: 100%; margin: 0 auto 20px; padding: 20mm 15mm; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); position: relative; }
+        /* @media screen (nao @media print) - isso garante que essa regra
+           NUNCA seja considerada na hora de imprimir/exportar PDF, mesmo que
+           a especificidade dela seja maior que a da regra .page dentro do
+           @media print mais abaixo. Sem o @media screen aqui, a maior
+           especificidade desta regra venceria por cima da regra de impressao
+           e quebraria o tamanho A4 fixo no PDF. */
+        @media screen {
+            .page:not(.cover-page):not(.divider-page) {
+                width: 100%;
+                max-width: 1100px;
+                padding: 32px 40px;
+            }
+        }
+        .cover-page { background-color: #0f3c78; padding: 0; overflow: hidden; min-height: 297mm; }
+        .cover-page {
+          background: linear-gradient(160deg, #1c4c8c 0%, #0f3c78 55%, #071f42 100%);
+          color: #fff;
+          box-sizing: border-box;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          padding: 30mm var(--capa-padding-h, 70px);
+          text-align: center;
+          position: relative;
+        }
+        .cover-page::before {
+          content: "";
+          position: absolute;
+          top: 10%;
+          left: 50%;
+          width: 84%;
+          padding-bottom: 84%;
+          transform: translateX(-50%);
+          border-radius: 50%;
+          background: rgba(255,255,255,0.07);
+        }
+        .cover-topo, .cover-titulo, .cover-rodape { position: relative; z-index: 1; }
+        .cover-titulo { margin-top: 55px; }
+        .cover-rodape { margin-top: auto; padding-top: 40px; }
+        .cover-topo .cp-programa {
+          font-family: Georgia, 'Times New Roman', serif;
+          font-size: 13pt; letter-spacing: 0.35em; color: #f6c453; margin: 0 0 6px 0;
+        }
+        .cover-topo .cp-instituicao {
+          font-family: Georgia, 'Times New Roman', serif; font-weight: bold;
+          font-size: 22pt; letter-spacing: 0.04em; color: #fff; margin: 0;
+        }
+        .cover-topo .cp-ano {
+          font-family: Georgia, 'Times New Roman', serif; font-size: 14pt;
+          letter-spacing: 0.3em; color: #f6c453; margin: 6px 0 0 0;
+        }
+        .cover-topo .cp-linha { width: 200px; height: 2px; background: #e8794a; margin: 14px auto 0; position: relative; }
+        .cover-topo .cp-linha::after {
+          content: ""; position: absolute; top: 50%; left: 50%; width: 9px; height: 9px;
+          border-radius: 50%; background: #f6c453; transform: translate(-50%,-50%);
+        }
+        .cover-topo .cp-programa { font-size: var(--fs-programa, 13pt); }
+        .cover-topo .cp-instituicao { font-size: var(--fs-instituicao, 22pt); }
+        .cover-topo .cp-ano { font-size: var(--fs-ano, 14pt); }
+        .cover-topo .cp-aviso-topo {
+          display: inline-block; margin: 32px auto 0; font-size: var(--fs-avisotopo, 13.1pt); font-weight: bold;
+          line-height: 1.4; color: #fff; background: rgba(200,60,50,0.92); border: 1px solid rgba(255,255,255,0.6);
+          padding: 8px 16px; border-radius: 0; text-align: center;
+        }
+        .cover-titulo .cp-materia {
+          font-family: Georgia, 'Times New Roman', serif; font-weight: 900;
+          font-size: var(--fs-titulo-nowrap, 37pt); color: #ffe135; margin: 0; line-height: 1.05;
+          text-shadow: 0 2px 18px rgba(0,0,0,0.35);
+          white-space: nowrap;
+        }
+        .cover-titulo .cp-materia.cp-materia-wrap {
+          /* font-size 100% controlado pelo painel (--fs-titulo). O ajuste fino
+             para NUNCA estourar a margem (janela estreita, titulo longo) e feito
+             via JS (fitCapaTitle), que encolhe so o necessario, mantendo o
+             valor do slider como teto normal em telas largas. */
+          font-size: var(--fs-titulo, 48pt);
+          white-space: normal; line-height: 1.15; color: #ffe135; text-align: left;
+        }
+        .cover-titulo .cp-subtitulo1 {
+          font-family: Georgia, 'Times New Roman', serif; font-weight: bold;
+          font-size: var(--fs-subtitulo1, 22pt); color: #fff; margin: 14px 0 0 0; line-height: 1.15;
+        }
+        .cover-titulo .cp-subtitulo2 {
+          font-family: Georgia, 'Times New Roman', serif; font-size: var(--fs-subtitulo2, 12pt);
+          letter-spacing: 0.1em; color: #cfe0f4; margin: 16px auto 0; max-width: 80%;
+          text-transform: uppercase;
+        }
+        .cover-rodape .cp-linha-fina { width: 60%; height: 1px; background: rgba(255,255,255,0.35); margin: 0 auto 12px; }
+        .cover-rodape .cp-copyright { font-size: var(--fs-copyright, 10.5pt); font-weight: bold; color: #fff; margin: 0 0 8px 0; white-space: nowrap; text-align: center; }
+        .cover-rodape .cp-aviso {
+          display: inline-block; font-size: var(--fs-avisorodape, 10.5pt); font-weight: bold; color: #fff;
+          background: rgba(200,60,50,0.85); border: 1px solid rgba(255,255,255,0.5);
+          padding: 6px 14px; margin: 0;
+        }
+        /* Capas de secao (PARTE N) - mesmas variaveis CSS controlaveis pelo painel colapsavel */
+        .divider-page .dv-header { font-size: var(--fs-dv-header, 17px); letter-spacing: 0.18em; color: #fff; font-weight: bold; margin: 0 0 22px 0; text-align: center; }
+        .divider-page .dv-parte { font-size: var(--fs-dv-parte, 14px); letter-spacing: 0.3em; color: #f39c12; margin: 0 0 10px 0; }
+        .divider-page .dv-titulo { font-size: var(--fs-dv-titulo, 40px); color: #fff; border: none; padding: 0; margin: 0 0 14px 0; }
+        .divider-page .dv-linha { width: 120px; height: 3px; margin: 0 0 18px 0; }
+        .divider-page .dv-subtitulo { font-size: var(--fs-dv-subtitulo, 14px); color: #bdc3c7; max-width: 70%; text-align: center; }
+
+        /* TIPOGRAFIA - HIERARQUIA CLARA */
+        .page h1 { text-align: center; font-size: 26px; font-weight: 800; margin-bottom: 20px; margin-top: 0; color: #1a252f; border-bottom: 4px solid #3498db; padding-bottom: 12px; letter-spacing: 0.5px; }
+        .page h2 { font-size: 18px; font-weight: 700; color: #2c3e50; margin-top: 18px; margin-bottom: 12px; border-left: 5px solid #3498db; padding-left: 12px; }
+        .page h3 { font-size: 14px; font-weight: 600; color: #34495e; margin-top: 12px; margin-bottom: 8px; margin-left: 0; }
+        .page h4 { font-size: 12px; font-weight: 600; color: #555; margin-top: 10px; margin-bottom: 6px; margin-left: 0; }
+        .page p { text-align: justify; font-size: 13px; line-height: 1.5; color: #2c3e50; margin: 6px 0; }
+        .page strong { font-weight: 700; color: #1a252f; }
+        .page em { font-style: italic; }
+        .page ul, .page ol { margin: 8px 0; padding-left: 20px; }
+
+        /* ÍNDICE — estilo padrão de sumário impresso: hierarquia clara por
+           tamanho/peso (sem saltos desproporcionais), numeração alinhada à
+           esquerda, linha pontilhada guia até a margem direita (como em
+           livros/apostilas tradicionais), cores em degradê de cinza-azulado. */
+        .toc-container { margin-top: 15px; font-family: 'Noto Sans', Arial, 'Segoe UI', sans-serif; }
+        .toc-level-1 { margin-bottom: 12px; }
+        .toc-level-1 > .toc-title {
+            font-size: 14pt; font-weight: 700; color: #1a252f; text-transform: uppercase;
+            letter-spacing: 0.03em; margin-bottom: 6px; padding: 4px 0 4px 10px;
+            border-left: 4px solid #3498db; display: flex; align-items: baseline;
+        }
+        .toc-level-2 { margin-left: 18px; margin-bottom: 3px; }
+        .toc-level-2 > .toc-title { font-size: 11.5pt; font-weight: 600; color: #2c3e50; display: flex; align-items: baseline; }
+        .toc-level-3 { margin-left: 34px; margin-bottom: 2px; }
+        .toc-level-3 > .toc-title { font-size: 10.5pt; font-weight: 400; color: #5d6d7e; display: flex; align-items: baseline; }
+        .toc-level-4 { margin-left: 48px; margin-bottom: 2px; }
+        .toc-level-4 > .toc-title { font-size: 9.5pt; font-weight: 400; color: #85929e; font-style: italic; display: flex; align-items: baseline; }
+        .toc-title { cursor: pointer; transition: color 0.15s ease; }
+        .toc-title:hover { color: #3498db; }
+        .toc-link {
+            color: inherit; text-decoration: none; display: flex; align-items: baseline;
+            flex-wrap: wrap; width: 100%; overflow: visible; white-space: normal;
+        }
+        .toc-link:hover { color: #3498db; }
+        /* linha pontilhada guia, no estilo classico de sumario de livro */
+        .toc-link::after {
+            content: ""; flex: 1 1 auto; margin: 0 6px; order: 1;
+            border-bottom: 1.5px dotted #b8c2cc; height: 0; align-self: baseline;
+            transform: translateY(-3px);
+        }
+        .toc-link > span, .toc-link > *:not(:first-child) { order: 2; flex-shrink: 0; }
+        html { scroll-behavior: smooth; }
+        .page[id], h1[id], h2[id], p[id] { scroll-margin-top: 20px; }
+
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #ecf0f1; }
+        ::-webkit-scrollbar-thumb { background: #3498db; border-radius: 5px; }
+
+        /* Tamanho de folha para impressão/PDF - quem decide onde cada pagina
+           comeca e termina agora e o motor de impressao do Chrome, nao mais
+           divs de altura fixa. "size: auto" (em vez de forçar A4) deixa a
+           folha se ajustar automaticamente ao papel que a pessoa escolher no
+           dialogo de impressao (A4, Carta/Letter, Ofício etc.) - as regras
+           abaixo usam % e vh em vez de mm fixo, entao acompanham esse
+           tamanho escolhido. */
+        @page {
+            margin: 0;
+        }
+
+        @media print {
+            html, body {
+                height: auto;
+                overflow: visible;
+                display: block;
+            }
+            .sidebar { display: none; }
+            .main-content {
+                flex: none;
+                overflow: visible;
+                padding: 0;
+                background: white;
+            }
+            .page {
+                width: 100%;
+                max-width: 100%;
+                min-height: 100vh;
+                margin: 0;
+                padding: 20mm 15mm;
+                box-shadow: none;
+                break-before: page;
+                page-break-before: always;
+            }
+            /* A primeira sessão (índice) não precisa de folha em branco antes dela */
+            .main-content > .page:first-child {
+                break-before: avoid;
+                page-break-before: avoid;
+            }
+            /* Capa deve ocupar exatamente 1 folha A4 inteira (sangria total).
+               @page agora tem margin:0, entao a propria .cover-page (com seu
+               padding interno de 30mm 18mm, ja definido fora do @media print)
+               preenche a folha inteira sem precisar de nenhum truque de
+               margem negativa - abordagem mais robusta e previsivel entre
+               diferentes configuracoes de impressao/exportacao de PDF. */
+            .cover-page {
+                width: 100%;
+                height: 100%;
+                min-height: 100vh;
+                margin: 0;
+                padding: 30mm var(--capa-padding-h, 70px);
+                page-break-after: always;
+            }
+            /* Capas de secao (PARTE N) tambem devem ocupar exatamente 1 folha
+               inteira - sem isso, o padding:20mm 15mm da regra .page generica
+               soma com o min-height:297mm do estilo inline da divisoria e
+               estoura pra uma segunda folha em branco. */
+            .divider-page {
+                width: 100%;
+                height: 100%;
+                min-height: 0;
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            /* Evita que o navegador corte no meio de tabelas, ilustracoes e
+               caixas de exercicio/formula - cada uma pula para a proxima
+               folha inteira se nao couber no espaco restante. */
+            svg, table, .toc-container,
+            .page > div[style*="border-left"],
+            .page > div[style*="border:2px dashed"],
+            .page > div[style*="border: 2px dashed"] {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+            h1, h2, h3 {
+                break-after: avoid;
+                page-break-after: avoid;
+            }
+            /* Nem h1 nem h2 forcam quebra de pagina sozinhos - a quebra
+               acontece SOMENTE entre capitulos (cada .page ja quebra pra
+               folha nova via a regra .page { break-before: page } acima).
+               Titulos de nivel 2 dentro do mesmo capitulo ficam junto do
+               conteudo deles, sem isolar o titulo sozinho numa folha. */
+            /* Cada .capitulo (cada Simulado/Apendice inteiro) comeca em
+               folha nova na impressao - isso permite ao professor imprimir
+               um simulado especifico sozinho, sabendo que ele sempre comeca
+               numa pagina redonda, sem conteudo de outro simulado antes. */
+            .capitulo {
+                break-before: page;
+                page-break-before: always;
+            }
+        }
+
+        /* ===== ESTILOS DOS SIMULADOS (portados da apostila de matematica) ===== */
+        .capitulo { margin-bottom: 44px; }
+        .subsecao { margin-bottom: 26px; }
+        .conceito { background:#eef7ff; border-left:4px solid #1976d2; padding:10px 14px; margin:12px 0; font-size:12.5px; }
+        .conteudo p { margin: 8px 0; }
+        .exercicios-ufpr { background: #ffffff; padding: 15px; margin: 18px 0; border: 1px solid #ccc; border-radius: 4px; font-size: 12.5px; }
+        .exercicios-ufpr h5 { margin: 0 0 10px 0; }
+        .questao-ufpr { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
+        .questao-ufpr:last-child { border-bottom: none; }
+        .questao-numero { font-weight: bold; color: #1976d2; margin: 0 0 6px 0; }
+        .questao-enunciado { margin: 0 0 8px 0; }
+        .questao-opcoes { margin-left: 10px; }
+        .opcao { margin: 6px 0; }
+        .tipo-questao { font-weight: normal; font-style: italic; color: #777; font-size: 10.5pt; }
+        .questao-ce .opcao { display: inline-block; margin-right: 24px; }
+        .itens-somatoria { margin: 8px 0 8px 10px; list-style: none; padding-left: 0; }
+        .itens-somatoria li { margin: 6px 0; }
+        .instrucao-somatoria { color: #777; font-size: 10.5pt; margin: 6px 0 0 0; }
+        .colunas-associacao { display: flex; gap: 24px; margin: 10px 0; flex-wrap: wrap; }
+        .coluna-a, .coluna-b { flex: 1; min-width: 180px; }
+        .coluna-a ol, .coluna-b ol { margin: 6px 0 0 0; padding-left: 20px; }
+        .texto-lacunas { line-height: 1.9; }
+        .banco-palavras { background: #fff8e1; border-left: 3px solid #f9a825; padding: 8px 12px; margin: 8px 0 0 0; font-size: 11.5pt; }
+        .itens-ordenacao { margin: 8px 0 8px 10px; }
+        .itens-ordenacao li { margin: 6px 0; padding: 4px 10px; background: #fff; border: 1px dashed #bbb; border-radius: 3px; list-style: none; }
+        .linha-resposta { margin-top: 10px; color: #555; }
+        .linhas-discursiva { margin-top: 10px; }
+        .linha-pontilhada { border-bottom: 1px dotted #999; height: 24px; }
+        .exercicios-ufpr .questao-ufpr { page-break-inside: avoid; }
+        .gabarito-cap-titulo { font-size: 15px; color: #1976d2; margin: 18px 0 8px 0; border-bottom: 1px solid #ccc; padding-bottom: 4px; font-weight:700; }
+        .gabarito-tabela { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+        .gabarito-item { background: #eef7ff; border: 1px solid #b8d8f5; border-radius: 6px; padding: 6px 12px; font-size: 11.5px; }
+        .gabarito-item .resp { font-weight: bold; color: #1565c0; }
+        .gabarito-item .indisponivel { font-style: italic; color: #999; }
+        .gabarito-tipo { font-weight: normal; font-style: italic; font-size: 10px; color: #888; }
+
+        /* Correção automática de fórmulas/linhas que "estouram" a largura da
+           página quando o tamanho da fonte é aumentado no painel de ajustes.
+           Em vez de vazar pra fora da página, quebra a linha e marca a
+           continuação com uma seta, deixando claro que é a mesma fórmula. */
+        .formula-overflow-fix {
+            white-space: normal !important;
+            overflow-wrap: break-word;
+            word-break: break-word;
+            display: block;
+            padding-left: 1.4em;
+            text-indent: -1.4em;
+        }
+        .formula-overflow-fix::before {
+            content: "↳ ";
+            color: #1976d2;
+            font-weight: bold;
+        }
+    
+
+/* ===== CSS ESPECÍFICO DE CONTEÚDO (herdado do arquivo original) ===== */
+
+:root {
+  --font-family: Arial, sans-serif;
+  --font-size-base: 14pt;
+  --font-size-caixas: 13pt;
+  --font-size-h1: 24pt;
+  --font-size-h2: 16pt;
+  --font-size-h3: 18pt;
+  --font-size-h4: 15pt;
+  --font-size-h5: 14pt;
+  --line-height: 1.5;
+  --page-padding: 20mm;
+  --border-width: 2px;
+  --color-text: #222222;
+  --color-bg: #ffffff;
+  --color-heading-border: #0066cc;
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  height: 100%;
+  font-family: var(--font-family);
+  background: #ffffff;
+  color: var(--color-text);
+}
+.layout { display: flex; height: 100%; }
+
+/* Painel — mesmo visual/comportamento do editor.html */
+.panel {
+  width: 320px;
+  flex-shrink: 0;
+  background: #1f2228;
+  color: #eee;
+  padding: 16px;
+  overflow-y: auto;
+}
+.panel.oculto { display: none; }
+.btn-toggle-panel {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 999;
+  width: auto;
+  padding: 8px 14px;
+  margin: 0;
+  border: none;
+  border-radius: 6px;
+  background: #1f2228;
+  color: #eee;
+  font-size: 13px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+.btn-toggle-panel:hover { background: #2b2f36; }
+.panel h1 { font-size: 16px; margin: 0 0 16px; }
+.panel h2 {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #9aa0a8;
+  margin: 20px 0 8px;
+  border-top: 1px solid #3a3f47;
+  padding-top: 12px;
+}
+.panel h2:first-of-type { border-top: none; padding-top: 0; }
+.field { margin-bottom: 12px; }
+.field label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  margin-bottom: 4px;
+  color: #ccc;
+}
+.field output { color: #7fc4ff; font-variant-numeric: tabular-nums; }
+.field input[type="range"] { width: 100%; }
+.field select, .field input[type="color"] {
+  width: 100%;
+  padding: 4px;
+  background: #2b2f36;
+  color: #eee;
+  border: 1px solid #3a3f47;
+  border-radius: 4px;
+}
+.field.row { display: flex; gap: 8px; align-items: center; }
+.field.row label { flex: 1; margin: 0; }
+button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+}
+#btn-pdf { background: linear-gradient(135deg, #e74c3c, #c0392b); color: #fff; }
+#btn-imprimir { background: linear-gradient(135deg, #3498db, #2980b9); color: #fff; }
+#btn-resetar { background: #3a3f47; color: #eee; }
+.status { font-size: 11px; color: #7fdb9a; margin-top: 8px; min-height: 14px; }
+
+.preview-wrap {
+  flex: 1;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+}
+.page {
+  width: 210mm;
+  max-width: 100%;
+  min-height: 297mm;
+  background: var(--color-bg);
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+  padding: var(--page-padding);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height);
+  color: var(--color-text);
+}
+
+.apostila-titulo {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: var(--border-width) solid var(--color-heading-border);
+}
+.apostila-titulo h1 { font-size: var(--font-size-h1); margin: 10px 0; color: var(--color-heading-border); }
+.apostila-titulo p { font-size: var(--font-size-h2); margin: 10px 0; color: #666; }
+
+/* Indice clicavel */
+.indice {
+  background: #f7f9fc;
+  border: 1px solid #dde3ec;
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin-bottom: 40px;
+  page-break-after: always;
+}
+.indice h2 {
+  font-size: var(--font-size-h2);
+  color: var(--color-heading-border);
+  margin: 0 0 14px 0;
+  text-align: center;
+}
+.indice-cap { margin-bottom: 4px; }
+.indice-cap > a {
+  display: block;
+  font-weight: bold;
+  color: var(--color-heading-border);
+  text-decoration: none;
+  padding: 6px 4px;
+  border-bottom: 1px dotted #ccc;
+  font-size: calc(var(--font-size-base) - 1pt);
+}
+.indice-cap > a:hover { text-decoration: underline; }
+.indice-subs { list-style: none; margin: 0 0 8px 0; padding: 0 0 0 22px; }
+.indice-subs li a {
+  display: block;
+  color: #444;
+  text-decoration: none;
+  padding: 3px 4px;
+  font-size: calc(var(--font-size-caixas) - 1pt);
+}
+.indice-subs li a:hover { text-decoration: underline; color: var(--color-heading-border); }
+
+/* Gabarito */
+.gabarito-final {
+  margin-top: 50px;
+  padding-top: 20px;
+  border-top: 3px double var(--color-heading-border);
+  page-break-before: always;
+}
+.gabarito-final h2 {
+  font-size: var(--font-size-h2);
+  color: var(--color-heading-border);
+  text-align: center;
+  margin-bottom: 18px;
+}
+.gabarito-cap-titulo {
+  font-size: var(--font-size-h4);
+  color: var(--color-heading-border);
+  margin: 18px 0 8px 0;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 4px;
+}
+.gabarito-tabela {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.gabarito-item {
+  background: #eef7ff;
+  border: 1px solid #b8d8f5;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: calc(var(--font-size-caixas) - 1pt);
+}
+.gabarito-item .resp {
+  font-weight: bold;
+  color: #1565c0;
+}
+.gabarito-item .indisponivel {
+  font-style: italic;
+  color: #999;
+}
+
+/* Aviso legal */
+.aviso-legal-final {
+  page-break-before: always;
+  padding: 30px 10px;
+}
+.aviso-legal-final h1 {
+  font-size: 18pt;
+  color: #c0392b;
+  text-align: center;
+  margin-bottom: 5px;
+}
+.aviso-linha { height: 3px; background: #2196f3; margin: 15px 0; }
+.aviso-box {
+  background: #ffebee;
+  border: 2px solid #c0392b;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  text-align: justify;
+  font-size: 12pt;
+  line-height: 1.7;
+  color: #c0392b;
+}
+.aviso-legal-final .autor {
+  text-align: center;
+  font-size: 14pt;
+  margin: 20px 0;
+}
+.aviso-legal-final .email { text-align: center; font-size: 12pt; margin: 15px 0; }
+.aviso-legal-final .contatos {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin: 30px 0;
+  flex-wrap: wrap;
+}
+.aviso-legal-final .qrcode-item { text-align: center; }
+.aviso-legal-final .rotulo { font-size: 11pt; font-weight: bold; color: #2196f3; margin: 8px 0 4px 0; }
+.aviso-legal-final .valor { font-size: 12pt; margin: 0; }
+.aviso-legal-final .valor a { color: #2196f3; text-decoration: none; font-weight: bold; }
+.aviso-legal-final .copyright {
+  text-align: center;
+  font-size: 10pt;
+  color: #999;
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #ddd;
+}
+
+.capitulo { margin-bottom: 44px; }
+.capitulo > h2 {
+  font-size: var(--font-size-h2);
+  color: var(--accent-text, #fff);
+  background: var(--accent, var(--color-heading-border));
+  margin: 0 0 18px 0;
+  padding: 10px 16px;
+  border-radius: 4px;
+  page-break-after: avoid;
+  break-after: avoid;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+.subsecao { margin-bottom: 26px; }
+.subsecao > h3 {
+  font-size: var(--font-size-h3);
+  color: var(--accent, var(--color-heading-border));
+  margin: 0 0 12px 0;
+  border-left: var(--border-width) solid var(--accent, var(--color-heading-border));
+  padding-left: 12px;
+  page-break-after: avoid;
+  break-after: avoid;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+.subsecao h4 {
+  font-size: var(--font-size-h4);
+  page-break-after: avoid;
+  break-after: avoid;
+}
+
+.conceito {
+  background: #e8f4f8;
+  border-left: 4px solid #0088cc;
+  padding: 12px;
+  margin: 12px 0;
+  font-size: var(--font-size-caixas);
+}
+.conteudo p { margin: 0 0 12px 0; }
+.conteudo ul { margin: 0 0 12px 0; padding-left: 22px; }
+.conteudo li { margin-bottom: 6px; }
+
+/* Citacao */
+.citacao {
+  background: #fffbea;
+  border-left: 4px solid #f0ad4e;
+  padding: 16px 20px;
+  margin: 18px 0;
+  font-style: italic;
+  font-size: var(--font-size-caixas);
+}
+.citacao .aspas { font-size: 28pt; color: #f0ad4e; opacity: 0.5; line-height: 0; vertical-align: -8px; margin-right: 4px; font-style: normal; }
+.citacao .autor-citacao { display: block; margin-top: 8px; font-style: normal; font-weight: bold; color: #8a6d3b; text-align: right; }
+
+/* Linha do tempo */
+.timeline { margin: 18px 0; padding-left: 10px; border-left: 3px solid #2196f3; }
+.timeline-item { position: relative; padding: 8px 0 8px 20px; margin-bottom: 4px; }
+.timeline-item::before { content: ""; position: absolute; left: -19px; top: 14px; width: 12px; height: 12px; background: #2196f3; border-radius: 50%; border: 2px solid #fff; }
+.timeline-texto { font-size: var(--font-size-caixas); }
+
+/* Mapa mental */
+.mapa-mental { background: #f3e5f5; border: 2px dashed #9c27b0; border-radius: 8px; padding: 20px; margin: 18px 0; text-align: center; }
+.mapa-mental .no-central { display: inline-block; background: #9c27b0; color: #fff; font-weight: bold; padding: 10px 20px; border-radius: 20px; margin-bottom: 14px; font-size: var(--font-size-caixas); }
+.mapa-mental .ramos { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.mapa-mental .ramo { background: #fff; border: 1px solid #9c27b0; color: #6a1b7a; padding: 8px 14px; border-radius: 16px; font-size: calc(var(--font-size-caixas) - 1pt); }
+
+/* Tabela comparativa */
+.tabela-comparativa { margin: 18px 0; overflow-x: auto; }
+.tabela-comparativa table { width: 100%; border-collapse: collapse; font-size: calc(var(--font-size-caixas) - 1pt); }
+.tabela-comparativa caption { font-weight: bold; text-align: left; margin-bottom: 8px; color: #333; }
+.tabela-comparativa th { background: var(--color-heading-border); color: #fff; padding: 8px 12px; text-align: left; }
+.tabela-comparativa td { padding: 8px 12px; border-bottom: 1px solid #ddd; }
+.tabela-comparativa tr:nth-child(even) { background: #f5f8fc; }
+
+/* Atencao */
+.atencao { background: #fdecea; border-left: 4px solid #e74c3c; padding: 14px 18px; margin: 18px 0; font-size: var(--font-size-caixas); }
+.atencao h5 { margin: 0 0 6px 0; color: #c0392b; }
+.atencao p { margin: 0; }
+
+/* Cai na prova */
+.cai-na-prova { background: #e8f5e9; border-left: 4px solid #43a047; padding: 14px 18px; margin: 18px 0; font-size: var(--font-size-caixas); }
+.cai-na-prova h5 { margin: 0 0 6px 0; color: #2e7d32; }
+.cai-na-prova p { margin: 0 0 6px 0; }
+.cai-na-prova .fonte { font-size: calc(var(--font-size-caixas) - 2pt); color: #666; font-style: italic; }
+
+/* Exercicio resolvido */
+.resolvido { background: #fff8e1; border: 1px solid #ffca28; border-radius: 6px; padding: 14px 18px; margin: 18px 0; font-size: var(--font-size-caixas); }
+.resolvido h5 { margin: 0 0 8px 0; color: #f57f17; }
+.resolvido .pergunta { margin: 0 0 8px 0; }
+.resolvido .resposta { margin: 0; background: #fff; padding: 10px; border-radius: 4px; }
+
+/* Destaques */
+.destaques-secao { background: #eef7ff; border-left: 4px solid #1976d2; padding: 14px 18px; margin: 18px 0; }
+.destaques-secao h5 { margin: 0 0 10px 0; color: #1565c0; }
+.destaque { margin-bottom: 10px; font-size: var(--font-size-caixas); }
+.marcas { margin-left: 8px; }
+.marca { display: inline-block; background: #1976d2; color: #fff; font-size: calc(var(--font-size-caixas) - 3pt); padding: 2px 8px; border-radius: 10px; margin-right: 4px; }
+
+/* Brainstorm */
+.brainstorm-secao { background: #fff3e0; border-left: 4px solid #fb8c00; padding: 14px 18px; margin: 18px 0; }
+.brainstorm-secao h5 { margin: 0 0 10px 0; color: #e65100; }
+.brainstorm-item { margin-bottom: 10px; font-size: var(--font-size-caixas); }
+.reflexao { margin: 4px 0 0 0; color: #555; }
+
+/* Questoes UFPR */
+.exercicios-ufpr { background: #f8f8f8; padding: 15px; margin: 18px 0; border: 1px solid #ddd; border-radius: 4px; font-size: var(--font-size-caixas); }
+.exercicios-ufpr h5 { margin: 0 0 10px 0; }
+.questao-ufpr { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
+.questao-ufpr:last-child { border-bottom: none; }
+.questao-numero { font-weight: bold; color: var(--color-heading-border); margin: 0 0 6px 0; }
+.questao-enunciado { margin: 0 0 8px 0; }
+.questao-opcoes { margin-left: 10px; }
+.opcao { margin: 6px 0; }
+
+/* Glossario */
+.glossario { background: #f0f0f0; padding: 15px; margin: 18px 0; border-radius: 4px; font-size: var(--font-size-caixas); }
+.glossario h5 { margin: 0 0 10px 0; }
+.glossario dt { font-weight: bold; margin-top: 10px; }
+.glossario dd { margin-left: 20px; margin-bottom: 6px; }
+
+/* Impressao: some com o painel, remove sombras/margens externas */
+        /* Regras de impressão/PDF para este bloco legado foram REMOVIDAS —
+           eram um segundo bloco de impressao duplicado (arquitetura pre-transplante),
+           que tinha a mesma especificidade CSS do bloco de impressao correto (mais
+           acima neste arquivo) e, por vir depois no codigo-fonte, vencia a
+           cascata em propriedades conflitantes (padding/margin/height da
+           .cover-page), causando bordas/margens erradas na capa ao exportar
+           PDF. O bloco de impressao correto e completo ja cobre tudo isso. */
+
+
+
+html,body{margin:0; padding:0; background:#fff;}
+</style>
+</head>
+<body>
+<div class="main-content" id="mainContent">
+<div class="page">
+<div class="apostila-titulo"><h1>Apostila de História</h1><p>PSS SEED-PR 2027 — Conteúdo Completo Conforme Edital (Foco Paraná + UFPR)</p></div>
+<div class="indice">
+<h2>📚 Índice</h2>
+<div class="indice-cap"><a href="#cap-1-reinos-e-sociedades-africanas-e-do-crescente-fertil">1. Reinos e Sociedades Africanas e do Crescente Fértil</a></div>
+<ul class="indice-subs">
+<li><a href="#sub-1-1-egito-antigo">1.1 Egito Antigo</a></li>
+<li><a href="#sub-1-2-povos-mesopotamicos">1.2 Povos Mesopotâmicos</a></li>
+</ul>
+<div class="indice-cap"><a href="#cap-2-antiguidade-classica">2. Antiguidade Clássica</a></div>
+<ul class="indice-subs">
+<li><a href="#sub-2-1-formas-de-governo-na-grecia-antiga">2.1 Formas de Governo na Grécia Antiga</a></li>
+<li><a href="#sub-2-2-imperio-romano">2.2 Império Romano</a></li>
+</ul>
+<div class="indice-cap"><a href="#cap-3-europa-medieval">3. Europa Medieval</a></div>
+<ul class="indice-subs">
+<li><a href="#sub-3-1-feudalismo">3.1 Feudalismo</a></li>
+<li><a href="#sub-3-2-igreja-medieval">3.2 Igreja Medieval</a></li>
+<li><a href="#sub-3-3-crise-do-seculo-xiv">3.3 Crise do Século XIV</a></li>
+</ul>
+<div class="indice-cap"><a href="#cap-4-idade-moderna">4. Idade Moderna</a></div>
+<ul class="indice-subs">
+<li><a href="#sub-4-1-reformas-religiosas">4.1 Reformas Religiosas</a></li>
+<li><a href="#sub-4-2-grandes-navegacoes">4.2 Grandes Navegações</a></li>
+<li><a href="#sub-4-3-iluminismo">4.3 Iluminismo</a></li>
+</ul>
+<div class="indice-cap"><a href="#cap-5-colonizacao-do-brasil">5. Colonização do Brasil</a></div>
+<ul class="indice-subs">
+<li><a href="#sub-5-1-povos-indigenas">5.1 Povos Indígenas</a></li>
+<li><a href="#sub-5-2-sistema-colonial">5.2 Sistema Colonial</a></li>
+<li><a href="#sub-5-3-trabalho-escravo">5.3 Trabalho Escravo</a></li>
+</ul>
+<div class="indice-cap"><a href="#cap-6-ocupacao-e-conquista-da-america">6. Ocupação e Conquista da América</a></div>
+<ul class="indice-subs">
+<li><a href="#sub-6-1-maias-astecas-e-incas">6.1 Maias, Astecas e Incas</a></li>
+</ul>
+<div class="indice-cap"><a href="#cap-7-revolucoes-burguesas">7. Revoluções Burguesas</a></div>
+<ul class="indice-subs">
+<li><a href="#sub-7-1-revolucao-francesa">7.1 Revolução Francesa</a></li>
+<li><a href="#sub-7-2-revolucao-industrial">7.2 Revolução Industrial</a></li>
+<li><a href="#sub-7-3-independencia-dos-eua">7.3 Independência dos EUA</a></li>
+</ul>
+<div class="indice-cap"><a href="#cap-8-brasil-imperio">8. Brasil Império</a></div>
+<ul class="indice-subs">
+<li><a href="#sub-8-1-processo-de-independencia">8.1 Processo de Independência</a></li>
+<li><a href="#sub-8-2-segundo-reinado">8.2 Segundo Reinado</a></li>
+<li><a href="#sub-8-3-movimento-abolicionista">8.3 Movimento Abolicionista</a></li>
+</ul>
+<div class="indice-cap"><a href="#cap-9-conflitos-e-revolucoes-do-seculo-xx">9. Conflitos e Revoluções do Século XX</a></div>
+<ul class="indice-subs">
+<li><a href="#sub-9-1-primeira-guerra-mundial">9.1 Primeira Guerra Mundial</a></li>
+<li><a href="#sub-9-2-segunda-guerra-mundial">9.2 Segunda Guerra Mundial</a></li>
+<li><a href="#sub-9-3-guerra-fria">9.3 Guerra Fria</a></li>
+<li><a href="#sub-9-4-globalizacao-e-os-desafios-do-mundo-contemporaneo">9.4 Globalização e os Desafios do Mundo Contemporâneo</a></li>
+</ul>
+<div class="indice-cap"><a href="#cap-10-brasil-republicano">10. Brasil Republicano</a></div>
+<ul class="indice-subs">
+<li><a href="#sub-10-1-primeira-republica">10.1 Primeira República</a></li>
+<li><a href="#sub-10-2-era-vargas">10.2 Era Vargas</a></li>
+<li><a href="#sub-10-3-regime-militar">10.3 Regime Militar</a></li>
+<li><a href="#sub-10-4-redemocratizacao">10.4 Redemocratização</a></li>
+</ul>
+<div class="indice-cap"><a href="#cap-11-historia-do-parana">11. História do Paraná</a></div>
+<ul class="indice-subs">
+<li><a href="#sub-11-1-ocupacao-do-territorio-ouro-tropeirismo-erva-mate-e-cafe">11.1 Ocupação do Território: Ouro, Tropeirismo, Erva-Mate e Café</a></li>
+<li><a href="#sub-11-2-povos-imigrantes-no-parana">11.2 Povos Imigrantes no Paraná</a></li>
+</ul>
+</div>
+<div class="capitulo" id="cap-1-reinos-e-sociedades-africanas-e-do-crescente-fertil" style="--accent: #2196f3; --accent-text: #fff;">
+<h2>1. Reinos e Sociedades Africanas e do Crescente Fértil</h2>
+<div class="subsecao" id="sub-1-1-egito-antigo">
+<h3>1.1 Egito Antigo</h3>
+<div class="conceito"><strong>CONCEITO-CHAVE:</strong> Egito Antigo = civilização fluvial do Nilo, faraós, politeísmo, hieróglifos, pirâmides, sociedade teocrática</div>
+<div class="conteudo"><p>O Egito Antigo se desenvolveu ao longo do <strong>rio Nilo</strong>, cujas cheias anuais fertilizavam as margens e permitiam agricultura intensiva (trigo, cevada, linho). Essa dependência do rio explica o ditado de Heródoto: "o Egito é uma dádiva do Nilo".</p>
+<p><strong>Organização política</strong>: Estado teocrático, governado pelo <strong>faraó</strong>, considerado um deus vivo (filho de Rá). O poder era absoluto, unindo funções política, religiosa e militar. Auxiliado por vizir (administração), sacerdotes (religião) e escribas (burocracia, registros).</p>
+<p><strong>Sociedade hierárquica</strong>: faraó no topo; nobres, sacerdotes e escribas em seguida; depois artesãos e comerciantes; na base, camponeses (maioria) e escravos (geralmente prisioneiros de guerra).</p>
+<p><strong>Religião politeísta</strong>: culto a Rá (sol), Osíris (morte e ressurreição), Ísis, Anúbis. Crença na vida após a morte motivou mumificação e construção de túmulos monumentais — as <strong>pirâmides</strong> (Quéops, Quéfren, Miquerinos, em Gizé).</p>
+<p><strong>Legado cultural</strong>: escrita hieroglífica, calendário solar de 365 dias, avanços em matemática e medicina, arquitetura monumental.</p></div>
+<div class="atencao">
+<h5>⚠️ Atenção — pegadinha de prova</h5>
+<p>Não confundir Antigo Império (era das pirâmides), Médio Império e Novo Império (expansão territorial, Ramsés II) — provas costumam pedir a ordem cronológica dos períodos egípcios.</p>
+</div>
+<div class="destaques-secao">
+<h5>📌 Pontos-chave</h5>
+<div class="destaque">
+<strong>Rio Nilo - Base de Tudo:</strong> Cheias anuais previsíveis fertilizavam as margens. Sem o Nilo, não haveria excedente agrícola nem a civilização egípcia como conhecemos.
+    <span class="marcas"><span class="marca">importante</span><span class="marca">geografia</span></span>
+</div>
+<div class="destaque">
+<strong>Faraó - Deus Vivo:</strong> Concentrava poder político, religioso e militar. Considerado filho de Rá — poder absoluto justificado pela religião.
+    <span class="marcas"><span class="marca">politica</span></span>
+</div>
+<div class="destaque">
+<strong>Mumificação e Vida Após a Morte:</strong> Crença na vida eterna motivou técnicas avançadas de preservação de corpos e construção de túmulos monumentais (pirâmides).
+    <span class="marcas"><span class="marca">cultura</span></span>
+</div>
+</div>
+<div class="glossario">
+<h5>📚 Glossário</h5><dl>
+<dt>Faraó</dt><dd>Governante egípcio, considerado deus vivo (filho de Rá). Poder absoluto: político, religioso e militar.</dd>
+<dt>Vizir</dt><dd>Principal auxiliar administrativo do faraó, responsável pela gestão do governo e da justiça.</dd>
+<dt>Hieróglifos</dt><dd>Sistema de escrita egípcio baseado em símbolos pictóricos, usado em templos e monumentos.</dd>
+<dt>Mumificação</dt><dd>Técnica de preservação de corpos ligada à crença na vida após a morte e à necessidade de manter o corpo intacto.</dd>
+</dl></div>
+</div>
+<div class="subsecao" id="sub-1-2-povos-mesopotamicos">
+<h3>1.2 Povos Mesopotâmicos</h3>
+<div class="conceito"><strong>CONCEITO-CHAVE:</strong> Mesopotâmia = região entre os rios Tigre e Eufrates, berço de sumérios, babilônios e assírios, escrita cuneiforme, Código de Hamurábi</div>
+<div class="conteudo"><p>A <strong>Mesopotâmia</strong> ("terra entre rios") situava-se entre os rios <strong>Tigre e Eufrates</strong>, no atual Iraque. Ao contrário do Egito, era uma região de passagem, sem barreiras naturais fortes — por isso sofreu invasões constantes e viu diversos povos se sucederem no poder.</p>
+<p><strong>Sumérios</strong> (c. 4000 a.C.): criadores da primeira escrita conhecida, a <strong>cuneiforme</strong>, gravada em tábuas de argila. Construíram cidades-estado (Ur, Uruk) com templos em forma de <strong>zigurate</strong>. Inventaram a roda e o arado.</p>
+<p><strong>Babilônios</strong>: destaque para o rei <strong>Hamurábi</strong> (c. 1750 a.C.), autor do <strong>Código de Hamurábi</strong>, um dos primeiros conjuntos de leis escritas da história, baseado na lei de talião ("olho por olho, dente por dente").</p>
+<p><strong>Assírios</strong>: povo guerreiro que unificou boa parte da Mesopotâmia através de conquistas militares violentas, com exército organizado e uso de ferro.</p>
+<p><strong>Persas</strong>: encerraram o ciclo mesopotâmico formando um grande império (Ciro, Dario), com administração eficiente dividida em satrapias.</p></div>
+<div class="timeline">
+<div class="timeline-item">
+<div class="timeline-texto"><strong>c. 4000 a.C.</strong> — Sumérios desenvolvem a escrita cuneiforme.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>c. 1750 a.C.</strong> — Hamurábi promulga seu Código de Leis na Babilônia.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>c. 900-600 a.C.</strong> — Auge e expansão do Império Assírio.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>539 a.C.</strong> — Persas conquistam a Babilônia, unificando a região.</div>
+</div>
+</div>
+<div class="tabela-comparativa"><table>
+<caption>Povos da Mesopotâmia</caption>
+<thead><tr>
+<th>Povo</th>
+<th>Contribuição Principal</th>
+</tr></thead><tbody>
+<tr>
+<td>Sumérios</td>
+<td>Escrita cuneiforme, zigurates, roda</td>
+</tr>
+<tr>
+<td>Babilônios</td>
+<td>Código de Hamurábi</td>
+</tr>
+<tr>
+<td>Assírios</td>
+<td>Expansão militar, uso do ferro</td>
+</tr>
+<tr>
+<td>Persas</td>
+<td>Administração por satrapias, grande império</td>
+</tr>
+</tbody></table></div>
+<div class="glossario">
+<h5>📚 Glossário</h5><dl>
+<dt>Cuneiforme</dt><dd>Sistema de escrita mesopotâmico feito com estilete em tábuas de argila, criado pelos sumérios.</dd>
+<dt>Zigurate</dt><dd>Templo em formato de pirâmide escalonada, centro religioso das cidades-estado sumérias.</dd>
+<dt>Código de Hamurábi</dt><dd>Conjunto de leis escritas da Babilônia (c. 1750 a.C.), baseado na lei de talião.</dd>
+<dt>Satrapia</dt><dd>Unidade administrativa do Império Persa, governada por um sátrapa em nome do rei.</dd>
+</dl></div>
+</div>
+</div>
+<div class="capitulo" id="cap-2-antiguidade-classica" style="--accent: #43a047; --accent-text: #fff;">
+<h2>2. Antiguidade Clássica</h2>
+<div class="subsecao" id="sub-2-1-formas-de-governo-na-grecia-antiga">
+<h3>2.1 Formas de Governo na Grécia Antiga</h3>
+<div class="conceito"><strong>CONCEITO-CHAVE:</strong> Grécia Antiga = cidades-estado (pólis), democracia ateniense, oligarquia militar espartana, filosofia clássica</div>
+<div class="conteudo"><p>A Grécia Antiga organizava-se em <strong>cidades-estado (pólis)</strong> independentes, cada uma com governo, leis e exército próprios. As mais estudadas em prova são <strong>Atenas</strong> e <strong>Esparta</strong>, por representarem modelos políticos opostos.</p>
+<p><strong>Atenas — democracia direta</strong>: após reformas de Sólon e Clístenes, os cidadãos (homens livres, adultos, filhos de pai ateniense) participavam diretamente das decisões na Assembleia (Ecclesia). <strong>Excluídos da cidadania</strong>: mulheres, estrangeiros (metecos) e escravos — maioria da população.</p>
+<p><strong>Esparta — oligarquia militarista</strong>: sociedade voltada para a guerra, governada por dois reis e um conselho de anciãos (Gerúsia). Educação militar rígida desde a infância (agogê). Sociedade dividida em espartanos, periecos (comerciantes livres sem cidadania) e hilotas (servos do Estado).</p>
+<p><strong>Outras formas de governo grega</strong>: monarquia (poder de um rei), aristocracia/oligarquia (poder de poucos nobres), tirania (poder pessoal conquistado à força, nem sempre negativo no sentido original).</p></div>
+<div class="tabela-comparativa"><table>
+<caption>Atenas x Esparta</caption>
+<thead><tr>
+<th>Aspecto</th>
+<th>Atenas</th>
+<th>Esparta</th>
+</tr></thead><tbody>
+<tr>
+<td>Governo</td>
+<td>Democracia direta</td>
+<td>Oligarquia militar (dois reis)</td>
+</tr>
+<tr>
+<td>Educação</td>
+<td>Retórica, filosofia, artes</td>
+<td>Militar (agogê) desde os 7 anos</td>
+</tr>
+<tr>
+<td>Valor central</td>
+<td>Participação política</td>
+<td>Disciplina e guerra</td>
+</tr>
+</tbody></table></div>
+<div class="destaques-secao">
+<h5>📌 Pontos-chave</h5>
+<div class="destaque">
+<strong>Democracia Ateniense — Exclusão como Regra:</strong> Apenas uma minoria (homens cidadãos) participava da política. Mulheres, metecos e escravos formavam a maioria excluída — ponto muito cobrado em prova.
+    <span class="marcas"><span class="marca">importante</span><span class="marca">politica</span></span>
+</div>
+<div class="destaque">
+<strong>Esparta — Educação Militar (Agogê):</strong> Crianças espartanas eram retiradas das famílias aos 7 anos para treinamento militar rígido. Sociedade inteira organizada para a guerra.
+    <span class="marcas"><span class="marca">destaque</span><span class="marca">sociedade</span></span>
+</div>
+</div>
+<div class="brainstorm-secao">
+<h5>💡 Para Refletir</h5>
+<div class="brainstorm-item">
+<strong>Democracia ateniense era realmente democrática?</strong>
+<p class="reflexao">Apenas ~10-15% da população (homens cidadãos) tinha voz política. Mulheres, estrangeiros e escravos — a maioria — estavam excluídos. Um modelo parcial que ainda assim influenciou a democracia moderna.</p>
+</div>
+</div>
+<div class="glossario">
+<h5>📚 Glossário</h5><dl>
+<dt>Pólis</dt><dd>Cidade-estado grega independente, com governo, leis e exército próprios.</dd>
+<dt>Ecclesia</dt><dd>Assembleia popular ateniense onde os cidadãos votavam diretamente as leis e decisões.</dd>
+<dt>Hilota</dt><dd>Servo do Estado espartano, população conquistada obrigada a trabalhar para os espartanos.</dd>
+<dt>Metecos</dt><dd>Estrangeiros residentes em Atenas, sem direitos de cidadania apesar de contribuírem para a economia.</dd>
+</dl></div>
+</div>
+<div class="subsecao" id="sub-2-2-imperio-romano">
+<h3>2.2 Império Romano</h3>
+<div class="conceito"><strong>CONCEITO-CHAVE:</strong> Roma = Monarquia, República e Império; expansão territorial; direito romano; cristianismo; queda de Roma 476 d.C.</div>
+<div class="conteudo"><p>A história de Roma se divide tradicionalmente em três fases: <strong>Monarquia</strong> (753-509 a.C.), <strong>República</strong> (509-27 a.C.) e <strong>Império</strong> (27 a.C.-476 d.C. no Ocidente).</p>
+<p><strong>República</strong>: poder dividido entre Senado (patrícios/aristocracia), cônsules (executivo, mandato de 1 ano) e assembleias populares. Conflito constante entre <strong>patrícios</strong> (elite) e <strong>plebeus</strong> (maioria), que conquistaram gradualmente direitos políticos (Lei das Doze Tábuas, tribunos da plebe).</p>
+<p><strong>Império</strong>: inicia com <strong>Otávio Augusto</strong> (27 a.C.), que concentra poderes mantendo aparência republicana. Período de grande expansão territorial (Mediterrâneo, Europa, norte da África) e da <strong>Pax Romana</strong> — dois séculos de relativa estabilidade.</p>
+<p><strong>Legado romano</strong>: direito romano (base do direito ocidental), latim (origem das línguas neolatinas, incluindo o português), engenharia (estradas, aquedutos, arcos), e a <strong>oficialização do cristianismo</strong> por Constantino (Edito de Milão, 313 d.C.) e Teodósio (religião oficial, 380 d.C.).</p>
+<p><strong>Queda de Roma (476 d.C.)</strong>: invasões dos povos germânicos, crise econômica, divisão administrativa (Império do Oriente sobrevive como Bizantino até 1453). Marca tradicional do fim da Idade Antiga e início da Idade Média.</p></div>
+<div class="timeline">
+<div class="timeline-item">
+<div class="timeline-texto"><strong>753 a.C.</strong> — Fundação lendária de Roma.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>509 a.C.</strong> — Fim da Monarquia, início da República.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>27 a.C.</strong> — Otávio Augusto torna-se o primeiro imperador.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>313 d.C.</strong> — Edito de Milão legaliza o cristianismo.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>476 d.C.</strong> — Queda do Império Romano do Ocidente.</div>
+</div>
+</div>
+<div class="mapa-mental">
+<span class="no-central">Roma Antiga</span>
+<div class="ramos">
+<div class="ramo">Monarquia (753-509 a.C.)</div>
+<div class="ramo">República (509-27 a.C.)</div>
+<div class="ramo">Império (27 a.C.-476 d.C.)</div>
+<div class="ramo">Direito romano e engenharia</div>
+<div class="ramo">Cristianismo oficializado (313/380 d.C.)</div>
+<div class="ramo">Queda de Roma (476 d.C.)</div>
+</div>
+</div>
+<div class="destaques-secao">
+<h5>📌 Pontos-chave</h5>
+<div class="destaque">
+<strong>Pax Romana - Dois Séculos de Estabilidade:</strong> Período de relativa paz e prosperidade sob os primeiros imperadores, permitindo florescimento do comércio, da cultura e da infraestrutura em todo o Mediterrâneo.
+    <span class="marcas"><span class="marca">importante</span><span class="marca">economia</span></span>
+</div>
+</div>
+<div class="glossario">
+<h5>📚 Glossário</h5><dl>
+<dt>Patrício</dt><dd>Membro da elite aristocrática romana, com plenos direitos políticos na República.</dd>
+<dt>Plebeu</dt><dd>Cidadão romano comum, sem os privilégios dos patrícios, que lutou por direitos políticos ao longo da República.</dd>
+<dt>Pax Romana</dt><dd>Período de estabilidade e prosperidade no Império Romano, iniciado com Augusto.</dd>
+<dt>Edito de Milão</dt><dd>313 d.C. Decreto de Constantino que legalizou o cristianismo no Império Romano.</dd>
+</dl></div>
+</div>
+</div>
+<div class="capitulo" id="cap-3-europa-medieval" style="--accent: #9c27b0; --accent-text: #fff;">
+<h2>3. Europa Medieval</h2>
+<div class="subsecao" id="sub-3-1-feudalismo">
+<h3>3.1 Feudalismo</h3>
+<div class="conceito"><strong>CONCEITO-CHAVE:</strong> Feudalismo = sistema socioeconômico medieval, relações de vassalagem, servidão, economia agrária autossuficiente, sociedade estamental</div>
+<div class="conteudo"><p>O <strong>feudalismo</strong> foi o sistema social, político e econômico predominante na Europa Ocidental entre os séculos IX e XV, formado a partir da fusão de elementos romanos (colonato) e germânicos (relações de fidelidade guerreira).</p>
+<p><strong>Relação de vassalagem</strong>: um senhor feudal cedia terra (feudo) a um vassalo em troca de fidelidade e auxílio militar — cerimônia formalizada pela <strong>homenagem</strong>. Criava-se uma cadeia hierárquica de lealdades entre nobres.</p>
+<p><strong>Servidão</strong>: a maioria da população era formada por <strong>servos</strong>, camponeses juridicamente livres mas presos à terra, obrigados a trabalhar para o senhor (corveia), pagar tributos em produtos (talha) e usar suas instalações mediante taxa (banalidades).</p>
+<p><strong>Economia</strong>: essencialmente agrária e de subsistência, organizada em torno do <strong>feudo/manor</strong>, com pouca circulação monetária e comércio reduzido — diferente da economia urbana e mercantil que ressurgiria depois, no fim da Idade Média.</p>
+<p><strong>Sociedade estamental</strong>: dividida em três ordens fixas — <strong>clero</strong> (oravam), <strong>nobreza</strong> (guerreavam) e <strong>camponeses/servos</strong> (trabalhavam) — com pouquíssima mobilidade social.</p></div>
+<div class="mapa-mental">
+<span class="no-central">Feudalismo</span>
+<div class="ramos">
+<div class="ramo">Vassalagem e feudo</div>
+<div class="ramo">Servidão (corveia, talha, banalidades)</div>
+<div class="ramo">Economia agrária de subsistência</div>
+<div class="ramo">Sociedade estamental (clero, nobreza, servos)</div>
+<div class="ramo">Fragmentação política</div>
+</div>
+</div>
+<div class="destaques-secao">
+<h5>📌 Pontos-chave</h5>
+<div class="destaque">
+<strong>Servidão ≠ Escravidão:</strong> O servo era juridicamente livre e não podia ser vendido como propriedade, mas estava preso à terra e devia obrigações ao senhor — distinção cobrada com frequência.
+    <span class="marcas"><span class="marca">importante</span><span class="marca">conceito</span></span>
+</div>
+</div>
+<div class="glossario">
+<h5>📚 Glossário</h5><dl>
+<dt>Vassalagem</dt><dd>Relação de fidelidade entre um senhor feudal e um vassalo, formalizada pela cerimônia de homenagem.</dd>
+<dt>Servo</dt><dd>Camponês juridicamente livre, mas preso à terra, obrigado a trabalhar e pagar tributos ao senhor feudal.</dd>
+<dt>Corveia</dt><dd>Trabalho obrigatório e gratuito que o servo prestava nas terras do senhor feudal.</dd>
+<dt>Talha</dt><dd>Tributo pago pelo servo ao senhor feudal, geralmente em produtos agrícolas.</dd>
+</dl></div>
+</div>
+<div class="subsecao" id="sub-3-2-igreja-medieval">
+<h3>3.2 Igreja Medieval</h3>
+<div class="conceito"><strong>CONCEITO-CHAVE:</strong> Igreja Católica = maior poder político-cultural da Idade Média, teocentrismo, monaquismo, Cruzadas, Inquisição</div>
+<div class="conteudo"><p>A <strong>Igreja Católica</strong> foi a instituição mais poderosa e influente da Idade Média, unificando a Europa cristã ocidental em torno da fé quando o poder político estava fragmentado entre reinos e feudos.</p>
+<p><strong>Teocentrismo</strong>: visão de mundo centrada em Deus, que orientava a arte, a filosofia (escolástica, Santo Tomás de Aquino) e a própria justificativa da ordem social feudal (as três ordens seriam vontade divina).</p>
+<p><strong>Monaquismo</strong>: mosteiros (beneditinos, depois franciscanos e dominicanos) preservaram textos antigos, educaram parte da população e organizaram a economia agrícola local — verdadeiros centros de conhecimento em meio ao período.</p>
+<p><strong>Poder político e econômico</strong>: a Igreja cobrava o <strong>dízimo</strong>, possuía vastas terras, e podia usar a <strong>excomunhão</strong> como arma política contra reis desobedientes.</p>
+<p><strong>Cruzadas</strong> (1096-1291): expedições militares religiosas para retomar Jerusalém dos muçulmanos, mobilizadas pelo papado. Motivações religiosas se misturavam a interesses comerciais e territoriais.</p>
+<p><strong>Inquisição</strong>: tribunal eclesiástico criado para combater heresias, especialmente a partir do século XIII, com métodos de investigação e punição severos.</p></div>
+<div class="timeline">
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1096</strong> — Início da Primeira Cruzada.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1291</strong> — Queda de Acre encerra as Cruzadas no Oriente Médio.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>Século XIII</strong> — Auge da Inquisição medieval contra heresias.</div>
+</div>
+</div>
+<div class="cai-na-prova">
+<h5>🎯 Cai assim na prova</h5>
+<p>Provas cobram a distinção entre motivações OFICIAIS das Cruzadas (religiosas, retomar a Terra Santa) e motivações REAIS/subjacentes (expansão comercial italiana, alívio da pressão populacional na Europa, ambições territoriais da nobreza).</p>
+<span class="fonte">Fonte: Padrão recorrente em questões sobre Cruzadas</span>
+</div>
+<div class="destaques-secao">
+<h5>📌 Pontos-chave</h5>
+<div class="destaque">
+<strong>Monaquismo - Guardiões do Conhecimento:</strong> Mosteiros preservaram textos antigos e mantiveram educação viva durante um período de fragmentação política — sem eles, muito do saber clássico teria se perdido.
+    <span class="marcas"><span class="marca">importante</span><span class="marca">cultura</span></span>
+</div>
+<div class="destaque">
+<strong>Excomunhão como Arma Política:</strong> A Igreja podia excluir reis da comunhão religiosa, deslegitimando seu governo perante a população — poderoso instrumento de pressão política.
+    <span class="marcas"><span class="marca">politica</span></span>
+</div>
+</div>
+<div class="glossario">
+<h5>📚 Glossário</h5><dl>
+<dt>Teocentrismo</dt><dd>Visão de mundo medieval centrada em Deus como explicação de todas as coisas.</dd>
+<dt>Dízimo</dt><dd>Tributo de 10% cobrado pela Igreja sobre a produção dos fiéis.</dd>
+<dt>Excomunhão</dt><dd>Exclusão de um fiel da comunhão da Igreja, usada também como arma política contra governantes.</dd>
+<dt>Cruzadas</dt><dd>Expedições militares religiosas (1096-1291) para retomar Jerusalém dos muçulmanos.</dd>
+</dl></div>
+</div>
+<div class="subsecao" id="sub-3-3-crise-do-seculo-xiv">
+<h3>3.3 Crise do Século XIV</h3>
+<div class="conceito"><strong>CONCEITO-CHAVE:</strong> Crise do século XIV = Peste Negra, Guerra dos Cem Anos, fome, revoltas camponesas, fim do feudalismo</div>
+<div class="conteudo"><p>O século XIV é chamado de "<strong>século da crise</strong>" por reunir uma sequência de catástrofes que abalaram profundamente a estrutura feudal, abrindo caminho para a transição rumo à Idade Moderna.</p>
+<p><strong>Peste Negra (1347-1351)</strong>: epidemia de peste bubônica trazida por rotas comerciais da Ásia, transmitida por pulgas de ratos. Matou entre <strong>um terço e metade da população europeia</strong>. Consequência direta: escassez de mão de obra, que fortaleceu o poder de barganha dos camponeses sobreviventes.</p>
+<p><strong>Guerra dos Cem Anos (1337-1453)</strong>: conflito entre França e Inglaterra pela sucessão do trono francês, marcado por batalhas, saques e o surgimento de sentimentos nacionais mais fortes em ambos os países. Destaque para <strong>Joana d'Arc</strong>, camponesa que liderou tropas francesas.</p>
+<p><strong>Fome e crise agrícola</strong>: mudanças climáticas e esgotamento de solos reduziram as colheitas antes mesmo da peste, agravando a crise geral.</p>
+<p><strong>Revoltas camponesas</strong>: a combinação de fome, guerra e peste gerou revoltas populares importantes, como a <strong>Jacquerie</strong> na França (1358) e a Revolta dos Camponeses na Inglaterra (1381), exigindo redução de tributos e fim da servidão.</p>
+<p><strong>Consequência estrutural</strong>: esse conjunto de crises corroeu as bases econômicas e sociais do feudalismo, contribuindo para o fortalecimento das monarquias nacionais e para a futura transição ao capitalismo comercial.</p></div>
+<div class="timeline">
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1315-1317</strong> — Grande Fome atinge a Europa, enfraquecendo a população.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1337</strong> — Início da Guerra dos Cem Anos entre França e Inglaterra.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1347-1351</strong> — Peste Negra dizima entre um terço e metade da população europeia.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1358</strong> — Jacquerie — revolta camponesa na França.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1381</strong> — Revolta dos Camponeses na Inglaterra.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1453</strong> — Fim da Guerra dos Cem Anos.</div>
+</div>
+</div>
+<div class="atencao">
+<h5>⚠️ Atenção — pegadinha de prova</h5>
+<p>Cuidado com relação de causa e efeito: a crise do século XIV não é APENAS a Peste Negra — envolve também fome anterior, guerra prolongada e revoltas sociais, todos interligados.</p>
+</div>
+<div class="destaques-secao">
+<h5>📌 Pontos-chave</h5>
+<div class="destaque">
+<strong>Peste Negra - Um Terço da Europa:</strong> Mortalidade entre 30% e 50% da população europeia entre 1347-1351. Escassez de mão de obra sobrevivente fortaleceu o poder de barganha dos camponeses.
+    <span class="marcas"><span class="marca">numero</span><span class="marca">importante</span></span>
+</div>
+</div>
+<div class="glossario">
+<h5>📚 Glossário</h5><dl>
+<dt>Peste Negra</dt><dd>Epidemia de peste bubônica (1347-1351) que matou entre um terço e metade da população europeia.</dd>
+<dt>Guerra dos Cem Anos</dt><dd>Conflito entre França e Inglaterra (1337-1453) pela sucessão do trono francês.</dd>
+<dt>Jacquerie</dt><dd>Revolta camponesa francesa de 1358, motivada pela combinação de fome, guerra e peste.</dd>
+</dl></div>
+</div>
+</div>
+<div class="capitulo" id="cap-4-idade-moderna" style="--accent: #fb8c00; --accent-text: #222;">
+<h2>4. Idade Moderna</h2>
+<div class="subsecao" id="sub-4-1-reformas-religiosas">
+<h3>4.1 Reformas Religiosas</h3>
+<div class="conceito"><strong>CONCEITO-CHAVE:</strong> Reforma Protestante = Martinho Lutero, 95 teses, Calvinismo, Contrarreforma católica, fragmentação religiosa da Europa</div>
+<div class="conteudo"><p>A <strong>Reforma Protestante</strong> rompeu a unidade religiosa da Europa Ocidental no século XVI, questionando práticas e a autoridade da Igreja Católica.</p>
+<p><strong>Martinho Lutero</strong> (1517): monge alemão que publicou as <strong>95 Teses</strong>, criticando principalmente a venda de <strong>indulgências</strong> (perdão de pecados mediante pagamento). Defendia a salvação pela fé (não por obras/pagamentos) e a leitura direta da Bíblia (traduzida ao alemão).</p>
+<p><strong>Calvinismo</strong>: João Calvino desenvolveu a doutrina da <strong>predestinação</strong> (Deus já determinou quem se salva) e valorizou o trabalho e o lucro como sinais de graça divina — ideia que influenciaria o espírito do capitalismo (segundo Max Weber).</p>
+<p><strong>Anglicanismo</strong>: na Inglaterra, Henrique VIII rompeu com Roma por motivos pessoais/políticos (o papa negou anulação de seu casamento), criando a Igreja Anglicana sob controle do Estado.</p>
+<p><strong>Contrarreforma católica</strong>: resposta da Igreja Católica, com o <strong>Concílio de Trento</strong> (1545-1563), reafirmação de dogmas, criação da <strong>Companhia de Jesus</strong> (jesuítas) para catequese e educação, e reforço da Inquisição.</p></div>
+<div class="timeline">
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1517</strong> — Lutero afixa as 95 teses em Wittenberg.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1534</strong> — Henrique VIII rompe com Roma e cria a Igreja Anglicana.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1545-1563</strong> — Concílio de Trento organiza a Contrarreforma católica.</div>
+</div>
+</div>
+<div class="destaques-secao">
+<h5>📌 Pontos-chave</h5>
+<div class="destaque">
+<strong>Lutero - Salvação pela Fé:</strong> Rompeu com a ideia de que a salvação podia ser comprada (indulgências), defendendo que somente a fé salva — princípio central do protestantismo.
+    <span class="marcas"><span class="marca">importante</span><span class="marca">religiao</span></span>
+</div>
+<div class="destaque">
+<strong>Calvinismo e o Espírito do Capitalismo:</strong> Max Weber associou a ética calvinista (valorização do trabalho e do lucro) ao desenvolvimento do capitalismo moderno.
+    <span class="marcas"><span class="marca">destaque</span><span class="marca">economia</span></span>
+</div>
+</div>
+<div class="glossario">
+<h5>📚 Glossário</h5><dl>
+<dt>Indulgência</dt><dd>Perdão de pecados vendido pela Igreja Católica, alvo central das críticas de Lutero.</dd>
+<dt>Predestinação</dt><dd>Doutrina calvinista segundo a qual Deus já determinou previamente quem se salvará.</dd>
+<dt>Concílio de Trento</dt><dd>1545-1563. Reunião da Igreja Católica que organizou a Contrarreforma.</dd>
+</dl></div>
+</div>
+<div class="subsecao" id="sub-4-2-grandes-navegacoes">
+<h3>4.2 Grandes Navegações</h3>
+<div class="conceito"><strong>CONCEITO-CHAVE:</strong> Grandes Navegações = expansão marítima ibérica, mercantilismo, Tratado de Tordesilhas, chegada à América</div>
+<div class="conteudo"><p>As <strong>Grandes Navegações</strong> (séculos XV-XVI) foram lideradas inicialmente por <strong>Portugal e Espanha</strong>, motivadas pela busca de novas rotas comerciais para o Oriente (especiarias), metais preciosos, e pela expansão da fé cristã.</p>
+<p><strong>Fatores que permitiram a expansão</strong>: avanços técnicos (caravela, bússola, astrolábio), acúmulo de capital mercantil, apoio das monarquias centralizadas e conhecimentos náuticos acumulados (Escola de Sagres, associada a Portugal).</p>
+<p><strong>Roteiro português</strong>: contorno da África (Bartolomeu Dias, Cabo da Boa Esperança, 1488), chegada à Índia (Vasco da Gama, 1498), e chegada ao Brasil (Pedro Álvares Cabral, 1500).</p>
+<p><strong>Roteiro espanhol</strong>: Cristóvão Colombo chega à América em 1492 buscando um caminho alternativo para as Índias. Espanha depois conquista os grandes impérios americanos (asteca e inca).</p>
+<p><strong>Tratado de Tordesilhas (1494)</strong>: acordo entre Portugal e Espanha que dividiu as terras "descobertas e por descobrir" por uma linha imaginária a 370 léguas de Cabo Verde — base da divisão territorial da América entre as duas coroas ibéricas.</p>
+<p><strong>Mercantilismo</strong>: política econômica que orientou a expansão — metalismo (acúmulo de metais preciosos), balança comercial favorável, monopólio comercial da metrópole sobre a colônia, pacto colonial.</p></div>
+<div class="mapa-mental">
+<span class="no-central">Grandes Navegações</span>
+<div class="ramos">
+<div class="ramo">Avanços técnicos (caravela, astrolábio, bússola)</div>
+<div class="ramo">Roteiro português (África, Índia, Brasil)</div>
+<div class="ramo">Roteiro espanhol (América)</div>
+<div class="ramo">Tratado de Tordesilhas (1494)</div>
+<div class="ramo">Mercantilismo e pacto colonial</div>
+</div>
+</div>
+<div class="tabela-comparativa"><table>
+<caption>Marcos das Grandes Navegações</caption>
+<thead><tr>
+<th>Ano</th>
+<th>Evento</th>
+<th>Responsável</th>
+</tr></thead><tbody>
+<tr>
+<td>1488</td>
+<td>Contorno do Cabo da Boa Esperança</td>
+<td>Bartolomeu Dias</td>
+</tr>
+<tr>
+<td>1492</td>
+<td>Chegada à América</td>
+<td>Cristóvão Colombo</td>
+</tr>
+<tr>
+<td>1494</td>
+<td>Tratado de Tordesilhas</td>
+<td>Portugal e Espanha</td>
+</tr>
+<tr>
+<td>1498</td>
+<td>Rota marítima para a Índia</td>
+<td>Vasco da Gama</td>
+</tr>
+<tr>
+<td>1500</td>
+<td>Chegada ao Brasil</td>
+<td>Pedro Álvares Cabral</td>
+</tr>
+</tbody></table></div>
+<div class="destaques-secao">
+<h5>📌 Pontos-chave</h5>
+<div class="destaque">
+<strong>Tratado de Tordesilhas - A Linha que Dividiu a América:</strong> Linha imaginária a 370 léguas de Cabo Verde dividiu terras entre Portugal e Espanha antes mesmo de serem totalmente exploradas — base jurídica da colonização americana.
+    <span class="marcas"><span class="marca">importante</span><span class="marca">politica</span></span>
+</div>
+</div>
+<div class="glossario">
+<h5>📚 Glossário</h5><dl>
+<dt>Caravela</dt><dd>Embarcação portuguesa leve e manobrável, essencial para as Grandes Navegações.</dd>
+<dt>Mercantilismo</dt><dd>Política econômica baseada no acúmulo de metais preciosos e balança comercial favorável à metrópole.</dd>
+<dt>Tratado de Tordesilhas</dt><dd>1494. Acordo Portugal-Espanha que dividiu as terras americanas por uma linha imaginária.</dd>
+</dl></div>
+</div>
+<div class="subsecao" id="sub-4-3-iluminismo">
+<h3>4.3 Iluminismo</h3>
+<div class="conceito"><strong>CONCEITO-CHAVE:</strong> Iluminismo = movimento filosófico do século XVIII, razão, contrato social, separação de poderes, base ideológica das revoluções liberais</div>
+<blockquote class="citacao">
+<span class="aspas">“</span>Ouso saber! Tenha a coragem de usar teu próprio entendimento.
+  <span class="autor-citacao">— Immanuel Kant, definindo o lema do Iluminismo (Sapere Aude)</span>
+</blockquote>
+<div class="conteudo"><p>O <strong>Iluminismo</strong> foi um movimento intelectual do século XVIII que defendia o uso da <strong>razão</strong> como principal instrumento para compreender o mundo e organizar a sociedade, questionando o absolutismo monárquico e os privilégios do Antigo Regime.</p>
+<p><strong>Principais pensadores e ideias</strong>:</p>
+<ul><li><strong>John Locke</strong>: direitos naturais (vida, liberdade, propriedade); governo deve ter consentimento dos governados.</li><li><strong>Montesquieu</strong>: teoria da <strong>separação dos três poderes</strong> (Executivo, Legislativo, Judiciário) para evitar tirania — base das constituições modernas.</li><li><strong>Voltaire</strong>: crítica à intolerância religiosa e ao absolutismo; defesa da liberdade de expressão.</li><li><strong>Rousseau</strong>: teoria do <strong>contrato social</strong> — a soberania pertence ao povo; defendeu ideia de igualdade e democracia direta.</li><li><strong>Diderot e D'Alembert</strong>: organizaram a <strong>Enciclopédia</strong>, obra que reunia e difundia o conhecimento das ciências, artes e ofícios da época, com viés crítico ao Antigo Regime.</li></ul>
+<p><strong>Impacto histórico</strong>: o Iluminismo forneceu a base ideológica para a <strong>Revolução Francesa</strong>, a <strong>Independência dos Estados Unidos</strong> e, mais tarde, para os movimentos de independência na América Latina, incluindo a Inconfidência Mineira no Brasil.</p></div>
+<div class="destaques-secao">
+<h5>📌 Pontos-chave</h5>
+<div class="destaque">
+<strong>Montesquieu - Separação dos Poderes:</strong> A divisão entre Executivo, Legislativo e Judiciário, criada para evitar concentração de poder, é a base de praticamente todas as constituições democráticas modernas.
+    <span class="marcas"><span class="marca">importante</span><span class="marca">politica</span></span>
+</div>
+</div>
+<div class="brainstorm-secao">
+<h5>💡 Para Refletir</h5>
+<div class="brainstorm-item">
+<strong>O Iluminismo foi só teoria ou mudou o mundo de fato?</strong>
+<p class="reflexao">Suas ideias inspiraram diretamente a Independência dos EUA, a Revolução Francesa e movimentos de independência na América Latina — raramente uma corrente filosófica teve impacto político tão imediato e concreto.</p>
+</div>
+</div>
+<div class="glossario">
+<h5>📚 Glossário</h5><dl>
+<dt>Contrato Social</dt><dd>Teoria de Rousseau segundo a qual a soberania pertence ao povo, não ao monarca.</dd>
+<dt>Separação dos Poderes</dt><dd>Teoria de Montesquieu que divide o governo em Executivo, Legislativo e Judiciário para evitar tirania.</dd>
+<dt>Enciclopédia</dt><dd>Obra organizada por Diderot e D'Alembert que reunia o conhecimento da época com viés crítico ao Antigo Regime.</dd>
+</dl></div>
+</div>
+</div>
+<div class="capitulo" id="cap-5-colonizacao-do-brasil" style="--accent: #d81b60; --accent-text: #fff;">
+<h2>5. Colonização do Brasil</h2>
+<div class="subsecao" id="sub-5-1-povos-indigenas">
+<h3>5.1 Povos Indígenas</h3>
+<div class="conceito"><strong>CONCEITO-CHAVE:</strong> Povos indígenas no Brasil = diversidade cultural pré-colonial, troncos linguísticos, impacto da colonização, resistência</div>
+<div class="conteudo"><p>Antes da chegada europeia em 1500, o território hoje correspondente ao Brasil era habitado por <strong>milhões de indígenas</strong>, organizados em centenas de povos e línguas diferentes — não uma população homogênea, como sugere o estereótipo simplificado do "índio genérico".</p>
+<p><strong>Principais troncos linguísticos</strong>: <strong>Tupi-Guarani</strong> (litoral, principal contato inicial com portugueses), <strong>Macro-Jê</strong> (interior, planalto), além de famílias Aruak e Karib na Amazônia.</p>
+<p><strong>Organização social</strong>: sociedades organizadas em aldeias, com divisão de trabalho por gênero e idade, economia baseada em agricultura (mandioca, milho), caça, pesca e coleta, sem propriedade privada da terra nos moldes europeus.</p>
+<p><strong>Impacto da colonização</strong>: contato trouxe doenças (varíola, sarampo) contra as quais os indígenas não tinham imunidade, causando colapso demográfico catastrófico; escravização direta; violência de expedições como as <strong>bandeiras</strong>; e catequese jesuítica que buscava "civilizar" segundo padrões europeus, destruindo práticas culturais originais.</p>
+<p><strong>Resistência indígena</strong>: guerras contra o avanço colonial, fugas, alianças estratégicas entre povos e europeus rivais, e preservação cultural mesmo sob pressão — resistência que persiste até hoje na luta por demarcação de terras.</p></div>
+<div class="mapa-mental">
+<span class="no-central">Povos Indígenas Pré-Coloniais</span>
+<div class="ramos">
+<div class="ramo">Tronco Tupi-Guarani (litoral)</div>
+<div class="ramo">Tronco Macro-Jê (interior/planalto)</div>
+<div class="ramo">Organização em aldeias</div>
+<div class="ramo">Impacto: doenças e escravização</div>
+<div class="ramo">Resistência e preservação cultural</div>
+</div>
+</div>
+<div class="atencao">
+<h5>⚠️ Atenção — pegadinha de prova</h5>
+<p>Cuidado com o mito do 'índio genérico': a UFPR valoriza questões que reconhecem a pluralidade de povos indígenas (Tupi, Guarani, Kaingang, entre outros no Paraná) e criticam visões estereotipadas ou romantizadas.</p>
+</div>
+<div class="destaques-secao">
+<h5>📌 Pontos-chave</h5>
+<div class="destaque">
+<strong>Colapso Demográfico por Doenças:</strong> Varíola e sarampo, doenças sem imunidade prévia entre os indígenas, causaram mortandade muito maior que a violência direta da colonização.
+    <span class="marcas"><span class="marca">numero</span><span class="marca">importante</span></span>
+</div>
+</div>
+<div class="glossario">
+<h5>📚 Glossário</h5><dl>
+<dt>Tronco Linguístico</dt><dd>Agrupamento de línguas indígenas com origem comum, como Tupi-Guarani e Macro-Jê.</dd>
+<dt>Aldeia</dt><dd>Unidade de organização social indígena, com divisão de trabalho por gênero e idade.</dd>
+</dl></div>
+</div>
+<div class="subsecao" id="sub-5-2-sistema-colonial">
+<h3>5.2 Sistema Colonial</h3>
+<div class="conceito"><strong>CONCEITO-CHAVE:</strong> Sistema colonial = Capitanias Hereditárias, bandeirantes, latifúndio, monocultura açúcar, monopólio português, Jesuítas, exploração indígena</div>
+<blockquote class="citacao">
+<span class="aspas">“</span>O Tratado de Madrid não desenhou fronteiras neutras: desenhou o mapa dos interesses de duas coroas distantes, sobre terras onde viviam povos que nunca foram consultados.
+  <span class="autor-citacao">— Síntese historiográfica sobre o Tratado de Madrid (1750)</span>
+</blockquote>
+<div class="conteudo"><p>Portugal estabeleceu colônia (Brasil) como máquina extração riquezas direto para Coroa. Modelo: mercantilismo—colônia enriquece metrópole.</p>
+<p><strong>Capitanias Hereditárias (1534)</strong>: Rei João III dividia litoral em 15 faixas dadas a donatários. Cada capitão-donatário: podia governar, justiça, distribuir terras, explorar recursos. Compensação: 10% rendas. <strong>Fracasso</strong>: donatários pobres, sem investimento, conflitos indígenas, Coroa longe. Apenas Pernambuco/São Vicente cresceram.</p>
+<p><strong>Reorganização Centralizadora</strong>: Governador-geral (1549) centraliza poder. Salvador capital (1549-1763). Capitanias mantêm nominalmente donatários mas governador-geral é autoridade. Funciona melhor.</p>
+<p><strong>Bandeirantes</strong>: Paulistas (principalmente São Paulo). Grupos exploração interior (século XVI-XVII). Objetivo inicial: capturar indígenas escravizar. "Bandeira" = expedição armada (100-200 homens + indígenas aliados). Penetravam sertão meses caçando indígenas. Legado: expandiram território Brasil (descobriram ouro Minas depois). <strong>Crítica moderna</strong>: "massacres impiedosos" destruindo populações indígenas; aprisionavam famílias inteiras.</p>
+<p><strong>Tratado de Madrid (1750)</strong>: Acordo Portugal-Espanha define fronteiras colônias América do Sul. Transferências: Sete Povos Missões (Jesuítas) Portugal→Espanha; Colônia Sacramento Portugal→Espanha; Região Grande Curitiba/Paraná→Portugal. Resultado: Brasil ganhou Amazônia, Curitiba, sul (Paraná/Santa Catarina/Rio Grande). Impacto demográfico: expulsão Jesuítas, conflitos Guaraní.</p>
+<p><strong>Jesuítas</strong>: Ordem Companhia de Jesus (Inácio de Loyola). Missão Brasil (1549+): catequese indígenas, educação, civilização (conforme europeu). Reduções: aldeias jesuítas concentrando indígenas pra aprender português, religião, agricultura europeia. Conflitos: Jesuítas protegiam indígenas colonos queriam escravizar. Expulsos 1759 Marquês de Pombal.</p>
+<p><strong>Economia Açucareira</strong>: Cana-de-açúcar plantada PE/BA (clima ideal). Engenho = fábrica moagem cana (grande, caro, necessário capital). Açúcar valia ouro Europa (luxo). Ciclo XVI-XVII: Brasil maior produtor açúcar mundo. <strong>Problema</strong>: precisava mão-de-obra MASSIVA. Solução: escravidão indígena→africana.</p>
+<p><strong>Monopólio Português</strong>: Colônia SÓ comercializa com Portugal. Tudo passa Companhia das Índias (depois Junta). Preços: artificialmente altos importações, baixos exportações. Brasil enriquece Portugal; Brasil fica pobre.</p></div>
+<div class="mapa-mental">
+<span class="no-central">Sistema Colonial Português</span>
+<div class="ramos">
+<div class="ramo">Capitanias Hereditárias (fracasso)</div>
+<div class="ramo">Governo-Geral (centralização)</div>
+<div class="ramo">Bandeirantes (expansão territorial)</div>
+<div class="ramo">Jesuítas (catequese e proteção)</div>
+<div class="ramo">Economia açucareira (monocultura)</div>
+<div class="ramo">Monopólio comercial (mercantilismo)</div>
+</div>
+</div>
+<div class="cai-na-prova">
+<h5>🎯 Cai assim na prova</h5>
+<p>A UFPR cobra insistentemente QUEM recebeu O QUÊ no Tratado de Madrid: Sete Povos das Missões foi de Espanha para Portugal, Colônia de Sacramento foi de Portugal para Espanha, e a região do Paraná/Curitiba consolidou-se como Portugal.</p>
+<span class="fonte">Fonte: Padrão recorrente em provas UFPR sobre limites coloniais</span>
+</div>
+<div class="destaques-secao">
+<h5>📌 Pontos-chave</h5>
+<div class="destaque">
+<strong>Capitanias Hereditárias Fracasso:</strong> 1534: 15 faixas litoral dadas donatários privados. Fracasso: falta investimento, conflitos indígenas, Coroa ausente. Reorganizadas Governador-geral 1549.
+    <span class="marcas"><span class="marca">importante</span><span class="marca">politica</span></span>
+</div>
+<div class="destaque">
+<strong>Bandeirantes - Exploração Interior:</strong> Paulistas do XVI-XVII. Expedições caçar indígenas escravos. 100-200 homens + aliados indígenas. Legado: expandiram território, descobriram ouro. Crítica: 'massacres impiedosos'.
+    <span class="marcas"><span class="marca">destaque</span><span class="marca">controverso</span></span>
+</div>
+<div class="destaque">
+<strong>Tratado de Madrid 1750:</strong> Portugal-Espanha definem fronteiras colônias. Transferências: Sete Povos→Portugal; Colônia Sacramento→Espanha; Paraná/Curitiba→Portugal. Brasil ganha Amazônia, sul.
+    <span class="marcas"><span class="marca">numero</span><span class="marca">politica</span></span>
+</div>
+<div class="destaque">
+<strong>Jesuítas Protegem Indígenas:</strong> Companhia Jesus reduz 1549+. Catequese, educação, proteção contra escravidão. Conflito: colonos queriam escravos; Jesuítas defendiam indígenas. Expulsos 1759.
+    <span class="marcas"><span class="marca">importante</span><span class="marca">conflito</span></span>
+</div>
+</div>
+<div class="brainstorm-secao">
+<h5>💡 Para Refletir</h5>
+<div class="brainstorm-item">
+<strong>Por que Tratado Madrid muda mapa Brasil?</strong>
+<p class="reflexao">Negociações entre potências europeias determinaram se Curitiba/Paraná seria português/espanhol. Povos indígenas não tiveram voz — fronteiras impostas.</p>
+</div>
+<div class="brainstorm-item">
+<strong>Jesuítas ajudaram ou prejudicaram indígenas?</strong>
+<p class="reflexao">Proteção contra escravidão = bom. Mas catequese = destruição cultura. Complexo: mal menor numa situação impossível.</p>
+</div>
+</div>
+<div class="exercicios-ufpr">
+<h5>📝 Questões UFPR</h5>
+<div class="questao-ufpr">
+<p class="questao-numero">Questão 13 — 105_historia.pdf</p>
+<p class="questao-enunciado">O Tratado de Madrid 1750 foi o primeiro de um conjunto de acordos entre Portugal e Espanha no intuito de definir as fronteiras entre os dois impérios coloniais no sul da América do Sul. O acordo definido em Madrid estabelecia:</p>
+<div class="questao-opcoes">
+<div class="opcao">a) a passagem do controle da região dos Sete Povos das Missões para Portugal e da Colônia do Sacramento para a Espanha.</div>
+<div class="opcao">b) a passagem do controle da região dos Sete Povos das Missões para a Espanha e da Colônia do Sacramento para Portugal.</div>
+<div class="opcao">c) a passagem do controle da região dos Sete Povos das Missões e da Colônia do Sacramento para Portugal.</div>
+<div class="opcao">d) a passagem do controle da região dos Sete Povos das Missões e da Colônia do Sacramento para a Espanha.</div>
+<div class="opcao">e) a passagem do controle da região dos Sete Povos das Missões e de Assunção para Portugal.</div>
+</div>
+</div>
+</div>
+<div class="glossario">
+<h5>📚 Glossário</h5><dl>
+<dt>Capitania Hereditária</dt><dd>Faixa litoral Brasil dada donatário privado (1534). Direito governar, justiça, distribuir terras. Fracasso: falta capital, conflitos indígenas.</dd>
+<dt>Bandeirante</dt><dd>Paulista séculos XVI-XVII. Expedição interior caçar indígenas escravizar. Expandiu território Brasil, descobriu ouro. Criticado 'massacres'.</dd>
+<dt>Tratado de Madrid</dt><dd>1750: acordo Portugal-Espanha fronteiras colônias América do Sul. Brasil ganhou Paraná, Amazônia, sul. Expulsou Jesuítas.</dd>
+<dt>Redução Jesuíta</dt><dd>Aldeia controlada Jesuítas catequese indígenas. Aprendiam português, religião, agricultura. Protegidas contra escravidão colonos.</dd>
+<dt>Mercantilismo</dt><dd>Política econômica: colônia existe enriquecer metrópole. Monopólio comercial, exporta matérias-primas, importa produtos manufaturados caros.</dd>
+<dt>Engenho de Açúcar</dt><dd>Fábrica moagem cana-de-açúcar. Grande, caro, necessário capital. Centro economia colonial XVI-XVII. Demandava escravidão massiva.</dd>
+</dl></div>
+</div>
+<div class="subsecao" id="sub-5-3-trabalho-escravo">
+<h3>5.3 Trabalho Escravo</h3>
+<div class="conceito"><strong>CONCEITO-CHAVE:</strong> Escravidão = africanos 4.9M Brasil, tráfico negreiro, quilombos, Palmares, Zumbi, Passagem Média, 300 anos, resistência</div>
+<div class="conteudo"><p>Escravidão foi fundamento economia colonial. 300 ANOS de escravaria massiva (1530s-1888) = maior duração de qualquer nação americana.</p>
+<p><strong>Fase Indígena (XVI)</strong>: Portugueses capturavam indígenas massivamente—trabalho forçado engenhos. "Peças" = unidade contagem escravo. Populações indígenas colapsam: doenças europeias (varíola), violência, fome (plantações substituem agricultura indígena). Oferta colapsa.</p>
+<p><strong>Tráfico Negreiro (XVII+)</strong>: Reis africanos (Mali, Congo, Angola) vendiam prisioneiros guerra, criminosos, devedores a traficantes europeus (portugueses, britânicos, franceses). Comércio triangular: navios Europa→África (bebidas, pano), carregam escravos→Brasil (vende escravos), carregam açúcar/tabaco→Europa.</p>
+<p><strong>Números Chocantes</strong>:</p>
+<ul><li><strong>4.9 MILHÕES</strong> africanos escravizados trazidos Brasil (46% total Américas)</li><li><strong>Passagem Média</strong> = jornada 1.5-2 meses navio negreiro África→Brasil</li><li><strong>Taxa mortalidade</strong>: 15-20% morriam na travessia (apertados, disenteria, doenças)</li><li><strong>Expectativa vida escravo</strong> no Brasil = ~10 anos (trabalho, castigos, subnutrição)</li><li><strong>Reposição escravo</strong>: mais barato comprar novo que manter vivo (diferença Brasil vs EUA)</li></ul>
+<p><strong>Resistência Massiva</strong>:</p>
+<ul><li><strong>Fugas</strong>: indivíduais, famílias inteiras fugindo interior</li><li><strong>Quilombos</strong>: comunidades escravos fugidos. Às centenas Brasil século XVII-XVIII</li><li><strong>Quilombo Palmares (1605-1694)</strong>: maior, mais famoso, ~60 ANOS de resistência. Localização: atual Alagoas. População: estimado 30 mil pessoas. Liderança: inicialmente Ganga Zumba; depois <strong>ZUMBI</strong> (1655-1695), capitão-mor, guerrilha e alianças indígenas. Colapso 1694, Zumbi morto 1695. <strong>20 NOVEMBRO = Dia Consciência Negra</strong>.</li><li><strong>Rebeliões armadas e resistência cultural</strong>: música (samba, congo), religião (candomblé), linguagem (bantu misturada português).</li></ul>
+<p><strong>Abolição Tardia Brasil</strong>: Lei Eusébio Queirós (1850, fim do tráfico) → Lei Rio Branco/Ventre Livre (1871) → Lei Sexagenária (1884) → <strong>Lei Áurea (13 MAIO 1888)</strong>. Resultado: Brasil <strong>ÚLTIMO nação Américas abolir escravidão</strong>. Pós-abolição: escravos libertos SEM terra, educação, integração. Desigualdade persiste.</p></div>
+<div class="tabela-comparativa"><table>
+<caption>Números da Escravidão no Brasil</caption>
+<thead><tr>
+<th>Indicador</th>
+<th>Valor</th>
+<th>Observação</th>
+</tr></thead><tbody>
+<tr>
+<td>Africanos escravizados trazidos</td>
+<td>4,9 milhões</td>
+<td>46% do total das Américas</td>
+</tr>
+<tr>
+<td>Duração Passagem Média</td>
+<td>1,5 a 2 meses</td>
+<td>Travessia África-Brasil</td>
+</tr>
+<tr>
+<td>Taxa de mortalidade na travessia</td>
+<td>15% a 20%</td>
+<td>Disenteria, varíola, desnutrição</td>
+</tr>
+<tr>
+<td>Expectativa de vida do escravizado</td>
+<td>~10 anos</td>
+<td>Após chegada ao Brasil</td>
+</tr>
+<tr>
+<td>Duração total da escravidão</td>
+<td>300 anos</td>
+<td>1530s a 1888</td>
+</tr>
+</tbody></table></div>
+<div class="atencao">
+<h5>⚠️ Atenção — pegadinha de prova</h5>
+<p>Cuidado: a UFPR frequentemente pede para diferenciar Lei Rio Branco (1871, Ventre Livre) de Lei Sexagenária (1884) — a primeira liberta os FILHOS nascidos depois da lei, a segunda liberta escravizados com MAIS DE 60 ANOS.</p>
+</div>
+<div class="cai-na-prova">
+<h5>🎯 Cai assim na prova</h5>
+<p>Zumbi dos Palmares nasceu livre em Pernambuco, foi capturado por um jesuíta, escapou aos ~20 anos e tornou-se capitão-mor do Quilombo dos Palmares, resistindo por 60 anos até 1694-1695.</p>
+<span class="fonte">Fonte: Recorrente em questões sobre resistência escrava e Dia da Consciência Negra (20 de novembro)</span>
+</div>
+<div class="resolvido">
+<h5>🎓 Exercício resolvido</h5>
+<p class="pergunta"><strong>Questão:</strong> Por que o Brasil foi o último país das Américas a abolir a escravidão?</p>
+<p class="resposta"><strong>Resposta:</strong> Porque a economia agroexportadora (primeiro açúcar, depois café) dependia estruturalmente do trabalho escravo, e a elite cafeeira do Vale do Paraíba e Oeste Paulista tinha forte influência política. As leis abolicionistas (Eusébio de Queirós 1850, Rio Branco 1871, Sexagenária 1884) foram graduais justamente para não romper abruptamente com esses interesses, até a Lei Áurea de 1888 encerrar o processo — 23 anos depois dos EUA e 2 anos depois de Cuba.</p>
+</div>
+<div class="destaques-secao">
+<h5>📌 Pontos-chave</h5>
+<div class="destaque">
+<strong>4.9 Milhões Escravizados:</strong> Brasil importou 4.9 milhões africanos—46% do total trazido Américas. Maior importador individual. Duração: 300 anos (1530-1888).
+    <span class="marcas"><span class="marca">numero</span><span class="marca">importante</span></span>
+</div>
+<div class="destaque">
+<strong>Quilombo Palmares - 60 Anos Resistência:</strong> 1605-1694. 30 mil pessoas. Líder Zumbi (nascido livre, fugiu aos ~20). Guerrilha 60 anos contra bandeirantes. Suicida 1695 ferido. MAIOR quilombo Brasil.
+    <span class="marcas"><span class="marca">destaque</span><span class="marca">resistencia</span></span>
+</div>
+<div class="destaque">
+<strong>Zumbi dos Palmares - Herói Resistência:</strong> 1655-1695. Capitão-mor Palmares. Estratégia guerrilha, ataques plantações, alianças indígenas. Morte: 20 novembro 1695. Comemorado Dia Consciência Negra.
+    <span class="marcas"><span class="marca">lideranca</span><span class="marca">importante</span></span>
+</div>
+</div>
+<div class="brainstorm-secao">
+<h5>💡 Para Refletir</h5>
+<div class="brainstorm-item">
+<strong>Resistência vs. Opressão - quem venceu?</strong>
+<p class="reflexao">Palmares durou 60 anos vs. Estado colonial. Zumbi = herói, mas eventualmente capturado/morto. Resistência massiva = mudou história (Lei Áurea), mas vitória oficial demorou séculos.</p>
+</div>
+</div>
+<div class="glossario">
+<h5>📚 Glossário</h5><dl>
+<dt>Quilombo</dt><dd>Comunidade escravos fugidos estabelecida interior. Autossuficiente agricultura, defesa armada. Centenas Brasil XVII-XVIII. Palmares maior (30k hab, 60 anos).</dd>
+<dt>Tráfico Negreiro</dt><dd>Comércio forçado africanos escravizados. Triangular: Europa→África (bebidas)→Brasil (escravos)→Europa (açúcar). 4.9M pessoas Brasil.</dd>
+<dt>Passagem Média</dt><dd>Jornada 1.5-2 meses navio negreiro África→Brasil. Porões apertados, mortalidade 15-20%, doenças (disenteria, varíola, desnutrição).</dd>
+<dt>Zumbi</dt><dd>1655-1695. Capitão-mor Palmares. Nasceu livre Pernambuco, capturado jesuíta, escapou Palmares. Guerrilha 60 anos. Morte 20 nov 1695. Herói resistência.</dd>
+</dl></div>
+</div>
+</div>
+<div class="capitulo" id="cap-6-ocupacao-e-conquista-da-america" style="--accent: #00897b; --accent-text: #fff;">
+<h2>6. Ocupação e Conquista da América</h2>
+<div class="subsecao" id="sub-6-1-maias-astecas-e-incas">
+<h3>6.1 Maias, Astecas e Incas</h3>
+<div class="conceito"><strong>CONCEITO-CHAVE:</strong> Grandes civilizações pré-colombianas = Maias (Mesoamérica, astronomia), Astecas (México, Tenochtitlán), Incas (Andes, Cusco); conquista espanhola</div>
+<div class="conteudo"><p>Antes da chegada europeia, a América abrigava civilizações complexas e urbanizadas, com sistemas políticos, religiosos e científicos sofisticados — desmontando o mito colonial de um continente "vazio" ou "primitivo".</p>
+<p><strong>Maias</strong> (Península de Yucatán, América Central, apogeu 250-900 d.C.): organizados em cidades-estado independentes (não um império único). Destaque em <strong>astronomia</strong> (calendários extremamente precisos), <strong>matemática</strong> (uso do zero antes dos europeus), e escrita hieroglífica. Praticavam agricultura intensiva (milho) e construíram pirâmides-templo (Chichén Itzá, Tikal).</p>
+<p><strong>Astecas</strong> (Vale do México, apogeu séculos XIV-XVI): império guerreiro centrado na capital <strong>Tenochtitlán</strong> (construída sobre um lago, hoje Cidade do México), com sistema de chinampas (ilhas artificiais agrícolas). Sociedade militarizada, tributação de povos conquistados, religião com sacrifícios humanos ligados ao culto solar. Conquistados por <strong>Hernán Cortés</strong> (1519-1521), que se aliou a povos rivais dos astecas.</p>
+<p><strong>Incas</strong> (região andina, do atual Equador ao Chile, apogeu séculos XV-XVI): maior império pré-colombiano em extensão territorial, capital em <strong>Cusco</strong>. Notáveis pela administração centralizada, rede de estradas (Caminho Inca), terraços agrícolas nas montanhas, e sistema de trabalho coletivo (mita). Conquistados por <strong>Francisco Pizarro</strong> (a partir de 1532), aproveitando uma guerra civil interna pela sucessão do trono.</p>
+<p><strong>Fatores da conquista espanhola</strong>: superioridade em armas de fogo e cavalaria, doenças europeias (varíola) que dizimaram populações sem imunidade, alianças com povos rivais dos impérios dominantes, e fatores internos de crise política nos impérios conquistados.</p></div>
+<div class="mapa-mental">
+<span class="no-central">Civilizações Pré-Colombianas</span>
+<div class="ramos">
+<div class="ramo">Maias — astronomia e matemática (zero)</div>
+<div class="ramo">Astecas — Tenochtitlán e chinampas</div>
+<div class="ramo">Incas — Cusco e Caminho Inca</div>
+<div class="ramo">Fatores da conquista europeia</div>
+<div class="ramo">Resistência e alianças internas</div>
+</div>
+</div>
+<div class="tabela-comparativa"><table>
+<caption>Grandes Civilizações Pré-Colombianas</caption>
+<thead><tr>
+<th>Civilização</th>
+<th>Região</th>
+<th>Capital/Centro</th>
+<th>Conquistador</th>
+</tr></thead><tbody>
+<tr>
+<td>Maias</td>
+<td>Mesoamérica (Yucatán)</td>
+<td>Cidades-estado (Chichén Itzá, Tikal)</td>
+<td>Sem conquista única — declínio anterior</td>
+</tr>
+<tr>
+<td>Astecas</td>
+<td>Vale do México</td>
+<td>Tenochtitlán</td>
+<td>Hernán Cortés (1519-1521)</td>
+</tr>
+<tr>
+<td>Incas</td>
+<td>Região andina</td>
+<td>Cusco</td>
+<td>Francisco Pizarro (a partir de 1532)</td>
+</tr>
+</tbody></table></div>
+<div class="atencao">
+<h5>⚠️ Atenção — pegadinha de prova</h5>
+<p>Cuidado: os Maias já estavam em declínio político bem antes da chegada espanhola (colapso ainda não totalmente explicado pelos historiadores) — diferente de Astecas e Incas, que foram diretamente conquistados no século XVI.</p>
+</div>
+<div class="destaques-secao">
+<h5>📌 Pontos-chave</h5>
+<div class="destaque">
+<strong>Astecas Usavam o Zero Antes dos Europeus:</strong> Os maias desenvolveram o conceito matemático do zero independentemente, séculos antes de sua difusão na Europa — prova da sofisticação científica dessas civilizações.
+    <span class="marcas"><span class="marca">numero</span><span class="marca">importante</span></span>
+</div>
+<div class="destaque">
+<strong>Conquista Facilitada por Guerra Civil Interna:</strong> Pizarro aproveitou uma guerra de sucessão entre os incas para conquistar o império — a conquista não foi apenas militar, mas também política.
+    <span class="marcas"><span class="marca">destaque</span><span class="marca">conflito</span></span>
+</div>
+</div>
+<div class="glossario">
+<h5>📚 Glossário</h5><dl>
+<dt>Chinampa</dt><dd>Ilha artificial agrícola construída pelos astecas em lagos, usada para cultivo intensivo.</dd>
+<dt>Caminho Inca</dt><dd>Extensa rede de estradas que conectava o Império Inca, facilitando administração e comunicação.</dd>
+<dt>Mita</dt><dd>Sistema de trabalho coletivo obrigatório do Império Inca.</dd>
+</dl></div>
+</div>
+</div>
+<div class="capitulo" id="cap-7-revolucoes-burguesas" style="--accent: #3f51b5; --accent-text: #fff;">
+<h2>7. Revoluções Burguesas</h2>
+<div class="subsecao" id="sub-7-1-revolucao-francesa">
+<h3>7.1 Revolução Francesa</h3>
+<div class="conceito"><strong>CONCEITO-CHAVE:</strong> Revolução Francesa = absolutismo caiu, direitos humanos, Terror, Napoleão, nacionalismo, transformação mundial</div>
+<blockquote class="citacao">
+<span class="aspas">“</span>Os homens nascem e permanecem livres e iguais em direitos.
+  <span class="autor-citacao">— Artigo 1º da Declaração dos Direitos do Homem e do Cidadão (1789)</span>
+</blockquote>
+<div class="conteudo"><p>Revolução Francesa (1789-1799) foi TRANSFORMADORA MUNDIAL. Destruiu absolutismo, criou direitos humanos modernos, inspirou revoluções continente. Cobrada TODAS provas UFPR.</p>
+<p><strong>Causas</strong>: Crise fiscal (Luís XVI gastava demais em guerras); fome agrícola (colheitas fracas 1787-1788); desigualdade estamental (Terceiro Estado, 95% população, pagava impostos; Clero/Nobreza isentos); ideologia iluminista (Rousseau, Voltaire, Diderot); bancarrota da Coroa.</p>
+<p><strong>Fase Constitucional (1789-1791)</strong>: 14 JULHO 1789: Assalto à Bastilha. 4 AGOSTO 1789: <strong>Abolição feudalismo</strong>. 26 AGOSTO 1789: <strong>Declaração Direitos Homem Cidadão</strong>. 1791: Constituição Civil do Clero. Fuga de Varennes.</p>
+<p><strong>Fase Radical/Jacobina (1792-1794)</strong> — "Reinado Terror": 22 SETEMBRO 1792: Proclamação República. 21 JANEIRO 1793: <strong>Execução Luís XVI</strong>. Junho 1793-julho 1794: <strong>Reinado Terror</strong> sob Robespierre — <strong>~40 mil execuções</strong>. 28 JULHO 1794: Queda de Robespierre.</p>
+<p><strong>Fase Diretório (1795-1799)</strong>: instabilidade política; ascensão de <strong>Napoleão Bonaparte</strong>. 9 NOVEMBRO 1799: <strong>Golpe 18 Brumário</strong> encerra a Revolução, inicia o Consulado.</p>
+<p><strong>Impacto Brasil</strong>: ideias de liberdade circularam entre a elite intelectual (Inconfidência Mineira); Napoleão invade Portugal 1807 — Coroa portuguesa foge ao Brasil, mudando a história colonial.</p></div>
+<div class="timeline">
+<div class="timeline-item">
+<div class="timeline-texto"><strong>14 jul 1789</strong> — Queda da Bastilha — início simbólico da Revolução.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>4 ago 1789</strong> — Abolição dos privilégios feudais em sessão noturna histórica.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>26 ago 1789</strong> — Declaração dos Direitos do Homem e do Cidadão.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>21 jan 1793</strong> — Execução de Luís XVI por guilhotina.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1793-1794</strong> — Reinado do Terror sob Robespierre — cerca de 40 mil execuções.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>9 nov 1799</strong> — Golpe do 18 Brumário: Napoleão Bonaparte assume o poder.</div>
+</div>
+</div>
+<div class="mapa-mental">
+<span class="no-central">Revolução Francesa (1789-1799)</span>
+<div class="ramos">
+<div class="ramo">Fase Constitucional (1789-1791)</div>
+<div class="ramo">Fase Radical/Jacobina — Terror (1792-1794)</div>
+<div class="ramo">Fase Diretório (1795-1799)</div>
+<div class="ramo">Direitos Humanos modernos</div>
+<div class="ramo">Ascensão de Napoleão Bonaparte</div>
+<div class="ramo">Impacto no Brasil (fuga da Corte 1808)</div>
+</div>
+</div>
+<div class="destaques-secao">
+<h5>📌 Pontos-chave</h5>
+<div class="destaque">
+<strong>14 Julho 1789 - Bastilha Símbolo:</strong> Assalto Bastilha (prisão-fortaleza Paris). Multidão invade, liberta 7 prisioneiros, decapita governador. Símbolo destruição opressão.
+    <span class="marcas"><span class="marca">data-chave</span><span class="marca">importante</span></span>
+</div>
+<div class="destaque">
+<strong>26 Agosto 1789 - Direitos Humanos Nascem:</strong> Declaração Direitos Homem Cidadão proclama direitos naturais (vida, liberdade, propriedade). Fundação direito moderno.
+    <span class="marcas"><span class="marca">importante</span><span class="marca">filosofia</span></span>
+</div>
+<div class="destaque">
+<strong>Reinado Terror - 40 Mil Mortes:</strong> 1793-1794. Robespierre, Comitê Segurança Pública. Guilhotina executa inimigos 'internos'. Até revolucionários originais morrem.
+    <span class="marcas"><span class="marca">numero</span><span class="marca">violencia</span></span>
+</div>
+</div>
+<div class="brainstorm-secao">
+<h5>💡 Para Refletir</h5>
+<div class="brainstorm-item">
+<strong>Por que Terror? Necessário ou desvio?</strong>
+<p class="reflexao">Historiadores debatem: foi necessário eliminar contra-revolução? Ou excesso de Robespierre que minou ideais próprios? Lição: revolução pode devorar filhos.</p>
+</div>
+</div>
+<div class="exercicios-ufpr">
+<h5>📝 Questões UFPR</h5>
+<div class="questao-ufpr">
+<p class="questao-numero">Questão 30 — historia (1).pdf</p>
+<p class="questao-enunciado">Leia o fragmento a seguir: O futuro desse progresso é caracterizado por dois momentos: por um lado, pela aceleração com que se põe à nossa frente; por outro lado, pelo seu caráter desconhecido. Pois o tempo que se acelera em si mesmo, isto é, a nossa própria história, abrevia os campos da experiência, rouba-lhes sua continuidade. KOSELLECK, Reinhart. Futuro passado: contribuição à semântica dos tempos históricos. Rio de Janeiro: Contraponto: Ed. PUC-Rio, 2006. p. 36. A respeito do assunto, assinale a alternativa correta.</p>
+<div class="questao-opcoes">
+<div class="opcao">a) Segundo Koselleck, o passado não inclui um sentido de futuridade, sendo o futuro objeto de análise apenas de futurólogos que fomentavam a ideia de premonição no século XVI.</div>
+<div class="opcao">b) A ideia de fim do mundo foi fundamental para a invenção da tradição, visto que a Igreja contribuiu para este imaginário.</div>
+<div class="opcao">c) O fato de que a maior parte das guerras dos séculos XVII e XVIII tenham sido conduzidas como guerras de sucessão mostra-nos o quanto o tempo histórico era ainda político e neutro.</div>
+<div class="opcao">d) Foi só com o advento da antropologia da história que uma incipiente modernidade desligou-se de seu próprio passado.</div>
+<div class="opcao">e) Segundo o autor, o vetor da moderna filosofia da história foi o cidadão emancipado da submissão absolutista e da tutela da Igreja, como precisamente se caracterizou no século XVIII.</div>
+</div>
+</div>
+<div class="questao-ufpr">
+<p class="questao-numero">Questão 32 — prova10.pdf</p>
+<p class="questao-enunciado">O iluminismo do século XVIII foi responsável por novas idéias. Numere a coluna da direita, relacionando-a com a da esquerda. 1. Obra de relevante importância dentre as produzidas pelos filósofos das luzes. 2. Empreendimento literário-científico que pretendeu sistematizar todo o conhecimento da época. 3. Lema central das idéias de oposição ao Antigo Regime, presente na Revolução Francesa. 4. Principal idéia das teorias iluministas acerca do desenvolvimento da história humana. 5. Defensor do Parlamentarismo. Assinale a alternativa que apresenta a numeração correta.</p>
+<div class="questao-opcoes">
+<div class="opcao">a) 1– 3 – 2 – 4 – 5.</div>
+<div class="opcao">b) 3– 2 – 4 – 5 – 1.</div>
+<div class="opcao">c) 5– 1 – 2 – 4 – 3.</div>
+<div class="opcao">d) 2– 3 – 5 – 1 – 4.</div>
+<div class="opcao">e) 4– 5 – 2 – 1 – 3.</div>
+</div>
+</div>
+</div>
+<div class="glossario">
+<h5>📚 Glossário</h5><dl>
+<dt>Terceiro Estado</dt><dd>Burguesia, artesãos, camponeses—95% população francesa. Pagava impostos enquanto Clero/Nobreza isentos.</dd>
+<dt>Reinado Terror</dt><dd>Junho 1793-julho 1794. Robespierre centraliza poder via Comitê Segurança Pública. ~40 mil execuções.</dd>
+<dt>Napoleão Bonaparte</dt><dd>1769-1821. General revolucionário. Golpe 18 Brumário 1799 depõe Diretório. Funda Consulado, depois Império.</dd>
+</dl></div>
+</div>
+<div class="subsecao" id="sub-7-2-revolucao-industrial">
+<h3>7.2 Revolução Industrial</h3>
+<div class="conceito"><strong>CONCEITO-CHAVE:</strong> Revolução Industrial = mecanização, fábricas, proletariado, capitalismo, êxodo rural, urbanização, socialismo resposta</div>
+<div class="conteudo"><p>Revolução Industrial transformou trabalho, sociedade, energia mundial. Mudança tão profunda quanto agricultura (10 mil anos antes). Origem Grã-Bretanha.</p>
+<p><strong>Primeira Revolução Industrial (1760-1840)</strong>: Localização Grã-Bretanha (algodão, carvão, capital mercantil). <strong>Teares Mecanizados</strong> (1764-1769) substituem trabalho manual. <strong>Motor Vapor</strong> (Watt 1769) alimenta teares, bombas, fundições. <strong>Ferro + Carvão</strong>: alto-forno coke produz aço barato.</p>
+<p><strong>Êxodo Rural Massivo</strong>: Cercamentos (Enclosure Acts) privatizam terras comunais, expulsam camponeses. Cidades explodem população (Manchester 1771 = 25 mil; 1831 = 180 mil). Habitação: cortiços apertados, doenças.</p>
+<p><strong>Classe Operária - Proletariado</strong>: nova classe sem meios de produção, vende força de trabalho. Jornadas 12-16 horas, trabalho infantil, sem proteção. Resistência: sindicatos, greves.</p>
+<p><strong>Segunda Revolução Industrial (1840-1920)</strong>: EUA, Alemanha, França, Bélgica expandem. <strong>Ferro + Aço</strong> (Bessemer 1856). <strong>Eletricidade</strong> (Edison, Tesla). <strong>Petróleo</strong> (Rockefeller). Ferrovias e navios a vapor globalizam comércio — base do imperialismo.</p>
+<p><strong>Impacto Social</strong>: urbanização descontrolada; <strong>Socialismo/Comunismo</strong> (Marx, Manifesto Comunista 1848) analisa exploração capitalista; legislação trabalhista surge lentamente (Factory Acts 1833) após lutas sangrentas.</p>
+<p><strong>Impacto Brasil</strong>: recebia tecnologia industrial, mas permanecia <strong>AGRÁRIO-ESCRAVISTA</strong> até 1888 — modernização superficial, estrutura colonial persistia.</p></div>
+<div class="timeline">
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1764-1769</strong> — Invenção dos teares mecanizados (spinning jenny, water frame).</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1769</strong> — James Watt aperfeiçoa o motor a vapor.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1833</strong> — Factory Acts no Reino Unido limitam o trabalho infantil.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1848</strong> — Marx e Engels publicam o Manifesto Comunista.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1879</strong> — Edison desenvolve a lâmpada incandescente comercialmente viável.</div>
+</div>
+</div>
+<div class="tabela-comparativa"><table>
+<caption>Primeira x Segunda Revolução Industrial</caption>
+<thead><tr>
+<th>Aspecto</th>
+<th>1ª Revolução (1760-1840)</th>
+<th>2ª Revolução (1840-1920)</th>
+</tr></thead><tbody>
+<tr>
+<td>Energia</td>
+<td>Vapor (carvão)</td>
+<td>Eletricidade e petróleo</td>
+</tr>
+<tr>
+<td>Países líderes</td>
+<td>Grã-Bretanha</td>
+<td>EUA, Alemanha, França, Bélgica</td>
+</tr>
+<tr>
+<td>Indústria-chave</td>
+<td>Têxtil</td>
+<td>Aço, química, elétrica</td>
+</tr>
+<tr>
+<td>Transporte</td>
+<td>Ferrovias iniciais</td>
+<td>Ferrovias e navios a vapor globais</td>
+</tr>
+</tbody></table></div>
+<div class="atencao">
+<h5>⚠️ Atenção — pegadinha de prova</h5>
+<p>Pegadinha frequente: a UFPR cobra que o Brasil manteve estrutura AGRÁRIO-ESCRAVISTA até 1888, mesmo recebendo tecnologia industrial — não confundir modernização tecnológica pontual com industrialização estrutural.</p>
+</div>
+<div class="destaques-secao">
+<h5>📌 Pontos-chave</h5>
+<div class="destaque">
+<strong>Jornadas 12-16 Horas, Trabalho Infantil:</strong> Operários trabalham 12-16h/dia, crianças 5-12 anos em máquinas, sem proteção. Sem descanso semanal nem férias. Pior exploração da história.
+    <span class="marcas"><span class="marca">numero</span><span class="marca">humanitario</span></span>
+</div>
+</div>
+<div class="brainstorm-secao">
+<h5>💡 Para Refletir</h5>
+<div class="brainstorm-item">
+<strong>Revolução Industrial = progresso ou destruição?</strong>
+<p class="reflexao">Sim, ambos: tecnologia avançou, mas custos humano/ambiental enormes. Poluição, trabalho infantil, imperialismo colonial. Complexo.</p>
+</div>
+</div>
+<div class="exercicios-ufpr">
+<h5>📝 Questões UFPR</h5>
+<div class="questao-ufpr">
+<p class="questao-numero">Questão 34 — prova10.pdf</p>
+<p class="questao-enunciado">A Revolução Industrial, a partir do final do século XVIII, transformou as relações do homem com o trabalho. As máquinas mudaram as formas de trabalhar e as fábricas concentraram-se em regiões próximas às matérias-primas e aos portos. Os operários cumpriam jornadas de 12 a 14 horas em condições difíceis. A legislação trabalhista surge muito lentamente ao longo do século XIX. É correto afirmar que as conquistas decorrentes da legislação trabalhista, nessa época, estão associadas com:</p>
+<div class="questao-opcoes">
+<div class="opcao">a) a expansão do capitalismo e a consolidação dos regimes monárquicos constitucionais.</div>
+<div class="opcao">b) a diminuição da oferta de mão-de-obra, devido à demanda por trabalhadores especializados.</div>
+<div class="opcao">c) a capacidade de resistência e de mobilização dos trabalhadores em defesa dos seus interesses.</div>
+<div class="opcao">d) o crescimento do Estado ao mesmo tempo que reduzia a representação operária nos parlamentos.</div>
+<div class="opcao">e) a vitória dos partidos comunistas nas eleições das capitais européias.</div>
+</div>
+</div>
+</div>
+<div class="glossario">
+<h5>📚 Glossário</h5><dl>
+<dt>Proletariado</dt><dd>Classe operários assalariados que vendem única mercadoria = força trabalho. Sem meios produção. Explorados capitalistas.</dd>
+<dt>Marx e Manifesto Comunista</dt><dd>Karl Marx 1848. Analisa exploração capitalismo, teoriza revolução proletária. Base comunismo.</dd>
+</dl></div>
+</div>
+<div class="subsecao" id="sub-7-3-independencia-dos-eua">
+<h3>7.3 Independência dos EUA</h3>
+<div class="conceito"><strong>CONCEITO-CHAVE:</strong> Independência dos EUA = Treze Colônias, taxação sem representação, Declaração de Independência 1776, primeira república moderna</div>
+<div class="conteudo"><p>A <strong>Independência dos Estados Unidos</strong> (1776) foi o primeiro grande movimento de emancipação colonial na América e uma das primeiras aplicações práticas das ideias iluministas de governo.</p>
+<p><strong>Contexto</strong>: as <strong>Treze Colônias</strong> britânicas na costa leste americana desenvolveram economias diversificadas (agricultura no sul, comércio e manufatura no norte) e certa autonomia política local através de assembleias coloniais.</p>
+<p><strong>Causas</strong>: após a Guerra dos Sete Anos, a Inglaterra aumentou impostos sobre as colônias para cobrir dívidas de guerra (Lei do Açúcar, Lei do Selo, Lei do Chá), sem conceder representação política no Parlamento britânico — o lema <strong>"no taxation without representation"</strong> ("nenhuma taxação sem representação") resume a revolta.</p>
+<p><strong>Marco simbólico — Festa do Chá de Boston (1773)</strong>: colonos disfarçados jogaram carregamentos de chá britânico no porto de Boston em protesto contra os impostos, provocando repressão inglesa e radicalizando o movimento.</p>
+<p><strong>Declaração de Independência (4 de julho de 1776)</strong>: redigida principalmente por <strong>Thomas Jefferson</strong>, proclamava os direitos naturais de vida, liberdade e busca da felicidade — clara influência do pensamento iluminista de Locke.</p>
+<p><strong>Guerra de Independência (1775-1783)</strong>: apoio militar e financeiro da França (rival da Inglaterra) foi decisivo para a vitória americana. Reconhecida pelo Tratado de Paris (1783).</p>
+<p><strong>Constituição de 1787</strong>: instituiu uma <strong>república federativa presidencialista</strong>, com separação de poderes inspirada em Montesquieu — modelo político que influenciaria movimentos de independência posteriores, inclusive no Brasil.</p></div>
+<div class="timeline">
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1773</strong> — Festa do Chá de Boston radicaliza o movimento colonial.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>4 jul 1776</strong> — Declaração de Independência dos Estados Unidos.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1775-1783</strong> — Guerra de Independência, com apoio francês decisivo.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1787</strong> — Constituição institui a república federativa presidencialista.</div>
+</div>
+</div>
+<div class="cai-na-prova">
+<h5>🎯 Cai assim na prova</h5>
+<p>A frase 'no taxation without representation' resume a causa central do movimento — não era rejeição a pagar impostos, mas à ausência de representação política das colônias no Parlamento britânico.</p>
+<span class="fonte">Fonte: Padrão recorrente em questões sobre a Independência dos EUA</span>
+</div>
+<div class="destaques-secao">
+<h5>📌 Pontos-chave</h5>
+<div class="destaque">
+<strong>Primeira Independência Colonial das Américas:</strong> Os EUA foram o primeiro grande movimento de emancipação colonial na América, servindo de modelo e inspiração para independências posteriores, incluindo a do Brasil.
+    <span class="marcas"><span class="marca">importante</span><span class="marca">data-chave</span></span>
+</div>
+</div>
+<div class="glossario">
+<h5>📚 Glossário</h5><dl>
+<dt>No Taxation Without Representation</dt><dd>Lema colonial contra impostos britânicos sem representação política das colônias no Parlamento.</dd>
+<dt>Tratado de Paris (1783)</dt><dd>Acordo que reconheceu oficialmente a independência dos Estados Unidos.</dd>
+</dl></div>
+</div>
+</div>
+<div class="capitulo" id="cap-8-brasil-imperio" style="--accent: #c0392b; --accent-text: #fff;">
+<h2>8. Brasil Império</h2>
+<div class="subsecao" id="sub-8-1-processo-de-independencia">
+<h3>8.1 Processo de Independência</h3>
+<div class="conceito"><strong>CONCEITO-CHAVE:</strong> Independência do Brasil = 1822, Dom Pedro I, Grito do Ipiranga, continuidade da elite, manutenção da escravidão</div>
+<div class="conteudo"><p>O processo de independência do Brasil (1808-1825) foi marcado pela <strong>continuidade</strong> mais do que pela ruptura radical — diferente de outros processos de independência latino-americanos.</p>
+<p><strong>Antecedentes</strong>: a fuga da família real portuguesa para o Brasil em 1808 (fugindo de Napoleão) já elevou o status da colônia, especialmente após a <strong>abertura dos portos às nações amigas</strong> (1808) e a elevação do Brasil a Reino Unido a Portugal e Algarves (1815).</p>
+<p><strong>Revolução do Porto (1820)</strong>: em Portugal, movimento liberal exigia o retorno de Dom João VI e a recolonização do Brasil (fim de privilégios conquistados). Dom João VI retorna a Portugal em 1821, deixando seu filho <strong>Dom Pedro</strong> como príncipe regente.</p>
+<p><strong>Dia do Fico (9 de janeiro de 1822)</strong>: Dom Pedro desobedece ordens portuguesas de retornar, permanecendo no Brasil — passo decisivo rumo à ruptura.</p>
+<p><strong>Grito do Ipiranga (7 de setembro de 1822)</strong>: Dom Pedro proclama a independência às margens do riacho Ipiranga, em São Paulo. Torna-se <strong>Dom Pedro I</strong>, primeiro imperador do Brasil.</p>
+<p><strong>Características da independência brasileira</strong>: processo relativamente pacífico (comparado às guerras de independência hispano-americanas); manteve a <strong>monarquia</strong> (único país independente da América a adotar esse regime); preservou a <strong>escravidão</strong> e a estrutura social/econômica colonial; elite agrária e a própria família real portuguesa lideraram o processo, sem participação popular ampla.</p></div>
+<div class="timeline">
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1808</strong> — Família real portuguesa foge para o Brasil e abre os portos.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1815</strong> — Brasil é elevado a Reino Unido a Portugal e Algarves.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1820</strong> — Revolução do Porto exige retorno do rei e recolonização.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>9 jan 1822</strong> — Dia do Fico — Dom Pedro decide permanecer no Brasil.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>7 set 1822</strong> — Grito do Ipiranga — proclamação da Independência.</div>
+</div>
+</div>
+<div class="atencao">
+<h5>⚠️ Atenção — pegadinha de prova</h5>
+<p>Pegadinha comum: a independência do Brasil NÃO representou ruptura social — escravidão, latifúndio e estrutura de poder da elite colonial foram mantidos. A UFPR cobra essa continuidade estrutural.</p>
+</div>
+<div class="destaques-secao">
+<h5>📌 Pontos-chave</h5>
+<div class="destaque">
+<strong>Independência sem Ruptura Social:</strong> Diferente de outros processos americanos, a independência brasileira manteve monarquia, escravidão e estrutura agrária — processo conduzido pela própria elite, sem participação popular ampla.
+    <span class="marcas"><span class="marca">importante</span><span class="marca">continuidade</span></span>
+</div>
+</div>
+<div class="glossario">
+<h5>📚 Glossário</h5><dl>
+<dt>Dia do Fico</dt><dd>9 de janeiro de 1822. Dom Pedro desobedece ordens portuguesas e permanece no Brasil.</dd>
+<dt>Grito do Ipiranga</dt><dd>7 de setembro de 1822. Proclamação da Independência do Brasil por Dom Pedro I.</dd>
+</dl></div>
+</div>
+<div class="subsecao" id="sub-8-2-segundo-reinado">
+<h3>8.2 Segundo Reinado</h3>
+<div class="conceito"><strong>CONCEITO-CHAVE:</strong> Segundo Reinado (1840-1889) = Dom Pedro II, parlamentarismo às avessas, café, Guerra do Paraguai, crise final da monarquia</div>
+<div class="conteudo"><p>O <strong>Segundo Reinado</strong> (1840-1889), sob <strong>Dom Pedro II</strong>, é o período de maior estabilidade política do Império, mas também de acúmulo de tensões que levariam à proclamação da República.</p>
+<p><strong>Golpe da Maioridade (1840)</strong>: antecipação da maioridade de Pedro II (então com 14 anos) para encerrar o período turbulento das Regências e estabilizar o poder central.</p>
+<p><strong>"Parlamentarismo às avessas"</strong>: apesar de existir um sistema parlamentarista formal, era o <strong>imperador</strong> quem de fato escolhia e demitia os ministros através do <strong>Poder Moderador</strong> — inversão da lógica parlamentarista europeia, onde o parlamento controla o governo.</p>
+<p><strong>Economia cafeeira</strong>: o café substitui o açúcar como principal produto de exportação, concentrado no Vale do Paraíba e depois no Oeste Paulista, sustentado ainda pelo trabalho escravo até o fim do século.</p>
+<p><strong>Guerra do Paraguai (1864-1870)</strong>: maior conflito armado da história da América do Sul, envolvendo Brasil, Argentina e Uruguai (Tríplice Aliança) contra o Paraguai de Solano López. Resultado: devastação populacional paraguaia; fortalecimento do Exército brasileiro, que ganharia peso político decisivo na queda da monarquia.</p>
+<p><strong>Crise final da monarquia</strong>: questão militar (atrito entre Exército e governo civil), questão religiosa (conflito com a Igreja) e, principalmente, a <strong>questão abolicionista/servil</strong> — a Lei Áurea (1888) desagradou a elite cafeeira sem compensação, retirando apoio político crucial à monarquia, que caiu em 1889.</p></div>
+<div class="timeline">
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1840</strong> — Golpe da Maioridade antecipa o poder de Dom Pedro II.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1864-1870</strong> — Guerra do Paraguai.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1888</strong> — Lei Áurea abole a escravidão — elite cafeeira retira apoio à monarquia.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1889</strong> — Proclamação da República encerra o Segundo Reinado.</div>
+</div>
+</div>
+<div class="mapa-mental">
+<span class="no-central">Segundo Reinado (1840-1889)</span>
+<div class="ramos">
+<div class="ramo">Golpe da Maioridade (1840)</div>
+<div class="ramo">Parlamentarismo às avessas (Poder Moderador)</div>
+<div class="ramo">Economia cafeeira</div>
+<div class="ramo">Guerra do Paraguai (1864-1870)</div>
+<div class="ramo">Crise final: questão militar, religiosa e servil</div>
+</div>
+</div>
+<div class="destaques-secao">
+<h5>📌 Pontos-chave</h5>
+<div class="destaque">
+<strong>Parlamentarismo às Avessas:</strong> Diferente da lógica europeia, era o imperador quem controlava o parlamento (via Poder Moderador), e não o contrário — ponto frequentemente cobrado em prova.
+    <span class="marcas"><span class="marca">importante</span><span class="marca">politica</span></span>
+</div>
+</div>
+<div class="glossario">
+<h5>📚 Glossário</h5><dl>
+<dt>Poder Moderador</dt><dd>Poder exclusivo do imperador para nomear e demitir ministros, acima dos três poderes clássicos.</dd>
+<dt>Guerra do Paraguai</dt><dd>1864-1870. Maior conflito armado da América do Sul, envolvendo Brasil, Argentina e Uruguai contra o Paraguai.</dd>
+</dl></div>
+</div>
+<div class="subsecao" id="sub-8-3-movimento-abolicionista">
+<h3>8.3 Movimento Abolicionista</h3>
+<div class="conceito"><strong>CONCEITO-CHAVE:</strong> Abolição = Lei Rio Branco 1871, Lei Áurea 1888, Lei Saraiva-Cotegipe 1885, resistência escravos, movimento social, Brasil último</div>
+<blockquote class="citacao">
+<span class="aspas">“</span>A escravidão é a fonte única da riqueza e do infortúnio deste país.
+  <span class="autor-citacao">— Joaquim Nabuco, O Abolicionismo (1883)</span>
+</blockquote>
+<div class="conteudo"><p>Movimento abolicionista cresceu século XIX Brasil—resultado décadas luta, pressão internacional, resistência própria escravos.</p>
+<p><strong>Contexto Século XIX</strong>: EUA aboliu 1865, Cuba aboliu 1886, Brasil ainda escravagista massivamente. Elite cafeeira enriquecia tráfico/trabalho escravo. Pressão internacional: Grã-Bretanha pressionava potências.</p>
+<p><strong>Figuras Abolicionistas</strong>: <strong>Joaquim Nabuco</strong> (1849-1910), livro "O Abolicionismo" (1883); <strong>André Rebouças</strong> (engenheiro negro, abolicionista); <strong>Luís Gama</strong> (advogado, libertou 500+ escravos via ações legais); <strong>Cruz e Sousa</strong> e <strong>Machado de Assis</strong> (escritores afro-brasileiros).</p>
+<p><strong>Leis Gradualistas</strong>: <strong>Lei Eusébio Queirós (1850)</strong> proíbe tráfico negreiro. <strong>Lei Rio Branco/Ventre Livre (1871)</strong>: filhos escravos nascem livres. <strong>Lei Saraiva-Cotegipe/Sexagenária (1884)</strong>: liberta escravos maiores 60 anos, poucos beneficiados. <strong>Lei Áurea (13 MAIO 1888)</strong>: Princesa Isabel assina abolição completa, sem indenizações. Brasil ÚLTIMO nação Américas abolir.</p>
+<p><strong>Resistência Própria dos Escravizados</strong>: fugas contínuas alimentam quilombos, greves de trabalho, tumultos urbanos, <strong>Revolta Malês</strong> (Bahia 1835, muçulmanos africanos escravizados).</p>
+<p><strong>Legado Ambíguo</strong>: abolição 1888 = vitória moral, mas liberdade formal não significou igualdade material. Escravos libertos marginalizados: sem propriedade, mercado de trabalho discriminava, educação negada. Desigualdade racial persiste no Brasil até hoje.</p></div>
+<div class="cai-na-prova">
+<h5>🎯 Cai assim na prova</h5>
+<p>Ordem cronológica das leis abolicionistas cobrada com frequência: Eusébio de Queirós (1850, fim do tráfico) → Rio Branco/Ventre Livre (1871) → Saraiva-Cotegipe/Sexagenária (1884) → Lei Áurea (13 de maio de 1888).</p>
+<span class="fonte">Fonte: Padrão recorrente em provas UFPR sobre processo abolicionista</span>
+</div>
+<div class="resolvido">
+<h5>🎓 Exercício resolvido</h5>
+<p class="pergunta"><strong>Questão:</strong> Qual a diferença entre abolição formal e igualdade material no contexto pós-1888?</p>
+<p class="resposta"><strong>Resposta:</strong> A Lei Áurea aboliu juridicamente a escravidão, mas não ofereceu terra, educação ou integração aos libertos. A liberdade tornou-se apenas formal: sem propriedade e enfrentando discriminação no mercado de trabalho, a população negra permaneceu à margem da sociedade — um legado de desigualdade racial que persiste no Brasil até hoje.</p>
+</div>
+<div class="destaques-secao">
+<h5>📌 Pontos-chave</h5>
+<div class="destaque">
+<strong>Lei Áurea 13 Maio 1888 - Fim Escravidão:</strong> Princesa Isabel assina abolição completa. Brasil ÚLTIMO nação Américas abolir (300 anos escravidão). Sem indenizações.
+    <span class="marcas"><span class="marca">data-chave</span><span class="marca">importante</span></span>
+</div>
+<div class="destaque">
+<strong>Luís Gama - Advogado Libertador:</strong> Descendente escravizados. Libertou 500+ escravos via ações legais. Poeta, jornalista. Ativismo radical.
+    <span class="marcas"><span class="marca">lideranca</span><span class="marca">resistencia</span></span>
+</div>
+</div>
+<div class="brainstorm-secao">
+<h5>💡 Para Refletir</h5>
+<div class="brainstorm-item">
+<strong>Abolição = Liberdade?</strong>
+<p class="reflexao">Formalmente sim. Materialmente não. Escravos libertos: sem terra, sem educação, mercado trabalho discriminava. Desigualdade persiste séculos pós-1888.</p>
+</div>
+</div>
+<div class="exercicios-ufpr">
+<h5>📝 Questões UFPR</h5>
+<div class="questao-ufpr">
+<p class="questao-numero">Questão 16 — 105_historia.pdf</p>
+<p class="questao-enunciado">"Nas Américas, em particular, a escravidão na grande lavoura foi ao mesmo tempo um sistema de trabalho, um modo de dominação racial e a base para o surgimento de uma classe dominante bem caracterizada". (FONER, Eric. Nada além da liberdade, 1988, p. 17) Pela vertente analítica proposta por Foner, é correto definir a escravidão nas Américas, inclusive no Brasil, como:</p>
+<div class="questao-opcoes">
+<div class="opcao">a) um sistema social.</div>
+<div class="opcao">b) uma sociedade de classe.</div>
+<div class="opcao">c) um sistema racista.</div>
+<div class="opcao">d) um modo de produção.</div>
+<div class="opcao">e) um regime de apartheid.</div>
+</div>
+</div>
+<div class="questao-ufpr">
+<p class="questao-numero">Questão 38 — 105_historia.pdf</p>
+<p class="questao-enunciado">Leia o texto abaixo. A escravidão no Brasil começou no século XVI e durou 300 anos e eram feitos de escravos os africanos e eles eram trazidos por navios. Quando eles fugiram formaram os quilombos que eram as comunidades. Que o líder foi Zumbi dos Palmares. (André, 12 anos, 5 out. 2011). Com base nos tipos de narrativa histórica estabelecidos por Rüsen, assinale a alternativa que indica os tipos de consciência histórica presentes no texto acima.</p>
+<div class="questao-opcoes">
+<div class="opcao">a) Exemplar e crítica.</div>
+<div class="opcao">b) Tradicional e crítica.</div>
+<div class="opcao">c) Crítica e genética.</div>
+<div class="opcao">d) Tradicional e exemplar.</div>
+<div class="opcao">e) Tradicional e genética.</div>
+</div>
+</div>
+</div>
+<div class="glossario">
+<h5>📚 Glossário</h5><dl>
+<dt>Abolicionismo</dt><dd>Movimento social contra escravidão. Intenso século XIX Brasil. Estratégias: petições, jornais, sociedades.</dd>
+<dt>Lei Áurea</dt><dd>13 maio 1888. Princesa Isabel assina abolição completa escravidão Brasil. Último nação Américas.</dd>
+<dt>Revolta Malês</dt><dd>Bahia 1835. Rebelião muçulmanos africanos escravos. Represália violenta, mas demonstra resistência organizada religiosa.</dd>
+</dl></div>
+</div>
+</div>
+<div class="capitulo" id="cap-9-conflitos-e-revolucoes-do-seculo-xx" style="--accent: #2196f3; --accent-text: #fff;">
+<h2>9. Conflitos e Revoluções do Século XX</h2>
+<div class="subsecao" id="sub-9-1-primeira-guerra-mundial">
+<h3>9.1 Primeira Guerra Mundial</h3>
+<div class="conceito"><strong>CONCEITO-CHAVE:</strong> Primeira Guerra Mundial (1914-1918) = imperialismo, alianças militares, atentado de Sarajevo, guerra de trincheiras, Tratado de Versalhes</div>
+<div class="conteudo"><p>A <strong>Primeira Guerra Mundial</strong> (1914-1918) resultou do acirramento das rivalidades entre potências europeias no contexto do <strong>imperialismo</strong> (disputa por colônias e mercados) e da formação de <strong>alianças militares</strong> rígidas.</p>
+<p><strong>Alianças</strong>: <strong>Tríplice Aliança</strong> (Alemanha, Áustria-Hungria, Itália) x <strong>Tríplice Entente</strong> (França, Grã-Bretanha, Rússia). Um conflito local poderia arrastar todas as potências — o que de fato aconteceu.</p>
+<p><strong>Estopim</strong>: assassinato do arquiduque <strong>Francisco Ferdinando</strong> da Áustria-Hungria em <strong>Sarajevo</strong> (28 de junho de 1914), por um nacionalista sérvio, desencadeou declarações de guerra em cadeia.</p>
+<p><strong>Guerra de trincheiras</strong>: combates no Front Ocidental ficaram travados por anos em linhas de trincheiras, com uso massivo de novas tecnologias bélicas (metralhadoras, gás venenoso, tanques, aviões) e perdas humanas em escala inédita.</p>
+<p><strong>Entrada dos EUA (1917)</strong> foi decisiva para o desfecho a favor da Entente. <strong>Rendição alemã (1918)</strong> e <strong>Tratado de Versalhes (1919)</strong> impuseram pesadas indenizações e restrições militares à Alemanha — condições que alimentariam o ressentimento explorado depois pelo nazismo.</p></div>
+<div class="timeline">
+<div class="timeline-item">
+<div class="timeline-texto"><strong>28 jun 1914</strong> — Assassinato de Francisco Ferdinando em Sarajevo.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1917</strong> — Entrada dos Estados Unidos no conflito.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1918</strong> — Armistício encerra os combates.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1919</strong> — Tratado de Versalhes impõe punições à Alemanha.</div>
+</div>
+</div>
+<div class="mapa-mental">
+<span class="no-central">Primeira Guerra Mundial</span>
+<div class="ramos">
+<div class="ramo">Tríplice Aliança x Tríplice Entente</div>
+<div class="ramo">Estopim: assassinato em Sarajevo (1914)</div>
+<div class="ramo">Guerra de trincheiras</div>
+<div class="ramo">Entrada dos EUA (1917)</div>
+<div class="ramo">Tratado de Versalhes (1919)</div>
+</div>
+</div>
+<div class="destaques-secao">
+<h5>📌 Pontos-chave</h5>
+<div class="destaque">
+<strong>Tratado de Versalhes - Semente do Nazismo:</strong> As pesadas indenizações e restrições impostas à Alemanha geraram ressentimento nacional que Hitler exploraria politicamente duas décadas depois.
+    <span class="marcas"><span class="marca">importante</span><span class="marca">consequencia</span></span>
+</div>
+</div>
+<div class="glossario">
+<h5>📚 Glossário</h5><dl>
+<dt>Tríplice Entente</dt><dd>Aliança militar entre França, Grã-Bretanha e Rússia antes da Primeira Guerra Mundial.</dd>
+<dt>Tratado de Versalhes</dt><dd>1919. Acordo que impôs pesadas indenizações e restrições militares à Alemanha derrotada.</dd>
+</dl></div>
+</div>
+<div class="subsecao" id="sub-9-2-segunda-guerra-mundial">
+<h3>9.2 Segunda Guerra Mundial</h3>
+<div class="conceito"><strong>CONCEITO-CHAVE:</strong> Segunda Guerra Mundial (1939-1945) = nazifascismo, Holocausto, bombas atômicas, Eixo x Aliados, novo cenário geopolítico</div>
+<div class="conteudo"><p>A <strong>Segunda Guerra Mundial</strong> (1939-1945) foi o conflito mais destrutivo da história, gerado em grande parte pelas condições humilhantes do Tratado de Versalhes, pela crise econômica de 1929 e pela ascensão de regimes totalitários.</p>
+<p><strong>Totalitarismos</strong>: <strong>nazismo</strong> na Alemanha (Adolf Hitler), <strong>fascismo</strong> na Itália (Mussolini) e militarismo no Japão formaram o <strong>Eixo</strong>, contra os <strong>Aliados</strong> (Grã-Bretanha, França, depois URSS e EUA).</p>
+<p><strong>Início</strong>: invasão alemã da Polônia (1º de setembro de 1939) provoca declarações de guerra de França e Grã-Bretanha.</p>
+<p><strong>Holocausto</strong>: perseguição sistemática e extermínio de aproximadamente <strong>6 milhões de judeus</strong>, além de ciganos, deficientes, homossexuais e opositores políticos, em campos de concentração e extermínio nazistas — um dos maiores crimes contra a humanidade da história.</p>
+<p><strong>Virada da guerra</strong>: entrada da URSS (após invasão alemã, 1941) e dos EUA (após Pearl Harbor, dezembro 1941) equilibram e depois revertem a vantagem do Eixo.</p>
+<p><strong>Fim da guerra</strong>: rendição alemã em maio de 1945; lançamento das <strong>bombas atômicas</strong> sobre Hiroshima e Nagasaki (agosto 1945) leva à rendição japonesa, encerrando o conflito.</p>
+<p><strong>Consequências</strong>: criação da <strong>ONU</strong> (1945); divisão do mundo em blocos capitalista e socialista, preparando o cenário da Guerra Fria.</p></div>
+<div class="timeline">
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1 set 1939</strong> — Invasão alemã da Polônia inicia a guerra.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>dez 1941</strong> — Ataque a Pearl Harbor leva os EUA à guerra.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>mai 1945</strong> — Rendição alemã.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>ago 1945</strong> — Bombas atômicas sobre Hiroshima e Nagasaki — rendição japonesa.</div>
+</div>
+</div>
+<div class="atencao">
+<h5>⚠️ Atenção — pegadinha de prova</h5>
+<p>Cuidado com datas: a entrada dos EUA na guerra ocorre em dezembro de 1941 (Pearl Harbor), não em 1939 — erro comum em provas de múltipla escolha.</p>
+</div>
+<div class="destaques-secao">
+<h5>📌 Pontos-chave</h5>
+<div class="destaque">
+<strong>Holocausto - 6 Milhões de Vítimas:</strong> Extermínio sistemático de judeus e outros grupos perseguidos pelo regime nazista, um dos maiores crimes contra a humanidade da história.
+    <span class="marcas"><span class="marca">numero</span><span class="marca">importante</span></span>
+</div>
+</div>
+<div class="glossario">
+<h5>📚 Glossário</h5><dl>
+<dt>Eixo</dt><dd>Aliança militar entre Alemanha, Itália e Japão na Segunda Guerra Mundial.</dd>
+<dt>Holocausto</dt><dd>Extermínio sistemático de cerca de 6 milhões de judeus pelo regime nazista.</dd>
+</dl></div>
+</div>
+<div class="subsecao" id="sub-9-3-guerra-fria">
+<h3>9.3 Guerra Fria</h3>
+<div class="conceito"><strong>CONCEITO-CHAVE:</strong> Guerra Fria (1947-1991) = bipolaridade EUA x URSS, capitalismo x socialismo, corrida armamentista/espacial, Muro de Berlim, fim da URSS</div>
+<div class="conteudo"><p>A <strong>Guerra Fria</strong> foi um período de disputa geopolítica, ideológica e militar entre <strong>Estados Unidos</strong> (capitalismo) e <strong>União Soviética</strong> (socialismo), sem confronto militar direto entre as duas superpotências — daí o termo "fria".</p>
+<p><strong>Divisão do mundo em blocos</strong>: bloco capitalista (EUA e aliados, OTAN) x bloco socialista (URSS e aliados, Pacto de Varsóvia), com países "não-alinhados" tentando ficar de fora da disputa (Terceiro Mundo).</p>
+<p><strong>Símbolo maior</strong>: a <strong>divisão da Alemanha</strong> e a construção do <strong>Muro de Berlim</strong> (1961), separando fisicamente os setores capitalista e socialista da cidade — símbolo mundial da divisão da Guerra Fria.</p>
+<p><strong>Corrida armamentista e espacial</strong>: acúmulo de armas nucleares por ambos os lados (equilíbrio pelo "terror" da destruição mútua garantida); disputa pela conquista espacial (satélite soviético Sputnik 1957; chegada americana à Lua, 1969).</p>
+<p><strong>Conflitos indiretos (guerras por procuração)</strong>: Guerra da Coreia (1950-1953), Guerra do Vietnã (1955-1975), crises regionais na América Latina, África e Ásia, onde as duas potências apoiavam lados opostos sem guerra direta entre si.</p>
+<p><strong>Fim da Guerra Fria</strong>: reformas de Mikhail Gorbachev na URSS (glasnost e perestroika), queda do Muro de Berlim (1989) e dissolução da União Soviética (1991) encerram o período bipolar, consolidando os EUA como potência hegemônica.</p></div>
+<div class="timeline">
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1961</strong> — Construção do Muro de Berlim.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1957</strong> — Lançamento do satélite soviético Sputnik.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1989</strong> — Queda do Muro de Berlim.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1991</strong> — Dissolução da União Soviética encerra a Guerra Fria.</div>
+</div>
+</div>
+<div class="tabela-comparativa"><table>
+<caption>Blocos da Guerra Fria</caption>
+<thead><tr>
+<th>Aspecto</th>
+<th>Bloco Capitalista</th>
+<th>Bloco Socialista</th>
+</tr></thead><tbody>
+<tr>
+<td>Liderança</td>
+<td>Estados Unidos</td>
+<td>União Soviética</td>
+</tr>
+<tr>
+<td>Aliança militar</td>
+<td>OTAN</td>
+<td>Pacto de Varsóvia</td>
+</tr>
+<tr>
+<td>Sistema econômico</td>
+<td>Capitalismo</td>
+<td>Socialismo/planificação estatal</td>
+</tr>
+</tbody></table></div>
+<div class="destaques-secao">
+<h5>📌 Pontos-chave</h5>
+<div class="destaque">
+<strong>Muro de Berlim - Símbolo Máximo da Divisão:</strong> Construído em 1961 para impedir fugas para o lado capitalista, tornou-se o símbolo mundial da Guerra Fria até sua queda em 1989.
+    <span class="marcas"><span class="marca">importante</span><span class="marca">data-chave</span></span>
+</div>
+</div>
+<div class="glossario">
+<h5>📚 Glossário</h5><dl>
+<dt>OTAN</dt><dd>Aliança militar liderada pelos EUA, reunindo países do bloco capitalista.</dd>
+<dt>Pacto de Varsóvia</dt><dd>Aliança militar liderada pela URSS, reunindo países do bloco socialista.</dd>
+<dt>Guerras por Procuração</dt><dd>Conflitos regionais (Coreia, Vietnã) onde EUA e URSS apoiavam lados opostos sem confronto direto entre si.</dd>
+</dl></div>
+</div>
+<div class="subsecao" id="sub-9-4-globalizacao-e-os-desafios-do-mundo-contemporaneo">
+<h3>9.4 Globalização e os Desafios do Mundo Contemporâneo</h3>
+<div class="conceito"><strong>CONCEITO-CHAVE:</strong> Globalização = integração econômica/cultural mundial, revolução tecnológica, desigualdades globais, crises ambientais, novos conflitos</div>
+<div class="conteudo"><p>A <strong>globalização</strong> intensificou-se a partir do fim da Guerra Fria (1991), com a expansão do capitalismo em escala mundial, avanços tecnológicos nas comunicações e transportes, e a formação de blocos econômicos regionais (União Europeia, Mercosul).</p>
+<p><strong>Revolução tecnológica e informacional</strong>: internet, redes sociais e tecnologias digitais transformaram a produção, o consumo, o trabalho e a própria política, criando um mundo mais interconectado — mas também mais desigual no acesso a essas tecnologias.</p>
+<p><strong>Desigualdades globais</strong>: a globalização aprofundou disparidades entre países ricos (Norte) e países em desenvolvimento (Sul), e dentro dos próprios países, entre quem se beneficia da integração econômica e quem é excluído dela.</p>
+<p><strong>Desafios contemporâneos</strong>: mudanças climáticas e crise ambiental (aquecimento global, perda de biodiversidade); novos conflitos regionais e terrorismo internacional; crises migratórias; ascensão de discursos nacionalistas/populistas como reação à própria globalização; pandemias globais (COVID-19, 2020) evidenciando interdependência mundial.</p>
+<p><strong>Multipolaridade emergente</strong>: ascensão econômica da China e de outras potências regionais (Índia, Brasil) sugere transição de um mundo unipolar (hegemonia americana pós-Guerra Fria) para um cenário mais multipolar no século XXI.</p></div>
+<div class="mapa-mental">
+<span class="no-central">Globalização</span>
+<div class="ramos">
+<div class="ramo">Revolução tecnológica e informacional</div>
+<div class="ramo">Desigualdades Norte-Sul</div>
+<div class="ramo">Mudanças climáticas</div>
+<div class="ramo">Crises migratórias e nacionalismo</div>
+<div class="ramo">Multipolaridade emergente (China, Índia)</div>
+</div>
+</div>
+<div class="cai-na-prova">
+<h5>🎯 Cai assim na prova</h5>
+<p>Provas cobram que a globalização não é um processo neutro ou puramente positivo: gera integração econômica, mas também aprofunda desigualdades e gera reações nacionalistas/protecionistas.</p>
+<span class="fonte">Fonte: Padrão recorrente em questões sobre globalização e mundo contemporâneo</span>
+</div>
+<div class="glossario">
+<h5>📚 Glossário</h5><dl>
+<dt>Multipolaridade</dt><dd>Cenário geopolítico com múltiplos centros de poder, em transição do mundo unipolar pós-Guerra Fria.</dd>
+<dt>Blocos Econômicos</dt><dd>Agrupamentos regionais de países para integração comercial, como União Europeia e Mercosul.</dd>
+</dl></div>
+</div>
+</div>
+<div class="capitulo" id="cap-10-brasil-republicano" style="--accent: #43a047; --accent-text: #fff;">
+<h2>10. Brasil Republicano</h2>
+<div class="subsecao" id="sub-10-1-primeira-republica">
+<h3>10.1 Primeira República</h3>
+<div class="conceito"><strong>CONCEITO-CHAVE:</strong> República Velha = coronelismo, voto cabresto, oligarquia cafeeira, federalismo, Revolta Vacina, Cerco Lapa, exclusão social</div>
+<div class="conteudo"><p>Primeira República (1889-1930) manteve exclusão social, elite poder. Mudou forma governo (monarquia→república) mas NÃO estrutura desigualdade.</p>
+<p><strong>Constituição 1891</strong>: Presidencialismo, federalismo, voto censitário/restrito (apenas alfabetizados, homens, maiores 21 anos — ~5% população podia votar).</p>
+<p><strong>Coronelismo - Sistema Político</strong>: <strong>Coronel</strong> = senhor rural que controla população rural via troca de favores. <strong>Voto de Cabresto</strong> = votante pressionado/ameaçado a votar no candidato do coronel. Democracia formal mascarava oligarquia fática.</p>
+<p><strong>Política Café-com-Leite</strong>: acordo tácito São Paulo (café) + Minas Gerais (leite), alternando a presidência, mantendo elite no poder.</p>
+<p><strong>Movimentos Sociais</strong>: <strong>Tenentismo — Coluna Prestes</strong> (1924-1927): 8 mil km de marcha militar de protesto. <strong>Revolta Vacina</strong> (Rio de Janeiro, 1904): governo obriga vacinação, população resiste, ~100 mortos. <strong>Cerco Lapa</strong> (Paraná, 1894): rebelião federalista (Guerra Revolução Federalista 1893-1895), monarquistas x republicanos.</p>
+<p><strong>Ciclo Café</strong>: café torna-se exportação principal, São Paulo domina produção. Crise 1929 leva à Revolução de 1930, liderada por Getúlio Vargas, encerrando a República Velha.</p></div>
+<div class="mapa-mental">
+<span class="no-central">República Velha (1889-1930)</span>
+<div class="ramos">
+<div class="ramo">Coronelismo e voto de cabresto</div>
+<div class="ramo">Política Café-com-Leite</div>
+<div class="ramo">Tenentismo e Coluna Prestes</div>
+<div class="ramo">Revolta da Vacina (1904)</div>
+<div class="ramo">Cerco da Lapa (Paraná, 1894)</div>
+<div class="ramo">Crise 1929 → Revolução de 1930</div>
+</div>
+</div>
+<div class="tabela-comparativa"><table>
+<caption>Movimentos de Contestação na República Velha</caption>
+<thead><tr>
+<th>Movimento</th>
+<th>Local</th>
+<th>Ano</th>
+<th>Motivo</th>
+</tr></thead><tbody>
+<tr>
+<td>Revolta da Vacina</td>
+<td>Rio de Janeiro</td>
+<td>1904</td>
+<td>Vacinação obrigatória contra varíola</td>
+</tr>
+<tr>
+<td>Cerco da Lapa</td>
+<td>Paraná</td>
+<td>1894</td>
+<td>Guerra Revolução Federalista</td>
+</tr>
+<tr>
+<td>Coluna Prestes</td>
+<td>Norte/Nordeste</td>
+<td>1924-1927</td>
+<td>Protesto tenentista contra oligarquia</td>
+</tr>
+</tbody></table></div>
+<div class="atencao">
+<h5>⚠️ Atenção — pegadinha de prova</h5>
+<p>Pegadinha comum: o Cerco da Lapa (Paraná, 1894) faz parte da Revolução Federalista (1893-1895), NÃO da Guerra do Contestado (1912-1916, também no Paraná/SC) — a UFPR testa essa distinção diretamente.</p>
+</div>
+<div class="destaques-secao">
+<h5>📌 Pontos-chave</h5>
+<div class="destaque">
+<strong>Coronelismo - Democracia Fachada:</strong> Senhor rural controla voto população via troca favores. 'Voto de cabresto'—votante ameaçado/coagido. Democracia formal mascarava oligarquia.
+    <span class="marcas"><span class="marca">politica</span><span class="marca">corrupcao</span></span>
+</div>
+<div class="destaque">
+<strong>Voto Censitário - 5% População:</strong> Apenas alfabetizados, homens, maiores 21 anos. Resultado: 95% população sem direito voto. Mulheres excluídas.
+    <span class="marcas"><span class="marca">numero</span><span class="marca">exclusao</span></span>
+</div>
+</div>
+<div class="brainstorm-secao">
+<h5>💡 Para Refletir</h5>
+<div class="brainstorm-item">
+<strong>Democracia ou Oligarquia?</strong>
+<p class="reflexao">República Velha era democracia formal (eleições, constituição) mas oligarquia material (voto censitário, coronelismo, matadores aluguel).</p>
+</div>
+</div>
+<div class="exercicios-ufpr">
+<h5>📝 Questões UFPR</h5>
+<div class="questao-ufpr">
+<p class="questao-numero">Questão 17 — 105_historia.pdf</p>
+<p class="questao-enunciado">No contexto da instalação da República no Brasil, segundo José Murilo de Carvalho, existiam, pelo menos, três modelos de república à disposição dos republicanos brasileiros. Dois deles, o americano e o positivista, embora partindo de premissas totalmente distintas, acabavam dando ênfase a aspectos de organização do poder. O terceiro colocava a intervenção popular como fundamento do novo regime. Para Murilo de Carvalho, o modelo de República em boa parte vitorioso na Constituição de 1891 era o preferido dos produtores rurais de São Paulo: o americano. Esse modelo defendia uma versão individualista do pacto social. Nessa linha de raciocínio a República instalada em 1889 consagrou:</p>
+<div class="questao-opcoes">
+<div class="opcao">a) o princípio do fascismo.</div>
+<div class="opcao">b) a desigualdade entre as pessoas, mediante a ideia da sobrevivência do mais forte.</div>
+<div class="opcao">c) a participação popular no regime.</div>
+<div class="opcao">d) a defesa dos princípios democráticos.</div>
+<div class="opcao">e) o princípio do totalitarismo.</div>
+</div>
+</div>
+<div class="questao-ufpr">
+<p class="questao-numero">Questão 20 — 105_historia.pdf</p>
+<p class="questao-enunciado">O Cerco da Lapa, no Paraná, episódio importante para a consolidação da República presidencialista no Brasil, está incluso no contexto da:</p>
+<div class="questao-opcoes">
+<div class="opcao">a) Guerra de Canudos.</div>
+<div class="opcao">b) Revolta da Armada.</div>
+<div class="opcao">c) Revolução Federalista.</div>
+<div class="opcao">d) Guerra do Contestado.</div>
+<div class="opcao">e) Guerra dos Farrapos.</div>
+</div>
+</div>
+</div>
+<div class="glossario">
+<h5>📚 Glossário</h5><dl>
+<dt>Coronelismo</dt><dd>Sistema político República Velha. Senhor rural (coronel) controla voto população via troca favores.</dd>
+<dt>República Velha</dt><dd>Primeira República Brasil 1889-1930. Coronelismo, oligarquia cafeeira, exclusão social. Fim 1930 golpe.</dd>
+</dl></div>
+</div>
+<div class="subsecao" id="sub-10-2-era-vargas">
+<h3>10.2 Era Vargas</h3>
+<div class="conceito"><strong>CONCEITO-CHAVE:</strong> Era Vargas (1930-1945) = Revolução de 1930, Estado Novo, centralização, CLT, legado trabalhista e autoritário</div>
+<div class="conteudo"><p>A <strong>Era Vargas</strong> (1930-1945) inicia com a Revolução de 1930, quando <strong>Getúlio Vargas</strong> assume o poder após a crise da República Velha, centralizando o poder federal e destruindo as antigas oligarquias estaduais.</p>
+<p><strong>Governo Provisório e Constitucional (1930-1937)</strong>: Vargas governa por decretos, depois é eleito indiretamente pela Constituição de 1934. Cria o Ministério do Trabalho, inicia legislação trabalhista.</p>
+<p><strong>Estado Novo (1937-1945)</strong>: ditadura fascista brasileira instaurada por golpe. Censura, repressão policial (DIP — Departamento de Imprensa e Propaganda), nacionalismo ("Brasil para brasileiros"), perseguição a opositores (comunistas e integralistas).</p>
+<p><strong>CLT (1943)</strong>: Consolidação das Leis do Trabalho estabelece direitos trabalhistas (férias, jornada de 8 horas, salário mínimo), mas sob controle e tutela do Estado — sindicatos atrelados ao governo (sindicalismo corporativista).</p>
+<p><strong>Legado ambíguo</strong>: trabalhismo e industrialização (avanço social real) convivendo com autoritarismo, censura e perseguição política — tensão que caracteriza toda a avaliação histórica do período.</p></div>
+<div class="timeline">
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1930</strong> — Getúlio Vargas assume o poder após a Revolução de 1930.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1937-1945</strong> — Estado Novo — ditadura fascista brasileira, com censura e CLT (1943).</div>
+</div>
+</div>
+<div class="exercicios-ufpr">
+<h5>📝 Questões UFPR</h5>
+<div class="questao-ufpr">
+<p class="questao-numero">Questão 21 — 105_historia.pdf</p>
+<p class="questao-enunciado">Entre os principais conflitos ocorridos durante a chamada Era Vargas, 1930-1945, figuram: 1. Revolução Constitucionalista. 2. Revolução Federalista. 3. Intentona Comunista 4. Levante Integralista. 5. Levante dos 18 do Forte. Estão corretos os itens:</p>
+<div class="questao-opcoes">
+<div class="opcao">a) 1, 3 e 4 apenas.</div>
+<div class="opcao">b) 2 e 5 apenas.</div>
+<div class="opcao">c) 1, 3 e 5 apenas.</div>
+<div class="opcao">d) 2, 3 e 4 apenas.</div>
+<div class="opcao">e) 1, 2 e 4 apenas.</div>
+</div>
+</div>
+</div>
+</div>
+<div class="subsecao" id="sub-10-3-regime-militar">
+<h3>10.3 Regime Militar</h3>
+<div class="conceito"><strong>CONCEITO-CHAVE:</strong> Regime Militar (1964-1985) = golpe de 1964, AI-5, repressão, censura, redemocratização gradual</div>
+<blockquote class="citacao">
+<span class="aspas">“</span>Não fossem os que lutaram, o Brasil não teria pressa nenhuma de ser livre outra vez.
+  <span class="autor-citacao">— Reflexão sobre a resistência à ditadura militar (1964-1985)</span>
+</blockquote>
+<div class="conteudo"><p>O <strong>Golpe de 1964</strong> derrubou o governo de <strong>João Goulart (Jango)</strong>, que ameaçava a elite conservadora com reformas sociais (as chamadas "reformas de base"). Em 31 de março-1º de abril de 1964, os militares assumem o poder, iniciando 21 anos de regime militar.</p>
+<p><strong>Presidentes militares</strong>: Castello Branco, Costa e Silva, Médici, Geisel, Figueiredo — cada um representando diferentes fases do regime, da instauração ao endurecimento e depois à abertura gradual.</p>
+<p><strong>AI-5 (13 dezembro 1968)</strong>: o <strong>Ato Institucional nº 5</strong> representa o auge da repressão — suspendeu direitos civis e garantias constitucionais, permitiu prisões arbitrárias, fechou o Congresso Nacional, institucionalizou a censura e a tortura como instrumento de Estado.</p>
+<p><strong>Repressão e resistência</strong>: artistas, intelectuais e estudantes perseguidos, exilados ou presos; movimentos de resistência armada e civil clandestinos (embora minoritários) enfrentaram o regime.</p>
+<p><strong>Abertura política</strong>: Lei da Anistia (1979) inicia processo gradual ("lenta, gradual e segura", nas palavras do governo Geisel) rumo à redemocratização.</p></div>
+<div class="timeline">
+<div class="timeline-item">
+<div class="timeline-texto"><strong>31 mar-1º abr 1964</strong> — Golpe militar depõe João Goulart.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>13 dez 1968</strong> — AI-5 suspende direitos civis — pico da repressão.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1979</strong> — Lei da Anistia inicia processo de abertura política.</div>
+</div>
+</div>
+<div class="atencao">
+<h5>⚠️ Atenção — pegadinha de prova</h5>
+<p>Não confundir Estado Novo (1937-1945, Vargas) com Regime Militar (1964-1985) — ambos são ditaduras, mas contextos, líderes e décadas totalmente diferentes.</p>
+</div>
+<div class="cai-na-prova">
+<h5>🎯 Cai assim na prova</h5>
+<p>O AI-5, de 13 de dezembro de 1968, é o Ato Institucional mais cobrado em provas por representar o auge da repressão: suspendeu garantias constitucionais, permitiu perseguição a opositores e fechou o Congresso Nacional.</p>
+<span class="fonte">Fonte: Padrão recorrente em provas sobre regime militar brasileiro</span>
+</div>
+</div>
+<div class="subsecao" id="sub-10-4-redemocratizacao">
+<h3>10.4 Redemocratização</h3>
+<div class="conceito"><strong>CONCEITO-CHAVE:</strong> Redemocratização (1985) = fim do regime militar, Diretas Já, Constituição Cidadã de 1988, consolidação democrática</div>
+<div class="conteudo"><p>A <strong>redemocratização</strong> brasileira foi um processo gradual, resultado tanto da abertura controlada pelos próprios militares quanto da crescente pressão popular organizada.</p>
+<p><strong>Movimento Diretas Já (1983-1984)</strong>: mobilização popular massiva pedindo eleições diretas para presidente, com grandes comícios em todo o país. Apesar de não aprovada pelo Congresso na época (emenda Dante de Oliveira rejeitada), o movimento demonstrou a força da pressão popular pela democracia.</p>
+<p><strong>Eleição indireta de Tancredo Neves (1985)</strong>: ainda por colégio eleitoral, marca simbolicamente o fim do regime militar. Tancredo morre antes de tomar posse; assume o vice <strong>José Sarney</strong>, primeiro presidente civil desde 1964.</p>
+<p><strong>Constituição de 1988 ("Constituição Cidadã")</strong>: elaborada por Assembleia Constituinte, amplia direitos sociais, políticos e civis, restabelece eleições diretas em todos os níveis e consolida o Estado democrático de direito.</p>
+<p><strong>Consolidação democrática</strong>: primeira eleição direta para presidente em 1989 (vitória de Fernando Collor); desde então o Brasil mantém eleições regulares e alternância pacífica de poder, embora enfrente desafios recorrentes de desigualdade, corrupção e polarização política.</p></div>
+<div class="timeline">
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1983-1984</strong> — Movimento Diretas Já mobiliza multidões pelo país.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1985</strong> — Tancredo Neves eleito indiretamente; Sarney assume a presidência.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1988</strong> — Promulgação da Constituição Cidadã.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1989</strong> — Primeira eleição direta para presidente desde 1964.</div>
+</div>
+</div>
+<div class="cai-na-prova">
+<h5>🎯 Cai assim na prova</h5>
+<p>O movimento Diretas Já (1983-1984) NÃO conseguiu aprovar eleições diretas imediatas — a emenda Dante de Oliveira foi rejeitada pelo Congresso. A eleição de Tancredo Neves em 1985 ainda foi indireta, pelo colégio eleitoral.</p>
+<span class="fonte">Fonte: Pegadinha recorrente sobre a cronologia da redemocratização</span>
+</div>
+<div class="destaques-secao">
+<h5>📌 Pontos-chave</h5>
+<div class="destaque">
+<strong>Constituição Cidadã de 1988:</strong> Ampliou significativamente direitos sociais, políticos e civis, restabelecendo eleições diretas e consolidando o Estado democrático de direito no Brasil.
+    <span class="marcas"><span class="marca">importante</span><span class="marca">data-chave</span></span>
+</div>
+</div>
+<div class="glossario">
+<h5>📚 Glossário</h5><dl>
+<dt>Diretas Já</dt><dd>Movimento popular (1983-1984) por eleições diretas para presidente, não aprovado no Congresso na época.</dd>
+<dt>Constituição Cidadã</dt><dd>Constituição de 1988, que ampliou direitos e consolidou a democracia brasileira.</dd>
+</dl></div>
+</div>
+</div>
+<div class="capitulo" id="cap-11-historia-do-parana" style="--accent: #9c27b0; --accent-text: #fff;">
+<h2>11. História do Paraná</h2>
+<div class="subsecao" id="sub-11-1-ocupacao-do-territorio-ouro-tropeirismo-erva-mate-e-cafe">
+<h3>11.1 Ocupação do Território: Ouro, Tropeirismo, Erva-Mate e Café</h3>
+<div class="conceito"><strong>CONCEITO-CHAVE:</strong> Ocupação do Paraná = ciclo do ouro, tropeirismo, erva-mate, depois café; formação de Curitiba; emancipação política 1853</div>
+<blockquote class="citacao">
+<span class="aspas">“</span>Curitiba não nasceu do ouro nem do café: nasceu do mate e dos tropeiros que a atravessavam a caminho de Sorocaba.
+  <span class="autor-citacao">— Síntese historiográfica sobre a formação urbana de Curitiba</span>
+</blockquote>
+<div class="conteudo"><p>A ocupação do território paranaense seguiu diferentes ciclos econômicos ao longo dos séculos, cada um deixando marcas na formação social e urbana do estado.</p>
+<p><strong>Ciclo do Ouro (século XVII)</strong>: primeiras expedições de exploração ao litoral e planalto paranaense buscavam ouro de aluvião (Paranaguá, região de Curitiba). Atividade modesta comparada a Minas Gerais, mas motivou os primeiros povoamentos permanentes na região.</p>
+<p><strong>Tropeirismo e Erva-Mate (séculos XVIII-XIX)</strong>: com o declínio do ouro, o <strong>tropeirismo</strong> — condução de gado e mate por caravanas entre o Rio Grande do Sul e São Paulo — tornou-se a principal atividade econômica. <strong>Curitiba</strong> desenvolveu-se como entreposto comercial nas rotas dos tropeiros.</p>
+<p><strong>Período Jesuíta (1600-1759)</strong>: jesuítas cultivavam erva-mate nas Missões, distribuindo-a pela região platina. Após a expulsão dos jesuítas (1759), colonos privados herdam as plantações, e o <strong>ciclo da erva-mate</strong> se intensifica, tornando-se a <strong>principal exportação paranaense</strong> no Império.</p>
+<p><strong>Emancipação Política (1853)</strong>: o Paraná se separa de São Paulo, tornando-se província autônoma — resultado direto da força econômica já consolidada pela elite ervateira, que buscava políticas próprias e proteção tarifária ao mate.</p>
+<p><strong>Declínio do mate e ascensão do café (1880s em diante)</strong>: as ferrovias substituem gradualmente as tropas, e o café — vindo do norte do Paraná — torna-se o novo motor econômico do estado no século XX, atraindo forte imigração e consolidando a ocupação do interior paranaense.</p></div>
+<div class="timeline">
+<div class="timeline-item">
+<div class="timeline-texto"><strong>Século XVII</strong> — Primeiras explorações de ouro no litoral e planalto — início do povoamento.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1600-1759</strong> — Período jesuíta: cultivo organizado de erva-mate nas Missões.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1759</strong> — Expulsão dos jesuítas — colonos privados herdam plantações.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1810s-1880s</strong> — Auge do tropeirismo — caravanas ligam Curitiba a Sorocaba, São Paulo e Rio Grande.</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1853</strong> — Emancipação política do Paraná (separação de São Paulo).</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-texto"><strong>1880s-1920s</strong> — Ferrovias substituem as tropas — declínio do mate e ascensão do café.</div>
+</div>
+</div>
+<div class="mapa-mental">
+<span class="no-central">Ocupação do Paraná</span>
+<div class="ramos">
+<div class="ramo">Ciclo do ouro (século XVII)</div>
+<div class="ramo">Período jesuíta (Missões, 1600-1759)</div>
+<div class="ramo">Tropeirismo (rotas Curitiba-Sorocaba-São Paulo)</div>
+<div class="ramo">Ciclo da erva-mate (auge no Império)</div>
+<div class="ramo">Emancipação política do Paraná (1853)</div>
+<div class="ramo">Ciclo do café (século XX, imigração)</div>
+</div>
+</div>
+<div class="tabela-comparativa"><table>
+<caption>Ciclos Econômicos da Ocupação do Paraná</caption>
+<thead><tr>
+<th>Período</th>
+<th>Ciclo</th>
+<th>Característica Principal</th>
+</tr></thead><tbody>
+<tr>
+<td>Século XVII</td>
+<td>Ouro</td>
+<td>Exploração de ouro de aluvião; povoamento inicial</td>
+</tr>
+<tr>
+<td>1600-1759</td>
+<td>Erva-mate jesuítico</td>
+<td>Cultivo organizado nas Reduções</td>
+</tr>
+<tr>
+<td>1759-1880s</td>
+<td>Tropeirismo/Erva-mate</td>
+<td>Auge; emancipação política (1853)</td>
+</tr>
+<tr>
+<td>1880s em diante</td>
+<td>Café</td>
+<td>Ferrovias, imigração, ocupação do interior</td>
+</tr>
+</tbody></table></div>
+<div class="atencao">
+<h5>⚠️ Atenção — pegadinha de prova</h5>
+<p>Atenção — a UFPR cobra insistentemente que o ciclo da erva-mate é ÚNICO no Brasil por ser comércio REGIONAL/interno (não exportação direta à metrópole como açúcar e café), e por ter produção mais descentralizada, sem depender de escravidão massiva.</p>
+</div>
+<div class="destaques-secao">
+<h5>📌 Pontos-chave</h5>
+<div class="destaque">
+<strong>Tropeirismo - Sistema Comercial:</strong> Campesinos viajam 3-12 meses caravanas mulas/cavalos mate/gado. Rotas: Curitiba-Sorocaba-São Paulo-Rio; Curitiba-Buenos Aires. Geram economia local.
+    <span class="marcas"><span class="marca">numero</span><span class="marca">social</span></span>
+</div>
+<div class="destaque">
+<strong>Emancipação Paraná 1853:</strong> Separação São Paulo permitiu Paraná políticas próprias. Elite ervateira já dominava economia. Autonomia fortaleceu mercado mate.
+    <span class="marcas"><span class="marca">data-chave</span><span class="marca">Parana</span></span>
+</div>
+</div>
+<div class="brainstorm-secao">
+<h5>💡 Para Refletir</h5>
+<div class="brainstorm-item">
+<strong>Por que erva-mate é tão importante na história do Paraná?</strong>
+<p class="reflexao">Ciclo mate foi ÚNICO desenvolvimento econômico Paraná por séculos. Não latifúndio escravista (como açúcar/café). Mais igualitário, duradouro, criou Curitiba. Identidade paranaense = tropeirismo + mate.</p>
+</div>
+</div>
+<div class="exercicios-ufpr">
+<h5>📝 Questões UFPR</h5>
+<div class="questao-ufpr">
+<p class="questao-numero">Questão 29 — prova10.pdf</p>
+<p class="questao-enunciado">"O estreito relacionamento dos produtores paranaenses com o Estado de São Paulo, nas primeiras décadas do século XX, além de causar a evasão de divisas com a venda da produção, também poderia quebrar a unidade territorial do estado". (SEED/DEM. Livro Didático Público, Relações de Poder. 2006, p. 241.) A preocupação do governo do Paraná com os problemas relatados no texto acima levou-o a tomar uma medida política relevante. Qual foi a estratégia usada?</p>
+<div class="questao-opcoes">
+<div class="opcao">a) Estimular o desenvolvimento da agroindústria nas regiões afetadas pelo problema.</div>
+<div class="opcao">b) Incentivar a industrialização do Paraná.</div>
+<div class="opcao">c) Implantar medidas de controle fiscal intenso nas fronteiras.</div>
+<div class="opcao">d) Colocar a ocupação das áreas sob a responsabilidade de companhias colonizadoras privadas.</div>
+<div class="opcao">e) Censurar e reprimir as pessoas interessadas em idéias separatistas.</div>
+</div>
+</div>
+<div class="questao-ufpr">
+<p class="questao-numero">Questão 37 — profissional_de_magisterio_docencia_ii_historia.pdf</p>
+<p class="questao-enunciado">Os dois trechos a seguir tratam de um mesmo tema: os vazios demográficos no Paraná no século XIX. Leia fragmento de Lúcio Tadeu Mota (2012) e Wilson Martins (1955). Considerando os dois fragmentos citados, assinale a alternativa correta.</p>
+<div class="questao-opcoes">
+<div class="opcao">a) Ambos os autores concordam sobre o fato de que o território paranaense era desabitado no período da emancipação política.</div>
+<div class="opcao">b) O texto de Wilson Martins é uma demonstração que valida a afirmação de Lúcio Tadeu Mota sobre a produção intelectual.</div>
+<div class="opcao">c) Ao mencionar os "dezenove pequenos oásis", Wilson Martins se refere aos núcleos de colonização de imigrantes.</div>
+<div class="opcao">d) Lúcio Tadeu Mota desconsidera a existência de uma população de indígenas e caboclos.</div>
+<div class="opcao">e) Os dois textos evidenciam que o conhecimento histórico é cumulativo.</div>
+</div>
+</div>
+</div>
+<div class="glossario">
+<h5>📚 Glossário</h5><dl>
+<dt>Tropeirismo</dt><dd>Sistema comercial XVI-XIX Paraná. Tropeiros viajam meses em caravanas de mulas/cavalos com mate/gado. Rotas longas sul-americanas.</dd>
+<dt>Ciclo Erva-Mate</dt><dd>XVII-XIX: economia regional Paraná dependia erva-mate. Durou séculos. Trouxe riqueza elite mate, desenvolveu Curitiba. Declinou com ferrovias no século XX.</dd>
+</dl></div>
+</div>
+<div class="subsecao" id="sub-11-2-povos-imigrantes-no-parana">
+<h3>11.2 Povos Imigrantes no Paraná</h3>
+<div class="conceito"><strong>CONCEITO-CHAVE:</strong> Imigração no Paraná = colonização europeia (italianos, alemães, poloneses, ucranianos) e japonesa, mosaico cultural do estado</div>
+<div class="conteudo"><p>A partir da segunda metade do século XIX, o governo brasileiro e provincial promoveu a <strong>imigração estrangeira</strong> para o Paraná, com objetivos de ocupar territórios "vazios" (ignorando a presença indígena e cabocla já existente), substituir mão de obra escrava e "branquear" a população, segundo ideologias raciais da época.</p>
+<p><strong>Principais grupos imigrantes</strong>:</p>
+<ul><li><strong>Italianos</strong>: chegaram principalmente a partir de 1870, colonizando áreas próximas a Curitiba (Colônia Santa Felicidade) e regiões de produção de vinho e alimentos.</li><li><strong>Alemães</strong>: colonizaram áreas como Rio Negro e regiões do Vale do Itajaí (fronteira com Santa Catarina), trazendo tradições agrícolas e arquitetônicas próprias.</li><li><strong>Poloneses</strong>: um dos maiores contingentes, formaram colônias ao redor de Curitiba (região hoje conhecida pelo Bosque do Papa e festividades polonesas), trabalhando principalmente na agricultura de pequena propriedade.</li><li><strong>Ucranianos</strong>: concentraram-se especialmente na região de Prudentópolis, hoje considerada a maior comunidade ucraniana fora da Ucrânia, preservando língua, religião (rito bizantino) e tradições culturais.</li><li><strong>Japoneses</strong>: chegaram principalmente no século XX, com forte presença na agricultura, especialmente no norte do estado, contribuindo para a diversificação produtiva.</li></ul>
+<p><strong>Impacto cultural</strong>: a imigração formou o característico <strong>mosaico cultural paranaense</strong>, visível em festividades (Oktoberfest em regiões alemãs, festas italianas, páscoa ucraniana), culinária, arquitetura e toponímia (nomes de cidades e bairros).</p>
+<p><strong>Crítica historiográfica</strong>: é importante destacar que essa narrativa de "colonização" muitas vezes invisibiliza os povos indígenas (Kaingang, Guarani) e a população cabocla (mestiça, luso-brasileira) que já ocupavam o território antes da chegada dos imigrantes europeus e asiáticos — ponto valorizado em provas que cobram uma leitura crítica da historiografia paranaense.</p></div>
+<div class="mapa-mental">
+<span class="no-central">Imigração no Paraná</span>
+<div class="ramos">
+<div class="ramo">Italianos (Santa Felicidade)</div>
+<div class="ramo">Alemães (Rio Negro)</div>
+<div class="ramo">Poloneses (região de Curitiba)</div>
+<div class="ramo">Ucranianos (Prudentópolis)</div>
+<div class="ramo">Japoneses (norte do estado)</div>
+<div class="ramo">Crítica: invisibilização de indígenas e caboclos</div>
+</div>
+</div>
+<div class="tabela-comparativa"><table>
+<caption>Principais Grupos Imigrantes no Paraná</caption>
+<thead><tr>
+<th>Grupo</th>
+<th>Período Principal</th>
+<th>Região de Concentração</th>
+</tr></thead><tbody>
+<tr>
+<td>Italianos</td>
+<td>A partir de 1870</td>
+<td>Santa Felicidade (Curitiba) e região</td>
+</tr>
+<tr>
+<td>Alemães</td>
+<td>Século XIX</td>
+<td>Rio Negro e áreas próximas</td>
+</tr>
+<tr>
+<td>Poloneses</td>
+<td>Final do século XIX</td>
+<td>Região de Curitiba</td>
+</tr>
+<tr>
+<td>Ucranianos</td>
+<td>Final do século XIX</td>
+<td>Prudentópolis</td>
+</tr>
+<tr>
+<td>Japoneses</td>
+<td>Século XX</td>
+<td>Norte do Paraná</td>
+</tr>
+</tbody></table></div>
+<div class="atencao">
+<h5>⚠️ Atenção — pegadinha de prova</h5>
+<p>Cuidado com a narrativa de 'terra vazia': a UFPR valoriza respostas que reconhecem a presença prévia de povos indígenas e caboclos, criticando a ideia colonizadora de que os imigrantes 'ocuparam um vazio demográfico'.</p>
+</div>
+<div class="destaques-secao">
+<h5>📌 Pontos-chave</h5>
+<div class="destaque">
+<strong>Prudentópolis - Maior Comunidade Ucraniana Fora da Ucrânia:</strong> A região preserva língua, religião de rito bizantino e tradições culturais ucranianas há mais de um século — caso único no Brasil.
+    <span class="marcas"><span class="marca">destaque</span><span class="marca">cultura</span></span>
+</div>
+</div>
+<div class="brainstorm-secao">
+<h5>💡 Para Refletir</h5>
+<div class="brainstorm-item">
+<strong>'Colonizar' é a palavra certa para descrever a chegada dos imigrantes ao Paraná?</strong>
+<p class="reflexao">O termo sugere terra vazia, mas indígenas e caboclos já ocupavam o território. Uma leitura crítica reconhece a imigração como mais uma camada de ocupação, não a 'fundação' do território.</p>
+</div>
+</div>
+<div class="glossario">
+<h5>📚 Glossário</h5><dl>
+<dt>Mosaico Cultural</dt><dd>Diversidade de tradições, festividades e arquiteturas trazidas por diferentes grupos imigrantes ao Paraná.</dd>
+<dt>Caboclo</dt><dd>População mestiça, de origem luso-brasileira e indígena, presente no Paraná antes da imigração europeia/asiática.</dd>
+</dl></div>
+</div>
+</div>
+<div class="gabarito-final">
+<h2>✅ Gabarito das Questões UFPR</h2>
+<div class="gabarito-cap-titulo">5. Colonização do Brasil</div>
+<div class="gabarito-tabela">
+<div class="gabarito-item">Questão 13 (105_historia.pdf): <span class="resp">A</span></div>
+</div>
+<div class="gabarito-cap-titulo">7. Revoluções Burguesas</div>
+<div class="gabarito-tabela">
+<div class="gabarito-item">Questão 30 (historia (1).pdf): <span class="indisponivel">gabarito não localizado</span></div>
+<div class="gabarito-item">Questão 32 (prova10.pdf): <span class="indisponivel">gabarito não localizado</span></div>
+<div class="gabarito-item">Questão 34 (prova10.pdf): <span class="indisponivel">gabarito não localizado</span></div>
+</div>
+<div class="gabarito-cap-titulo">8. Brasil Império</div>
+<div class="gabarito-tabela">
+<div class="gabarito-item">Questão 16 (105_historia.pdf): <span class="resp">A</span></div>
+<div class="gabarito-item">Questão 38 (105_historia.pdf): <span class="resp">E</span></div>
+</div>
+<div class="gabarito-cap-titulo">10. Brasil Republicano</div>
+<div class="gabarito-tabela">
+<div class="gabarito-item">Questão 17 (105_historia.pdf): <span class="resp">B</span></div>
+<div class="gabarito-item">Questão 20 (105_historia.pdf): <span class="resp">C</span></div>
+<div class="gabarito-item">Questão 21 (105_historia.pdf): <span class="resp">A</span></div>
+</div>
+<div class="gabarito-cap-titulo">11. História do Paraná</div>
+<div class="gabarito-tabela">
+<div class="gabarito-item">Questão 29 (prova10.pdf): <span class="indisponivel">gabarito não localizado</span></div>
+<div class="gabarito-item">Questão 37 (profissional_de_magisterio_docencia_ii_historia.pdf): <span class="indisponivel">gabarito não localizado</span></div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

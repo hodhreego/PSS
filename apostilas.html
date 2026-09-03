@@ -60,7 +60,8 @@
   .apostilas-title .icon{font-size:20px; line-height:1;}
   .apostilas-title .txt{font-size:13.5px; color:var(--navy-deep);}
 
-  .apostilas-list{display:flex; flex-direction:column; gap:8px;}
+  .apostilas-list{display:flex; flex-direction:column; gap:14px;}
+  .apostila-block{display:flex; flex-direction:column; gap:8px;}
   .apostila-link{
     display:flex; align-items:center; gap:8px; text-decoration:none;
     background:rgba(255,255,255,.08); border:1px solid rgba(233,212,142,.35); border-radius:10px;
@@ -93,25 +94,24 @@
     text-align:center;
   }
 
-  /* Mini prévia da capa e do índice reais das apostilas (screenshots reais) */
-  .apostilas-preview{margin-top:14px; padding-top:12px; border-top:1px dashed rgba(233,212,142,.35);}
-  .apostilas-preview-caption{font-size:9.5px; color:var(--gold-light); text-align:center; margin-bottom:8px; font-weight:700;}
-  .apostilas-preview-row{display:flex; justify-content:center; align-items:flex-start; gap:12px;}
-
-  .thumb-mini{
-    width:118px; height:auto; flex-shrink:0; display:block;
-    border-radius:6px; box-shadow:0 4px 12px rgba(0,0,0,.3);
-  }
-  .thumb-mini.indice{box-shadow:0 4px 12px rgba(0,0,0,.18); border:1.5px solid #B9B9B9;}
-
-  .preview-item{margin-bottom:18px;}
-  .preview-item:last-child{margin-bottom:0;}
-  .preview-item-title{
-    display:flex; align-items:center; justify-content:center; gap:6px;
-    font-size:11.5px; font-weight:800; color:#fff; text-align:center; margin-bottom:7px;
-  }
-  .apostilas-preview-row{text-decoration:none; transition:transform .15s ease;}
+  /* Mini prévia da capa, índice e uma página de conteúdo — HTML/CSS reais das
+     apostilas, renderizados ao vivo num iframe e reduzidos via transform:scale
+     (não são screenshots/imagens estáticas). */
+  .apostilas-preview-row{display:flex; justify-content:center; align-items:flex-start; gap:9px; text-decoration:none; transition:transform .15s ease;}
   .apostilas-preview-row:hover{transform:translateY(-1px);}
+
+  .thumb-frame{
+    width:100px; height:141px; flex-shrink:0; position:relative; overflow:hidden;
+    border-radius:6px; box-shadow:0 4px 12px rgba(0,0,0,.3); background:#fff;
+  }
+  .thumb-frame.indice, .thumb-frame.meio{box-shadow:0 4px 12px rgba(0,0,0,.18); border:1.5px solid #B9B9B9;}
+  .thumb-frame iframe{
+    position:absolute; top:0; left:0; width:900px; height:1600px; border:0;
+    transform:scale(0.1111); transform-origin:top left;
+    pointer-events:none;
+  }
+  .thumb-frame-label{font-size:6.5px; color:var(--gold-light); text-align:center; margin-top:3px; text-transform:uppercase; letter-spacing:.05em;}
+  .thumb-frame-col{display:flex; flex-direction:column; align-items:center;}
 
   .back-btn{
     display:flex; align-items:center; justify-content:center; gap:8px;
@@ -138,83 +138,150 @@
   </div>
 
   <div class="apostilas-list">
-    <a href="https://chk.eduzz.com/D0R8O6N19Y" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🎓</span> Apostila SEED PR - PSS CONHECIMENTOS BÁSICOS</a>
-    <a href="https://chk.eduzz.com/7WXGBK340A" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🤝</span> Apostila EDUCAÇÃO INCLUSIVA PSS SEED-PR 2027</a>
-    <a href="https://chk.eduzz.com/Z0B1JYOJ9A" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🔢</span> Apostila SEED PR - PSS MATEMÁTICA</a>
-    <a href="https://chk.eduzz.com/E0DKVQ4N91" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🍎</span> Apostila PEDAGOGO PSS SEED-PR 2027</a>
-    <a href="https://chk.eduzz.com/39ZR8NY7WE" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🔤</span> Apostila LÍNGUA INGLESA PSS SEED-PR 2027</a>
-    <a href="https://chk.eduzz.com/797ZYRQ40E" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🌍</span> Apostila GEOGRAFIA PSS SEED-PR 2027</a>
-    <a href="https://chk.eduzz.com/89AXR1860D" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🏛️</span> Apostila HISTÓRIA PSS SEED-PR 2027</a>
-    <a href="https://chk.eduzz.com/G96RA585W1" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🎨</span> Apostila ARTES PSS SEED-PR 2027</a>
-    <div class="apostila-coming-soon"><span>🚀</span> Em breve mais disciplinas</div>
-  </div>
-
-  <div class="apostilas-preview">
-    <div class="apostilas-preview-caption">👀 Assim ficam a capa e o índice reais de cada apostila</div>
-
-    <div class="preview-item">
-      <div class="preview-item-title">🎓 Conhecimentos Básicos</div>
+    <div class="apostila-block">
+      <a href="https://chk.eduzz.com/D0R8O6N19Y" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🎓</span> Apostila SEED PR - PSS CONHECIMENTOS BÁSICOS</a>
       <a href="https://chk.eduzz.com/D0R8O6N19Y" target="_blank" rel="noopener" class="apostilas-preview-row">
-        <img src="thumbs/conhecimentos-basicos-capa.jpg" alt="Capa da apostila" class="thumb-mini capa">
-        <img src="thumbs/conhecimentos-basicos-indice.jpg" alt="Índice da apostila" class="thumb-mini indice">
+        <div class="thumb-frame-col">
+          <div class="thumb-frame capa"><iframe src="previews/conhecimentos-basicos-capa.html" scrolling="no" tabindex="-1"></iframe></div>
+          <div class="thumb-frame-label">Capa</div>
+        </div>
+        <div class="thumb-frame-col">
+          <div class="thumb-frame indice"><iframe src="previews/conhecimentos-basicos-indice.html" scrolling="no" tabindex="-1"></iframe></div>
+          <div class="thumb-frame-label">Índice</div>
+        </div>
+        <div class="thumb-frame-col">
+          <div class="thumb-frame meio"><iframe src="previews/conhecimentos-basicos-meio.html" scrolling="no" tabindex="-1"></iframe></div>
+          <div class="thumb-frame-label">Conteúdo</div>
+        </div>
       </a>
     </div>
 
-    <div class="preview-item">
-      <div class="preview-item-title">🤝 Educação Inclusiva</div>
+    <div class="apostila-block">
+      <a href="https://chk.eduzz.com/7WXGBK340A" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🤝</span> Apostila EDUCAÇÃO INCLUSIVA PSS SEED-PR 2027</a>
       <a href="https://chk.eduzz.com/7WXGBK340A" target="_blank" rel="noopener" class="apostilas-preview-row">
-        <img src="thumbs/educacao-especial-capa.jpg" alt="Capa da apostila" class="thumb-mini capa">
-        <img src="thumbs/educacao-especial-indice.jpg" alt="Índice da apostila" class="thumb-mini indice">
+        <div class="thumb-frame-col">
+          <div class="thumb-frame capa"><iframe src="previews/educacao-especial-capa.html" scrolling="no" tabindex="-1"></iframe></div>
+          <div class="thumb-frame-label">Capa</div>
+        </div>
+        <div class="thumb-frame-col">
+          <div class="thumb-frame indice"><iframe src="previews/educacao-especial-indice.html" scrolling="no" tabindex="-1"></iframe></div>
+          <div class="thumb-frame-label">Índice</div>
+        </div>
+        <div class="thumb-frame-col">
+          <div class="thumb-frame meio"><iframe src="previews/educacao-especial-meio.html" scrolling="no" tabindex="-1"></iframe></div>
+          <div class="thumb-frame-label">Conteúdo</div>
+        </div>
       </a>
     </div>
 
-    <div class="preview-item">
-      <div class="preview-item-title">🔢 Matemática</div>
+    <div class="apostila-block">
+      <a href="https://chk.eduzz.com/Z0B1JYOJ9A" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🔢</span> Apostila SEED PR - PSS MATEMÁTICA</a>
       <a href="https://chk.eduzz.com/Z0B1JYOJ9A" target="_blank" rel="noopener" class="apostilas-preview-row">
-        <img src="thumbs/matematica-capa.jpg" alt="Capa da apostila" class="thumb-mini capa">
-        <img src="thumbs/matematica-indice.jpg" alt="Índice da apostila" class="thumb-mini indice">
+        <div class="thumb-frame-col">
+          <div class="thumb-frame capa"><iframe src="previews/matematica-capa.html" scrolling="no" tabindex="-1"></iframe></div>
+          <div class="thumb-frame-label">Capa</div>
+        </div>
+        <div class="thumb-frame-col">
+          <div class="thumb-frame indice"><iframe src="previews/matematica-indice.html" scrolling="no" tabindex="-1"></iframe></div>
+          <div class="thumb-frame-label">Índice</div>
+        </div>
+        <div class="thumb-frame-col">
+          <div class="thumb-frame meio"><iframe src="previews/matematica-meio.html" scrolling="no" tabindex="-1"></iframe></div>
+          <div class="thumb-frame-label">Conteúdo</div>
+        </div>
       </a>
     </div>
 
-    <div class="preview-item">
-      <div class="preview-item-title">🍎 Pedagogo</div>
+    <div class="apostila-block">
+      <a href="https://chk.eduzz.com/E0DKVQ4N91" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🍎</span> Apostila PEDAGOGO PSS SEED-PR 2027</a>
       <a href="https://chk.eduzz.com/E0DKVQ4N91" target="_blank" rel="noopener" class="apostilas-preview-row">
-        <img src="thumbs/pedagogo-capa.jpg" alt="Capa da apostila" class="thumb-mini capa">
-        <img src="thumbs/pedagogo-indice.jpg" alt="Índice da apostila" class="thumb-mini indice">
+        <div class="thumb-frame-col">
+          <div class="thumb-frame capa"><iframe src="previews/pedagogo-capa.html" scrolling="no" tabindex="-1"></iframe></div>
+          <div class="thumb-frame-label">Capa</div>
+        </div>
+        <div class="thumb-frame-col">
+          <div class="thumb-frame indice"><iframe src="previews/pedagogo-indice.html" scrolling="no" tabindex="-1"></iframe></div>
+          <div class="thumb-frame-label">Índice</div>
+        </div>
+        <div class="thumb-frame-col">
+          <div class="thumb-frame meio"><iframe src="previews/pedagogo-meio.html" scrolling="no" tabindex="-1"></iframe></div>
+          <div class="thumb-frame-label">Conteúdo</div>
+        </div>
       </a>
     </div>
 
-    <div class="preview-item">
-      <div class="preview-item-title">🔤 Língua Inglesa</div>
+    <div class="apostila-block">
+      <a href="https://chk.eduzz.com/39ZR8NY7WE" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🔤</span> Apostila LÍNGUA INGLESA PSS SEED-PR 2027</a>
       <a href="https://chk.eduzz.com/39ZR8NY7WE" target="_blank" rel="noopener" class="apostilas-preview-row">
-        <img src="thumbs/lingua-inglesa-capa.jpg" alt="Capa da apostila" class="thumb-mini capa">
-        <img src="thumbs/lingua-inglesa-indice.jpg" alt="Índice da apostila" class="thumb-mini indice">
+        <div class="thumb-frame-col">
+          <div class="thumb-frame capa"><iframe src="previews/lingua-inglesa-capa.html" scrolling="no" tabindex="-1"></iframe></div>
+          <div class="thumb-frame-label">Capa</div>
+        </div>
+        <div class="thumb-frame-col">
+          <div class="thumb-frame indice"><iframe src="previews/lingua-inglesa-indice.html" scrolling="no" tabindex="-1"></iframe></div>
+          <div class="thumb-frame-label">Índice</div>
+        </div>
+        <div class="thumb-frame-col">
+          <div class="thumb-frame meio"><iframe src="previews/lingua-inglesa-meio.html" scrolling="no" tabindex="-1"></iframe></div>
+          <div class="thumb-frame-label">Conteúdo</div>
+        </div>
       </a>
     </div>
 
-    <div class="preview-item">
-      <div class="preview-item-title">🌍 Geografia</div>
+    <div class="apostila-block">
+      <a href="https://chk.eduzz.com/797ZYRQ40E" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🌍</span> Apostila GEOGRAFIA PSS SEED-PR 2027</a>
       <a href="https://chk.eduzz.com/797ZYRQ40E" target="_blank" rel="noopener" class="apostilas-preview-row">
-        <img src="thumbs/geografia-capa.jpg" alt="Capa da apostila" class="thumb-mini capa">
-        <img src="thumbs/geografia-indice.jpg" alt="Índice da apostila" class="thumb-mini indice">
+        <div class="thumb-frame-col">
+          <div class="thumb-frame capa"><iframe src="previews/geografia-capa.html" scrolling="no" tabindex="-1"></iframe></div>
+          <div class="thumb-frame-label">Capa</div>
+        </div>
+        <div class="thumb-frame-col">
+          <div class="thumb-frame indice"><iframe src="previews/geografia-indice.html" scrolling="no" tabindex="-1"></iframe></div>
+          <div class="thumb-frame-label">Índice</div>
+        </div>
+        <div class="thumb-frame-col">
+          <div class="thumb-frame meio"><iframe src="previews/geografia-meio.html" scrolling="no" tabindex="-1"></iframe></div>
+          <div class="thumb-frame-label">Conteúdo</div>
+        </div>
       </a>
     </div>
 
-    <div class="preview-item">
-      <div class="preview-item-title">🏛️ História</div>
+    <div class="apostila-block">
+      <a href="https://chk.eduzz.com/89AXR1860D" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🏛️</span> Apostila HISTÓRIA PSS SEED-PR 2027</a>
       <a href="https://chk.eduzz.com/89AXR1860D" target="_blank" rel="noopener" class="apostilas-preview-row">
-        <img src="thumbs/historia-capa.jpg" alt="Capa da apostila" class="thumb-mini capa">
-        <img src="thumbs/historia-indice.jpg" alt="Índice da apostila" class="thumb-mini indice">
+        <div class="thumb-frame-col">
+          <div class="thumb-frame capa"><iframe src="previews/historia-capa.html" scrolling="no" tabindex="-1"></iframe></div>
+          <div class="thumb-frame-label">Capa</div>
+        </div>
+        <div class="thumb-frame-col">
+          <div class="thumb-frame indice"><iframe src="previews/historia-indice.html" scrolling="no" tabindex="-1"></iframe></div>
+          <div class="thumb-frame-label">Índice</div>
+        </div>
+        <div class="thumb-frame-col">
+          <div class="thumb-frame meio"><iframe src="previews/historia-meio.html" scrolling="no" tabindex="-1"></iframe></div>
+          <div class="thumb-frame-label">Conteúdo</div>
+        </div>
       </a>
     </div>
 
-    <div class="preview-item">
-      <div class="preview-item-title">🎨 Artes</div>
+    <div class="apostila-block">
+      <a href="https://chk.eduzz.com/G96RA585W1" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🎨</span> Apostila ARTES PSS SEED-PR 2027</a>
       <a href="https://chk.eduzz.com/G96RA585W1" target="_blank" rel="noopener" class="apostilas-preview-row">
-        <img src="thumbs/artes-capa.jpg" alt="Capa da apostila" class="thumb-mini capa">
-        <img src="thumbs/artes-indice.jpg" alt="Índice da apostila" class="thumb-mini indice">
+        <div class="thumb-frame-col">
+          <div class="thumb-frame capa"><iframe src="previews/artes-capa.html" scrolling="no" tabindex="-1"></iframe></div>
+          <div class="thumb-frame-label">Capa</div>
+        </div>
+        <div class="thumb-frame-col">
+          <div class="thumb-frame indice"><iframe src="previews/artes-indice.html" scrolling="no" tabindex="-1"></iframe></div>
+          <div class="thumb-frame-label">Índice</div>
+        </div>
+        <div class="thumb-frame-col">
+          <div class="thumb-frame meio"><iframe src="previews/artes-meio.html" scrolling="no" tabindex="-1"></iframe></div>
+          <div class="thumb-frame-label">Conteúdo</div>
+        </div>
       </a>
     </div>
+    <div class="apostila-coming-soon"><span>🚀</span> Em breve mais disciplinas</div>
   </div>
 
   <a href="https://hodhreego.github.io/PSS/" class="back-btn">

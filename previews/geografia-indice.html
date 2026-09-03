@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>preview</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet"/>
+<link href="../templates/styles.css" rel="stylesheet"/>
+<link href="../templates/overrides.css" rel="stylesheet"/>
+<style>
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { height: 100%; }
+        body { height: 100%; font-family: 'Noto Sans', Arial, 'Segoe UI', sans-serif; background-color: #f0f2f5; display: flex; overflow: hidden; }
+
+        /* PAINEL LATERAL */
+        .sidebar {
+            width: 300px;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: #ecf0f1;
+            padding: 20px;
+            overflow-y: auto;
+            box-shadow: 4px 0 12px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+        .sidebar h2 { font-size: 15px; margin-bottom: 12px; border-bottom: 3px solid #3498db; padding-bottom: 8px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+        .control-group { margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid #445a6f; }
+        .control-group:last-child { border-bottom: none; }
+        .control-group label { display: block; font-size: 10px; margin-bottom: 4px; text-transform: uppercase; color: #bdc3c7; font-weight: 600; letter-spacing: 0.5px; }
+        .control-group input[type="text"] { width: 100%; padding: 6px 10px; background-color: #1f3a52; color: #ecf0f1; border: 1px solid #3498db; border-radius: 4px; font-size: 12px; font-family: 'Noto Sans', Arial, sans-serif; transition: all 0.3s ease; }
+        .control-group input[type="text"]:focus { outline: none; background-color: #254a68; border-color: #2ecc71; box-shadow: 0 0 8px rgba(46, 204, 113, 0.3); }
+        .control-group input[type="range"] { width: 100%; height: 6px; border-radius: 3px; background: linear-gradient(to right, #2980b9, #3498db); outline: none; -webkit-appearance: none; cursor: pointer; margin-bottom: 4px; }
+        .control-group input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: #f39c12; cursor: pointer; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); }
+        .control-group input[type="range"]::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: #f39c12; cursor: pointer; border: none; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); }
+        .value-display { display: inline-block; background-color: #1f3a52; padding: 4px 8px; border-radius: 3px; font-size: 10px; color: #f39c12; font-weight: 700; border: 1px solid #3498db; }
+        .control-group select { width: 100%; padding: 6px 10px; background-color: #1f3a52; color: #ecf0f1; border: 1px solid #3498db; border-radius: 4px; font-size: 12px; cursor: pointer; transition: all 0.3s ease; }
+        .control-group select:focus { outline: none; border-color: #2ecc71; }
+        button { border: none; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.3s ease; }
+        #generatePdfBtn { width: 100%; padding: 9px; background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; margin-bottom: 6px; }
+        #printBtn { width: 100%; padding: 9px; background: linear-gradient(135deg, #3498db, #2980b9); color: white; margin-bottom: 6px; }
+        #resetBtn { width: 100%; padding: 9px; background: linear-gradient(135deg, #95a5a6, #7f8c8d); color: white; }
+        .status-message { padding: 6px; border-radius: 3px; font-size: 11px; text-align: center; margin-bottom: 8px; display: none; }
+        .status-message.success { background-color: #27ae60; color: white; display: block; }
+
+        /* Painel colapsável — ajustes de fonte exclusivos das capas/divisórias.
+           Fica fechado por padrão pra não atrapalhar os controles do dia a dia. */
+        .capa-fonts-details { margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid #445a6f; }
+        .capa-fonts-details summary {
+            cursor: pointer; font-size: 12px; font-weight: 700; color: #f39c12;
+            text-transform: uppercase; letter-spacing: 0.5px; padding: 6px 0;
+            list-style: none; user-select: none;
+        }
+        .capa-fonts-details summary::-webkit-details-marker { display: none; }
+        .capa-fonts-details summary::before { content: "▸ "; }
+        .capa-fonts-details[open] summary::before { content: "▾ "; }
+        .capa-fonts-details .capa-fonts-body { padding-top: 4px; }
+        .capa-fonts-details .control-group { margin-bottom: 6px; padding-bottom: 4px; }
+        #resetCapaFontsBtn { width: 100%; padding: 7px; margin-top: 2px; background: linear-gradient(135deg, #95a5a6, #7f8c8d); color: #fff; font-size: 10px; }
+
+        /* CONTEÚDO PRINCIPAL - fluxo HTML normal, sem altura fixa de A4.
+           A paginação real acontece no momento da impressão (Ctrl+P), feita pelo
+           proprio motor do Chrome, guiado pela regra @page abaixo. */
+        .main-content { flex: 1; overflow-y: auto; padding: 30px; background: linear-gradient(135deg, #ecf0f1 0%, #f5f7fa 100%); }
+        /* No navegador, so as paginas "fixas" (capa/contracapa/divisorias de
+           secao) mantem o formato A4 rigido - elas dependem disso pro layout
+           visual (circulo decorativo, texto centralizado etc.). As paginas de
+           conteudo comum ficam com layout livre/responsivo na tela, ocupando
+           o espaco disponivel da janela, o que facilita muito a leitura e
+           revisao no navegador. No PDF/impressao (@media print, mais abaixo)
+           TODAS as paginas continuam sendo forcadas para o tamanho A4 exato -
+           isso aqui afeta so a visualizacao em tela. */
+        .page { background-color: white; width: 210mm; max-width: 100%; margin: 0 auto 20px; padding: 20mm 15mm; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); position: relative; }
+        /* @media screen (nao @media print) - isso garante que essa regra
+           NUNCA seja considerada na hora de imprimir/exportar PDF, mesmo que
+           a especificidade dela seja maior que a da regra .page dentro do
+           @media print mais abaixo. Sem o @media screen aqui, a maior
+           especificidade desta regra venceria por cima da regra de impressao
+           e quebraria o tamanho A4 fixo no PDF. */
+        @media screen {
+            .page:not(.cover-page):not(.divider-page) {
+                width: 100%;
+                max-width: 1100px;
+                padding: 32px 40px;
+            }
+        }
+        .cover-page { background-color: #0f3c78; padding: 0; overflow: hidden; min-height: 297mm; }
+        .cover-page {
+          background: linear-gradient(160deg, #1c4c8c 0%, #0f3c78 55%, #071f42 100%);
+          color: #fff;
+          box-sizing: border-box;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          padding: 30mm var(--capa-padding-h, 70px);
+          text-align: center;
+          position: relative;
+        }
+        .cover-page::before {
+          content: "";
+          position: absolute;
+          top: 10%;
+          left: 50%;
+          width: 84%;
+          padding-bottom: 84%;
+          transform: translateX(-50%);
+          border-radius: 50%;
+          background: rgba(255,255,255,0.07);
+        }
+        .cover-topo, .cover-titulo, .cover-rodape { position: relative; z-index: 1; }
+        .cover-titulo { margin-top: 55px; }
+        .cover-rodape { margin-top: auto; padding-top: 40px; }
+        .cover-topo .cp-programa {
+          font-family: Georgia, 'Times New Roman', serif;
+          font-size: 13pt; letter-spacing: 0.35em; color: #f6c453; margin: 0 0 6px 0;
+        }
+        .cover-topo .cp-instituicao {
+          font-family: Georgia, 'Times New Roman', serif; font-weight: bold;
+          font-size: 22pt; letter-spacing: 0.04em; color: #fff; margin: 0;
+        }
+        .cover-topo .cp-ano {
+          font-family: Georgia, 'Times New Roman', serif; font-size: 14pt;
+          letter-spacing: 0.3em; color: #f6c453; margin: 6px 0 0 0;
+        }
+        .cover-topo .cp-linha { width: 200px; height: 2px; background: #e8794a; margin: 14px auto 0; position: relative; }
+        .cover-topo .cp-linha::after {
+          content: ""; position: absolute; top: 50%; left: 50%; width: 9px; height: 9px;
+          border-radius: 50%; background: #f6c453; transform: translate(-50%,-50%);
+        }
+        .cover-topo .cp-programa { font-size: var(--fs-programa, 13pt); }
+        .cover-topo .cp-instituicao { font-size: var(--fs-instituicao, 22pt); }
+        .cover-topo .cp-ano { font-size: var(--fs-ano, 14pt); }
+        .cover-topo .cp-aviso-topo {
+          display: inline-block; margin: 32px auto 0; font-size: var(--fs-avisotopo, 13.1pt); font-weight: bold;
+          line-height: 1.4; color: #fff; background: rgba(200,60,50,0.92); border: 1px solid rgba(255,255,255,0.6);
+          padding: 8px 16px; border-radius: 0; text-align: center;
+        }
+        .cover-titulo .cp-materia {
+          font-family: Georgia, 'Times New Roman', serif; font-weight: 900;
+          font-size: var(--fs-titulo-nowrap, 37pt); color: #ffe135; margin: 0; line-height: 1.05;
+          text-shadow: 0 2px 18px rgba(0,0,0,0.35);
+          white-space: nowrap;
+        }
+        .cover-titulo .cp-materia.cp-materia-wrap {
+          /* font-size 100% controlado pelo painel (--fs-titulo). O ajuste fino
+             para NUNCA estourar a margem (janela estreita, titulo longo) e feito
+             via JS (fitCapaTitle), que encolhe so o necessario, mantendo o
+             valor do slider como teto normal em telas largas. */
+          font-size: var(--fs-titulo, 48pt);
+          white-space: normal; line-height: 1.15; color: #ffe135; text-align: left;
+        }
+        .cover-titulo .cp-subtitulo1 {
+          font-family: Georgia, 'Times New Roman', serif; font-weight: bold;
+          font-size: var(--fs-subtitulo1, 22pt); color: #fff; margin: 14px 0 0 0; line-height: 1.15;
+        }
+        .cover-titulo .cp-subtitulo2 {
+          font-family: Georgia, 'Times New Roman', serif; font-size: var(--fs-subtitulo2, 12pt);
+          letter-spacing: 0.1em; color: #cfe0f4; margin: 16px auto 0; max-width: 80%;
+          text-transform: uppercase;
+        }
+        .cover-rodape .cp-linha-fina { width: 60%; height: 1px; background: rgba(255,255,255,0.35); margin: 0 auto 12px; }
+        .cover-rodape .cp-copyright { font-size: var(--fs-copyright, 10.5pt); font-weight: bold; color: #fff; margin: 0 0 8px 0; white-space: nowrap; text-align: center; }
+        .cover-rodape .cp-aviso {
+          display: inline-block; font-size: var(--fs-avisorodape, 10.5pt); font-weight: bold; color: #fff;
+          background: rgba(200,60,50,0.85); border: 1px solid rgba(255,255,255,0.5);
+          padding: 6px 14px; margin: 0;
+        }
+        /* Capas de secao (PARTE N) - mesmas variaveis CSS controlaveis pelo painel colapsavel */
+        .divider-page .dv-header { font-size: var(--fs-dv-header, 17px); letter-spacing: 0.18em; color: #fff; font-weight: bold; margin: 0 0 22px 0; text-align: center; }
+        .divider-page .dv-parte { font-size: var(--fs-dv-parte, 14px); letter-spacing: 0.3em; color: #f39c12; margin: 0 0 10px 0; }
+        .divider-page .dv-titulo { font-size: var(--fs-dv-titulo, 40px); color: #fff; border: none; padding: 0; margin: 0 0 14px 0; }
+        .divider-page .dv-linha { width: 120px; height: 3px; margin: 0 0 18px 0; }
+        .divider-page .dv-subtitulo { font-size: var(--fs-dv-subtitulo, 14px); color: #bdc3c7; max-width: 70%; text-align: center; }
+
+        /* TIPOGRAFIA - HIERARQUIA CLARA */
+        .page h1 { text-align: center; font-size: 26px; font-weight: 800; margin-bottom: 20px; margin-top: 0; color: #1a252f; border-bottom: 4px solid #3498db; padding-bottom: 12px; letter-spacing: 0.5px; }
+        .page h2 { font-size: 18px; font-weight: 700; color: #2c3e50; margin-top: 18px; margin-bottom: 12px; border-left: 5px solid #3498db; padding-left: 12px; }
+        .page h3 { font-size: 14px; font-weight: 600; color: #34495e; margin-top: 12px; margin-bottom: 8px; margin-left: 0; }
+        .page h4 { font-size: 12px; font-weight: 600; color: #555; margin-top: 10px; margin-bottom: 6px; margin-left: 0; }
+        .page p { text-align: justify; font-size: 13px; line-height: 1.5; color: #2c3e50; margin: 6px 0; }
+        .page strong { font-weight: 700; color: #1a252f; }
+        .page em { font-style: italic; }
+        .page ul, .page ol { margin: 8px 0; padding-left: 20px; }
+
+        /* ÍNDICE — estilo padrão de sumário impresso: hierarquia clara por
+           tamanho/peso (sem saltos desproporcionais), numeração alinhada à
+           esquerda, linha pontilhada guia até a margem direita (como em
+           livros/apostilas tradicionais), cores em degradê de cinza-azulado. */
+        .toc-container { margin-top: 15px; font-family: 'Noto Sans', Arial, 'Segoe UI', sans-serif; }
+        .toc-level-1 { margin-bottom: 12px; }
+        .toc-level-1 > .toc-title {
+            font-size: 14pt; font-weight: 700; color: #1a252f; text-transform: uppercase;
+            letter-spacing: 0.03em; margin-bottom: 6px; padding: 4px 0 4px 10px;
+            border-left: 4px solid #3498db; display: flex; align-items: baseline;
+        }
+        .toc-level-2 { margin-left: 18px; margin-bottom: 3px; }
+        .toc-level-2 > .toc-title { font-size: 11.5pt; font-weight: 600; color: #2c3e50; display: flex; align-items: baseline; }
+        .toc-level-3 { margin-left: 34px; margin-bottom: 2px; }
+        .toc-level-3 > .toc-title { font-size: 10.5pt; font-weight: 400; color: #5d6d7e; display: flex; align-items: baseline; }
+        .toc-level-4 { margin-left: 48px; margin-bottom: 2px; }
+        .toc-level-4 > .toc-title { font-size: 9.5pt; font-weight: 400; color: #85929e; font-style: italic; display: flex; align-items: baseline; }
+        .toc-title { cursor: pointer; transition: color 0.15s ease; }
+        .toc-title:hover { color: #3498db; }
+        .toc-link {
+            color: inherit; text-decoration: none; display: flex; align-items: baseline;
+            flex-wrap: wrap; width: 100%; overflow: visible; white-space: normal;
+        }
+        .toc-link:hover { color: #3498db; }
+        /* linha pontilhada guia, no estilo classico de sumario de livro */
+        .toc-link::after {
+            content: ""; flex: 1 1 auto; margin: 0 6px; order: 1;
+            border-bottom: 1.5px dotted #b8c2cc; height: 0; align-self: baseline;
+            transform: translateY(-3px);
+        }
+        .toc-link > span, .toc-link > *:not(:first-child) { order: 2; flex-shrink: 0; }
+        html { scroll-behavior: smooth; }
+        .page[id], h1[id], h2[id], p[id] { scroll-margin-top: 20px; }
+
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #ecf0f1; }
+        ::-webkit-scrollbar-thumb { background: #3498db; border-radius: 5px; }
+
+        /* Tamanho de folha para impressão/PDF - quem decide onde cada pagina
+           comeca e termina agora e o motor de impressao do Chrome, nao mais
+           divs de altura fixa. "size: auto" (em vez de forçar A4) deixa a
+           folha se ajustar automaticamente ao papel que a pessoa escolher no
+           dialogo de impressao (A4, Carta/Letter, Ofício etc.) - as regras
+           abaixo usam % e vh em vez de mm fixo, entao acompanham esse
+           tamanho escolhido. */
+        @page {
+            margin: 0;
+        }
+
+        @media print {
+            html, body {
+                height: auto;
+                overflow: visible;
+                display: block;
+            }
+            .sidebar { display: none; }
+            .main-content {
+                flex: none;
+                overflow: visible;
+                padding: 0;
+                background: white;
+            }
+            .page {
+                width: 100%;
+                max-width: 100%;
+                min-height: 100vh;
+                margin: 0;
+                padding: 20mm 15mm;
+                box-shadow: none;
+                break-before: page;
+                page-break-before: always;
+            }
+            /* A primeira sessão (índice) não precisa de folha em branco antes dela */
+            .main-content > .page:first-child {
+                break-before: avoid;
+                page-break-before: avoid;
+            }
+            /* Capa deve ocupar exatamente 1 folha A4 inteira (sangria total).
+               @page agora tem margin:0, entao a propria .cover-page (com seu
+               padding interno de 30mm 18mm, ja definido fora do @media print)
+               preenche a folha inteira sem precisar de nenhum truque de
+               margem negativa - abordagem mais robusta e previsivel entre
+               diferentes configuracoes de impressao/exportacao de PDF. */
+            .cover-page {
+                width: 100%;
+                height: 100%;
+                min-height: 100vh;
+                margin: 0;
+                padding: 30mm var(--capa-padding-h, 70px);
+                page-break-after: always;
+            }
+            /* Capas de secao (PARTE N) tambem devem ocupar exatamente 1 folha
+               inteira - sem isso, o padding:20mm 15mm da regra .page generica
+               soma com o min-height:297mm do estilo inline da divisoria e
+               estoura pra uma segunda folha em branco. */
+            .divider-page {
+                width: 100%;
+                height: 100%;
+                min-height: 0;
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            /* Evita que o navegador corte no meio de tabelas, ilustracoes e
+               caixas de exercicio/formula - cada uma pula para a proxima
+               folha inteira se nao couber no espaco restante. */
+            svg, table, .toc-container,
+            .page > div[style*="border-left"],
+            .page > div[style*="border:2px dashed"],
+            .page > div[style*="border: 2px dashed"] {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+            h1, h2, h3 {
+                break-after: avoid;
+                page-break-after: avoid;
+            }
+            /* Nem h1 nem h2 forcam quebra de pagina sozinhos - a quebra
+               acontece SOMENTE entre capitulos (cada .page ja quebra pra
+               folha nova via a regra .page { break-before: page } acima).
+               Titulos de nivel 2 dentro do mesmo capitulo ficam junto do
+               conteudo deles, sem isolar o titulo sozinho numa folha. */
+            /* Cada .capitulo (cada Simulado/Apendice inteiro) comeca em
+               folha nova na impressao - isso permite ao professor imprimir
+               um simulado especifico sozinho, sabendo que ele sempre comeca
+               numa pagina redonda, sem conteudo de outro simulado antes. */
+            .capitulo {
+                break-before: page;
+                page-break-before: always;
+            }
+        }
+
+        /* ===== ESTILOS DOS SIMULADOS (portados da apostila de matematica) ===== */
+        .capitulo { margin-bottom: 44px; }
+        .subsecao { margin-bottom: 26px; }
+        .conceito { background:#eef7ff; border-left:4px solid #1976d2; padding:10px 14px; margin:12px 0; font-size:12.5px; }
+        .conteudo p { margin: 8px 0; }
+        .exercicios-ufpr { background: #ffffff; padding: 15px; margin: 18px 0; border: 1px solid #ccc; border-radius: 4px; font-size: 12.5px; }
+        .exercicios-ufpr h5 { margin: 0 0 10px 0; }
+        .questao-ufpr { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
+        .questao-ufpr:last-child { border-bottom: none; }
+        .questao-numero { font-weight: bold; color: #1976d2; margin: 0 0 6px 0; }
+        .questao-enunciado { margin: 0 0 8px 0; }
+        .questao-opcoes { margin-left: 10px; }
+        .opcao { margin: 6px 0; }
+        .tipo-questao { font-weight: normal; font-style: italic; color: #777; font-size: 10.5pt; }
+        .questao-ce .opcao { display: inline-block; margin-right: 24px; }
+        .itens-somatoria { margin: 8px 0 8px 10px; list-style: none; padding-left: 0; }
+        .itens-somatoria li { margin: 6px 0; }
+        .instrucao-somatoria { color: #777; font-size: 10.5pt; margin: 6px 0 0 0; }
+        .colunas-associacao { display: flex; gap: 24px; margin: 10px 0; flex-wrap: wrap; }
+        .coluna-a, .coluna-b { flex: 1; min-width: 180px; }
+        .coluna-a ol, .coluna-b ol { margin: 6px 0 0 0; padding-left: 20px; }
+        .texto-lacunas { line-height: 1.9; }
+        .banco-palavras { background: #fff8e1; border-left: 3px solid #f9a825; padding: 8px 12px; margin: 8px 0 0 0; font-size: 11.5pt; }
+        .itens-ordenacao { margin: 8px 0 8px 10px; }
+        .itens-ordenacao li { margin: 6px 0; padding: 4px 10px; background: #fff; border: 1px dashed #bbb; border-radius: 3px; list-style: none; }
+        .linha-resposta { margin-top: 10px; color: #555; }
+        .linhas-discursiva { margin-top: 10px; }
+        .linha-pontilhada { border-bottom: 1px dotted #999; height: 24px; }
+        .exercicios-ufpr .questao-ufpr { page-break-inside: avoid; }
+        .gabarito-cap-titulo { font-size: 15px; color: #1976d2; margin: 18px 0 8px 0; border-bottom: 1px solid #ccc; padding-bottom: 4px; font-weight:700; }
+        .gabarito-tabela { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+        .gabarito-item { background: #eef7ff; border: 1px solid #b8d8f5; border-radius: 6px; padding: 6px 12px; font-size: 11.5px; }
+        .gabarito-item .resp { font-weight: bold; color: #1565c0; }
+        .gabarito-item .indisponivel { font-style: italic; color: #999; }
+        .gabarito-tipo { font-weight: normal; font-style: italic; font-size: 10px; color: #888; }
+
+        /* Correção automática de fórmulas/linhas que "estouram" a largura da
+           página quando o tamanho da fonte é aumentado no painel de ajustes.
+           Em vez de vazar pra fora da página, quebra a linha e marca a
+           continuação com uma seta, deixando claro que é a mesma fórmula. */
+        .formula-overflow-fix {
+            white-space: normal !important;
+            overflow-wrap: break-word;
+            word-break: break-word;
+            display: block;
+            padding-left: 1.4em;
+            text-indent: -1.4em;
+        }
+        .formula-overflow-fix::before {
+            content: "↳ ";
+            color: #1976d2;
+            font-weight: bold;
+        }
+    
+
+/* ===== CSS ESPECÍFICO DE CONTEÚDO (herdado do arquivo original) ===== */
+
+:root {
+  --font-family: Arial, sans-serif;
+  --font-size-base: 14pt;
+  --font-size-caixas: 13pt;
+  --font-size-h1: 24pt;
+  --font-size-h2: 16pt;
+  --font-size-h3: 18pt;
+  --font-size-h4: 15pt;
+  --font-size-h5: 14pt;
+  --line-height: 1.5;
+  --page-padding: 20mm;
+  --border-width: 2px;
+  --color-text: #222222;
+  --color-bg: #ffffff;
+  --color-heading-border: #0066cc;
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  height: 100%;
+  font-family: var(--font-family);
+  background: #ffffff;
+  color: var(--color-text);
+}
+.layout { display: flex; height: 100%; }
+
+/* Painel — mesmo visual/comportamento do editor.html */
+.panel {
+  width: 320px;
+  flex-shrink: 0;
+  background: #1f2228;
+  color: #eee;
+  padding: 16px;
+  overflow-y: auto;
+}
+.panel.oculto { display: none; }
+.btn-toggle-panel {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 999;
+  width: auto;
+  padding: 8px 14px;
+  margin: 0;
+  border: none;
+  border-radius: 6px;
+  background: #1f2228;
+  color: #eee;
+  font-size: 13px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+.btn-toggle-panel:hover { background: #2b2f36; }
+.panel h1 { font-size: 16px; margin: 0 0 16px; }
+.panel h2 {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #9aa0a8;
+  margin: 20px 0 8px;
+  border-top: 1px solid #3a3f47;
+  padding-top: 12px;
+}
+.panel h2:first-of-type { border-top: none; padding-top: 0; }
+.field { margin-bottom: 12px; }
+.field label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  margin-bottom: 4px;
+  color: #ccc;
+}
+.field output { color: #7fc4ff; font-variant-numeric: tabular-nums; }
+.field input[type="range"] { width: 100%; }
+.field select, .field input[type="color"] {
+  width: 100%;
+  padding: 4px;
+  background: #2b2f36;
+  color: #eee;
+  border: 1px solid #3a3f47;
+  border-radius: 4px;
+}
+.field.row { display: flex; gap: 8px; align-items: center; }
+.field.row label { flex: 1; margin: 0; }
+button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+}
+#btn-pdf { background: linear-gradient(135deg, #e74c3c, #c0392b); color: #fff; }
+#btn-imprimir { background: linear-gradient(135deg, #3498db, #2980b9); color: #fff; }
+#btn-resetar { background: #3a3f47; color: #eee; }
+.status { font-size: 11px; color: #7fdb9a; margin-top: 8px; min-height: 14px; }
+
+.preview-wrap {
+  flex: 1;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+}
+.page {
+  width: 210mm;
+  max-width: 100%;
+  min-height: 297mm;
+  background: var(--color-bg);
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+  padding: var(--page-padding);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height);
+  color: var(--color-text);
+}
+
+.apostila-titulo {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: var(--border-width) solid var(--color-heading-border);
+}
+.apostila-titulo h1 { font-size: var(--font-size-h1); margin: 10px 0; color: var(--color-heading-border); }
+.apostila-titulo p { font-size: var(--font-size-h2); margin: 10px 0; color: #666; }
+
+/* Indice clicavel */
+.indice {
+  background: #f7f9fc;
+  border: 1px solid #dde3ec;
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin-bottom: 40px;
+  page-break-after: always;
+}
+.indice h2 {
+  font-size: var(--font-size-h2);
+  color: var(--color-heading-border);
+  margin: 0 0 14px 0;
+  text-align: center;
+}
+.indice-cap { margin-bottom: 4px; }
+.indice-cap > a {
+  display: block;
+  font-weight: bold;
+  color: var(--color-heading-border);
+  text-decoration: none;
+  padding: 6px 4px;
+  border-bottom: 1px dotted #ccc;
+  font-size: calc(var(--font-size-base) - 1pt);
+}
+.indice-cap > a:hover { text-decoration: underline; }
+.indice-subs { list-style: none; margin: 0 0 8px 0; padding: 0 0 0 22px; }
+.indice-subs li a {
+  display: block;
+  color: #444;
+  text-decoration: none;
+  padding: 3px 4px;
+  font-size: calc(var(--font-size-caixas) - 1pt);
+}
+.indice-subs li a:hover { text-decoration: underline; color: var(--color-heading-border); }
+
+/* Gabarito */
+.gabarito-final {
+  margin-top: 50px;
+  padding-top: 20px;
+  border-top: 3px double var(--color-heading-border);
+  page-break-before: always;
+}
+.gabarito-final h2 {
+  font-size: var(--font-size-h2);
+  color: var(--color-heading-border);
+  text-align: center;
+  margin-bottom: 18px;
+}
+.gabarito-cap-titulo {
+  font-size: var(--font-size-h4);
+  color: var(--color-heading-border);
+  margin: 18px 0 8px 0;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 4px;
+}
+.gabarito-tabela {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.gabarito-item {
+  background: #eef7ff;
+  border: 1px solid #b8d8f5;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: calc(var(--font-size-caixas) - 1pt);
+}
+.gabarito-item .resp {
+  font-weight: bold;
+  color: #1565c0;
+}
+.gabarito-item .indisponivel {
+  font-style: italic;
+  color: #999;
+}
+
+/* Aviso legal */
+.aviso-legal-final {
+  page-break-before: always;
+  padding: 30px 10px;
+}
+.aviso-legal-final h1 {
+  font-size: 18pt;
+  color: #c0392b;
+  text-align: center;
+  margin-bottom: 5px;
+}
+.aviso-linha { height: 3px; background: #2196f3; margin: 15px 0; }
+.aviso-box {
+  background: #ffebee;
+  border: 2px solid #c0392b;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  text-align: justify;
+  font-size: 12pt;
+  line-height: 1.7;
+  color: #c0392b;
+}
+.aviso-legal-final .autor {
+  text-align: center;
+  font-size: 14pt;
+  margin: 20px 0;
+}
+.aviso-legal-final .email { text-align: center; font-size: 12pt; margin: 15px 0; }
+.aviso-legal-final .contatos {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin: 30px 0;
+  flex-wrap: wrap;
+}
+.aviso-legal-final .qrcode-item { text-align: center; }
+.aviso-legal-final .rotulo { font-size: 11pt; font-weight: bold; color: #2196f3; margin: 8px 0 4px 0; }
+.aviso-legal-final .valor { font-size: 12pt; margin: 0; }
+.aviso-legal-final .valor a { color: #2196f3; text-decoration: none; font-weight: bold; }
+.aviso-legal-final .copyright {
+  text-align: center;
+  font-size: 10pt;
+  color: #999;
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #ddd;
+}
+
+.capitulo { margin-bottom: 44px; }
+.capitulo > h2 {
+  font-size: var(--font-size-h2);
+  color: var(--accent-text, #fff);
+  background: var(--accent, var(--color-heading-border));
+  margin: 0 0 18px 0;
+  padding: 10px 16px;
+  border-radius: 4px;
+  page-break-after: avoid;
+  break-after: avoid;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+.subsecao { margin-bottom: 26px; }
+.subsecao > h3 {
+  font-size: var(--font-size-h3);
+  color: var(--accent, var(--color-heading-border));
+  margin: 0 0 12px 0;
+  border-left: var(--border-width) solid var(--accent, var(--color-heading-border));
+  padding-left: 12px;
+  page-break-after: avoid;
+  break-after: avoid;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+.subsecao h4 {
+  font-size: var(--font-size-h4);
+  page-break-after: avoid;
+  break-after: avoid;
+}
+
+.conceito {
+  background: #e8f4f8;
+  border-left: 4px solid #0088cc;
+  padding: 12px;
+  margin: 12px 0;
+  font-size: var(--font-size-caixas);
+}
+.conteudo p { margin: 0 0 12px 0; }
+.conteudo ul { margin: 0 0 12px 0; padding-left: 22px; }
+.conteudo li { margin-bottom: 6px; }
+
+/* Citacao */
+.citacao {
+  background: #fffbea;
+  border-left: 4px solid #f0ad4e;
+  padding: 16px 20px;
+  margin: 18px 0;
+  font-style: italic;
+  font-size: var(--font-size-caixas);
+}
+.citacao .aspas { font-size: 28pt; color: #f0ad4e; opacity: 0.5; line-height: 0; vertical-align: -8px; margin-right: 4px; font-style: normal; }
+.citacao .autor-citacao { display: block; margin-top: 8px; font-style: normal; font-weight: bold; color: #8a6d3b; text-align: right; }
+
+/* Linha do tempo */
+.timeline { margin: 18px 0; padding-left: 10px; border-left: 3px solid #2196f3; }
+.timeline-item { position: relative; padding: 8px 0 8px 20px; margin-bottom: 4px; }
+.timeline-item::before { content: ""; position: absolute; left: -19px; top: 14px; width: 12px; height: 12px; background: #2196f3; border-radius: 50%; border: 2px solid #fff; }
+.timeline-texto { font-size: var(--font-size-caixas); }
+
+/* Mapa mental */
+.mapa-mental { background: #f3e5f5; border: 2px dashed #9c27b0; border-radius: 8px; padding: 20px; margin: 18px 0; text-align: center; }
+.mapa-mental .no-central { display: inline-block; background: #9c27b0; color: #fff; font-weight: bold; padding: 10px 20px; border-radius: 20px; margin-bottom: 14px; font-size: var(--font-size-caixas); }
+.mapa-mental .ramos { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.mapa-mental .ramo { background: #fff; border: 1px solid #9c27b0; color: #6a1b7a; padding: 8px 14px; border-radius: 16px; font-size: calc(var(--font-size-caixas) - 1pt); }
+
+/* Tabela comparativa */
+.tabela-comparativa { margin: 18px 0; overflow-x: auto; }
+.tabela-comparativa table { width: 100%; border-collapse: collapse; font-size: calc(var(--font-size-caixas) - 1pt); }
+.tabela-comparativa caption { font-weight: bold; text-align: left; margin-bottom: 8px; color: #333; }
+.tabela-comparativa th { background: var(--color-heading-border); color: #fff; padding: 8px 12px; text-align: left; }
+.tabela-comparativa td { padding: 8px 12px; border-bottom: 1px solid #ddd; }
+.tabela-comparativa tr:nth-child(even) { background: #f5f8fc; }
+
+/* Atencao */
+.atencao { background: #fdecea; border-left: 4px solid #e74c3c; padding: 14px 18px; margin: 18px 0; font-size: var(--font-size-caixas); }
+.atencao h5 { margin: 0 0 6px 0; color: #c0392b; }
+.atencao p { margin: 0; }
+
+/* Cai na prova */
+.cai-na-prova { background: #e8f5e9; border-left: 4px solid #43a047; padding: 14px 18px; margin: 18px 0; font-size: var(--font-size-caixas); }
+.cai-na-prova h5 { margin: 0 0 6px 0; color: #2e7d32; }
+.cai-na-prova p { margin: 0 0 6px 0; }
+.cai-na-prova .fonte { font-size: calc(var(--font-size-caixas) - 2pt); color: #666; font-style: italic; }
+
+/* Exercicio resolvido */
+.resolvido { background: #fff8e1; border: 1px solid #ffca28; border-radius: 6px; padding: 14px 18px; margin: 18px 0; font-size: var(--font-size-caixas); }
+.resolvido h5 { margin: 0 0 8px 0; color: #f57f17; }
+.resolvido .pergunta { margin: 0 0 8px 0; }
+.resolvido .resposta { margin: 0; background: #fff; padding: 10px; border-radius: 4px; }
+
+/* Destaques */
+.destaques-secao { background: #eef7ff; border-left: 4px solid #1976d2; padding: 14px 18px; margin: 18px 0; }
+.destaques-secao h5 { margin: 0 0 10px 0; color: #1565c0; }
+.destaque { margin-bottom: 10px; font-size: var(--font-size-caixas); }
+.marcas { margin-left: 8px; }
+.marca { display: inline-block; background: #1976d2; color: #fff; font-size: calc(var(--font-size-caixas) - 3pt); padding: 2px 8px; border-radius: 10px; margin-right: 4px; }
+
+/* Brainstorm */
+.brainstorm-secao { background: #fff3e0; border-left: 4px solid #fb8c00; padding: 14px 18px; margin: 18px 0; }
+.brainstorm-secao h5 { margin: 0 0 10px 0; color: #e65100; }
+.brainstorm-item { margin-bottom: 10px; font-size: var(--font-size-caixas); }
+.reflexao { margin: 4px 0 0 0; color: #555; }
+
+/* Questoes UFPR */
+.exercicios-ufpr { background: #f8f8f8; padding: 15px; margin: 18px 0; border: 1px solid #ddd; border-radius: 4px; font-size: var(--font-size-caixas); }
+.exercicios-ufpr h5 { margin: 0 0 10px 0; }
+.questao-ufpr { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
+.questao-ufpr:last-child { border-bottom: none; }
+.questao-numero { font-weight: bold; color: var(--color-heading-border); margin: 0 0 6px 0; }
+.questao-enunciado { margin: 0 0 8px 0; }
+.questao-opcoes { margin-left: 10px; }
+.opcao { margin: 6px 0; }
+
+/* Glossario */
+.glossario { background: #f0f0f0; padding: 15px; margin: 18px 0; border-radius: 4px; font-size: var(--font-size-caixas); }
+.glossario h5 { margin: 0 0 10px 0; }
+.glossario dt { font-weight: bold; margin-top: 10px; }
+.glossario dd { margin-left: 20px; margin-bottom: 6px; }
+
+/* Impressao: some com o painel, remove sombras/margens externas */
+        /* Regras de impressão/PDF para este bloco legado foram REMOVIDAS —
+           eram um segundo bloco de impressao duplicado (arquitetura pre-transplante),
+           que tinha a mesma especificidade CSS do bloco de impressao correto (mais
+           acima neste arquivo) e, por vir depois no codigo-fonte, vencia a
+           cascata em propriedades conflitantes (padding/margin/height da
+           .cover-page), causando bordas/margens erradas na capa ao exportar
+           PDF. O bloco de impressao correto e completo ja cobre tudo isso. */
+
+
+
+html,body{margin:0; padding:0; background:#fff;}
+</style>
+</head>
+<body>
+<div class="main-content" id="mainContent">
+<div class="page indice-page">
+<h2 style="text-align: center; margin-bottom: 24px;">Índice</h2>
+<nav class="indice">
+<div class="indice-secao">
+<a class="indice-titulo" href="#secao-1">
+            1. Conhecimento cartográfico
+          </a>
+<ul class="indice-subsecoes">
+<li>
+<a href="#secao-1-sub-1">
+                    1.1 1.1 Orientação e localização no espaço geográfico
+                  </a>
+</li>
+<li>
+<a href="#secao-1-sub-2">
+                    1.2 1.2 Representações do espaço geográfico (croqui, carta, mapa, planta, maquete, bloco diagrama)
+                  </a>
+</li>
+<li>
+<a href="#secao-1-sub-3">
+                    1.3 1.3 Conceitos básicos de Geotecnologias
+                  </a>
+</li>
+</ul>
+</div>
+<div class="indice-secao">
+<a class="indice-titulo" href="#secao-2">
+            2. Industrialização do espaço mundial e brasileiro
+          </a>
+<ul class="indice-subsecoes">
+<li>
+<a href="#secao-2-sub-1">
+                    2.1 2.1 Fases das revoluções industriais
+                  </a>
+</li>
+<li>
+<a href="#secao-2-sub-2">
+                    2.2 2.2 Características da industrialização brasileira (evolução histórica e situação atual)
+                  </a>
+</li>
+<li>
+<a href="#secao-2-sub-3">
+                    2.3 2.3 Fontes de energia (renováveis e não renováveis)
+                  </a>
+</li>
+</ul>
+</div>
+<div class="indice-secao">
+<a class="indice-titulo" href="#secao-3">
+            3. Globalização e as relações geopolíticas
+          </a>
+<ul class="indice-subsecoes">
+<li>
+<a href="#secao-3-sub-1">
+                    3.1 3.1 Nova ordem mundial
+                  </a>
+</li>
+<li>
+<a href="#secao-3-sub-2">
+                    3.2 3.2 Globalização, mundialização e as transnacionais
+                  </a>
+</li>
+<li>
+<a href="#secao-3-sub-3">
+                    3.3 3.3 Blocos econômicos
+                  </a>
+</li>
+</ul>
+</div>
+<div class="indice-secao">
+<a class="indice-titulo" href="#secao-4">
+            4. Dinâmica demográfica e o processo de urbanização no Brasil e no mundo
+          </a>
+<ul class="indice-subsecoes">
+<li>
+<a href="#secao-4-sub-1">
+                    4.1 4.1 Taxas demográficas (densidade demográfica, natalidade, mortalidade, mortalidade infantil, crescimento populacional, expectativa de vida, taxa de fecundidade)
+                  </a>
+</li>
+<li>
+<a href="#secao-4-sub-2">
+                    4.2 4.2 Análise socioeconômica da população (PIB per capita, concentração de renda, IDH, Índice de Gini)
+                  </a>
+</li>
+<li>
+<a href="#secao-4-sub-3">
+                    4.3 4.3 Redes e hierarquia urbana
+                  </a>
+</li>
+<li>
+<a href="#secao-4-sub-4">
+                    4.4 4.4 Processo de urbanização nos países desenvolvidos e subdesenvolvidos
+                  </a>
+</li>
+<li>
+<a href="#secao-4-sub-5">
+                    4.5 4.5 Fluxos migratórios contemporâneos
+                  </a>
+</li>
+</ul>
+</div>
+<div class="indice-secao">
+<a class="indice-titulo" href="#secao-5">
+            5. O espaço agrário
+          </a>
+<ul class="indice-subsecoes">
+<li>
+<a href="#secao-5-sub-1">
+                    5.1 5.1 Sistemas de produção agropecuários
+                  </a>
+</li>
+<li>
+<a href="#secao-5-sub-2">
+                    5.2 5.2 Produção agropecuária brasileira e paranaense
+                  </a>
+</li>
+</ul>
+</div>
+<div class="indice-secao">
+<a class="indice-titulo" href="#secao-6">
+            6. A geopolítica dos conflitos internacionais
+          </a>
+<ul class="indice-subsecoes">
+<li>
+<a href="#secao-6-sub-1">
+                    6.1 6.1 Conflitos atuais em escala global
+                  </a>
+</li>
+</ul>
+</div>
+<div class="indice-secao">
+<a class="indice-titulo" href="#secao-7">
+            7. Problemas socioambientais no Brasil e no mundo
+          </a>
+<ul class="indice-subsecoes">
+<li>
+<a href="#secao-7-sub-1">
+                    7.1 7.1 Problemas socioambientais urbanos
+                  </a>
+</li>
+<li>
+<a href="#secao-7-sub-2">
+                    7.2 7.2 Desenvolvimento sustentável
+                  </a>
+</li>
+<li>
+<a href="#secao-7-sub-3">
+                    7.3 7.3 Aquecimento global e as mudanças climáticas
+                  </a>
+</li>
+</ul>
+</div>
+<div class="indice-secao">
+<a class="indice-titulo" href="#secao-8">
+            8. O estudo do espaço geográfico
+          </a>
+<ul class="indice-subsecoes">
+<li>
+<a href="#secao-8-sub-1">
+                    8.1 8.1 Conceito de espaço geográfico
+                  </a>
+</li>
+<li>
+<a href="#secao-8-sub-2">
+                    8.2 8.2 O trabalho e a transformação do espaço geográfico
+                  </a>
+</li>
+<li>
+<a href="#secao-8-sub-3">
+                    8.3 8.3 Paisagem
+                  </a>
+</li>
+<li>
+<a href="#secao-8-sub-4">
+                    8.4 8.4 Lugar
+                  </a>
+</li>
+<li>
+<a href="#secao-8-sub-5">
+                    8.5 8.5 Território, país, Estado e nação
+                  </a>
+</li>
+<li>
+<a href="#secao-8-sub-6">
+                    8.6 8.6 Região e regionalização
+                  </a>
+</li>
+</ul>
+</div>
+<div class="indice-secao">
+<a class="indice-titulo" href="#secao-9">
+            9. O planeta Terra
+          </a>
+<ul class="indice-subsecoes">
+<li>
+<a href="#secao-9-sub-1">
+                    9.1 9.1 Movimentos da Terra
+                  </a>
+</li>
+<li>
+<a href="#secao-9-sub-2">
+                    9.2 9.2 Zonas térmicas
+                  </a>
+</li>
+</ul>
+</div>
+<div class="indice-secao">
+<a class="indice-titulo" href="#secao-10">
+            10. Aspectos físicos do Brasil e do mundo
+          </a>
+<ul class="indice-subsecoes">
+<li>
+<a href="#secao-10-sub-1">
+                    10.1 10.1 Formas do relevo terrestre
+                  </a>
+</li>
+<li>
+<a href="#secao-10-sub-2">
+                    10.2 10.2 Classificação do relevo brasileiro
+                  </a>
+</li>
+<li>
+<a href="#secao-10-sub-3">
+                    10.3 10.3 O relevo do Paraná
+                  </a>
+</li>
+<li>
+<a href="#secao-10-sub-4">
+                    10.4 10.4 O tempo atmosférico e o clima
+                  </a>
+</li>
+<li>
+<a href="#secao-10-sub-5">
+                    10.5 10.5 Domínios morfoclimáticos do Brasil e do Paraná
+                  </a>
+</li>
+<li>
+<a href="#secao-10-sub-6">
+                    10.6 10.6 Hidrografia brasileira
+                  </a>
+</li>
+</ul>
+</div>
+</nav>
+</div>
+</div>
+</body>
+</html>

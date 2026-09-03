@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>preview</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" rel="stylesheet"/>
+<style>
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { height: 100%; }
+        body { height: 100%; font-family: 'Noto Sans', Arial, 'Segoe UI', sans-serif; background-color: #f0f2f5; display: flex; overflow: hidden; }
+
+        /* PAINEL LATERAL */
+        .sidebar {
+            width: 300px;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: #ecf0f1;
+            padding: 20px;
+            overflow-y: auto;
+            box-shadow: 4px 0 12px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+        .sidebar h2 { font-size: 15px; margin-bottom: 12px; border-bottom: 3px solid #3498db; padding-bottom: 8px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+        .control-group { margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid #445a6f; }
+        .control-group:last-child { border-bottom: none; }
+        .control-group label { display: block; font-size: 10px; margin-bottom: 4px; text-transform: uppercase; color: #bdc3c7; font-weight: 600; letter-spacing: 0.5px; }
+        .control-group input[type="text"] { width: 100%; padding: 6px 10px; background-color: #1f3a52; color: #ecf0f1; border: 1px solid #3498db; border-radius: 4px; font-size: 12px; font-family: 'Noto Sans', Arial, sans-serif; transition: all 0.3s ease; }
+        .control-group input[type="text"]:focus { outline: none; background-color: #254a68; border-color: #2ecc71; box-shadow: 0 0 8px rgba(46, 204, 113, 0.3); }
+        .control-group input[type="range"] { width: 100%; height: 6px; border-radius: 3px; background: linear-gradient(to right, #2980b9, #3498db); outline: none; -webkit-appearance: none; cursor: pointer; margin-bottom: 4px; }
+        .control-group input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: #f39c12; cursor: pointer; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); }
+        .control-group input[type="range"]::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: #f39c12; cursor: pointer; border: none; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); }
+        .value-display { display: inline-block; background-color: #1f3a52; padding: 4px 8px; border-radius: 3px; font-size: 10px; color: #f39c12; font-weight: 700; border: 1px solid #3498db; }
+        .control-group select { width: 100%; padding: 6px 10px; background-color: #1f3a52; color: #ecf0f1; border: 1px solid #3498db; border-radius: 4px; font-size: 12px; cursor: pointer; transition: all 0.3s ease; }
+        .control-group select:focus { outline: none; border-color: #2ecc71; }
+        button { border: none; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.3s ease; }
+        #generatePdfBtn { width: 100%; padding: 9px; background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; margin-bottom: 6px; }
+        #printBtn { width: 100%; padding: 9px; background: linear-gradient(135deg, #3498db, #2980b9); color: white; margin-bottom: 6px; }
+        #resetBtn { width: 100%; padding: 9px; background: linear-gradient(135deg, #95a5a6, #7f8c8d); color: white; }
+        .status-message { padding: 6px; border-radius: 3px; font-size: 11px; text-align: center; margin-bottom: 8px; display: none; }
+        .status-message.success { background-color: #27ae60; color: white; display: block; }
+
+        /* Painel colapsável — ajustes de fonte exclusivos das capas/divisórias.
+           Fica fechado por padrão pra não atrapalhar os controles do dia a dia. */
+        .capa-fonts-details { margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid #445a6f; }
+        .capa-fonts-details summary {
+            cursor: pointer; font-size: 12px; font-weight: 700; color: #f39c12;
+            text-transform: uppercase; letter-spacing: 0.5px; padding: 6px 0;
+            list-style: none; user-select: none;
+        }
+        .capa-fonts-details summary::-webkit-details-marker { display: none; }
+        .capa-fonts-details summary::before { content: "▸ "; }
+        .capa-fonts-details[open] summary::before { content: "▾ "; }
+        .capa-fonts-details .capa-fonts-body { padding-top: 4px; }
+        .capa-fonts-details .control-group { margin-bottom: 6px; padding-bottom: 4px; }
+        #resetCapaFontsBtn { width: 100%; padding: 7px; margin-top: 2px; background: linear-gradient(135deg, #95a5a6, #7f8c8d); color: #fff; font-size: 10px; }
+
+        /* CONTEÚDO PRINCIPAL - fluxo HTML normal, sem altura fixa de A4.
+           A paginação real acontece no momento da impressão (Ctrl+P), feita pelo
+           proprio motor do Chrome, guiado pela regra @page abaixo. */
+        .main-content { flex: 1; overflow-y: auto; padding: 30px; background: linear-gradient(135deg, #ecf0f1 0%, #f5f7fa 100%); }
+        /* No navegador, so as paginas "fixas" (capa/contracapa/divisorias de
+           secao) mantem o formato A4 rigido - elas dependem disso pro layout
+           visual (circulo decorativo, texto centralizado etc.). As paginas de
+           conteudo comum ficam com layout livre/responsivo na tela, ocupando
+           o espaco disponivel da janela, o que facilita muito a leitura e
+           revisao no navegador. No PDF/impressao (@media print, mais abaixo)
+           TODAS as paginas continuam sendo forcadas para o tamanho A4 exato -
+           isso aqui afeta so a visualizacao em tela. */
+        .page { background-color: white; width: 210mm; max-width: 100%; margin: 0 auto 20px; padding: 20mm 15mm; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); position: relative; }
+        /* @media screen (nao @media print) - isso garante que essa regra
+           NUNCA seja considerada na hora de imprimir/exportar PDF, mesmo que
+           a especificidade dela seja maior que a da regra .page dentro do
+           @media print mais abaixo. Sem o @media screen aqui, a maior
+           especificidade desta regra venceria por cima da regra de impressao
+           e quebraria o tamanho A4 fixo no PDF. */
+        @media screen {
+            .page:not(.cover-page):not(.divider-page) {
+                width: 100%;
+                max-width: 1100px;
+                padding: 32px 40px;
+            }
+        }
+        .cover-page {
+          background: linear-gradient(160deg, #1c4c8c 0%, #0f3c78 55%, #071f42 100%);
+          color: #fff;
+          min-height: 297mm;
+          box-sizing: border-box;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          padding: 30mm var(--capa-padding-h, 70px);
+          text-align: center;
+          position: relative;
+          overflow: hidden;
+        }
+        .cover-page::before {
+          content: "";
+          position: absolute;
+          top: 10%;
+          left: 50%;
+          width: 84%;
+          padding-bottom: 84%;
+          transform: translateX(-50%);
+          border-radius: 50%;
+          background: rgba(255,255,255,0.07);
+        }
+        .cover-topo, .cover-titulo, .cover-rodape { position: relative; z-index: 1; }
+        .cover-titulo { margin-top: 55px; }
+        .cover-rodape { margin-top: auto; padding-top: 40px; }
+        .cover-topo .cp-programa {
+          font-family: Georgia, 'Times New Roman', serif;
+          font-size: 13pt; letter-spacing: 0.35em; color: #f6c453; margin: 0 0 6px 0;
+        }
+        .cover-topo .cp-instituicao {
+          font-family: Georgia, 'Times New Roman', serif; font-weight: bold;
+          font-size: 22pt; letter-spacing: 0.04em; color: #fff; margin: 0;
+        }
+        .cover-topo .cp-ano {
+          font-family: Georgia, 'Times New Roman', serif; font-size: 14pt;
+          letter-spacing: 0.3em; color: #f6c453; margin: 6px 0 0 0;
+        }
+        .cover-topo .cp-linha { width: 200px; height: 2px; background: #e8794a; margin: 14px auto 0; position: relative; }
+        .cover-topo .cp-linha::after {
+          content: ""; position: absolute; top: 50%; left: 50%; width: 9px; height: 9px;
+          border-radius: 50%; background: #f6c453; transform: translate(-50%,-50%);
+        }
+        .cover-topo .cp-programa { font-size: var(--fs-programa, 13pt); }
+        .cover-topo .cp-instituicao { font-size: var(--fs-instituicao, 22pt); }
+        .cover-topo .cp-ano { font-size: var(--fs-ano, 14pt); }
+        .cover-topo .cp-aviso-topo {
+          display: inline-block; margin: 32px auto 0; font-size: var(--fs-avisotopo, 13.1pt); font-weight: bold;
+          line-height: 1.4; color: #fff; background: rgba(200,60,50,0.92); border: 1px solid rgba(255,255,255,0.6);
+          padding: 8px 16px; border-radius: 0; text-align: center;
+        }
+        .cover-titulo .cp-materia {
+          font-family: Georgia, 'Times New Roman', serif; font-weight: 900;
+          font-size: var(--fs-titulo-nowrap, 37pt); color: #ffe135; margin: 0; line-height: 1.05;
+          text-shadow: 0 2px 18px rgba(0,0,0,0.35);
+          white-space: nowrap;
+        }
+        .cover-titulo .cp-materia.cp-materia-wrap {
+          /* font-size 100% controlado pelo painel (--fs-titulo). O ajuste fino
+             para NUNCA estourar a margem (janela estreita, titulo longo) e feito
+             via JS (fitCapaTitle), que encolhe so o necessario, mantendo o
+             valor do slider como teto normal em telas largas. */
+          font-size: var(--fs-titulo, 48pt);
+          white-space: normal; line-height: 1.15; color: #ffe135; text-align: left;
+        }
+        .cover-titulo .cp-subtitulo1 {
+          font-family: Georgia, 'Times New Roman', serif; font-weight: bold;
+          font-size: var(--fs-subtitulo1, 22pt); color: #fff; margin: 14px 0 0 0; line-height: 1.15;
+        }
+        .cover-titulo .cp-subtitulo2 {
+          font-family: Georgia, 'Times New Roman', serif; font-size: var(--fs-subtitulo2, 12pt);
+          letter-spacing: 0.1em; color: #cfe0f4; margin: 16px auto 0; max-width: 80%;
+          text-transform: uppercase;
+        }
+        .cover-rodape .cp-linha-fina { width: 60%; height: 1px; background: rgba(255,255,255,0.35); margin: 0 auto 12px; }
+        .cover-rodape .cp-copyright { font-size: var(--fs-copyright, 10.5pt); font-weight: bold; color: #fff; margin: 0 0 8px 0; white-space: nowrap; text-align: center; }
+        .cover-rodape .cp-aviso {
+          display: inline-block; font-size: var(--fs-avisorodape, 10.5pt); font-weight: bold; color: #fff;
+          background: rgba(200,60,50,0.85); border: 1px solid rgba(255,255,255,0.5);
+          padding: 6px 14px; margin: 0;
+        }
+        /* Capas de secao (PARTE N) - mesmas variaveis CSS controlaveis pelo painel colapsavel */
+        .divider-page .dv-header { font-size: var(--fs-dv-header, 17px); letter-spacing: 0.18em; color: #fff; font-weight: bold; margin: 0 0 22px 0; text-align: center; }
+        .divider-page .dv-parte { font-size: var(--fs-dv-parte, 14px); letter-spacing: 0.3em; color: #f39c12; margin: 0 0 10px 0; }
+        .divider-page .dv-titulo { font-size: var(--fs-dv-titulo, 40px); color: #fff; border: none; padding: 0; margin: 0 0 14px 0; }
+        .divider-page .dv-linha { width: 120px; height: 3px; margin: 0 0 18px 0; }
+        .divider-page .dv-subtitulo { font-size: var(--fs-dv-subtitulo, 14px); color: #bdc3c7; max-width: 70%; text-align: center; }
+
+        /* TIPOGRAFIA - HIERARQUIA CLARA */
+        .page h1 { text-align: center; font-size: 26px; font-weight: 800; margin-bottom: 20px; margin-top: 0; color: #1a252f; border-bottom: 4px solid #3498db; padding-bottom: 12px; letter-spacing: 0.5px; }
+        .page h2 { font-size: 18px; font-weight: 700; color: #2c3e50; margin-top: 18px; margin-bottom: 12px; border-left: 5px solid #3498db; padding-left: 12px; }
+        .page h3 { font-size: 14px; font-weight: 600; color: #34495e; margin-top: 12px; margin-bottom: 8px; margin-left: 0; }
+        .page h4 { font-size: 12px; font-weight: 600; color: #555; margin-top: 10px; margin-bottom: 6px; margin-left: 0; }
+        .page p { text-align: justify; font-size: 13px; line-height: 1.5; color: #2c3e50; margin: 6px 0; }
+        .page strong { font-weight: 700; color: #1a252f; }
+        .page em { font-style: italic; }
+        .page ul, .page ol { margin: 8px 0; padding-left: 20px; }
+
+        /* ÍNDICE — estilo padrão de sumário impresso: hierarquia clara por
+           tamanho/peso (sem saltos desproporcionais), numeração alinhada à
+           esquerda, linha pontilhada guia até a margem direita (como em
+           livros/apostilas tradicionais), cores em degradê de cinza-azulado. */
+        .toc-container { margin-top: 15px; font-family: 'Noto Sans', Arial, 'Segoe UI', sans-serif; }
+        .toc-level-1 { margin-bottom: 12px; }
+        .toc-level-1 > .toc-title {
+            font-size: 14pt; font-weight: 700; color: #1a252f; text-transform: uppercase;
+            letter-spacing: 0.03em; margin-bottom: 6px; padding: 4px 0 4px 10px;
+            border-left: 4px solid #3498db; display: flex; align-items: baseline;
+        }
+        .toc-level-2 { margin-left: 18px; margin-bottom: 3px; }
+        .toc-level-2 > .toc-title { font-size: 11.5pt; font-weight: 600; color: #2c3e50; display: flex; align-items: baseline; }
+        .toc-level-3 { margin-left: 34px; margin-bottom: 2px; }
+        .toc-level-3 > .toc-title { font-size: 10.5pt; font-weight: 400; color: #5d6d7e; display: flex; align-items: baseline; }
+        .toc-level-4 { margin-left: 48px; margin-bottom: 2px; }
+        .toc-level-4 > .toc-title { font-size: 9.5pt; font-weight: 400; color: #85929e; font-style: italic; display: flex; align-items: baseline; }
+        .toc-title { cursor: pointer; transition: color 0.15s ease; }
+        .toc-title:hover { color: #3498db; }
+        .toc-link {
+            color: inherit; text-decoration: none; display: flex; align-items: baseline;
+            flex-wrap: wrap; width: 100%; overflow: visible; white-space: normal;
+        }
+        .toc-link:hover { color: #3498db; }
+        /* linha pontilhada guia, no estilo classico de sumario de livro */
+        .toc-link::after {
+            content: ""; flex: 1 1 auto; margin: 0 6px; order: 1;
+            border-bottom: 1.5px dotted #b8c2cc; height: 0; align-self: baseline;
+            transform: translateY(-3px);
+        }
+        .toc-link > span, .toc-link > *:not(:first-child) { order: 2; flex-shrink: 0; }
+        html { scroll-behavior: smooth; }
+        .page[id], h1[id], h2[id], p[id] { scroll-margin-top: 20px; }
+
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #ecf0f1; }
+        ::-webkit-scrollbar-thumb { background: #3498db; border-radius: 5px; }
+
+        /* Tamanho de folha para impressão/PDF - quem decide onde cada pagina
+           comeca e termina agora e o motor de impressao do Chrome, nao mais
+           divs de altura fixa. "size: auto" (em vez de forçar A4) deixa a
+           folha se ajustar automaticamente ao papel que a pessoa escolher no
+           dialogo de impressao (A4, Carta/Letter, Ofício etc.) - as regras
+           abaixo usam % e vh em vez de mm fixo, entao acompanham esse
+           tamanho escolhido. */
+        @page {
+            margin: 0;
+        }
+
+        @media print {
+            html, body {
+                height: auto;
+                overflow: visible;
+                display: block;
+            }
+            .sidebar { display: none; }
+            .main-content {
+                flex: none;
+                overflow: visible;
+                padding: 0;
+                background: white;
+            }
+            .page {
+                width: 100%;
+                max-width: 100%;
+                margin: 0;
+                padding: 20mm 15mm;
+                box-shadow: none;
+                break-after: page;
+                page-break-after: always;
+            }
+            .page:last-child {
+                break-after: auto;
+                page-break-after: auto;
+            }
+            /* Capa deve ocupar exatamente 1 folha A4 inteira (sangria total).
+               @page agora tem margin:0, entao a propria .cover-page (com seu
+               padding interno de 30mm 18mm, ja definido fora do @media print)
+               preenche a folha inteira sem precisar de nenhum truque de
+               margem negativa - abordagem mais robusta e previsivel entre
+               diferentes configuracoes de impressao/exportacao de PDF. */
+            .cover-page, .divider-page {
+                width: 100%;
+                height: 100%;
+                min-height: 100vh;
+                margin: 0;
+            }
+            .cover-page {
+                padding: 30mm var(--capa-padding-h, 70px);
+                page-break-after: always;
+            }
+            /* Capas de secao (PARTE N) tambem devem ocupar exatamente 1 folha
+               inteira - sem isso, o padding:20mm 15mm da regra .page generica
+               soma com o min-height:297mm do estilo inline da divisoria e
+               estoura pra uma segunda folha em branco. */
+            .divider-page {
+                min-height: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            /* Evita que o navegador corte no meio de tabelas, ilustracoes e
+               caixas de exercicio/formula - cada uma pula para a proxima
+               folha inteira se nao couber no espaco restante. */
+            svg, table, .toc-container,
+            .page > div[style*="border-left"],
+            .page > div[style*="border:2px dashed"],
+            .page > div[style*="border: 2px dashed"] {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+            h1, h2, h3 {
+                break-after: avoid;
+                page-break-after: avoid;
+            }
+            /* Nem h1 nem h2 forcam quebra de pagina sozinhos - a quebra
+               acontece SOMENTE entre capitulos (cada .page ja quebra pra
+               folha nova via a regra .page { break-before: page } acima).
+               Titulos de nivel 2 dentro do mesmo capitulo ficam junto do
+               conteudo deles, sem isolar o titulo sozinho numa folha. */
+            /* Cada .capitulo (cada Simulado/Apendice inteiro) comeca em
+               folha nova na impressao - isso permite ao professor imprimir
+               um simulado especifico sozinho, sabendo que ele sempre comeca
+               numa pagina redonda, sem conteudo de outro simulado antes. */
+            .capitulo {
+                break-before: page;
+                page-break-before: always;
+            }
+        }
+
+        /* ===== ESTILOS DOS SIMULADOS (portados da apostila de matematica) ===== */
+        .capitulo { margin-bottom: 44px; }
+        .subsecao { margin-bottom: 26px; }
+        .conceito { background:#eef7ff; border-left:4px solid #1976d2; padding:10px 14px; margin:12px 0; font-size:12.5px; }
+        .conteudo p { margin: 8px 0; }
+        .exercicios-ufpr { background: #ffffff; padding: 15px; margin: 18px 0; border: 1px solid #ccc; border-radius: 4px; font-size: 12.5px; }
+        .exercicios-ufpr h5 { margin: 0 0 10px 0; }
+        .questao-ufpr { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
+        .questao-ufpr:last-child { border-bottom: none; }
+        .questao-numero { font-weight: bold; color: #1976d2; margin: 0 0 6px 0; }
+        .questao-enunciado { margin: 0 0 8px 0; }
+        .questao-opcoes { margin-left: 10px; }
+        .opcao { margin: 6px 0; }
+        .tipo-questao { font-weight: normal; font-style: italic; color: #777; font-size: 10.5pt; }
+        .questao-ce .opcao { display: inline-block; margin-right: 24px; }
+        .itens-somatoria { margin: 8px 0 8px 10px; list-style: none; padding-left: 0; }
+        .itens-somatoria li { margin: 6px 0; }
+        .instrucao-somatoria { color: #777; font-size: 10.5pt; margin: 6px 0 0 0; }
+        .colunas-associacao { display: flex; gap: 24px; margin: 10px 0; flex-wrap: wrap; }
+        .coluna-a, .coluna-b { flex: 1; min-width: 180px; }
+        .coluna-a ol, .coluna-b ol { margin: 6px 0 0 0; padding-left: 20px; }
+        .texto-lacunas { line-height: 1.9; }
+        .banco-palavras { background: #fff8e1; border-left: 3px solid #f9a825; padding: 8px 12px; margin: 8px 0 0 0; font-size: 11.5pt; }
+        .itens-ordenacao { margin: 8px 0 8px 10px; }
+        .itens-ordenacao li { margin: 6px 0; padding: 4px 10px; background: #fff; border: 1px dashed #bbb; border-radius: 3px; list-style: none; }
+        .linha-resposta { margin-top: 10px; color: #555; }
+        .linhas-discursiva { margin-top: 10px; }
+        .linha-pontilhada { border-bottom: 1px dotted #999; height: 24px; }
+        .exercicios-ufpr .questao-ufpr { page-break-inside: avoid; }
+        .gabarito-cap-titulo { font-size: 15px; color: #1976d2; margin: 18px 0 8px 0; border-bottom: 1px solid #ccc; padding-bottom: 4px; font-weight:700; }
+        .gabarito-tabela { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+        .gabarito-item { background: #eef7ff; border: 1px solid #b8d8f5; border-radius: 6px; padding: 6px 12px; font-size: 11.5px; }
+        .gabarito-item .resp { font-weight: bold; color: #1565c0; }
+        .gabarito-item .indisponivel { font-style: italic; color: #999; }
+        .gabarito-tipo { font-weight: normal; font-style: italic; font-size: 10px; color: #888; }
+
+        /* Correção automática de fórmulas/linhas que "estouram" a largura da
+           página quando o tamanho da fonte é aumentado no painel de ajustes.
+           Em vez de vazar pra fora da página, quebra a linha e marca a
+           continuação com uma seta, deixando claro que é a mesma fórmula. */
+        .formula-overflow-fix {
+            white-space: normal !important;
+            overflow-wrap: break-word;
+            word-break: break-word;
+            display: block;
+            padding-left: 1.4em;
+            text-indent: -1.4em;
+        }
+        .formula-overflow-fix::before {
+            content: "↳ ";
+            color: #1976d2;
+            font-weight: bold;
+        }
+    
+html,body{margin:0; padding:0; background:#fff;}
+</style>
+</head>
+<body>
+<div class="main-content" id="mainContent">
+<div class="page">
+<h2 id="lingua-portuguesa">1.1 LÍNGUA PORTUGUESA</h2>
+<p style="margin:2px 0 12px 0;"><a href="#indice" style="font-size:10.5px; color:#3498db; text-decoration:none; font-weight:600;">📄 voltar ao índice</a></p>
+<h3 style="margin-top:18px; color:#2c3e50;">1. Compreensão e Interpretação de Textos de Gêneros Variados</h3>
+<div style="background:linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); padding:14px; border-left:6px solid #2196F3; border-radius:6px; margin:12px 0; box-shadow:0 2px 8px rgba(33,150,243,0.15);"><p style="font-size:13px; color:#1565c0; margin:0;"><strong>DEFINIÇÃO:</strong> É a capacidade de extrair informações explícitas E implícitas do texto, entendendo seu significado global, intenção do autor, audiência alvo e relações entre ideias.</p></div>
+<p><strong>🎯 Três níveis de compreensão:</strong></p>
+<ul><li>🔵 <strong>Nível LITERAL</strong> — Extrai informações EXPLÍCITAS, DIRETAS mencionadas textualmente. Responde: O quê? Quem? Quando? Onde?</li><li>🟣 <strong>Nível INFERENCIAL</strong> — DEDUZ informações IMPLÍCITAS, SUBENTENDIDAS. Exige raciocínio e conexão de ideias (ler nas entrelinhas).</li><li>🟠 <strong>Nível CRÍTICO</strong> — AVALIA, julga, analisa criticamente. Questiona validade dos argumentos, identifica pontos de vista, reconhece preconceitos.</li></ul>
+<p><strong>📚 Gêneros textuais e seus usos:</strong></p>
+<ul><li>1️⃣ <strong>NARRATIVO:</strong> Relata fatos sequencialmente (apresentação → desenvolvimento → clímax → desfecho). Ex.: contos, romances, crônicas, notícias.</li><li>2️⃣ <strong>DESCRITIVO:</strong> Caracteriza pessoas, objetos, cenários com riqueza de detalhes e sensações. Objetivo: "pintar" com palavras.</li><li>3️⃣ <strong>DISSERTATIVO (Argumentativo):</strong> ARGUMENTA sobre tema, defende ideias com provas, evidências, contra-argumentos. Objetivo: convencer.</li><li>4️⃣ <strong>EXPOSITIVO:</strong> Apresenta informações de forma OBJETIVA, NEUTRA, sem argumentação. Ex.: enciclopédias, manuais, textos científicos.</li><li>5️⃣ <strong>INJUNTIVO:</strong> ORIENTA, COMANDA ações. Ex.: receitas de cozinha, instruções de uso, manuais técnicos.</li><li>6️⃣ <strong>CONVERSACIONAL/DIALOGAL:</strong> REPRODUZ DIÁLOGOS naturais entre personagens. Usa travessão ou parênteses para distinguir falas.</li></ul>
+<p><strong>💡 Estratégias de leitura eficaz (passo a passo):</strong></p>
+<ul><li>Fazer LEITURA PRÉVIA RÁPIDA para captar ideia geral (skimming)</li><li>Ler o TEXTO INTEIRO antes de responder questões (evita respostas superficiais)</li><li>Identificar TEMA PRINCIPAL (ideia central) E temas secundários</li><li>Localizar PALAVRAS-CHAVE que se repetem (indicam importância)</li><li>Anotar DÚVIDAS E VOLTAR a elas após leitura completa</li><li>Relacionar informações do texto com CONHECIMENTO PRÉVIO (ativar schemas)</li><li>QUESTIONAR-SE enquanto lê: Por quê? Como? Que consequência? (pensamento crítico)</li></ul>
+<div class="exercicios-ufpr" style="margin:16px 0;"><div class="questao-ufpr"><p class="questao-numero">🎓 Exercício Resolvido 1</p><p class="questao-enunciado"><strong>Questão:</strong> Texto: "A educação é a arma mais poderosa para mudar o mundo." — Nelson Mandela. Que recurso estilístico o autor usa? O que ele quer comunicar?</p><p style="margin:6px 0 0 0;"><strong style="color:#1976d2;">Resposta:</strong> O autor usa <strong>metáfora</strong> (educação é comparada a uma arma). Comunica que educação é poderosa, decisiva, transformadora. É uma crítica implícita aos que negligenciam educação.</p></div></div>
+<h3 style="margin-top:18px; color:#2c3e50;">2. Domínio da Ortografia e Gramática Oficial</h3>
+<p>📖 <strong>Ortografia:</strong> Sistema de escrita CORRETO de uma língua, regido pela NORMA OFICIAL.</p>
+<p><strong>✏️ Principais regras ortográficas:</strong></p>
+<ul><li><strong>S ou Z:</strong> S em sufixos -ês/-esa (gentílico), -esia, -ismo, -ura (português, francesa, poesia, catolicismo, bravura) | Z em -izar, -ização, -izador (utilizar, utilização, utilizador). ⚠️ "-ção" sozinho (quando NÃO vem de verbo em "-izar") se escreve com Ç, não Z: criação, nação, ação. Só leva Z quando vem de "-izar": utilizar → utilização.</li><li><strong>SS ou Ç:</strong> os dois representam o som de "S" entre vogais (diferente do S sozinho entre vogais, que soa como "Z": casa). Não há regra 100% produtiva — é majoritariamente lexical: SS (passar, assunto, professor) | Ç (cabeça, açúcar, nação).</li><li><strong>X ou CH:</strong> X árabe/indígena/"me-" (xadrez, mexer) | CH origem latina (charuto, chamado).</li><li><strong>Hífen:</strong> palavras compostas (guarda-chuva) | prefixo termina na MESMA vogal que inicia a base (micro-onda, anti-inflamatório) | prefixo termina em R e a base começa por R — super-/hiper-/inter- (hiper-realista, inter-regional). ⚠️ quando o PREFIXO termina em vogal (não em R) e a base começa por R ou S, em geral DOBRA-SE a letra em vez de usar hífen: anti+social = antissocial, contra+regra = contrarregra.</li><li><strong>G ou J:</strong> antes de E/I as duas soam igual — não há regra fonética, é lexical: G (gelo, girafa, página) | J (jeito, jiboia, pajé). ✅ Regra confiável — sufixo "-AGEM": sempre com G, nunca J: viagem, passagem, coragem, vantagem, garagem.</li></ul>
+<p><strong>📚 Gramática normativa — estruturas:</strong></p>
+<div style="background:linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); padding:14px; border-left:6px solid #2196F3; border-radius:6px; margin:12px 0; box-shadow:0 2px 8px rgba(33,150,243,0.15);"><p style="font-size:13px; color:#1565c0; margin:0;"><strong>10 CLASSES DE PALAVRAS:</strong> 1️⃣ Substantivo (nomeia) · 2️⃣ Adjetivo (qualifica) · 3️⃣ Artigo (especifica) · 4️⃣ Pronome (substitui) · 5️⃣ Verbo (ação/estado) · 6️⃣ Advérbio (modifica V/Adj) · 7️⃣ Preposição (relação) · 8️⃣ Conjunção (conecta) · 9️⃣ Numeral (quantifica) · 🔟 Interjeição (emoção). <strong>Variáveis</strong> (mudam de forma): substantivo, adjetivo, artigo, pronome, verbo, numeral. <strong>Invariáveis</strong> (forma fixa): advérbio, preposição, conjunção, interjeição.</p></div>
+<p><strong>🧩 Termos da oração:</strong></p>
+<ul><li><strong>Essenciais:</strong> Sujeito (de quem se declara algo) e Predicado (o que se declara). "O aluno [sujeito] estudou muito [predicado]."</li><li><strong>Integrantes</strong> (completam sentido de verbo/nome): Objeto Direto (sem prep.: "comprou o livro"), Objeto Indireto (com prep.: "gosta DE livros"), Complemento Nominal (completa nome: "medo DE altura"), Agente da Passiva ("foi elogiado PELO professor").</li><li><strong>Acessórios</strong> (podem ser retirados sem perder a estrutura): Adjunto Adnominal (qualifica o substantivo: "o livro NOVO"), Adjunto Adverbial (circunstância: "estudou HOJE"), Aposto (explica/identifica: "Maria, A PROFESSORA, chegou"), Vocativo (chama/invoca: "MARIA, venha aqui").</li></ul>
+<p><strong>🗣️ Tipos de predicado (frequentemente cobrado):</strong></p>
+<ul><li><strong>Verbal:</strong> núcleo é um verbo de AÇÃO (transitivo ou intransitivo). "O aluno estudou."</li><li><strong>Nominal:</strong> núcleo é um NOME (predicativo do sujeito), com verbo de ligação (ser, estar, ficar, parecer, permanecer, continuar). "O aluno está cansado."</li><li><strong>Verbo-nominal:</strong> tem DOIS núcleos — um verbo de ação E um predicativo (do sujeito ou do objeto) no mesmo predicado. "O aluno chegou cansado." (chegou = núcleo verbal; cansado = predicativo do sujeito)</li></ul>
+<p><strong>🔀 5 tipos de sujeito:</strong></p>
+<ul><li>Simples (1 núcleo) | Composto (2+ núcleos) | Oculto/Elíptico/Desinencial (subentendido pela terminação verbal: "Estudamos muito" = nós)</li><li>Indeterminado: EXISTE, mas não se sabe/não se quer dizer quem é. Ocorre com verbo na 3ª pl. sem referente claro ("Falaram de você") OU verbo + "SE" índice de indeterminação ("Precisa-se de funcionários").</li><li>Inexistente (oração sem sujeito): NÃO HÁ sujeito nenhum (nem oculto). Ocorre com verbos impessoais: fenômenos da natureza ("Choveu ontem"), HAVER no sentido de existir ("Havia muitos alunos" — nunca "Haviam"!), e verbos indicando tempo decorrido ("Faz dois anos que estudo").</li></ul>
+<div style="background:linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%); border:2px solid #b8860b; border-radius:8px; padding:14px 18px; margin:12px 0;"><p style="font-size:13px; color:#b8860b; margin:0;"><strong>⚠️ Pegadinha clássica de prova:</strong> "indeterminado" ≠ "inexistente". Indeterminado tem sujeito (só não se sabe quem); inexistente não tem sujeito algum — por isso "haver" (existir) e verbos de fenômeno da natureza NUNCA vão para o plural.</p></div>
+<p><strong>⛓️ Períodos — simples e composto:</strong></p>
+<ul><li>Simples: 1 única oração (1 verbo/locução verbal). "O aluno estudou."</li><li>Composto por Coordenação: orações independentes entre si, ligadas por conjunção ou justapostas. "Estudou E passou."</li><li>Composto por Subordinação: uma oração depende sintaticamente da outra (funciona como termo dela). "Passou PORQUE ESTUDOU."</li></ul>
+<div class="exercicios-ufpr" style="margin:16px 0;"><div class="questao-ufpr"><p class="questao-numero">🎓 Exercício Resolvido 2</p><p class="questao-enunciado"><strong>Questão:</strong> Escolha a alternativa com todas as palavras ortograficamente corretas: a) Possibilidade, utilizar, passadio  b) Possibilidade, utilizar, passadiço  c) Posibilidade, utilizár, passadiço</p><p style="margin:6px 0 0 0;"><strong style="color:#1976d2;">Resposta:</strong> <strong>Letra B.</strong> Possibilidade (sufixo -dade), utilizar (sufixo -izar), passadiço (locução arcaica em português). Letra A tem "passadio" incorreto. Letra C tem erros: "posibilidade" (falta ss) e acento em "utilizár".</p></div></div>
+<div class="exercicios-ufpr" style="margin:16px 0;"><div class="questao-ufpr"><p class="questao-numero">🎓 Exercício Resolvido (Tipo de Predicado)</p><p class="questao-enunciado"><strong>Questão:</strong> Classifique o predicado em "Os alunos saíram irritados da prova."</p><p style="margin:6px 0 0 0;"><strong style="color:#1976d2;">Resposta:</strong> <strong>Verbo-nominal.</strong> "Saíram" é núcleo verbal (ação) e "irritados" é predicativo do sujeito (estado) — dois núcleos no mesmo predicado, um verbal e um nominal.</p></div></div>
+<div class="exercicios-ufpr" style="margin:16px 0;"><div class="questao-ufpr"><p class="questao-numero">🎓 Exercício Resolvido (Sujeito Indeterminado x Inexistente)</p><p class="questao-enunciado"><strong>Questão:</strong> Classifique o sujeito em (a) "Havia muitos alunos na sala" e (b) "Bateram à porta".</p><p style="margin:6px 0 0 0;"><strong style="color:#1976d2;">Resposta:</strong> (a) <strong>Sujeito inexistente</strong> (oração sem sujeito) — "haver" no sentido de existir é impessoal, por isso fica sempre no singular ("havia", nunca "haviam"). (b) <strong>Sujeito indeterminado</strong> — alguém bateu, mas não se sabe quem (verbo na 3ª pessoa do plural sem referente).</p></div></div>
+<h3 style="margin-top:18px; color:#2c3e50;">3. Emprego dos Sinais de Pontuação</h3>
+<div style="background:linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); padding:14px; border-left:6px solid #2196F3; border-radius:6px; margin:12px 0; box-shadow:0 2px 8px rgba(33,150,243,0.15);"><p style="font-size:13px; color:#1565c0; margin:0;"><strong>MEMOREX — sinais de pontuação:</strong> Vírgula (,): separa enumeração, pausas naturais, aposto, vocativo, adjuntos deslocados. ❌ NÃO entre sujeito e verbo! "O professor, cansado, entrou." · Ponto (.): encerra frase declarativa. · Ponto-e-vírgula (;): separa orações relacionadas (pausa maior que vírgula). "Os alunos estudaram; portanto, passaram." · Dois-pontos (:): introduz citação direta, enumeração, explicação. "Necessário: caneta, papel." · Travessão (—): marca diálogo, aposto com ênfase, interrupção de fala. · Reticências (...): pausa dramática, suspensão, omissão, dúvida. · Parênteses ( ): informação complementar, menos importante. · Aspas (" "): citação direta, palavra destacada, ironia, neologismo.</p></div>
+<h3 style="margin-top:18px; color:#2c3e50;">4. Emprego de Crase; Regência Nominal e Verbal</h3>
+<div style="background:linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%); border:2px solid #b8860b; border-radius:8px; padding:14px 18px; margin:12px 0;"><p style="font-size:13px; color:#b8860b; margin:0;"><strong>🚨 CRASE (`):</strong> Fusão de preposição "a" + artigo feminino "a" (derivados: as, à qual, aquele/a/o).</p></div>
+<p><strong>🎯 Regra de ouro:</strong> substitua a palavra feminina por masculina. Se aparecer "ao", use crase; se aparecer "a", NÃO use. "Fui à escola" → "Fui ao colégio" ✓ | "Fui a Roma" → "Fui a Paris" ✗</p>
+<ul><li>✅ <strong>Casos obrigatórios:</strong> antes de "a qual", "aquele", "aquilo"; locuções adverbiais femininas (à noite, à tarde); locuções prepositivas (à frente de, à esquerda).</li><li>❌ <strong>Casos proibidos:</strong> antes de verbo infinitivo; nomes masculinos; "casa" (sem artigo); "pessoa" sem determinante; preposição diferente de "a".</li></ul>
+<p>⚙️ <strong>Regência verbal:</strong> relação obrigatória entre verbo e complementos. Ex.: Assistir A (ver), Assistir EM (trabalhar), Obedecer A, Preferir A, Insistir EM.</p>
+<p>⚙️ <strong>Regência nominal:</strong> relação entre nomes e preposições. Ex.: Gosto DE, Diferente DE, Idêntico A, Apto PARA.</p>
+<div class="exercicios-ufpr" style="margin:16px 0;"><div class="questao-ufpr"><p class="questao-numero">🎓 Exercício Resolvido 3</p><p class="questao-enunciado"><strong>Questão:</strong> Assinale a alternativa com crase e regência corretas: a) Assisti a peça / Fui à praia  b) Assisti na peça / Fui a praia  c) Assisti a peça / Fui a praia</p><p style="margin:6px 0 0 0;"><strong style="color:#1976d2;">Resposta:</strong> <strong>Letra A.</strong> "Assisti A peça" (verbo assistir = ver, exige preposição A); "Fui à praia" (substituir: "fui ao lugar", aparece "ao", então usa crase). Letra B está errada: "assisti na" (preposição EM não vai com "assistir" para ver). Letra C: falta crase em "à praia".</p></div></div>
+<h3 style="margin-top:18px; color:#2c3e50;">5. Concordância Verbal e Nominal</h3>
+<p><strong>Concordância verbal:</strong> o verbo concorda em NÚMERO e PESSOA com o sujeito (núcleo).</p>
+<p>📌 <strong>Casos principais de concordância verbal:</strong></p>
+<ul><li>🔵 Sujeito Simples (1 núcleo): verbo segue o número do núcleo. "O aluno estuda" / "Os alunos estudam"</li><li>🔵 Sujeito Composto (múltiplos núcleos): verbo vai para 3ª pessoa do PLURAL. "O professor e o aluno estudam."</li><li>🔵 Sujeito Oracional (oração é o sujeito): verbo fica na 3ª pessoa do SINGULAR. "Estudar é importante."</li><li>🔵 Coletivo (singular, mas indica vários): "A multidão gritou" (singular) mas "Uma multidão de pessoas gritavam" (verbo pode ir ao plural, concordando com o termo mais próximo).</li><li>🔵 Percentual: "30% dos alunos passaram" (concorda com 30%) OU "30% dos alunos passou" (concorda com "alunos") — ambas aceitas, a norma culta prefere o plural.</li><li>🔵 Casos especiais (verbo no singular): "Meia dúzia de pessoas", "Mais de um aluno", "Um ou outro", "Nem um nem outro".</li></ul>
+<p><strong>Concordância nominal:</strong> adjetivo, artigo e pronome concordam em GÊNERO e NÚMERO com o nome (núcleo) a que se referem.</p>
+<ul><li>🟠 Um adjetivo + múltiplos nomes (posposto): "Menino e menina felizes" (concorda com todos, no plural).</li><li>🟠 Adjetivo anteposto: "Felizes menino e menina" (concorda apenas com o nome mais próximo).</li><li>🟠 Adjetivo posposto, nomes de gêneros diferentes: "Livro e caneta vermelhos" (plural, masculino "vence") OU "Livro e caneta vermelha" (concorda só com o mais próximo).</li><li>🟠 Predicativo do sujeito: "Os alunos ficaram cansados." (concorda com o sujeito, não com o verbo).</li></ul>
+<div class="exercicios-ufpr" style="margin:16px 0;"><div class="questao-ufpr"><p class="questao-numero">🎓 Exercício Resolvido 4</p><p class="questao-enunciado"><strong>Questão:</strong> "30% dos eleitores _____ pelo candidato" (votaram/votou). Qual está correto?</p><p style="margin:6px 0 0 0;"><strong style="color:#1976d2;">Resposta:</strong> Ambas são aceitas. "30% votaram" (concorda com o número percentual) ou "30% votou" (concorda com "eleitores" — o núcleo). Na fala/escrita formal, prefere-se o plural ("votaram").</p></div></div>
+<div class="exercicios-ufpr" style="margin:16px 0;"><div class="questao-ufpr"><p class="questao-numero">🎓 Exercício Resolvido 4B</p><p class="questao-enunciado"><strong>Questão:</strong> "Aluguel e transporte _____ caros neste mês." (ficou/ficaram)</p><p style="margin:6px 0 0 0;"><strong style="color:#1976d2;">Resposta:</strong> "Ficaram". Sujeito composto ("Aluguel e transporte" = dois núcleos) exige verbo na 3ª pessoa do PLURAL, independentemente da ordem das palavras na frase.</p></div></div>
+<h3 style="margin-top:18px; color:#2c3e50;">6. Reconhecimento de Formas Linguageiras na Internet</h3>
+<div style="background:linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); padding:14px; border-left:6px solid #2196F3; border-radius:6px; margin:12px 0; box-shadow:0 2px 8px rgba(33,150,243,0.15);"><p style="font-size:13px; color:#1565c0; margin:0;"><strong>LINGUAGEM DIGITAL:</strong> Linguagem informal, criativa, abreviada, específica de ambientes virtuais. Quebra normas cultas propositalmente.</p></div>
+<p><strong>Características principais:</strong></p>
+<ul><li><strong>Neologismos</strong> (palavras novas): criadas pela comunidade online para nomear ações/conceitos novos. Ex.: "tweetar", "cancelar", "viralizar", "stonar", "cringe".</li><li><strong>Abreviações:</strong> redução para economizar tempo/espaço. Ex.: "msg", "vc", "tbm", "pq", "td", "blz", "cmg", "sqn".</li><li><strong>Emoticons e emojis:</strong> símbolos que expressam emoções sem palavras. ":)", ":(", "😂", "❤".</li><li><strong>Gíria digital:</strong> termos específicos da cultura online. "Troll", "spam", "fake news", "meme", "ship".</li><li><strong>Caps Lock</strong> (tudo em maiúscula): indica grito, ênfase, agressividade virtual. "VOCÊ TÁ OUVINDO?!"</li><li><strong>Repetição de letras:</strong> estende som para reforçar sentimento. "Eee valeu!" / "Nããão, não vou!"</li></ul>
+<div style="background:#fff8e1; border-left:4px solid #f9a825; border-radius:6px; padding:14px 16px; margin:14px 0;"><p style="margin:0 0 8px 0; font-weight:700; color:#e65100; font-size:12.5px;">📝 Atividades para praticar (Linguagem Digital) <span style="font-weight:400; font-style:italic; color:#996d00;">(veja o gabarito ao final)</span></p><p style="margin:6px 0;"><strong>1)</strong> Classifique as seguintes expressões digitais: a) "tá bom?" — ( ) Neologismo ( ) Abreviação ( ) Gíria Digital · b) "😂" — ( ) Emoticon ( ) Emoji ( ) Caps Lock · c) "VOCÊ VIU?!!" — ( ) Repetição de Letras ( ) Caps Lock ( ) Abreviação</p></div>
+<div class="exercicios-ufpr" style="margin:16px 0;"><div class="questao-ufpr"><p class="questao-numero">🎓 Exercício Resolvido 5</p><p class="questao-enunciado"><strong>Questão:</strong> "Os meninos e as meninas _____ cansados" (ficaram/ficou). Qual é correto?</p><p style="margin:6px 0 0 0;"><strong style="color:#1976d2;">Resposta:</strong> "Ficaram" (plural). Sujeito composto requer verbo na 3ª pessoa do PLURAL. "Os meninos e as meninas" têm dois núcleos, então: "ficaram".</p></div></div>
+<h3 style="margin-top:18px; color:#2c3e50;">7. Figuras de Linguagem</h3>
+<div style="background:linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); padding:14px; border-left:6px solid #2196F3; border-radius:6px; margin:12px 0; box-shadow:0 2px 8px rgba(33,150,243,0.15);"><p style="font-size:13px; color:#1565c0; margin:0;"><strong>DEFINIÇÃO:</strong> Recursos expressivos que fogem do sentido literal ou da construção-padrão da frase, usados para dar ênfase, criar imagens ou efeitos de sentido. Muito cobrado em questões de interpretação.</p></div>
+<p><strong>🎨 Figuras de palavras (sentido):</strong></p>
+<ul><li><strong>Metáfora:</strong> comparação IMPLÍCITA (sem conectivo). "Seus olhos são estrelas."</li><li><strong>Comparação/Símile:</strong> comparação EXPLÍCITA (com "como", "tal qual"). "Seus olhos são como estrelas."</li><li><strong>Metonímia:</strong> troca de um termo por outro com relação de proximidade/associação (parte pelo todo, autor pela obra, causa pelo efeito). "Li Machado de Assis" (autor pela obra); "Ganhar o pão de cada dia" (o pão = alimento em geral).</li><li><strong>Hipérbole:</strong> exagero proposital. "Já disse mil vezes para você arrumar o quarto."</li><li><strong>Eufemismo:</strong> suaviza uma ideia desagradável. "Ele foi desta para melhor" (em vez de "morreu").</li><li><strong>Prosopopeia/Personificação:</strong> atribui características humanas a seres inanimados/abstratos. "O vento sussurrava segredos."</li><li><strong>Ironia:</strong> diz o contrário do que quer comunicar, com intenção crítica/humorística. "Que chuva maravilhosa!" (dita durante um temporal que atrapalhou os planos).</li></ul>
+<p><strong>🔊 Figuras de construção e som:</strong></p>
+<ul><li><strong>Anáfora:</strong> repetição de palavra no início de versos/frases, para dar ênfase.</li><li><strong>Elipse:</strong> omissão de um termo facilmente subentendido. "Na sala, só cadeiras vazias" (omite "havia").</li><li><strong>Aliteração:</strong> repetição de sons consonantais. "O rato roeu a roupa do rei de Roma."</li><li><strong>Assonância:</strong> repetição de sons vocálicos.</li><li><strong>Onomatopeia:</strong> palavra que imita um som. "Tique-taque", "Miau".</li></ul>
+<div class="exercicios-ufpr" style="margin:16px 0;"><div class="questao-ufpr"><p class="questao-numero">🎓 Exercício Resolvido 6 (Figuras)</p><p class="questao-enunciado"><strong>Questão:</strong> Identifique a figura de linguagem em: "O Brasil não tomou vacina suficiente" (referindo-se ao governo/à gestão pública).</p><p style="margin:6px 0 0 0;"><strong style="color:#1976d2;">Resposta:</strong> <strong>Metonímia.</strong> "Brasil" está no lugar de "governo brasileiro" / "gestores públicos" — usa o todo (o país) para se referir a uma parte responsável (a administração), relação de associação típica da metonímia.</p></div></div>
+<h3 style="margin-top:18px; color:#2c3e50;">8. Coesão e Coerência Textual</h3>
+<div style="background:linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); padding:14px; border-left:6px solid #2196F3; border-radius:6px; margin:12px 0; box-shadow:0 2px 8px rgba(33,150,243,0.15);"><p style="font-size:13px; color:#1565c0; margin:0;"><strong>COESÃO x COERÊNCIA:</strong> Coesão é a ligação GRAMATICAL entre as partes do texto (uso de conectivos, pronomes, sinônimos). Coerência é a ligação de SENTIDO/LÓGICA entre as ideias do texto — um texto pode ser coeso mas incoerente, e vice-versa.</p></div>
+<p><strong>🔗 Mecanismos de coesão:</strong></p>
+<ul><li><strong>Referencial (retomada):</strong> pronomes, sinônimos, hiperônimos retomam um termo já citado. "Maria chegou. Ela estava cansada." (ela = Maria)</li><li><strong>Sequencial (conectivos):</strong> conjunções e advérbios ligam orações/parágrafos mostrando a relação lógica entre eles. Ex.: "portanto" (conclusão), "contudo" (oposição), "além disso" (adição), "porque" (causa).</li><li><strong>Lexical:</strong> uso de palavras do mesmo campo semântico ao longo do texto, evitando repetição desnecessária (ex.: "escola", "instituição de ensino", "colégio").</li></ul>
+<p><strong>🧭 Fatores de coerência:</strong></p>
+<ul><li>Não contradição: as ideias não podem se contradizer ao longo do texto;</li><li>Continuidade temática: o texto precisa manter o foco no tema, sem digressões desconexas;</li><li>Progressão: cada novo parágrafo deve acrescentar informação nova, não apenas repetir o que já foi dito;</li><li>Articulação com o conhecimento de mundo do leitor: um texto coerente faz sentido dentro do que sabemos sobre a realidade.</li></ul>
+<div class="exercicios-ufpr" style="margin:16px 0;"><div class="questao-ufpr"><p class="questao-numero">🎓 Exercício Resolvido 7 (Coesão)</p><p class="questao-enunciado"><strong>Questão:</strong> Aponte o elemento de coesão em: "Os alunos entregaram os trabalhos. Estes, porém, vieram incompletos."</p><p style="margin:6px 0 0 0;"><strong style="color:#1976d2;">Resposta:</strong> "Estes" é um pronome demonstrativo que retoma "os trabalhos" (coesão referencial); "porém" é uma conjunção adversativa que sinaliza oposição/contraste com a informação anterior (coesão sequencial).</p></div></div>
+<h3 style="margin-top:18px; color:#2c3e50;">9. Funções da Linguagem</h3>
+<div style="background:linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); padding:14px; border-left:6px solid #2196F3; border-radius:6px; margin:12px 0; box-shadow:0 2px 8px rgba(33,150,243,0.15);"><p style="font-size:13px; color:#1565c0; margin:0;"><strong>CONCEITO:</strong> Toda comunicação tem uma finalidade predominante, ligada a um elemento do processo comunicativo (emissor, receptor, mensagem, código, canal, contexto). Reconhecer a função ajuda a interpretar a intenção do texto.</p></div>
+<ul><li><strong>Referencial/Denotativa</strong> (foco no CONTEXTO/assunto): informa de forma objetiva. Predomina em notícias, textos científicos.</li><li><strong>Emotiva/Expressiva</strong> (foco no EMISSOR): expressa sentimentos, opiniões, 1ª pessoa. Predomina em poemas líricos, cartas pessoais.</li><li><strong>Conativa/Apelativa</strong> (foco no RECEPTOR): busca convencer, orientar, dar ordens. Predomina em publicidade, propaganda, textos injuntivos.</li><li><strong>Fática</strong> (foco no CANAL): testa/mantém o contato entre emissor e receptor. "Alô?", "Está me ouvindo?".</li><li><strong>Metalinguística</strong> (foco no CÓDIGO): a linguagem explica a própria linguagem. Dicionários, uma gramática, um poema que fala sobre fazer poesia.</li><li><strong>Poética</strong> (foco na MENSAGEM em si, na forma/estética): predomina em textos literários, onde o COMO se diz importa tanto quanto o que se diz.</li></ul>
+<div class="exercicios-ufpr" style="margin:16px 0;"><div class="questao-ufpr"><p class="questao-numero">🎓 Exercício Resolvido 8 (Funções)</p><p class="questao-enunciado"><strong>Questão:</strong> Qual função da linguagem predomina em um anúncio publicitário que diz "Compre já e transforme sua vida!"?</p><p style="margin:6px 0 0 0;"><strong style="color:#1976d2;">Resposta:</strong> <strong>Função conativa/apelativa.</strong> O texto se dirige diretamente ao receptor (verbo no imperativo "Compre"), buscando convencê-lo e provocar uma ação — foco no receptor da mensagem.</p></div></div>
+</div>
+</div>
+</body>
+</html>
