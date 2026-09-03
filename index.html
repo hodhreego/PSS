@@ -259,17 +259,6 @@
   .indice-mini .item span:first-child{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
   .indice-mini .item .pg{color:var(--gold); font-weight:800; flex-shrink:0;}
 
-  .meters{display:flex; flex-direction:column; gap:8px; margin-top:12px;}
-  .meter{background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.14); border-radius:12px; padding:10px 12px 11px;}
-  .meter-name{font-size:9px; font-weight:800; color:var(--gold-light); text-transform:uppercase; letter-spacing:.06em; margin-bottom:4px;}
-  .meter-top{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px;}
-  .meter-top .big{font-family:'Playfair Display', serif; font-size:19px; font-weight:700; color:var(--gold-light); transition:color .2s;}
-  .meter-top .unit{font-size:12px;}
-  .meter-top .happy{font-size:14px;}
-  .meter-top .small{font-size:9px; color:#C7D3E3; text-transform:uppercase; letter-spacing:.06em;}
-  .bar{width:100%; height:8px; border-radius:6px; overflow:hidden; background:rgba(255,255,255,.12);}
-  .bar-fill{height:100%; width:0%; border-radius:6px; background:linear-gradient(90deg, var(--gold), var(--gold-light)); transition:width .45s cubic-bezier(.34,1.4,.64,1);}
-  .meters-legend{font-size:8.5px; color:#C7D3E3; text-align:center; margin-top:2px; letter-spacing:.02em;}
 
   .live-total{margin-top:9px; display:flex; flex-direction:column; gap:3px; background:rgba(255,255,255,.08); border:1px dashed rgba(233,212,142,.5); border-radius:10px; padding:7px 11px;}
   .live-total .lt-main{display:flex; align-items:center; justify-content:space-between;}
@@ -570,7 +559,7 @@
     transition:transform .15s ease;
   }
   .apostilas-page-link:hover{transform:translateY(-1px);}
-  .apostilas-page-link .icon{font-size:17px; line-height:1;}
+  .apostilas-page-link .icon{font-size:17px; line-height:1; display:inline-block; transform:rotate(180deg);}
   .apostilas-page-link .arrow{font-size:13px;}
   .apostilas-page-link .pdf-tag{
     display:inline-block; margin-left:7px; background:#fff; color:#C0392B;
@@ -696,7 +685,6 @@
         <span class="arrow">↗</span>
       </a>
 
-      <div class="meters" id="metersWrap"></div>
 
       <div class="live-total">
         <div class="lt-main">
@@ -1256,7 +1244,6 @@
   const outroInput = document.getElementById('outroInput');
   const ctaBtn = document.getElementById('ctaBtn');
   const ctaHint = document.getElementById('ctaHint');
-  const metersWrap = document.getElementById('metersWrap');
   const videoOptionsWrap = document.getElementById('videoOptionsWrap');
   const uploadOptionsWrap = document.getElementById('uploadOptionsWrap');
   const planoCards = [document.getElementById('cardBasica'), document.getElementById('cardPedagogo'), document.getElementById('cardEspecial')];
@@ -1477,25 +1464,6 @@
     planoCards.forEach(c => c.classList.toggle('alert', warn));
     if(!warn){ confirmRiskChk.checked = false; }
     confirmRisk.classList.toggle('checked', confirmRiskChk.checked);
-
-    // barra(s) de cobertura: uma barra por inscrição/plano marcado (5 pts plano + 25 pts vídeo = 30 pts cada)
-    const listaParaBarras = planosSelecionados.length ? planosSelecionados : [null];
-    let metersHtml = '';
-    listaParaBarras.forEach(tipo => {
-      const key = tipo || 'none';
-      const temVideo = !!videoState.slides[key] || !!videoState.gravacao[key];
-      const covered = (tipo ? 5 : 0) + (temVideo ? 25 : 0);
-      const pct = (covered / 30 * 100);
-      const nome = tipo ? PLANO_LABELS[tipo] : null;
-      const happy = covered >= 30 ? '<span class="happy">🎉</span>' : '';
-      metersHtml += '<div class="meter">'
-        + (nome ? '<div class="meter-name">' + nome + '</div>' : '')
-        + '<div class="meter-top"><span class="big">' + covered.toFixed(1).replace('.', ',') + ' <span class="unit">pts</span>' + happy + '</span>'
-        + '<span class="small">de 30,0 possíveis</span></div>'
-        + '<div class="bar"><div class="bar-fill" style="width:' + pct + '%"></div></div>'
-        + '</div>';
-    });
-    metersWrap.innerHTML = metersHtml;
 
     // menu de componente curricular só aparece se Educação Básica estiver entre os planos marcados
     const showSubject = planosSelecionados.includes('basica');
