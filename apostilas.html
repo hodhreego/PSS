@@ -101,7 +101,22 @@
     margin-top:10px; background:rgba(255,255,255,.06); border:1.5px solid rgba(233,212,142,.35);
     border-radius:10px; padding:12px;
   }
-  .ask-label{display:block; font-size:11.5px; font-weight:700; color:var(--gold-light); margin-bottom:8px; line-height:1.35;}
+  .ask-label{display:block; font-size:11.5px; font-weight:700; color:var(--gold-light); margin-bottom:10px; line-height:1.35;}
+
+  .ask-group-title{font-size:9.5px; font-weight:800; color:var(--gold-light); text-transform:uppercase; letter-spacing:.04em; margin:12px 0 6px;}
+  .ask-group-title:first-of-type{margin-top:0;}
+  .ask-chip-grid{display:flex; flex-wrap:wrap; gap:6px;}
+  .ask-chip{
+    display:flex; align-items:center; gap:5px; cursor:pointer;
+    background:rgba(255,255,255,.08); border:1px solid rgba(233,212,142,.3); border-radius:20px;
+    padding:6px 11px 6px 9px; font-size:11px; color:#fff; line-height:1.25;
+    transition:background .15s ease, border-color .15s ease;
+  }
+  .ask-chip input{accent-color:var(--gold); width:13px; height:13px; flex-shrink:0; margin:0; cursor:pointer;}
+  .ask-chip:has(input:checked){background:rgba(233,212,142,.22); border-color:var(--gold-light);}
+
+  .ask-results{display:flex; flex-direction:column; gap:8px; margin-top:14px;}
+
   .ask-select{
     width:100%; font-size:12.5px; font-family:'Source Sans 3', sans-serif; color:var(--ink);
     padding:9px 10px; border-radius:8px; border:1px solid var(--line); background:#fff;
@@ -326,45 +341,151 @@
     <div class="apostila-coming-soon"><span>🚀</span> Em breve mais disciplinas</div>
 
     <div class="ask-box">
-      <label for="askSelect" class="ask-label">🔎 Qual disciplina/cargo você tem interesse? (conforme a prova objetiva)</label>
-      <select id="askSelect" class="ask-select">
-        <option value="">Selecione...</option>
-        <optgroup label="Educação Básica">
-          <option>Arte</option>
-          <option>Biologia</option>
-          <option>Ciências</option>
-          <option>Educação Física</option>
-          <option>Educação Digital e Computação/Programação</option>
-          <option>Filosofia</option>
-          <option>Física</option>
-          <option>Geografia</option>
-          <option>História</option>
-          <option>Língua Espanhola</option>
-          <option>Língua Inglesa</option>
-          <option>Língua Portuguesa</option>
-          <option>Matemática</option>
-          <option>Química</option>
-          <option>Sociologia</option>
-          <option>Educação Infantil e Anos Iniciais</option>
-        </optgroup>
-        <optgroup label="Outros cargos">
-          <option>Pedagogo</option>
-          <option>Educação Especial / Inclusiva</option>
-          <option>Administração, Gestão e Negócios</option>
-          <option>Informação e Comunicação</option>
-        </optgroup>
-        <option value="Outro">Outro (não está na lista)</option>
-      </select>
+      <label class="ask-label">🔎 Marque a(s) disciplina(s)/cargo(s) de seu interesse (conforme a prova objetiva):</label>
 
-      <div id="askResultAvailable" class="ask-result ask-result-available" hidden>
-        <span class="em">✅</span>
-        <span>Boa notícia — a apostila de <b id="askAvailableName"></b> já está disponível! <a href="#" id="askAvailableLink">Veja mais acima ↑</a></span>
+      <div class="ask-group-title">Educação Básica</div>
+      <div class="ask-chip-grid" data-group="basica">
+        <label class="ask-chip"><input type="checkbox" value="Arte"><span>Arte</span></label>
+        <label class="ask-chip"><input type="checkbox" value="Biologia"><span>Biologia</span></label>
+        <label class="ask-chip"><input type="checkbox" value="Ciências"><span>Ciências</span></label>
+        <label class="ask-chip"><input type="checkbox" value="Educação Física"><span>Educação Física</span></label>
+        <label class="ask-chip"><input type="checkbox" value="Educação Digital e Computação/Programação"><span>Educação Digital e Computação/Programação</span></label>
+        <label class="ask-chip"><input type="checkbox" value="Filosofia"><span>Filosofia</span></label>
+        <label class="ask-chip"><input type="checkbox" value="Física"><span>Física</span></label>
+        <label class="ask-chip"><input type="checkbox" value="Geografia"><span>Geografia</span></label>
+        <label class="ask-chip"><input type="checkbox" value="História"><span>História</span></label>
+        <label class="ask-chip"><input type="checkbox" value="Língua Espanhola"><span>Língua Espanhola</span></label>
+        <label class="ask-chip"><input type="checkbox" value="Língua Inglesa"><span>Língua Inglesa</span></label>
+        <label class="ask-chip"><input type="checkbox" value="Língua Portuguesa"><span>Língua Portuguesa</span></label>
+        <label class="ask-chip"><input type="checkbox" value="Matemática"><span>Matemática</span></label>
+        <label class="ask-chip"><input type="checkbox" value="Química"><span>Química</span></label>
+        <label class="ask-chip"><input type="checkbox" value="Sociologia"><span>Sociologia</span></label>
+        <label class="ask-chip"><input type="checkbox" value="Educação Infantil e Anos Iniciais"><span>Educação Infantil e Anos Iniciais</span></label>
       </div>
 
-      <a id="askResultUnavailable" href="#" target="_blank" rel="noopener" class="ask-result ask-result-unavailable" hidden>
-        <span class="em">💬</span>
-        <span>Ainda não temos essa apostila pronta — clique pra perguntar no WhatsApp quando fica disponível</span>
-      </a>
+      <div class="ask-group-title">Outras funções</div>
+      <div class="ask-chip-grid" data-group="outras">
+        <label class="ask-chip"><input type="checkbox" value="Pedagogo"><span>Pedagogo</span></label>
+        <label class="ask-chip"><input type="checkbox" value="Educação Especial / Inclusiva"><span>Educação Especial / Inclusiva</span></label>
+        <label class="ask-chip"><input type="checkbox" value="SAREH – Atendimento Pedagógico Domiciliar"><span>SAREH – Atendimento Pedagógico Domiciliar</span></label>
+        <label class="ask-chip"><input type="checkbox" value="Professor de Libras"><span>Professor de Libras</span></label>
+      </div>
+
+      <div class="ask-group-title">Educação Profissional — Ambiente e Saúde</div>
+      <div class="ask-chip-grid">
+        <label class="ask-chip"><input type="checkbox" value="AS – Análises Clínicas"><span>AS – Análises Clínicas</span></label>
+        <label class="ask-chip"><input type="checkbox" value="AS – Cuidados de Idosos"><span>AS – Cuidados de Idosos</span></label>
+        <label class="ask-chip"><input type="checkbox" value="AS – Enfermagem"><span>AS – Enfermagem</span></label>
+        <label class="ask-chip"><input type="checkbox" value="AS – Enfermagem do Trabalho"><span>AS – Enfermagem do Trabalho</span></label>
+        <label class="ask-chip"><input type="checkbox" value="AS – Estética"><span>AS – Estética</span></label>
+        <label class="ask-chip"><input type="checkbox" value="AS – Farmácia"><span>AS – Farmácia</span></label>
+        <label class="ask-chip"><input type="checkbox" value="AS – Meio Ambiente"><span>AS – Meio Ambiente</span></label>
+        <label class="ask-chip"><input type="checkbox" value="AS – Nutrição e Dietética"><span>AS – Nutrição e Dietética</span></label>
+        <label class="ask-chip"><input type="checkbox" value="AS – Prótese Dentária"><span>AS – Prótese Dentária</span></label>
+        <label class="ask-chip"><input type="checkbox" value="AS – Saúde Bucal"><span>AS – Saúde Bucal</span></label>
+      </div>
+
+      <div class="ask-group-title">Educação Profissional — Controle e Processos Industriais</div>
+      <div class="ask-chip-grid">
+        <label class="ask-chip"><input type="checkbox" value="CI – Eletroeletrônica"><span>CI – Eletroeletrônica</span></label>
+        <label class="ask-chip"><input type="checkbox" value="CI – Eletromecânica"><span>CI – Eletromecânica</span></label>
+        <label class="ask-chip"><input type="checkbox" value="CI – Eletrônica"><span>CI – Eletrônica</span></label>
+        <label class="ask-chip"><input type="checkbox" value="CI – Eletrotécnica"><span>CI – Eletrotécnica</span></label>
+        <label class="ask-chip"><input type="checkbox" value="CI – Manutenção Automotiva"><span>CI – Manutenção Automotiva</span></label>
+        <label class="ask-chip"><input type="checkbox" value="CI – Manutenção de Máquinas Pesadas"><span>CI – Manutenção de Máquinas Pesadas</span></label>
+        <label class="ask-chip"><input type="checkbox" value="CI – Mecânica"><span>CI – Mecânica</span></label>
+        <label class="ask-chip"><input type="checkbox" value="CI – Mecatrônica"><span>CI – Mecatrônica</span></label>
+        <label class="ask-chip"><input type="checkbox" value="CI – Sistemas de Energia Renovável"><span>CI – Sistemas de Energia Renovável</span></label>
+      </div>
+
+      <div class="ask-group-title">Educação Profissional — Formação de Docentes</div>
+      <div class="ask-chip-grid">
+        <label class="ask-chip"><input type="checkbox" value="Formação de Docentes"><span>Formação de Docentes</span></label>
+      </div>
+
+      <div class="ask-group-title">Educação Profissional — Gestão de Negócios</div>
+      <div class="ask-chip-grid">
+        <label class="ask-chip"><input type="checkbox" value="GN – Administração"><span>GN – Administração</span></label>
+        <label class="ask-chip"><input type="checkbox" value="GN – Bioeconomia"><span>GN – Bioeconomia</span></label>
+        <label class="ask-chip"><input type="checkbox" value="GN – Contabilidade"><span>GN – Contabilidade</span></label>
+        <label class="ask-chip"><input type="checkbox" value="GN – Logística"><span>GN – Logística</span></label>
+        <label class="ask-chip"><input type="checkbox" value="GN – Marketing"><span>GN – Marketing</span></label>
+        <label class="ask-chip"><input type="checkbox" value="GN – Qualidade"><span>GN – Qualidade</span></label>
+        <label class="ask-chip"><input type="checkbox" value="GN – Recursos Humanos"><span>GN – Recursos Humanos</span></label>
+        <label class="ask-chip"><input type="checkbox" value="GN – Secretariado"><span>GN – Secretariado</span></label>
+        <label class="ask-chip"><input type="checkbox" value="GN – Serviços Jurídicos"><span>GN – Serviços Jurídicos</span></label>
+        <label class="ask-chip"><input type="checkbox" value="GN – Transações Imobiliárias"><span>GN – Transações Imobiliárias</span></label>
+        <label class="ask-chip"><input type="checkbox" value="GN – Vendas"><span>GN – Vendas</span></label>
+      </div>
+
+      <div class="ask-group-title">Educação Profissional — Informação e Comunicação</div>
+      <div class="ask-chip-grid">
+        <label class="ask-chip"><input type="checkbox" value="IC – Desenvolvimento de Sistemas"><span>IC – Desenvolvimento de Sistemas</span></label>
+        <label class="ask-chip"><input type="checkbox" value="IC – Informática"><span>IC – Informática</span></label>
+        <label class="ask-chip"><input type="checkbox" value="IC – Informática para Internet"><span>IC – Informática para Internet</span></label>
+        <label class="ask-chip"><input type="checkbox" value="IC – Inteligência Artificial"><span>IC – Inteligência Artificial</span></label>
+        <label class="ask-chip"><input type="checkbox" value="IC – Manutenção e Suporte em Informática"><span>IC – Manutenção e Suporte em Informática</span></label>
+        <label class="ask-chip"><input type="checkbox" value="IC – Programação de Jogos Digitais"><span>IC – Programação de Jogos Digitais</span></label>
+      </div>
+
+      <div class="ask-group-title">Educação Profissional — Infraestrutura</div>
+      <div class="ask-chip-grid">
+        <label class="ask-chip"><input type="checkbox" value="IE – Edificações"><span>IE – Edificações</span></label>
+        <label class="ask-chip"><input type="checkbox" value="IE – Portos"><span>IE – Portos</span></label>
+      </div>
+
+      <div class="ask-group-title">Educação Profissional — Produção Alimentícia</div>
+      <div class="ask-chip-grid">
+        <label class="ask-chip"><input type="checkbox" value="PA – Agroindústria"><span>PA – Agroindústria</span></label>
+        <label class="ask-chip"><input type="checkbox" value="PA – Alimentos"><span>PA – Alimentos</span></label>
+      </div>
+
+      <div class="ask-group-title">Educação Profissional — Produção Cultural e Design</div>
+      <div class="ask-chip-grid">
+        <label class="ask-chip"><input type="checkbox" value="PD – Design de Interiores"><span>PD – Design de Interiores</span></label>
+        <label class="ask-chip"><input type="checkbox" value="PD – Produção de Áudio e Vídeo"><span>PD – Produção de Áudio e Vídeo</span></label>
+        <label class="ask-chip"><input type="checkbox" value="PD – Teatro"><span>PD – Teatro</span></label>
+      </div>
+
+      <div class="ask-group-title">Educação Profissional — Produção Industrial</div>
+      <div class="ask-chip-grid">
+        <label class="ask-chip"><input type="checkbox" value="PI – Açúcar e Álcool"><span>PI – Açúcar e Álcool</span></label>
+        <label class="ask-chip"><input type="checkbox" value="PI – Biotecnologia"><span>PI – Biotecnologia</span></label>
+        <label class="ask-chip"><input type="checkbox" value="PI – Celulose e Papel"><span>PI – Celulose e Papel</span></label>
+        <label class="ask-chip"><input type="checkbox" value="PI – Planejamento, Controle e Produção"><span>PI – Planejamento, Controle e Produção</span></label>
+        <label class="ask-chip"><input type="checkbox" value="PI – Química"><span>PI – Química</span></label>
+        <label class="ask-chip"><input type="checkbox" value="PI – Vestuário"><span>PI – Vestuário</span></label>
+      </div>
+
+      <div class="ask-group-title">Educação Profissional — Recursos Naturais</div>
+      <div class="ask-chip-grid">
+        <label class="ask-chip"><input type="checkbox" value="RN – Agrícola CAE/CFR"><span>RN – Agrícola CAE/CFR</span></label>
+        <label class="ask-chip"><input type="checkbox" value="RN – Agricultura"><span>RN – Agricultura</span></label>
+        <label class="ask-chip"><input type="checkbox" value="RN – Agroecologia"><span>RN – Agroecologia</span></label>
+        <label class="ask-chip"><input type="checkbox" value="RN – Agronegócio"><span>RN – Agronegócio</span></label>
+        <label class="ask-chip"><input type="checkbox" value="RN – Agropecuária"><span>RN – Agropecuária</span></label>
+        <label class="ask-chip"><input type="checkbox" value="RN – Agrotecnologia"><span>RN – Agrotecnologia</span></label>
+        <label class="ask-chip"><input type="checkbox" value="RN – Florestas"><span>RN – Florestas</span></label>
+        <label class="ask-chip"><input type="checkbox" value="RN – Operações de Máquinas Florestais"><span>RN – Operações de Máquinas Florestais</span></label>
+        <label class="ask-chip"><input type="checkbox" value="RN – Pecuária"><span>RN – Pecuária</span></label>
+      </div>
+
+      <div class="ask-group-title">Educação Profissional — Segurança</div>
+      <div class="ask-chip-grid">
+        <label class="ask-chip"><input type="checkbox" value="SE – Segurança do Trabalho"><span>SE – Segurança do Trabalho</span></label>
+      </div>
+
+      <div class="ask-group-title">Educação Profissional — Turismo, Hospitalidade e Lazer</div>
+      <div class="ask-chip-grid">
+        <label class="ask-chip"><input type="checkbox" value="THL – Agenciamento de Viagens"><span>THL – Agenciamento de Viagens</span></label>
+        <label class="ask-chip"><input type="checkbox" value="THL – Cozinha"><span>THL – Cozinha</span></label>
+        <label class="ask-chip"><input type="checkbox" value="THL – Gastronomia"><span>THL – Gastronomia</span></label>
+        <label class="ask-chip"><input type="checkbox" value="THL – Guia de Turismo"><span>THL – Guia de Turismo</span></label>
+        <label class="ask-chip"><input type="checkbox" value="THL – Hospedagem"><span>THL – Hospedagem</span></label>
+        <label class="ask-chip"><input type="checkbox" value="THL – Lazer"><span>THL – Lazer</span></label>
+      </div>
+
+      <div id="askResults" class="ask-results"></div>
     </div>
   </div>
 
@@ -379,7 +500,7 @@
 </div>
 
 <script>
-  // Mapa: disciplina/cargo selecionado -> id do bloco da apostila já disponível
+  // Mapa: disciplina/cargo marcado -> id do bloco da apostila já disponível
   const AVAILABLE = {
     "Matemática": "block-matematica",
     "Língua Inglesa": "block-lingua-inglesa",
@@ -388,40 +509,47 @@
     "Arte": "block-artes",
     "Pedagogo": "block-pedagogo",
     "Educação Especial / Inclusiva": "block-educacao-especial",
-    "Administração, Gestão e Negócios": "block-gestao-negocios"
+    "GN – Administração": "block-gestao-negocios"
   };
 
-  const askSelect = document.getElementById('askSelect');
-  const resAvailable = document.getElementById('askResultAvailable');
-  const resUnavailable = document.getElementById('askResultUnavailable');
-  const availableNameEl = document.getElementById('askAvailableName');
-  const availableLinkEl = document.getElementById('askAvailableLink');
+  const askResults = document.getElementById('askResults');
+  const askChecks = document.querySelectorAll('.ask-chip input[type="checkbox"]');
 
-  askSelect.addEventListener('change', function () {
-    const value = this.value;
-    resAvailable.hidden = true;
-    resUnavailable.hidden = true;
-    if (!value) return;
-
-    const blockId = AVAILABLE[value];
-    if (blockId) {
-      availableNameEl.textContent = value;
-      availableLinkEl.onclick = function (e) {
-        e.preventDefault();
-        const el = document.getElementById(blockId);
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          el.classList.add('block-highlight');
-          setTimeout(() => el.classList.remove('block-highlight'), 2200);
-        }
-      };
-      resAvailable.hidden = false;
-    } else {
-      const texto = 'Olá! Quero saber se já está disponível a apostila de ' + value + ' para o PSS SEED-PR 2027.';
-      resUnavailable.href = 'https://wa.me/554599699444?text=' + encodeURIComponent(texto);
-      resUnavailable.hidden = false;
+  function scrollToBlock(blockId) {
+    const el = document.getElementById(blockId);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      el.classList.add('block-highlight');
+      setTimeout(() => el.classList.remove('block-highlight'), 2200);
     }
-  });
+  }
+
+  function renderResults() {
+    askResults.innerHTML = '';
+    askChecks.forEach(chk => {
+      if (!chk.checked) return;
+      const value = chk.value;
+      const blockId = AVAILABLE[value];
+      if (blockId) {
+        const div = document.createElement('div');
+        div.className = 'ask-result ask-result-available';
+        div.innerHTML = '<span class="em">✅</span><span>' + value + ' já está disponível! <a href="#">Veja mais acima ↑</a></span>';
+        div.querySelector('a').onclick = function (e) { e.preventDefault(); scrollToBlock(blockId); };
+        askResults.appendChild(div);
+      } else {
+        const texto = 'Olá! Quero saber se já está disponível a apostila de ' + value + ' para o PSS SEED-PR 2027.';
+        const a = document.createElement('a');
+        a.className = 'ask-result ask-result-unavailable';
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.href = 'https://wa.me/554599699444?text=' + encodeURIComponent(texto);
+        a.innerHTML = '<span class="em">💬</span><span>' + value + ' ainda não está pronta — clique pra perguntar no WhatsApp</span>';
+        askResults.appendChild(a);
+      }
+    });
+  }
+
+  askChecks.forEach(chk => chk.addEventListener('change', renderResults));
 </script>
 
 </body>
