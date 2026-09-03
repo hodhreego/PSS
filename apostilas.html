@@ -61,7 +61,8 @@
   .apostilas-title .txt{font-size:13.5px; color:var(--navy-deep);}
 
   .apostilas-list{display:flex; flex-direction:column; gap:14px;}
-  .apostila-block{display:flex; flex-direction:column; gap:8px;}
+  .apostila-block{display:flex; flex-direction:column; gap:8px; border-radius:12px; transition:box-shadow .3s ease;}
+  .apostila-block.block-highlight{box-shadow:0 0 0 3px var(--gold), 0 0 20px rgba(233,212,142,.7);}
   .apostila-link{
     display:flex; align-items:center; gap:8px; text-decoration:none;
     background:rgba(255,255,255,.08); border:1px solid rgba(233,212,142,.35); border-radius:10px;
@@ -94,14 +95,26 @@
     padding:11px 12px; font-size:13px; font-weight:800; color:#FF6B6B; line-height:1.3;
     text-align:center;
   }
-  .ask-availability{
-    display:flex; align-items:center; justify-content:center; gap:8px; text-decoration:none;
-    background:rgba(52,211,153,.14); border:1.5px solid rgba(52,211,153,.6); border-radius:10px;
-    padding:11px 12px; margin-top:8px; font-size:12.5px; font-weight:700; color:#fff; line-height:1.3;
-    text-align:center; transition:transform .15s ease, background .15s ease;
+  .ask-box{
+    margin-top:10px; background:rgba(255,255,255,.06); border:1.5px solid rgba(233,212,142,.35);
+    border-radius:10px; padding:12px;
   }
-  .ask-availability:hover{background:rgba(52,211,153,.22); transform:translateY(-1px);}
-  .ask-availability .em{font-size:16px; flex-shrink:0;}
+  .ask-label{display:block; font-size:11.5px; font-weight:700; color:var(--gold-light); margin-bottom:8px; line-height:1.35;}
+  .ask-select{
+    width:100%; font-size:12.5px; font-family:'Source Sans 3', sans-serif; color:var(--ink);
+    padding:9px 10px; border-radius:8px; border:1px solid var(--line); background:#fff;
+  }
+  .ask-result{
+    display:flex; align-items:flex-start; gap:8px; text-decoration:none;
+    border-radius:9px; padding:10px 11px; margin-top:9px; font-size:12px; font-weight:600; line-height:1.4;
+    transition:transform .15s ease;
+  }
+  .ask-result[hidden]{display:none;}
+  .ask-result:hover{transform:translateY(-1px);}
+  .ask-result .em{font-size:16px; flex-shrink:0; line-height:1.3;}
+  .ask-result-available{background:rgba(52,211,153,.16); border:1.5px solid rgba(52,211,153,.6); color:#fff;}
+  .ask-result-available a{color:#fff; text-decoration:underline; font-weight:800;}
+  .ask-result-unavailable{background:rgba(255,0,0,.12); border:1.5px solid rgba(255,0,0,.5); color:#fff;}
 
   /* Mini prévia da capa, índice e uma página de conteúdo — HTML/CSS reais das
      apostilas, renderizados ao vivo num iframe e reduzidos via transform:scale
@@ -147,7 +160,7 @@
   </div>
 
   <div class="apostilas-list">
-    <div class="apostila-block">
+    <div class="apostila-block" id="block-conhecimentos-basicos">
       <a href="https://chk.eduzz.com/D0R8O6N19Y" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🎓</span> Apostila SEED PR - PSS CONHECIMENTOS BÁSICOS</a>
       <a href="https://chk.eduzz.com/D0R8O6N19Y" target="_blank" rel="noopener" class="apostilas-preview-row">
         <div class="thumb-frame-col">
@@ -165,7 +178,7 @@
       </a>
     </div>
 
-    <div class="apostila-block">
+    <div class="apostila-block" id="block-educacao-especial">
       <a href="https://chk.eduzz.com/7WXGBK340A" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🤝</span> Apostila EDUCAÇÃO INCLUSIVA PSS SEED-PR 2027</a>
       <a href="https://chk.eduzz.com/7WXGBK340A" target="_blank" rel="noopener" class="apostilas-preview-row">
         <div class="thumb-frame-col">
@@ -183,7 +196,7 @@
       </a>
     </div>
 
-    <div class="apostila-block">
+    <div class="apostila-block" id="block-matematica">
       <a href="https://chk.eduzz.com/Z0B1JYOJ9A" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🔢</span> Apostila SEED PR - PSS MATEMÁTICA</a>
       <a href="https://chk.eduzz.com/Z0B1JYOJ9A" target="_blank" rel="noopener" class="apostilas-preview-row">
         <div class="thumb-frame-col">
@@ -201,7 +214,7 @@
       </a>
     </div>
 
-    <div class="apostila-block">
+    <div class="apostila-block" id="block-pedagogo">
       <a href="https://chk.eduzz.com/E0DKVQ4N91" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🍎</span> Apostila PEDAGOGO PSS SEED-PR 2027</a>
       <a href="https://chk.eduzz.com/E0DKVQ4N91" target="_blank" rel="noopener" class="apostilas-preview-row">
         <div class="thumb-frame-col">
@@ -219,7 +232,7 @@
       </a>
     </div>
 
-    <div class="apostila-block">
+    <div class="apostila-block" id="block-lingua-inglesa">
       <a href="https://chk.eduzz.com/39ZR8NY7WE" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🔤</span> Apostila LÍNGUA INGLESA PSS SEED-PR 2027</a>
       <a href="https://chk.eduzz.com/39ZR8NY7WE" target="_blank" rel="noopener" class="apostilas-preview-row">
         <div class="thumb-frame-col">
@@ -237,7 +250,7 @@
       </a>
     </div>
 
-    <div class="apostila-block">
+    <div class="apostila-block" id="block-geografia">
       <a href="https://chk.eduzz.com/797ZYRQ40E" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🌍</span> Apostila GEOGRAFIA PSS SEED-PR 2027</a>
       <a href="https://chk.eduzz.com/797ZYRQ40E" target="_blank" rel="noopener" class="apostilas-preview-row">
         <div class="thumb-frame-col">
@@ -255,7 +268,7 @@
       </a>
     </div>
 
-    <div class="apostila-block">
+    <div class="apostila-block" id="block-historia">
       <a href="https://chk.eduzz.com/89AXR1860D" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🏛️</span> Apostila HISTÓRIA PSS SEED-PR 2027</a>
       <a href="https://chk.eduzz.com/89AXR1860D" target="_blank" rel="noopener" class="apostilas-preview-row">
         <div class="thumb-frame-col">
@@ -273,7 +286,7 @@
       </a>
     </div>
 
-    <div class="apostila-block">
+    <div class="apostila-block" id="block-artes">
       <a href="https://chk.eduzz.com/G96RA585W1" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🎨</span> Apostila ARTES PSS SEED-PR 2027</a>
       <a href="https://chk.eduzz.com/G96RA585W1" target="_blank" rel="noopener" class="apostilas-preview-row">
         <div class="thumb-frame-col">
@@ -291,7 +304,7 @@
       </a>
     </div>
 
-    <div class="apostila-block">
+    <div class="apostila-block" id="block-gestao-negocios">
       <a href="https://chk.eduzz.com/G92KEVJKWE" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">💼</span> Apostila ADMINISTRAÇÃO, GESTÃO E NEGÓCIOS PSS SEED-PR 2027</a>
       <a href="https://chk.eduzz.com/G92KEVJKWE" target="_blank" rel="noopener" class="apostilas-preview-row">
         <div class="thumb-frame-col">
@@ -309,10 +322,48 @@
       </a>
     </div>
     <div class="apostila-coming-soon"><span>🚀</span> Em breve mais disciplinas</div>
-    <a href="https://wa.me/554599699444?text=Ol%C3%A1%21%20Quero%20saber%20se%20j%C3%A1%20est%C3%A1%20dispon%C3%ADvel%20a%20apostila%20da%20minha%20disciplina%20de%20interesse%20para%20o%20PSS%20SEED-PR%202027." target="_blank" rel="noopener" class="ask-availability">
-      <span class="em">💬</span>
-      <span>Não achou sua disciplina? Pergunte se já está disponível</span>
-    </a>
+
+    <div class="ask-box">
+      <label for="askSelect" class="ask-label">🔎 Qual disciplina/cargo você tem interesse? (conforme a prova objetiva)</label>
+      <select id="askSelect" class="ask-select">
+        <option value="">Selecione...</option>
+        <optgroup label="Educação Básica">
+          <option>Arte</option>
+          <option>Biologia</option>
+          <option>Ciências</option>
+          <option>Educação Física</option>
+          <option>Educação Digital e Computação/Programação</option>
+          <option>Filosofia</option>
+          <option>Física</option>
+          <option>Geografia</option>
+          <option>História</option>
+          <option>Língua Espanhola</option>
+          <option>Língua Inglesa</option>
+          <option>Língua Portuguesa</option>
+          <option>Matemática</option>
+          <option>Química</option>
+          <option>Sociologia</option>
+          <option>Educação Infantil e Anos Iniciais</option>
+        </optgroup>
+        <optgroup label="Outros cargos">
+          <option>Pedagogo</option>
+          <option>Educação Especial / Inclusiva</option>
+          <option>Administração, Gestão e Negócios</option>
+          <option>Informação e Comunicação</option>
+        </optgroup>
+        <option value="Outro">Outro (não está na lista)</option>
+      </select>
+
+      <div id="askResultAvailable" class="ask-result ask-result-available" hidden>
+        <span class="em">✅</span>
+        <span>Boa notícia — a apostila de <b id="askAvailableName"></b> já está disponível! <a href="#" id="askAvailableLink">Veja mais acima ↑</a></span>
+      </div>
+
+      <a id="askResultUnavailable" href="#" target="_blank" rel="noopener" class="ask-result ask-result-unavailable" hidden>
+        <span class="em">💬</span>
+        <span>Ainda não temos essa apostila pronta — clique pra perguntar no WhatsApp quando fica disponível</span>
+      </a>
+    </div>
   </div>
 
   <a href="https://hodhreego.github.io/PSS/" class="back-btn">
@@ -324,6 +375,52 @@
     <div>PSS SEED-PR 2027 · Loja de Matemática</div>
   </footer>
 </div>
+
+<script>
+  // Mapa: disciplina/cargo selecionado -> id do bloco da apostila já disponível
+  const AVAILABLE = {
+    "Matemática": "block-matematica",
+    "Língua Inglesa": "block-lingua-inglesa",
+    "Geografia": "block-geografia",
+    "História": "block-historia",
+    "Arte": "block-artes",
+    "Pedagogo": "block-pedagogo",
+    "Educação Especial / Inclusiva": "block-educacao-especial",
+    "Administração, Gestão e Negócios": "block-gestao-negocios"
+  };
+
+  const askSelect = document.getElementById('askSelect');
+  const resAvailable = document.getElementById('askResultAvailable');
+  const resUnavailable = document.getElementById('askResultUnavailable');
+  const availableNameEl = document.getElementById('askAvailableName');
+  const availableLinkEl = document.getElementById('askAvailableLink');
+
+  askSelect.addEventListener('change', function () {
+    const value = this.value;
+    resAvailable.hidden = true;
+    resUnavailable.hidden = true;
+    if (!value) return;
+
+    const blockId = AVAILABLE[value];
+    if (blockId) {
+      availableNameEl.textContent = value;
+      availableLinkEl.onclick = function (e) {
+        e.preventDefault();
+        const el = document.getElementById(blockId);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          el.classList.add('block-highlight');
+          setTimeout(() => el.classList.remove('block-highlight'), 2200);
+        }
+      };
+      resAvailable.hidden = false;
+    } else {
+      const texto = 'Olá! Quero saber se já está disponível a apostila de ' + value + ' para o PSS SEED-PR 2027.';
+      resUnavailable.href = 'https://wa.me/554599699444?text=' + encodeURIComponent(texto);
+      resUnavailable.hidden = false;
+    }
+  });
+</script>
 
 </body>
 </html>
