@@ -130,13 +130,17 @@
      (não são screenshots/imagens estáticas). */
   .apostilas-preview-row{display:flex; justify-content:center; align-items:flex-start; gap:9px; text-decoration:none; transition:transform .15s ease;}
 
-  /* Deslize em cascata das miniaturas — só nas que não estavam visíveis
-     no primeiro carregamento da página (acima da dobra). */
+  /* Deslize/virada de página em 3D nas miniaturas — anima toda vez que a
+     fileira sai e volta a entrar no foco da tela (exceto no que já
+     aparece no primeiro carregamento). */
+  .apostilas-preview-row{ perspective:1100px; }
   .apostilas-preview-row .thumb-frame-col{
     transition: opacity 1s ease, transform 1s ease;
+    transform-origin: left center;
+    backface-visibility: hidden;
   }
   .apostilas-preview-row.slide-pending .thumb-frame-col{
-    opacity:0; transform:translateX(55px);
+    opacity:0; transform: rotateY(-100deg);
   }
   .apostilas-preview-row .thumb-frame-col:nth-child(1){transition-delay:0s;}
   .apostilas-preview-row .thumb-frame-col:nth-child(2){transition-delay:.5s;}
@@ -562,30 +566,28 @@
 
   askChecks.forEach(chk => chk.addEventListener('change', renderResults));
 
-  // Deslize em cascata: só nas fileiras de miniaturas que não estavam
-  // visíveis (primeiro plano) no carregamento da página.
+  // Deslize em cascata: no carregamento, só anima as fileiras que não
+  // estavam no primeiro plano da página. Depois disso, a animação se repete
+  // toda vez que uma fileira sai e volta a entrar no foco da tela.
   (function () {
     const rows = document.querySelectorAll('.apostilas-preview-row');
     const viewportH = window.innerHeight;
-    const pending = [];
     rows.forEach(row => {
       const rect = row.getBoundingClientRect();
       const wasVisible = rect.top < viewportH && rect.bottom > 0;
-      if (!wasVisible) {
-        row.classList.add('slide-pending');
-        pending.push(row);
-      }
+      if (!wasVisible) row.classList.add('slide-pending');
     });
-    if (!pending.length) return;
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.remove('slide-pending');
-          observer.unobserve(entry.target);
+        } else {
+          entry.target.classList.add('slide-pending');
         }
       });
     }, { threshold: 0.15 });
-    pending.forEach(row => observer.observe(row));
+    rows.forEach(row => observer.observe(row));
   })();
 </script>
 
