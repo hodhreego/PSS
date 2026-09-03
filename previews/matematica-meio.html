@@ -373,161 +373,155 @@ html,body{margin:0; padding:0; background:#fff;}
 </head>
 <body>
 <div class="main-content" id="mainContent">
-<div class="page" style="background: linear-gradient(135deg, #e8f5e9 0%, #f5f5f5 100%);">
-<h2 id="geometria-plana">2.4 GEOMETRIA PLANA - PERÍMETROS E ÁREAS</h2>
+<div class="page" style="background: linear-gradient(135deg, #e8f4f8 0%, #f0f5ff 100%);">
+<h2 id="funcoes">2.2 FUNÇÕES - CONCEITOS FUNDAMENTAIS</h2>
 <p style="margin:2px 0 12px 0;"><a href="#indice" style="font-size:10.5px; color:#3498db; text-decoration:none; font-weight:600;">📄</a></p>
-<p><strong style="color:#2c3e50;">PERÍMETRO: Soma de TODOS os lados (contorno)</strong></p>
-<svg style="width:100%; max-height:110px; margin:8px 0; margin:4px 0;" viewbox="0 0 480 100">
-<!-- Quadrado -->
-<rect fill="#3498db" height="50" opacity="0.3" stroke="#3498db" stroke-width="2" width="50" x="20" y="20"></rect>
-<text fill="#2c3e50" font-size="12" font-weight="bold" x="40" y="50">l</text>
-<text fill="#2c3e50" font-size="12" x="20" y="85">P = 4l</text>
-<!-- Retângulo -->
-<rect fill="#e74c3c" height="40" opacity="0.3" stroke="#e74c3c" stroke-width="2" width="70" x="100" y="20"></rect>
-<text fill="#2c3e50" font-size="11" x="125" y="50">c</text>
-<text fill="#2c3e50" font-size="11" x="105" y="30">l</text>
-<text fill="#2c3e50" font-size="12" x="100" y="85">P = 2(c+l)</text>
-<!-- Triângulo -->
-<polygon fill="#27ae60" opacity="0.3" points="220,60 250,20 280,60" stroke="#27ae60" stroke-width="2"></polygon>
-<text fill="#2c3e50" font-size="11" x="240" y="50">a,b,c</text>
-<text fill="#2c3e50" font-size="12" x="200" y="85">P = a+b+c</text>
-<!-- Círculo -->
-<circle cx="360" cy="45" fill="#f39c12" opacity="0.3" r="30" stroke="#f39c12" stroke-width="2"></circle>
-<text fill="#2c3e50" font-size="11" x="350" y="50">r</text>
-<text fill="#2c3e50" font-size="12" x="320" y="85">C = 2πr</text>
+<p><strong>DEFINIÇÃO:</strong> Função é uma relação entre dois conjuntos onde cada entrada tem uma ÚNICA saída. Não pode haver um x com dois y diferentes!</p>
+<p><strong>Notação Matemática:</strong> f: A → B onde f(x) = y</p>
+<p>• <strong>A (Domínio):</strong> Conjunto de ENTRADAS (valores de x que podemos usar)</p>
+<p>• <strong>B (Contradomínio):</strong> Conjunto de possíveis SAÍDAS</p>
+<p>• <strong>Imagem:</strong> Saídas que realmente ocorrem ⊆ Contradomínio</p>
+<svg style="width:100%; max-height:190px; margin:8px 0;" viewbox="0 0 400 175">
+<!-- Diagrama unico: Domínio -> Contradomínio. Pontinhos SEMPRE do lado interno (voltados
+                     para as setas); os rótulos numéricos ficam do lado externo, sem cruzar as setas. -->
+<!-- Domínio (Entrada) -->
+<ellipse cx="85" cy="88" fill="#3498db" opacity="0.15" rx="45" ry="72" stroke="#3498db" stroke-width="2.5"></ellipse>
+<text fill="#2c3e50" font-size="13" font-weight="bold" text-anchor="middle" x="85" y="24">Domínio</text>
+<text fill="#2c3e50" font-size="13" text-anchor="end" x="104" y="64">1</text>
+<circle cx="120" cy="60" fill="#2c3e50" r="3"></circle>
+<text fill="#2c3e50" font-size="13" text-anchor="end" x="104" y="92">2</text>
+<circle cx="120" cy="88" fill="#2c3e50" r="3"></circle>
+<text fill="#2c3e50" font-size="13" text-anchor="end" x="104" y="120">3</text>
+<circle cx="120" cy="116" fill="#2c3e50" r="3"></circle>
+<!-- Contradomínio (Saída) -->
+<ellipse cx="315" cy="88" fill="#27ae60" opacity="0.15" rx="45" ry="80" stroke="#27ae60" stroke-width="2.5"></ellipse>
+<text fill="#2c3e50" font-size="13" font-weight="bold" text-anchor="middle" x="315" y="20">Contradomínio</text>
+<circle cx="280" cy="50" fill="#2c3e50" r="3"></circle>
+<text fill="#2c3e50" font-size="13" x="296" y="54">3</text>
+<circle cx="280" cy="78" fill="#2c3e50" r="3"></circle>
+<text fill="#2c3e50" font-size="13" x="296" y="82">5</text>
+<circle cx="280" cy="106" fill="#2c3e50" r="3"></circle>
+<text fill="#2c3e50" font-size="13" x="296" y="110">7</text>
+<circle cx="280" cy="140" fill="#7f8c8d" r="3"></circle>
+<text fill="#7f8c8d" font-size="13" x="296" y="144">9</text>
+<text fill="#7f8c8d" font-size="10" font-style="italic" text-anchor="middle" x="315" y="160">(não usado)</text>
+<!-- Setas ligando diretamente os pontinhos, sem cruzar os números -->
+<line marker-end="url(#arrowfunc)" stroke="#e74c3c" stroke-width="2" x1="123" x2="277" y1="60" y2="50"></line>
+<line marker-end="url(#arrowfunc)" stroke="#e74c3c" stroke-width="2" x1="123" x2="277" y1="88" y2="78"></line>
+<line marker-end="url(#arrowfunc)" stroke="#e74c3c" stroke-width="2" x1="123" x2="277" y1="116" y2="106"></line>
+<text fill="#154360" font-size="13" font-weight="bold" text-anchor="middle" x="200" y="38">f(x) = 2x + 1</text>
+<defs>
+<marker id="arrowfunc" markerheight="10" markerunits="strokeWidth" markerwidth="10" orient="auto" refx="8" refy="3">
+<path d="M0,0 L0,6 L9,3 z" fill="#e74c3c"></path>
+</marker>
+</defs>
 </svg>
-<p><strong style="color:#e74c3c; font-size:15px;">📐 ÁREA = ESPAÇO INTERNO</strong></p>
-<div style="background:#ecf0f1; padding:8px; border-left:4px solid #3498db; margin:6px 0;">
-<p><strong>TRIÂNGULO:</strong> A = (base × altura) / 2 | Heron: A = √(s(s-a)(s-b)(s-c)) onde s=(a+b+c)/2</p>
-<p><strong>QUADRADO:</strong> A = l²</p>
-<p><strong>RETÂNGULO:</strong> A = comprimento × largura</p>
-<p><strong>PARALELOGRAMO:</strong> A = base × altura</p>
-<p><strong>TRAPÉZIO:</strong> A = (B + b) × h / 2  (B=base maior, b=base menor, h=altura)</p>
-<p><strong>LOSANGO:</strong> A = (D × d) / 2  (D e d = diagonais)</p>
-<p><strong>CÍRCULO:</strong> A = πr²</p>
-<p><strong>SETOR CIRCULAR:</strong> A = (θ/360°) × πr²  (θ em graus)</p>
-<p><strong>COROA CIRCULAR:</strong> A = π(R² - r²)  (R=raio maior, r=raio menor)</p>
+<p><strong style="color:#2c3e50;">FUNÇÃO AFIM (OU LINEAR):</strong> f(x) = ax + b</p>
+<div style="background:#e8f4f8; padding:8px; border-left:4px solid #3498db; margin:6px 0;">
+<p><strong>• a = coeficiente angular (inclinação da reta)</strong> → a &gt; 0: crescente | a &lt; 0: decrescente</p>
+<p><strong>• b = coeficiente linear (onde corta eixo Y)</strong></p>
+<p><strong>• Raiz:</strong> x = -b/a (onde a reta corta eixo X)</p>
 </div>
-<p><strong style="color:#27ae60;">✓ EXEMPLOS PRÁTICOS:</strong></p>
-<p>• <strong>Retângulo 5×8:</strong> P = 2(5+8) = 26 | A = 5×8 = 40</p>
-<p>• <strong>Círculo r=3:</strong> C = 2π(3) ≈ 18,85 | A = π(3²) ≈ 28,27</p>
-<p>• <strong>Trapézio B=10, b=6, h=4:</strong> A = (10+6)×4/2 = 32</p>
-<p><strong style="color:#e74c3c; font-size:15px; margin-top:12px;">LEMBRETE IMPORTANTE:</strong></p>
-<p>📌 Perímetro é em UNIDADES lineares (cm, m) | Área é em UNIDADES quadradas (cm², m²)</p>
-<p style="margin-top:12px;"><strong style="color:#e74c3c; font-size:13px;">✓ EXERCÍCIO RESOLVIDO 9 (Página 2 - Perímetro Retângulo):</strong></p>
-<div style="background:#f0f8ff; padding:10px; border-left:4px solid #2196F3; margin:8px 0; border-radius:4px;">
-<p style="margin:4px 0;"><strong>Questão:</strong> Um retângulo tem comprimento 12 cm e largura 8 cm. Calcule perímetro e área.</p>
-<p style="margin:4px 0;"><strong>Solução:</strong></p>
-<p style="margin:4px 0;">• P = 2(c + l) = 2(12 + 8) = 2(20) = <strong>40 cm</strong></p>
-<p style="margin:4px 0;">• A = c × l = 12 × 8 = <strong>96 cm²</strong></p>
+<p><strong style="color:#27ae60;">✓ EXEMPLO:</strong> f(x) = 2x + 3</p>
+<p>• a = 2 (crescente), b = 3 (corta Y em 3), Raiz: x = -3/2 = -1,5</p>
+<p>• f(0) = 3, f(1) = 5, f(2) = 7</p>
+<svg style="width:100%; max-height:175px; margin:8px 0;" viewbox="0 0 400 175">
+<!-- Diagrama Domínio -> Contradomínio da Função Afim f(x) = 2x + 3 -->
+<ellipse cx="85" cy="88" fill="#3498db" opacity="0.15" rx="45" ry="72" stroke="#3498db" stroke-width="2.5"></ellipse>
+<text fill="#2c3e50" font-size="13" font-weight="bold" text-anchor="middle" x="85" y="24">Domínio</text>
+<text fill="#2c3e50" font-size="13" text-anchor="end" x="104" y="59">0</text>
+<circle cx="120" cy="55" fill="#2c3e50" r="3"></circle>
+<text fill="#2c3e50" font-size="13" text-anchor="end" x="104" y="92">1</text>
+<circle cx="120" cy="88" fill="#2c3e50" r="3"></circle>
+<text fill="#2c3e50" font-size="13" text-anchor="end" x="104" y="125">2</text>
+<circle cx="120" cy="121" fill="#2c3e50" r="3"></circle>
+<ellipse cx="315" cy="88" fill="#27ae60" opacity="0.15" rx="45" ry="72" stroke="#27ae60" stroke-width="2.5"></ellipse>
+<text fill="#2c3e50" font-size="13" font-weight="bold" text-anchor="middle" x="315" y="24">Contradomínio</text>
+<circle cx="280" cy="55" fill="#2c3e50" r="3"></circle>
+<text fill="#2c3e50" font-size="13" x="296" y="59">3</text>
+<circle cx="280" cy="88" fill="#2c3e50" r="3"></circle>
+<text fill="#2c3e50" font-size="13" x="296" y="92">5</text>
+<circle cx="280" cy="121" fill="#2c3e50" r="3"></circle>
+<text fill="#2c3e50" font-size="13" x="296" y="125">7</text>
+<line marker-end="url(#arrowfunc2)" stroke="#e74c3c" stroke-width="2" x1="123" x2="277" y1="55" y2="55"></line>
+<line marker-end="url(#arrowfunc2)" stroke="#e74c3c" stroke-width="2" x1="123" x2="277" y1="88" y2="88"></line>
+<line marker-end="url(#arrowfunc2)" stroke="#e74c3c" stroke-width="2" x1="123" x2="277" y1="121" y2="121"></line>
+<text fill="#154360" font-size="13" font-weight="bold" text-anchor="middle" x="200" y="38">f(x) = 2x + 3</text>
+<defs>
+<marker id="arrowfunc2" markerheight="10" markerunits="strokeWidth" markerwidth="10" orient="auto" refx="8" refy="3">
+<path d="M0,0 L0,6 L9,3 z" fill="#e74c3c"></path>
+</marker>
+</defs>
+</svg>
+<p><strong style="color:#2c3e50;">FUNÇÃO QUADRÁTICA:</strong> f(x) = ax² + bx + c (a ≠ 0)</p>
+<div style="background:#fef5e7; padding:10px; border-left:4px solid #f39c12; margin:8px 0;">
+<p><strong>📐 Raízes (Bhaskara):</strong> x = (-b ± √Δ) / (2a) onde Δ = b² - 4ac</p>
+<p><strong>📌 Vértice:</strong> xᵥ = -b/(2a), yᵥ = -Δ/(4a) (máximo se a &lt; 0, mínimo se a &gt; 0)</p>
 </div>
-<p style="margin-top:10px;"><strong style="color:#e74c3c; font-size:13px;">✓ EXERCÍCIO RESOLVIDO 10 (Página 2 - Área Círculo):</strong></p>
-<div style="background:#fff3e0; padding:10px; border-left:4px solid #ff9800; margin:8px 0; border-radius:4px;">
-<p style="margin:4px 0;"><strong>Questão:</strong> Um círculo tem raio 5 cm. Calcule circunferência e área.</p>
-<p style="margin:4px 0;"><strong>Solução:</strong></p>
-<p style="margin:4px 0;">• C = 2πr = 2π(5) = <strong>10π ≈ 31,4 cm</strong></p>
-<p style="margin:4px 0;">• A = πr² = π(5²) = <strong>25π ≈ 78,5 cm²</strong></p>
+<p><strong style="color:#27ae60;">✓ EXEMPLO:</strong> f(x) = x² - 4x + 3</p>
+<p>• Δ = 16 - 12 = 4 → √Δ = 2</p>
+<p>• Raízes: x = (4 ± 2)/2 = 3 ou 1</p>
+<p>• Vértice: x = 2, y = 4 - 8 + 3 = -1 → V(2, -1)</p>
+<svg style="width:100%; max-height:175px; margin:8px 0;" viewbox="0 0 400 175">
+<!-- Diagrama Domínio -> Contradomínio da Função Quadrática f(x) = x² - 4x + 3 -->
+<!-- Repare: f(1) = 0 e f(3) = 0 -> duas setas chegam no MESMO ponto (função não é injetora) -->
+<ellipse cx="85" cy="88" fill="#f39c12" opacity="0.15" rx="45" ry="72" stroke="#f39c12" stroke-width="2.5"></ellipse>
+<text fill="#2c3e50" font-size="13" font-weight="bold" text-anchor="middle" x="85" y="24">Domínio</text>
+<text fill="#2c3e50" font-size="13" text-anchor="end" x="104" y="59">1</text>
+<circle cx="120" cy="55" fill="#2c3e50" r="3"></circle>
+<text fill="#2c3e50" font-size="13" text-anchor="end" x="104" y="92">2</text>
+<circle cx="120" cy="88" fill="#2c3e50" r="3"></circle>
+<text fill="#2c3e50" font-size="13" text-anchor="end" x="104" y="125">3</text>
+<circle cx="120" cy="121" fill="#2c3e50" r="3"></circle>
+<ellipse cx="315" cy="88" fill="#e74c3c" opacity="0.15" rx="45" ry="72" stroke="#e74c3c" stroke-width="2.5"></ellipse>
+<text fill="#2c3e50" font-size="13" font-weight="bold" text-anchor="middle" x="315" y="24">Contradomínio</text>
+<circle cx="280" cy="88" fill="#2c3e50" r="3"></circle>
+<text fill="#2c3e50" font-size="13" x="296" y="92">0</text>
+<circle cx="280" cy="121" fill="#2c3e50" r="3"></circle>
+<text fill="#2c3e50" font-size="13" x="296" y="125">-1</text>
+<line marker-end="url(#arrowfunc3)" stroke="#8e44ad" stroke-width="2" x1="123" x2="277" y1="55" y2="88"></line>
+<line marker-end="url(#arrowfunc3)" stroke="#8e44ad" stroke-width="2" x1="123" x2="277" y1="88" y2="121"></line>
+<line marker-end="url(#arrowfunc3)" stroke="#8e44ad" stroke-width="2" x1="123" x2="277" y1="121" y2="88"></line>
+<text fill="#154360" font-size="13" font-weight="bold" text-anchor="middle" x="200" y="38">f(x) = x² - 4x + 3</text>
+<text fill="#8e44ad" font-size="10.5" font-style="italic" text-anchor="middle" x="200" y="150">f(1) = f(3) = 0 → dois elementos do domínio para a mesma imagem</text>
+<defs>
+<marker id="arrowfunc3" markerheight="10" markerunits="strokeWidth" markerwidth="10" orient="auto" refx="8" refy="3">
+<path d="M0,0 L0,6 L9,3 z" fill="#8e44ad"></path>
+</marker>
+</defs>
+</svg>
+<p style="margin-top:10px;"><strong style="color:#e74c3c; font-size:14px;">🔍 CONCAVIDADE E ESTUDO DO SINAL:</strong></p>
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+<div style="background:#e8f5e9; padding:10px; border-left:4px solid #4caf50; border-radius:4px;"><p style="margin:0; color:#2e7d32;"><strong>a &gt; 0:</strong> parábola com concavidade para CIMA (∪) — tem valor MÍNIMO no vértice.</p></div>
+<div style="background:#ffe8e8; padding:10px; border-left:4px solid #e74c3c; border-radius:4px;"><p style="margin:0; color:#c0392b;"><strong>a &lt; 0:</strong> parábola com concavidade para BAIXO (∩) — tem valor MÁXIMO no vértice.</p></div>
 </div>
-<p style="margin-top:10px;"><strong style="color:#e74c3c; font-size:13px;">✓ EXERCÍCIO RESOLVIDO 11 (Página 2 - Área Trapézio):</strong></p>
-<div style="background:#e8f5e9; padding:10px; border-left:4px solid #4caf50; margin:8px 0; border-radius:4px;">
-<p style="margin:4px 0;"><strong>Questão:</strong> Um trapézio tem base maior 10 cm, base menor 6 cm, altura 4 cm. Calcule área.</p>
-<p style="margin:4px 0;"><strong>Solução:</strong></p>
-<p style="margin:4px 0;">• A = (B + b) × h / 2 = (10 + 6) × 4 / 2 = 16 × 4 / 2 = <strong>32 cm²</strong></p>
-</div>
-<p style="margin-top:10px;"><strong style="color:#9b59b6; font-size:13px;">🎓 EXERCÍCIO RESOLVIDO 26 (Quadrado):</strong></p>
+<p style="margin-top:8px;">📌 <strong>Discriminante (Δ) e as raízes:</strong> Δ &gt; 0 → duas raízes reais distintas | Δ = 0 → uma raiz real (dupla), a parábola tangencia o eixo X | Δ &lt; 0 → nenhuma raiz real, a parábola não toca o eixo X.</p>
+<p><strong style="color:#9b59b6;">🎓 EXERCÍCIO RESOLVIDO (Função Afim):</strong></p>
 <div style="background:#f0e8f5; padding:10px; border-left:4px solid #9b59b6; margin:8px 0; border-radius:4px;">
-<p><strong>Questão:</strong> Um quadrado tem lado 6 cm. Calcule perímetro e área.</p>
-<p><strong>Solução:</strong></p>
-<p>• P = 4l = 4(6) = <strong>24 cm</strong></p>
-<p>• A = l² = 6² = <strong>36 cm²</strong></p>
+<p><strong>Questão:</strong> Uma corrida de táxi custa R$ 5 fixos + R$ 2 por km rodado. Escreva a função e calcule o custo de uma corrida de 12 km.</p>
+<p><strong>Solução:</strong> f(x) = 2x + 5 (x = km rodados). f(12) = 2(12) + 5 = 24 + 5 = <strong>R$ 29</strong></p>
 </div>
-<p style="margin-top:10px;"><strong style="color:#9b59b6; font-size:13px;">🎓 EXERCÍCIO RESOLVIDO 27 (Triângulo):</strong></p>
+<p><strong style="color:#9b59b6;">🎓 EXERCÍCIO RESOLVIDO (Função Quadrática sem raízes reais):</strong></p>
 <div style="background:#f0e8f5; padding:10px; border-left:4px solid #9b59b6; margin:8px 0; border-radius:4px;">
-<p><strong>Questão:</strong> Um triângulo tem base 8 cm e altura 5 cm. Calcule área.</p>
-<p><strong>Solução:</strong></p>
-<p>• A = (base × altura) / 2 = (8 × 5) / 2 = 40 / 2 = <strong>20 cm²</strong></p>
+<p><strong>Questão:</strong> A função f(x) = x² + 2x + 5 tem raízes reais? Justifique usando o discriminante.</p>
+<p><strong>Solução:</strong> Δ = b² - 4ac = 2² - 4(1)(5) = 4 - 20 = <strong>-16</strong></p>
+<p>Como Δ &lt; 0, a função <strong>NÃO tem raízes reais</strong> — a parábola (concavidade para cima, pois a=1&gt;0) não toca o eixo X, ficando inteiramente acima dele.</p>
 </div>
-<p style="margin-top:10px;"><strong style="color:#9b59b6; font-size:13px;">🎓 EXERCÍCIO RESOLVIDO 28 (Losango):</strong></p>
-<div style="background:#f0e8f5; padding:10px; border-left:4px solid #9b59b6; margin:8px 0; border-radius:4px;">
-<p><strong>Questão:</strong> Um losango tem diagonais D = 12 cm e d = 8 cm. Calcule área.</p>
-<p><strong>Solução:</strong></p>
-<p>• A = (D × d) / 2 = (12 × 8) / 2 = 96 / 2 = <strong>48 cm²</strong></p>
+<p style="margin-top:12px;"><strong style="color:#e74c3c; font-size:14px;">📝 ATIVIDADES PARA PRATICAR (Funções Afim e Quadrática - Página 2)</strong></p>
+<div style="background:#f9f9f9; padding:10px; border-left:4px solid #3498db; margin:8px 0; border-radius:4px;">
+<p><strong>Atividade 1:</strong> Dado f(x) = 3x - 2, determine:</p>
+<p>a) O coeficiente angular e linear</p>
+<p>b) A raiz da função (onde corta eixo X)</p>
+<p>c) O valor de f(4)</p>
 </div>
-<p style="margin-top:10px;"><strong style="color:#9b59b6; font-size:13px;">🎓 EXERCÍCIO RESOLVIDO 29 (Setor Circular):</strong></p>
-<div style="background:#f0e8f5; padding:10px; border-left:4px solid #9b59b6; margin:8px 0; border-radius:4px;">
-<p><strong>Questão:</strong> Um setor circular tem raio 6 cm e ângulo central de 60°. Calcule sua área.</p>
-<p><strong>Solução:</strong> A = (θ/360°) × πr² = (60/360) × π(6²) = (1/6) × 36π = <strong>6π ≈ 18,85 cm²</strong></p>
+<div style="background:#f9f9f9; padding:10px; border-left:4px solid #f39c12; margin:8px 0; border-radius:4px;">
+<p><strong>Atividade 2:</strong> Dada f(x) = x² - 5x + 6, calcule:</p>
+<p>a) As raízes (Δ e Bhaskara)</p>
+<p>b) O vértice da parábola</p>
+<p>c) Se a parábola tem máximo ou mínimo e por quê</p>
 </div>
-<p style="margin-top:10px;"><strong style="color:#9b59b6; font-size:13px;">🎓 EXERCÍCIO RESOLVIDO 30 (Coroa Circular):</strong></p>
-<div style="background:#f0e8f5; padding:10px; border-left:4px solid #9b59b6; margin:8px 0; border-radius:4px;">
-<p><strong>Questão:</strong> Uma coroa circular tem raio maior R = 8 cm e raio menor r = 5 cm. Calcule sua área.</p>
-<p><strong>Solução:</strong> A = π(R² - r²) = π(64 - 25) = <strong>39π ≈ 122,5 cm²</strong></p>
-</div>
-<h2 style="margin-top:20px;">2.4.4 POLÍGONOS - ÂNGULOS INTERNOS</h2>
-<p style="margin:2px 0 12px 0;"><a href="#indice" style="font-size:10.5px; color:#3498db; text-decoration:none; font-weight:600;">📄</a></p>
-<p><strong style="color:#2c3e50;">POLÍGONO:</strong> figura plana fechada formada por segmentos de reta (lados). Classifica-se pelo número de lados.</p>
-<table style="width:100%; border-collapse:collapse; margin:8px 0; font-size:12px;">
-<tr style="background:#2c3e50; color:#fff;">
-<td style="padding:6px; text-align:center;"><strong>Nome</strong></td>
-<td style="padding:6px; text-align:center;"><strong>Lados (n)</strong></td>
-<td style="padding:6px; text-align:center;"><strong>Soma ângulos internos</strong></td>
-<td style="padding:6px; text-align:center;"><strong>Ângulo interno (regular)</strong></td>
-</tr>
-<tr style="background:#ecf0f1;">
-<td style="padding:6px; text-align:center; border:1px solid #ddd;">Triângulo</td>
-<td style="padding:6px; text-align:center; border:1px solid #ddd;">3</td>
-<td style="padding:6px; text-align:center; border:1px solid #ddd;">180°</td>
-<td style="padding:6px; text-align:center; border:1px solid #ddd;">60°</td>
-</tr>
-<tr>
-<td style="padding:6px; text-align:center; border:1px solid #ddd;">Quadrilátero</td>
-<td style="padding:6px; text-align:center; border:1px solid #ddd;">4</td>
-<td style="padding:6px; text-align:center; border:1px solid #ddd;">360°</td>
-<td style="padding:6px; text-align:center; border:1px solid #ddd;">90°</td>
-</tr>
-<tr style="background:#ecf0f1;">
-<td style="padding:6px; text-align:center; border:1px solid #ddd;">Pentágono</td>
-<td style="padding:6px; text-align:center; border:1px solid #ddd;">5</td>
-<td style="padding:6px; text-align:center; border:1px solid #ddd;">540°</td>
-<td style="padding:6px; text-align:center; border:1px solid #ddd;">108°</td>
-</tr>
-<tr>
-<td style="padding:6px; text-align:center; border:1px solid #ddd;">Hexágono</td>
-<td style="padding:6px; text-align:center; border:1px solid #ddd;">6</td>
-<td style="padding:6px; text-align:center; border:1px solid #ddd;">720°</td>
-<td style="padding:6px; text-align:center; border:1px solid #ddd;">120°</td>
-</tr>
-<tr style="background:#ecf0f1;">
-<td style="padding:6px; text-align:center; border:1px solid #ddd;">Octógono</td>
-<td style="padding:6px; text-align:center; border:1px solid #ddd;">8</td>
-<td style="padding:6px; text-align:center; border:1px solid #ddd;">1080°</td>
-<td style="padding:6px; text-align:center; border:1px solid #ddd;">135°</td>
-</tr>
-</table>
-<div style="background:#ecf0f1; padding:10px; border-left:4px solid #3498db; margin:8px 0; text-align:center;">
-                $$S_i = (n-2) \times 180° \qquad a_i = \frac{S_i}{n} \text{ (polígono regular)}$$
-            </div>
-<p><strong style="color:#9b59b6;">🎓 EXERCÍCIO RESOLVIDO 31 (Ângulos de Polígono):</strong></p>
-<div style="background:#f0e8f5; padding:10px; border-left:4px solid #9b59b6; margin:8px 0; border-radius:4px;">
-<p><strong>Questão:</strong> Calcule a soma dos ângulos internos e o ângulo interno de um hexágono regular.</p>
-<p><strong>Solução:</strong> $S_i = (6-2) \times 180° = 4 \times 180° = 720°$</p>
-<p>Ângulo interno: $a_i = 720°/6 = \textbf{120°}$</p>
-</div>
-<h2 style="margin-top:20px;">2.4.5 SEMELHANÇA DE TRIÂNGULOS E TEOREMA DE TALES</h2>
-<p style="margin:2px 0 12px 0;"><a href="#indice" style="font-size:10.5px; color:#3498db; text-decoration:none; font-weight:600;">📄</a></p>
-<p><strong style="color:#2c3e50;">TEOREMA DE TALES:</strong> Um feixe de retas paralelas cortado por duas retas transversais determina segmentos proporcionais.</p>
-<div style="background:#e8f4f8; padding:10px; border-left:4px solid #3498db; margin:6px 0; text-align:center;">
-                $$\frac{AB}{A'B'} = \frac{BC}{B'C'}$$
-            </div>
-<p><strong style="color:#2c3e50;">TRIÂNGULOS SEMELHANTES:</strong> mesma forma, tamanhos proporcionais. Ângulos correspondentes iguais, lados correspondentes proporcionais (razão de semelhança k).</p>
-<div style="background:#e8f4f8; padding:10px; border-left:4px solid #3498db; margin:6px 0; text-align:center;">
-                $$k = \frac{\text{lado do triângulo maior}}{\text{lado correspondente do triângulo menor}}$$
-            </div>
-<p>📌 Se a razão de semelhança é k, a razão entre as ÁREAS é k² (área escala com o quadrado da razão linear).</p>
-<p><strong style="color:#9b59b6;">🎓 EXERCÍCIO RESOLVIDO 32 (Semelhança de Triângulos):</strong></p>
-<div style="background:#f0e8f5; padding:10px; border-left:4px solid #9b59b6; margin:8px 0; border-radius:4px;">
-<p><strong>Questão:</strong> Dois triângulos são semelhantes com razão k = 3. Se o menor tem área 5 cm², qual a área do maior?</p>
-<p><strong>Solução:</strong> Razão entre áreas = k² = 3² = 9. Área maior = 5 × 9 = <strong>45 cm²</strong></p>
+<div style="background:#f9f9f9; padding:10px; border-left:4px solid #27ae60; margin:8px 0; border-radius:4px;">
+<p><strong>Atividade 3:</strong> Uma função afim passa pelos pontos A(1, 3) e B(3, 7). Encontre a lei da função f(x) = ax + b.</p>
 </div>
 </div>
 </div>
