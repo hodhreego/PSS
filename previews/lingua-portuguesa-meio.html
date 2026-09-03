@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>preview</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<style>
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { height: 100%; }
+        body { height: 100%; font-family: 'Noto Sans', Arial, 'Segoe UI', sans-serif; background-color: #f0f2f5; display: flex; overflow: hidden; }
+
+        /* PAINEL LATERAL */
+        .sidebar {
+            width: 300px;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: #ecf0f1;
+            padding: 20px;
+            overflow-y: auto;
+            box-shadow: 4px 0 12px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+        .sidebar h2 { font-size: 15px; margin-bottom: 12px; border-bottom: 3px solid #3498db; padding-bottom: 8px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+        .control-group { margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid #445a6f; }
+        .control-group:last-child { border-bottom: none; }
+        .control-group label { display: block; font-size: 10px; margin-bottom: 4px; text-transform: uppercase; color: #bdc3c7; font-weight: 600; letter-spacing: 0.5px; }
+        .control-group input[type="text"] { width: 100%; padding: 6px 10px; background-color: #1f3a52; color: #ecf0f1; border: 1px solid #3498db; border-radius: 4px; font-size: 12px; font-family: 'Noto Sans', Arial, sans-serif; transition: all 0.3s ease; }
+        .control-group input[type="text"]:focus { outline: none; background-color: #254a68; border-color: #2ecc71; box-shadow: 0 0 8px rgba(46, 204, 113, 0.3); }
+        .control-group input[type="range"] { width: 100%; height: 6px; border-radius: 3px; background: linear-gradient(to right, #2980b9, #3498db); outline: none; -webkit-appearance: none; cursor: pointer; margin-bottom: 4px; }
+        .control-group input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: #f39c12; cursor: pointer; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); }
+        .control-group input[type="range"]::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: #f39c12; cursor: pointer; border: none; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); }
+        .value-display { display: inline-block; background-color: #1f3a52; padding: 4px 8px; border-radius: 3px; font-size: 10px; color: #f39c12; font-weight: 700; border: 1px solid #3498db; }
+        .control-group select { width: 100%; padding: 6px 10px; background-color: #1f3a52; color: #ecf0f1; border: 1px solid #3498db; border-radius: 4px; font-size: 12px; cursor: pointer; transition: all 0.3s ease; }
+        .control-group select:focus { outline: none; border-color: #2ecc71; }
+        button { border: none; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.3s ease; }
+        #generatePdfBtn { width: 100%; padding: 9px; background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; margin-bottom: 6px; }
+        #printBtn { width: 100%; padding: 9px; background: linear-gradient(135deg, #3498db, #2980b9); color: white; margin-bottom: 6px; }
+        #resetBtn { width: 100%; padding: 9px; background: linear-gradient(135deg, #95a5a6, #7f8c8d); color: white; }
+        .status-message { padding: 6px; border-radius: 3px; font-size: 11px; text-align: center; margin-bottom: 8px; display: none; }
+        .status-message.success { background-color: #27ae60; color: white; display: block; }
+
+        /* Painel colapsável — ajustes de fonte exclusivos das capas/divisórias.
+           Fica fechado por padrão pra não atrapalhar os controles do dia a dia. */
+        .capa-fonts-details { margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid #445a6f; }
+        .capa-fonts-details summary {
+            cursor: pointer; font-size: 12px; font-weight: 700; color: #f39c12;
+            text-transform: uppercase; letter-spacing: 0.5px; padding: 6px 0;
+            list-style: none; user-select: none;
+        }
+        .capa-fonts-details summary::-webkit-details-marker { display: none; }
+        .capa-fonts-details summary::before { content: "▸ "; }
+        .capa-fonts-details[open] summary::before { content: "▾ "; }
+        .capa-fonts-details .capa-fonts-body { padding-top: 4px; }
+        .capa-fonts-details .control-group { margin-bottom: 6px; padding-bottom: 4px; }
+        #resetCapaFontsBtn { width: 100%; padding: 7px; margin-top: 2px; background: linear-gradient(135deg, #95a5a6, #7f8c8d); color: #fff; font-size: 10px; }
+
+        /* CONTEÚDO PRINCIPAL - fluxo HTML normal, sem altura fixa de A4.
+           A paginação real acontece no momento da impressão (Ctrl+P), feita pelo
+           proprio motor do Chrome, guiado pela regra @page abaixo. */
+        .main-content { flex: 1; overflow-y: auto; padding: 30px; background: linear-gradient(135deg, #ecf0f1 0%, #f5f7fa 100%); }
+        /* No navegador, so as paginas "fixas" (capa/contracapa/divisorias de
+           secao) mantem o formato A4 rigido - elas dependem disso pro layout
+           visual (circulo decorativo, texto centralizado etc.). As paginas de
+           conteudo comum ficam com layout livre/responsivo na tela, ocupando
+           o espaco disponivel da janela, o que facilita muito a leitura e
+           revisao no navegador. No PDF/impressao (@media print, mais abaixo)
+           TODAS as paginas continuam sendo forcadas para o tamanho A4 exato -
+           isso aqui afeta so a visualizacao em tela. */
+        .page { background-color: white; width: 210mm; max-width: 100%; margin: 0 auto 20px; padding: 20mm 15mm; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); position: relative; }
+        /* @media screen (nao @media print) - isso garante que essa regra
+           NUNCA seja considerada na hora de imprimir/exportar PDF, mesmo que
+           a especificidade dela seja maior que a da regra .page dentro do
+           @media print mais abaixo. Sem o @media screen aqui, a maior
+           especificidade desta regra venceria por cima da regra de impressao
+           e quebraria o tamanho A4 fixo no PDF. */
+        @media screen {
+            .page:not(.cover-page):not(.divider-page) {
+                width: 100%;
+                max-width: 1100px;
+                padding: 32px 40px;
+            }
+        }
+        .cover-page {
+          background: linear-gradient(160deg, #1c4c8c 0%, #0f3c78 55%, #071f42 100%);
+          color: #fff;
+          min-height: 297mm;
+          box-sizing: border-box;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          padding: 30mm var(--capa-padding-h, 70px);
+          text-align: center;
+          position: relative;
+          overflow: hidden;
+        }
+        .cover-page::before {
+          content: "";
+          position: absolute;
+          top: 10%;
+          left: 50%;
+          width: 84%;
+          padding-bottom: 84%;
+          transform: translateX(-50%);
+          border-radius: 50%;
+          background: rgba(255,255,255,0.07);
+        }
+        .cover-topo, .cover-titulo, .cover-rodape { position: relative; z-index: 1; }
+        .cover-titulo { margin-top: 55px; }
+        .cover-rodape { margin-top: auto; padding-top: 40px; }
+        .cover-topo .cp-programa {
+          font-family: Georgia, 'Times New Roman', serif;
+          font-size: 13pt; letter-spacing: 0.35em; color: #f6c453; margin: 0 0 6px 0;
+        }
+        .cover-topo .cp-instituicao {
+          font-family: Georgia, 'Times New Roman', serif; font-weight: bold;
+          font-size: 22pt; letter-spacing: 0.04em; color: #fff; margin: 0;
+        }
+        .cover-topo .cp-ano {
+          font-family: Georgia, 'Times New Roman', serif; font-size: 14pt;
+          letter-spacing: 0.3em; color: #f6c453; margin: 6px 0 0 0;
+        }
+        .cover-topo .cp-linha { width: 200px; height: 2px; background: #e8794a; margin: 14px auto 0; position: relative; }
+        .cover-topo .cp-linha::after {
+          content: ""; position: absolute; top: 50%; left: 50%; width: 9px; height: 9px;
+          border-radius: 50%; background: #f6c453; transform: translate(-50%,-50%);
+        }
+        .cover-topo .cp-programa { font-size: var(--fs-programa, 13pt); }
+        .cover-topo .cp-instituicao { font-size: var(--fs-instituicao, 22pt); }
+        .cover-topo .cp-ano { font-size: var(--fs-ano, 14pt); }
+        .cover-topo .cp-aviso-topo {
+          display: inline-block; margin: 32px auto 0; font-size: var(--fs-avisotopo, 13.1pt); font-weight: bold;
+          line-height: 1.4; color: #fff; background: rgba(200,60,50,0.92); border: 1px solid rgba(255,255,255,0.6);
+          padding: 8px 16px; border-radius: 0; text-align: center;
+        }
+        .cover-titulo .cp-materia {
+          font-family: Georgia, 'Times New Roman', serif; font-weight: 900;
+          font-size: var(--fs-titulo-nowrap, 37pt); color: #ffe135; margin: 0; line-height: 1.05;
+          text-shadow: 0 2px 18px rgba(0,0,0,0.35);
+          white-space: nowrap;
+        }
+        .cover-titulo .cp-materia.cp-materia-wrap {
+          /* font-size 100% controlado pelo painel (--fs-titulo). O ajuste fino
+             para NUNCA estourar a margem (janela estreita, titulo longo) e feito
+             via JS (fitCapaTitle), que encolhe so o necessario, mantendo o
+             valor do slider como teto normal em telas largas. */
+          font-size: var(--fs-titulo, 48pt);
+          white-space: normal; line-height: 1.15; color: #ffe135; text-align: left;
+        }
+        .cover-titulo .cp-subtitulo1 {
+          font-family: Georgia, 'Times New Roman', serif; font-weight: bold;
+          font-size: var(--fs-subtitulo1, 22pt); color: #fff; margin: 14px 0 0 0; line-height: 1.15;
+        }
+        .cover-titulo .cp-subtitulo2 {
+          font-family: Georgia, 'Times New Roman', serif; font-size: var(--fs-subtitulo2, 12pt);
+          letter-spacing: 0.1em; color: #cfe0f4; margin: 16px auto 0; max-width: 80%;
+          text-transform: uppercase;
+        }
+        .cover-rodape .cp-linha-fina { width: 60%; height: 1px; background: rgba(255,255,255,0.35); margin: 0 auto 12px; }
+        .cover-rodape .cp-copyright { font-size: var(--fs-copyright, 10.5pt); font-weight: bold; color: #fff; margin: 0 0 8px 0; white-space: nowrap; text-align: center; }
+        .cover-rodape .cp-aviso {
+          display: inline-block; font-size: var(--fs-avisorodape, 10.5pt); font-weight: bold; color: #fff;
+          background: rgba(200,60,50,0.85); border: 1px solid rgba(255,255,255,0.5);
+          padding: 6px 14px; margin: 0;
+        }
+        /* Capas de secao (PARTE N) - mesmas variaveis CSS controlaveis pelo painel colapsavel */
+        .divider-page .dv-header { font-size: var(--fs-dv-header, 17px); letter-spacing: 0.18em; color: #fff; font-weight: bold; margin: 0 0 22px 0; text-align: center; }
+        .divider-page .dv-parte { font-size: var(--fs-dv-parte, 14px); letter-spacing: 0.3em; color: #f39c12; margin: 0 0 10px 0; }
+        .divider-page .dv-titulo { font-size: var(--fs-dv-titulo, 40px); color: #fff; border: none; padding: 0; margin: 0 0 14px 0; }
+        .divider-page .dv-linha { width: 120px; height: 3px; margin: 0 0 18px 0; }
+        .divider-page .dv-subtitulo { font-size: var(--fs-dv-subtitulo, 14px); color: #bdc3c7; max-width: 70%; text-align: center; }
+
+        /* TIPOGRAFIA - HIERARQUIA CLARA */
+        .page h1 { text-align: center; font-size: 26px; font-weight: 800; margin-bottom: 20px; margin-top: 0; color: #1a252f; border-bottom: 4px solid #3498db; padding-bottom: 12px; letter-spacing: 0.5px; }
+        .page h2 { font-size: 18px; font-weight: 700; color: #2c3e50; margin-top: 18px; margin-bottom: 12px; border-left: 5px solid #3498db; padding-left: 12px; }
+        .page h3 { font-size: 14px; font-weight: 600; color: #34495e; margin-top: 12px; margin-bottom: 8px; margin-left: 0; }
+        .page h4 { font-size: 12px; font-weight: 600; color: #555; margin-top: 10px; margin-bottom: 6px; margin-left: 0; }
+        .page p { text-align: justify; font-size: 13px; line-height: 1.5; color: #2c3e50; margin: 6px 0; }
+        .page strong { font-weight: 700; color: #1a252f; }
+        .page em { font-style: italic; }
+        .page ul, .page ol { margin: 8px 0; padding-left: 20px; }
+
+        /* ÍNDICE — estilo padrão de sumário impresso: hierarquia clara por
+           tamanho/peso (sem saltos desproporcionais), numeração alinhada à
+           esquerda, linha pontilhada guia até a margem direita (como em
+           livros/apostilas tradicionais), cores em degradê de cinza-azulado. */
+        .toc-container { margin-top: 15px; font-family: 'Noto Sans', Arial, 'Segoe UI', sans-serif; }
+        .toc-level-1 { margin-bottom: 12px; }
+        .toc-level-1 > .toc-title {
+            font-size: 14pt; font-weight: 700; color: #1a252f; text-transform: uppercase;
+            letter-spacing: 0.03em; margin-bottom: 6px; padding: 4px 0 4px 10px;
+            border-left: 4px solid #3498db; display: flex; align-items: baseline;
+        }
+        .toc-level-2 { margin-left: 18px; margin-bottom: 3px; }
+        .toc-level-2 > .toc-title { font-size: 11.5pt; font-weight: 600; color: #2c3e50; display: flex; align-items: baseline; }
+        .toc-level-3 { margin-left: 34px; margin-bottom: 2px; }
+        .toc-level-3 > .toc-title { font-size: 10.5pt; font-weight: 400; color: #5d6d7e; display: flex; align-items: baseline; }
+        .toc-level-4 { margin-left: 48px; margin-bottom: 2px; }
+        .toc-level-4 > .toc-title { font-size: 9.5pt; font-weight: 400; color: #85929e; font-style: italic; display: flex; align-items: baseline; }
+        .toc-title { cursor: pointer; transition: color 0.15s ease; }
+        .toc-title:hover { color: #3498db; }
+        .toc-link {
+            color: inherit; text-decoration: none; display: flex; align-items: baseline;
+            flex-wrap: wrap; width: 100%; overflow: visible; white-space: normal;
+        }
+        .toc-link:hover { color: #3498db; }
+        /* linha pontilhada guia, no estilo classico de sumario de livro */
+        .toc-link::after {
+            content: ""; flex: 1 1 auto; margin: 0 6px; order: 1;
+            border-bottom: 1.5px dotted #b8c2cc; height: 0; align-self: baseline;
+            transform: translateY(-3px);
+        }
+        .toc-link > span, .toc-link > *:not(:first-child) { order: 2; flex-shrink: 0; }
+        html { scroll-behavior: smooth; }
+        .page[id], h1[id], h2[id], p[id] { scroll-margin-top: 20px; }
+
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #ecf0f1; }
+        ::-webkit-scrollbar-thumb { background: #3498db; border-radius: 5px; }
+
+        /* Tamanho de folha para impressão/PDF - quem decide onde cada pagina
+           comeca e termina agora e o motor de impressao do Chrome, nao mais
+           divs de altura fixa. "size: auto" (em vez de forçar A4) deixa a
+           folha se ajustar automaticamente ao papel que a pessoa escolher no
+           dialogo de impressao (A4, Carta/Letter, Ofício etc.) - as regras
+           abaixo usam % e vh em vez de mm fixo, entao acompanham esse
+           tamanho escolhido. */
+        @page {
+            margin: 0;
+        }
+
+        @media print {
+            html, body {
+                height: auto;
+                overflow: visible;
+                display: block;
+            }
+            .sidebar { display: none; }
+            .main-content {
+                flex: none;
+                overflow: visible;
+                padding: 0;
+                background: white;
+            }
+            .page {
+                width: 100%;
+                max-width: 100%;
+                margin: 0;
+                padding: 20mm 15mm;
+                box-shadow: none;
+                break-after: page;
+                page-break-after: always;
+            }
+            .page:last-child {
+                break-after: auto;
+                page-break-after: auto;
+            }
+            /* Capa/divisorias ocupam a folha inteira, no tamanho que o
+               renderizador/dialogo de impressao escolher (sem forcar A4). */
+            .cover-page, .divider-page {
+                width: 100%;
+                height: 100%;
+                min-height: 100vh;
+                margin: 0;
+            }
+            .cover-page {
+                padding: 30mm var(--capa-padding-h, 70px);
+                page-break-after: always;
+            }
+            /* Capas de secao (PARTE N) tambem devem ocupar exatamente 1 folha
+               inteira - sem isso, o padding:20mm 15mm da regra .page generica
+               soma com o min-height:297mm do estilo inline da divisoria e
+               estoura pra uma segunda folha em branco. */
+            .divider-page {
+                min-height: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            /* Evita que o navegador corte no meio de tabelas, ilustracoes e
+               caixas de exercicio/formula - cada uma pula para a proxima
+               folha inteira se nao couber no espaco restante. */
+            svg, table, .toc-container,
+            .page > div[style*="border-left"],
+            .page > div[style*="border:2px dashed"],
+            .page > div[style*="border: 2px dashed"] {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+            h1, h2, h3 {
+                break-after: avoid;
+                page-break-after: avoid;
+            }
+            /* Nem h1 nem h2 forcam quebra de pagina sozinhos - a quebra
+               acontece SOMENTE entre capitulos (cada .page ja quebra pra
+               folha nova via a regra .page { break-before: page } acima).
+               Titulos de nivel 2 dentro do mesmo capitulo ficam junto do
+               conteudo deles, sem isolar o titulo sozinho numa folha. */
+            /* Cada .capitulo (cada Simulado/Apendice inteiro) comeca em
+               folha nova na impressao - isso permite ao professor imprimir
+               um simulado especifico sozinho, sabendo que ele sempre comeca
+               numa pagina redonda, sem conteudo de outro simulado antes. */
+            .capitulo {
+                break-before: page;
+                page-break-before: always;
+            }
+        }
+
+        /* ===== ESTILOS DOS SIMULADOS (portados da apostila de matematica) ===== */
+        .capitulo { margin-bottom: 44px; }
+        .subsecao { margin-bottom: 26px; }
+        .conceito { background:#eef7ff; border-left:4px solid #1976d2; padding:10px 14px; margin:12px 0; font-size:12.5px; }
+        .conteudo p { margin: 8px 0; }
+        .exercicios-ufpr { background: #ffffff; padding: 15px; margin: 18px 0; border: 1px solid #ccc; border-radius: 4px; font-size: 12.5px; }
+        .exercicios-ufpr h5 { margin: 0 0 10px 0; }
+        .questao-ufpr { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
+        .questao-ufpr:last-child { border-bottom: none; }
+        .questao-numero { font-weight: bold; color: #1976d2; margin: 0 0 6px 0; }
+        .questao-enunciado { margin: 0 0 8px 0; }
+        .questao-opcoes { margin-left: 10px; }
+        .opcao { margin: 6px 0; }
+        .tipo-questao { font-weight: normal; font-style: italic; color: #777; font-size: 10.5pt; }
+        .questao-ce .opcao { display: inline-block; margin-right: 24px; }
+        .itens-somatoria { margin: 8px 0 8px 10px; list-style: none; padding-left: 0; }
+        .itens-somatoria li { margin: 6px 0; }
+        .instrucao-somatoria { color: #777; font-size: 10.5pt; margin: 6px 0 0 0; }
+        .colunas-associacao { display: flex; gap: 24px; margin: 10px 0; flex-wrap: wrap; }
+        .coluna-a, .coluna-b { flex: 1; min-width: 180px; }
+        .coluna-a ol, .coluna-b ol { margin: 6px 0 0 0; padding-left: 20px; }
+        .texto-lacunas { line-height: 1.9; }
+        .banco-palavras { background: #fff8e1; border-left: 3px solid #f9a825; padding: 8px 12px; margin: 8px 0 0 0; font-size: 11.5pt; }
+        .itens-ordenacao { margin: 8px 0 8px 10px; }
+        .itens-ordenacao li { margin: 6px 0; padding: 4px 10px; background: #fff; border: 1px dashed #bbb; border-radius: 3px; list-style: none; }
+        .linha-resposta { margin-top: 10px; color: #555; }
+        .linhas-discursiva { margin-top: 10px; }
+        .linha-pontilhada { border-bottom: 1px dotted #999; height: 24px; }
+        .exercicios-ufpr .questao-ufpr { page-break-inside: avoid; }
+        .gabarito-cap-titulo { font-size: 15px; color: #1976d2; margin: 18px 0 8px 0; border-bottom: 1px solid #ccc; padding-bottom: 4px; font-weight:700; }
+        .gabarito-tabela { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+        .gabarito-item { background: #eef7ff; border: 1px solid #b8d8f5; border-radius: 6px; padding: 6px 12px; font-size: 11.5px; }
+        .gabarito-item .resp { font-weight: bold; color: #1565c0; }
+        .gabarito-item .indisponivel { font-style: italic; color: #999; }
+        .gabarito-tipo { font-weight: normal; font-style: italic; font-size: 10px; color: #888; }
+
+        /* Correção automática de fórmulas/linhas que "estouram" a largura da
+           página quando o tamanho da fonte é aumentado no painel de ajustes.
+           Em vez de vazar pra fora da página, quebra a linha e marca a
+           continuação com uma seta, deixando claro que é a mesma fórmula. */
+        .formula-overflow-fix {
+            white-space: normal !important;
+            overflow-wrap: break-word;
+            word-break: break-word;
+            display: block;
+            padding-left: 1.4em;
+            text-indent: -1.4em;
+        }
+        .formula-overflow-fix::before {
+            content: "↳ ";
+            color: #1976d2;
+            font-weight: bold;
+        }
+    
+html,body{margin:0; padding:0; background:#fff;}
+</style>
+</head>
+<body>
+<div class="main-content" id="mainContent">
+<div class="page">
+<h2 id="generos-textuais">1. GÊNEROS TEXTUAIS/DISCURSIVOS</h2>
+<p style="margin:2px 0 12px 0;"><a href="#indice" style="font-size:10.5px; color:#3498db; text-decoration:none; font-weight:600;">📄</a></p>
+<p><strong>DEFINIÇÃO/CONCEITO:</strong> O estudo dos gêneros textuais/discursivos é hoje eixo central do ensino de Língua Portuguesa e recorrente nas provas da banca UFPR, que costuma cobrar textos autênticos (reportagens, tirinhas, memes, charges, anúncios, crônicas) pedindo ao candidato que reconheça em que gênero o texto se enquadra, qual sua função social e quais marcas composicionais o caracterizam. A base teórica de referência é dupla: de um lado, a noção de <strong>gênero do discurso</strong> formulada por Mikhail Bakhtin (Círculo de Bakhtin), de outro, a sistematização de <strong>gênero textual</strong> feita por Luiz Antônio Marcuschi a partir dessa matriz bakhtiniana, dialogando também com Jean-Paul Bronckart (interacionismo sociodiscursivo).</p>
+<h3 style="color:#1976d2; margin-top:16px;">1.1 Elementos composicionais dos gêneros: conteúdo temático, construção composicional e estilo</h3>
+<p>Bakhtin, em "Os gêneros do discurso" (obra póstuma que reúne reflexões produzidas ao longo do século XX), define os gêneros como "tipos relativamente estáveis de enunciados", elaborados em cada esfera de utilização da língua. Todo enunciado, por mais individual que seja, reflete as condições específicas e as finalidades de cada uma dessas esferas, não só por seu conteúdo temático e por seu estilo verbal — pela seleção operada nos recursos da língua (recursos lexicais, fraseológicos e gramaticais) —, mas também, e sobretudo, por sua construção composicional. Esses três elementos fundem-se indissoluvelmente no todo do enunciado e são igualmente determinados pela especificidade de uma esfera de comunicação. Para a prova, é fundamental decorar e saber diferenciar os três planos:</p>
+<table style="width:100%; border-collapse:collapse; margin:10px 0; font-size:12px;">
+<tr style="background:#1976d2; color:#fff;">
+<td style="padding:6px; border:1px solid #ccc;"><strong>Elemento</strong></td>
+<td style="padding:6px; border:1px solid #ccc;"><strong>Definição</strong></td>
+<td style="padding:6px; border:1px solid #ccc;"><strong>Exemplo prático</strong></td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Conteúdo temático</td>
+<td style="padding:6px; border:1px solid #ccc;">Não é "o assunto" no sentido estrito, mas o domínio de sentido, a esfera de referência que o gênero permite abordar e o modo como o objeto do discurso é enfocado dentro daquela prática social.</td>
+<td style="padding:6px; border:1px solid #ccc;">Em um editorial de jornal, o tema é tratado com posicionamento crítico sobre fatos de relevância pública.</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Construção composicional</td>
+<td style="padding:6px; border:1px solid #ccc;">Organização e estruturação do texto: forma de início, desenvolvimento e fecho, disposição das partes, grau de acabamento típico do gênero.</td>
+<td style="padding:6px; border:1px solid #ccc;">A receita culinária organiza-se em lista de ingredientes seguida de modo de preparo em passos numerados.</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Estilo</td>
+<td style="padding:6px; border:1px solid #ccc;">Seleção de recursos lexicais, fraseológicos e gramaticais da língua, ligada à unidade de estilo do gênero (não ao estilo individual do autor, embora este possa aparecer nos gêneros secundários mais abertos, como a crônica literária).</td>
+<td style="padding:6px; border:1px solid #ccc;">A linguagem técnica e impessoal de uma bula de remédio versus a linguagem coloquial e bem-humorada de um post em rede social.</td>
+</tr>
+</table>
+<div style="background:#eef7ff; border-left:4px solid #1976d2; padding:10px 14px; margin:12px 0; font-size:12.5px;">
+<strong>Dica de prova:</strong> A UFPR gosta de testar se o candidato confunde "conteúdo temático" com "assunto genérico". Lembre-se: o conteúdo temático é sempre relativo à esfera — o mesmo assunto (por exemplo, "aquecimento global") pode gerar conteúdos temáticos diferentes conforme o gênero (reportagem científica, charge, sermão, discurso político).
+    </div>
+<p>Bakhtin também distingue <strong>gêneros primários (simples)</strong> — aqueles que se formam nas condições da comunicação verbal espontânea, cotidiana, imediata, como o diálogo, o bilhete, a carta familiar, a conversa de bar — de <strong>gêneros secundários (complexos)</strong>, que surgem em condições de um convívio cultural mais complexo e relativamente mais evoluído (o romance, o teatro, o discurso científico, o discurso jurídico, o editorial). Um ponto muito cobrado é que os gêneros secundários, ao se formarem, absorvem e reelaboram os gêneros primários, que perdem sua relação imediata com a realidade existente e passam a integrar a obra maior como elemento de sua composição (por exemplo, uma carta — gênero primário — inserida dentro de um romance — gênero secundário — deixa de ser um ato de comunicação real e passa a ser um elemento ficcional).</p>
+<h3 style="color:#1976d2; margin-top:16px;">1.5 Intertextualidade: conceito e tipologia</h3>
+<p>Intertextualidade é a relação dialógica que um texto estabelece com outro(s) texto(s) preexistente(s), seja retomando, contestando, transformando ou incorporando trechos, estilos ou vozes alheias. O conceito, de raiz bakhtiniana (todo enunciado é uma resposta a enunciados anteriores e antecipa outros futuros — dialogismo), foi sistematizado por Julia Kristeva e é cobrado com frequência em provas por meio de trechos que citam, aludem ou parodiam outro texto.</p>
+<table style="width:100%; border-collapse:collapse; margin:10px 0; font-size:12px;">
+<tr style="background:#1976d2; color:#fff;">
+<th style="padding:6px; border:1px solid #ccc;">Tipo</th>
+<th style="padding:6px; border:1px solid #ccc;">Definição</th>
+<th style="padding:6px; border:1px solid #ccc;">Exemplo</th>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;"><strong>Explícita</strong></td>
+<td style="padding:6px; border:1px solid #ccc;">A fonte é citada de forma clara, com marcas linguísticas (aspas, itálico, verbo de citação, referência).</td>
+<td style="padding:6px; border:1px solid #ccc;">Citação direta de um artigo de lei em um parecer, epígrafe de livro.</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;"><strong>Implícita</strong></td>
+<td style="padding:6px; border:1px solid #ccc;">O texto-fonte não é identificado; exige que o leitor o reconheça por conhecimento prévio (conhecimento de mundo).</td>
+<td style="padding:6px; border:1px solid #ccc;">Uma manchete que ecoa um verso famoso sem citar o autor.</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;"><strong>Paródia</strong></td>
+<td style="padding:6px; border:1px solid #ccc;">Retoma um texto para subvertê-lo, geralmente com intenção crítica, irônica ou humorística; muda o sentido.</td>
+<td style="padding:6px; border:1px solid #ccc;">Charge que reescreve o Hino Nacional para criticar um fato político.</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;"><strong>Paráfrase</strong></td>
+<td style="padding:6px; border:1px solid #ccc;">Reescreve o texto-fonte com outras palavras, preservando a essência do sentido (sem intenção de subverter).</td>
+<td style="padding:6px; border:1px solid #ccc;">Resumo de um texto científico em linguagem mais simples.</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;"><strong>Estilização</strong></td>
+<td style="padding:6px; border:1px solid #ccc;">Incorpora o estilo/voz de outro texto ou autor, sem intuito de crítica — é uma homenagem ou pastiche.</td>
+<td style="padding:6px; border:1px solid #ccc;">Um poema contemporâneo escrito "à maneira de" Drummond.</td>
+</tr>
+</table>
+<div style="background:#eef7ff; border-left:4px solid #1976d2; padding:10px 14px; margin:12px 0; font-size:12.5px;">
+<strong>Dica de prova / Cuidado:</strong> A banca costuma confundir paródia com paráfrase. Lembre-se: paródia subverte/critica (muda o sentido, tom irônico); paráfrase preserva o sentido original com outras palavras. Se a questão mencionar humor, crítica social ou inversão de valores, é paródia; se mencionar "reescrita fiel" ou "com outras palavras", é paráfrase.
+</div>
+<h3 style="color:#1976d2; margin-top:16px;">1.6 Gênero e suporte textual</h3>
+<p>Suporte é a superfície física ou virtual em que um texto é fixado e apresentado para circulação social — o "lugar" onde o gênero se materializa (Marcuschi). O suporte não é neutro: ele participa da constituição do gênero, pois interfere nas condições de produção, circulação e recepção do texto, mas não deve ser confundido com o próprio gênero.</p>
+<table style="width:100%; border-collapse:collapse; margin:10px 0; font-size:12px;">
+<tr style="background:#1976d2; color:#fff;">
+<th style="padding:6px; border:1px solid #ccc;">Categoria</th>
+<th style="padding:6px; border:1px solid #ccc;">Exemplos de suporte</th>
+<th style="padding:6px; border:1px solid #ccc;">Gêneros que podem circular nele</th>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Convencional/incidental</td>
+<td style="padding:6px; border:1px solid #ccc;">Jornal impresso, outdoor, muro, camiseta, para-choque de carro</td>
+<td style="padding:6px; border:1px solid #ccc;">Notícia, propaganda, pichação, frase de para-choque</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Digital</td>
+<td style="padding:6px; border:1px solid #ccc;">Site, aplicativo, rede social, e-mail</td>
+<td style="padding:6px; border:1px solid #ccc;">Post, tweet, e-mail comercial, comentário</td>
+</tr>
+</table>
+<p>É importante distinguir: um mesmo gênero pode circular em suportes diferentes (uma notícia pode estar no jornal impresso ou no portal on-line), e um mesmo suporte pode veicular gêneros distintos (um jornal impresso traz notícia, editorial, charge, anúncio, carta do leitor).</p>
+<h3 style="color:#1976d2; margin-top:16px;">1.7 Gêneros digitais emergentes</h3>
+<p>Com a expansão dos ambientes digitais, surgiram gêneros textuais novos ou "gêneros emergentes" (Marcuschi, Xavier), que combinam múltiplas linguagens (verbal, visual, sonora) e possuem composicionalidade própria, muitas vezes efêmera e altamente interativa.</p>
+<table style="width:100%; border-collapse:collapse; margin:10px 0; font-size:12px;">
+<tr style="background:#1976d2; color:#fff;">
+<th style="padding:6px; border:1px solid #ccc;">Gênero</th>
+<th style="padding:6px; border:1px solid #ccc;">Caracterização composicional</th>
+<th style="padding:6px; border:1px solid #ccc;">Função social predominante</th>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Podcast</td>
+<td style="padding:6px; border:1px solid #ccc;">Áudio seriado, estrutura de episódios, oralidade planejada, pode ter roteiro; permite escuta assíncrona</td>
+<td style="padding:6px; border:1px solid #ccc;">Informar, entreter, debater temas em profundidade</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Stories</td>
+<td style="padding:6px; border:1px solid #ccc;">Sequência de imagens/vídeos curtos, efêmeros (24h), multissemióticos, com recursos interativos (enquete, caixa de pergunta)</td>
+<td style="padding:6px; border:1px solid #ccc;">Compartilhar cotidiano, engajar audiência de forma rápida e informal</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Live</td>
+<td style="padding:6px; border:1px solid #ccc;">Transmissão em tempo real, alto grau de interatividade (chat simultâneo), oralidade espontânea</td>
+<td style="padding:6px; border:1px solid #ccc;">Interação direta e imediata com o público</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Meme</td>
+<td style="padding:6px; border:1px solid #ccc;">Imagem/vídeo/texto curto, com forte apelo intertextual e humorístico, alta replicabilidade e variação</td>
+<td style="padding:6px; border:1px solid #ccc;">Crítica social, humor, síntese de opinião coletiva</td>
+</tr>
+</table>
+<div style="background:#eef7ff; border-left:4px solid #1976d2; padding:10px 14px; margin:12px 0; font-size:12.5px;">
+<strong>Dica de prova / Cuidado:</strong> Bancas gostam de testar se o candidato reconhece que gêneros digitais também têm elementos composicionais estáveis (Bakhtin) — mesmo sendo "novos", possuem estrutura reconhecível, estilo e finalidade social próprios. Não trate "gênero digital" como sinônimo de "ausência de regras".
+</div>
+<div class="page"></div>
+<h3 style="color:#1976d2; margin-top:16px;">1.8 Sequências textuais de Jean-Michel Adam</h3>
+<p>Jean-Michel Adam propõe que, dentro de um mesmo texto (gênero), coexistem diferentes <strong>sequências textuais</strong> — blocos organizacionais menores e prototípicos que se combinam e se intercalam. Essa noção refina a distinção entre tipo textual e gênero: o gênero é a "moldura" social e comunicativa; as sequências são os modos de organização interna que se alternam dentro dele.</p>
+<table style="width:100%; border-collapse:collapse; margin:10px 0; font-size:12px;">
+<tr style="background:#1976d2; color:#fff;">
+<th style="padding:6px; border:1px solid #ccc;">Sequência</th>
+<th style="padding:6px; border:1px solid #ccc;">Traço organizador</th>
+<th style="padding:6px; border:1px solid #ccc;">Exemplo típico</th>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Narrativa</td>
+<td style="padding:6px; border:1px solid #ccc;">Sucessão temporal de ações, personagens, complicação e desfecho</td>
+<td style="padding:6px; border:1px solid #ccc;">Conto, notícia de fato</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Descritiva</td>
+<td style="padding:6px; border:1px solid #ccc;">Enumeração de características, sem progressão temporal</td>
+<td style="padding:6px; border:1px solid #ccc;">Trecho de romance que descreve um ambiente</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Argumentativa</td>
+<td style="padding:6px; border:1px solid #ccc;">Tese, argumentos, contra-argumentos e conclusão</td>
+<td style="padding:6px; border:1px solid #ccc;">Editorial, dissertação</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Explicativa (expositiva)</td>
+<td style="padding:6px; border:1px solid #ccc;">Apresentação de um problema/fenômeno e sua explicação causal</td>
+<td style="padding:6px; border:1px solid #ccc;">Verbete, texto didático</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Dialogal (conversacional)</td>
+<td style="padding:6px; border:1px solid #ccc;">Estrutura de turnos de fala, abertura, negociação e fechamento</td>
+<td style="padding:6px; border:1px solid #ccc;">Entrevista, diálogo em peça teatral</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Injuntiva (instrucional)</td>
+<td style="padding:6px; border:1px solid #ccc;">Sequência de comandos/instruções, geralmente verbos no imperativo</td>
+<td style="padding:6px; border:1px solid #ccc;">Receita, manual de instruções</td>
+</tr>
+</table>
+<p>Um único texto pode combinar várias sequências: uma reportagem (gênero) pode abrir com uma sequência narrativa (relato do fato), inserir uma sequência descritiva (cenário) e fechar com uma sequência argumentativa (opinião do jornalista ou de uma fonte ouvida).</p>
+<div style="background:#eef7ff; border-left:4px solid #1976d2; padding:10px 14px; margin:12px 0; font-size:12.5px;">
+<strong>Dica de prova / Cuidado:</strong> Não confunda "sequência textual" (Adam) com "tipologia textual" (Marcuschi/tradição escolar) — são conceitos próximos, mas Adam enfatiza que as sequências se combinam dentro de um mesmo texto (heterogeneidade composicional), enquanto a tipologia tradicional tende a classificar o texto inteiro em um único tipo dominante.
+</div>
+<p><strong style="color:#9b59b6;">🎓 EXERCÍCIO RESOLVIDO (elementos composicionais):</strong></p>
+<div style="background:#f0e8f5; padding:10px; border-left:4px solid #9b59b6; margin:8px 0; border-radius:4px;">
+<p><strong>Questão:</strong> Segundo a concepção bakhtiniana de gêneros do discurso, assinale a alternativa que apresenta corretamente os três elementos que se fundem indissoluvelmente no enunciado e que são determinados pela especificidade de cada esfera de comunicação.</p>
+<p>a) Coesão, coerência e intertextualidade.<br/>
+        b) Conteúdo temático, construção composicional e estilo.<br/>
+        c) Tipologia, superestrutura e macroestrutura.<br/>
+        d) Enunciado, enunciação e sujeito enunciador.<br/>
+        e) Forma, função e suporte textual.</p>
+<p><strong>Resposta comentada:</strong> A alternativa correta é a (b). Bakhtin afirma expressamente que todo enunciado reflete as condições e finalidades de cada esfera não só por seu conteúdo temático e estilo, mas também por sua construção composicional — os três elementos mencionados na letra (b). As demais alternativas trazem conceitos de outras teorias (coesão/coerência são categorias da linguística textual clássica; tipologia/superestrutura remetem a Van Dijk/Adam; suporte é categoria discutida por Marcuschi, mas não é um dos três elementos bakhtinianos do enunciado).</p>
+</div>
+<h3 style="color:#1976d2; margin-top:16px;">1.2 Função social dos gêneros</h3>
+<p>Todo gênero textual nasce vinculado a uma necessidade social e a uma atividade humana específicas: ele existe porque cumpre uma função comunicativa reconhecível pelos falantes de uma comunidade. Marcuschi insiste que os gêneros são fenômenos históricos, profundamente vinculados à vida cultural e social, e que seria impossível se comunicar verbalmente a não ser por algum gênero, do mesmo modo como seria impossível se comunicar verbalmente a não ser por algum texto. Isso significa que a comunicação verbal só é possível por algum gênero textual.</p>
+<p>A função social determina, em grande medida, a escolha composicional e estilística: uma ata de reunião tem a função de registrar formalmente decisões e deliberações, por isso exige objetividade, impessoalidade e estrutura fixa; um cordel tem função de entreter e narrar de forma poética e popular, o que permite maior liberdade estilística. Reconhecer a função social de um gênero é frequentemente o primeiro passo cobrado pela banca antes de perguntar sobre efeitos de sentido específicos do texto.</p>
+<p>É importante notar que um mesmo gênero pode ter sua função social deslocada ou ampliada conforme o contexto de circulação — fenômeno estudado sob o nome de <strong>hibridização</strong> ou <strong>intergenericidade</strong>: um anúncio publicitário pode assumir a forma de uma notícia (a chamada "publi-reportagem"), mesclando a função de informar com a de persuadir/vender, o que gera efeitos de sentido específicos que a prova costuma explorar.</p>
+<h3 style="color:#1976d2; margin-top:16px;">1.3 Esfera/campo de atividade humana</h3>
+<p>Bakhtin situa a origem dos gêneros nas <strong>esferas de utilização da língua</strong> (também traduzidas como "campos" ou "esferas de atividade humana"): a esfera cotidiana/familiar, a esfera jornalística, a esfera científica, a esfera jurídica, a esfera religiosa, a esfera escolar/acadêmica, a esfera publicitária, a esfera artístico-literária, entre outras. Cada esfera desenvolve seu próprio repertório relativamente estável de gêneros — por isso Bakhtin fala em uma "riqueza e diversidade infinitas dos gêneros do discurso", já que cada esfera é inesgotável em suas possibilidades de atividade e cada uma delas comporta um repertório de gêneros que cresce e se diferencia à medida que a própria esfera se desenvolve e se complexifica.</p>
+<p>A Base Nacional Comum Curricular (BNCC), documento normativo com forte impacto nas provas de concursos docentes como o PSS SEED-PR, adota justamente essa organização por <strong>campos de atuação</strong> para o Ensino Fundamental (campo da vida cotidiana, campo artístico-literário, campo das práticas de estudo e pesquisa, campo jornalístico-midiático, campo de atuação na vida pública) e por <strong>campos de atuação social</strong> ampliados no Ensino Médio, retomando diretamente a noção bakhtiniana de esfera de atividade. É essencial que o candidato relacione a teoria de Bakhtin à organização curricular da BNCC, pois a UFPR frequentemente cruza esses dois referenciais em uma mesma questão.</p>
+<table style="width:100%; border-collapse:collapse; margin:10px 0; font-size:12px;">
+<tr style="background:#1976d2; color:#fff;">
+<td style="padding:6px; border:1px solid #ccc;"><strong>Campo de atuação (BNCC)</strong></td>
+<td style="padding:6px; border:1px solid #ccc;"><strong>Exemplos de gêneros</strong></td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Vida cotidiana</td>
+<td style="padding:6px; border:1px solid #ccc;">Bilhete, lista de compras, receita, relato pessoal, conversa em aplicativo de mensagens</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Artístico-literário</td>
+<td style="padding:6px; border:1px solid #ccc;">Poema, conto, crônica, romance, cordel, letra de canção</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Práticas de estudo e pesquisa</td>
+<td style="padding:6px; border:1px solid #ccc;">Verbete de enciclopédia, resumo, resenha, seminário, relatório científico</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Jornalístico-midiático</td>
+<td style="padding:6px; border:1px solid #ccc;">Notícia, reportagem, editorial, entrevista, infográfico, meme</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Atuação na vida pública</td>
+<td style="padding:6px; border:1px solid #ccc;">Abaixo-assinado, carta de reclamação, discurso político, lei, requerimento</td>
+</tr>
+</table>
+<p><strong style="color:#9b59b6;">🎓 EXERCÍCIO RESOLVIDO (esfera de atividade):</strong></p>
+<div style="background:#f0e8f5; padding:10px; border-left:4px solid #9b59b6; margin:8px 0; border-radius:4px;">
+<p><strong>Questão:</strong> A organização dos componentes curriculares de Língua Portuguesa na BNCC em "campos de atuação" retoma diretamente qual conceito da teoria bakhtiniana dos gêneros do discurso?</p>
+<p>a) Polifonia.<br/>
+        b) Dialogismo interdiscursivo.<br/>
+        c) Esfera de utilização/atividade da língua.<br/>
+        d) Cronotopo.<br/>
+        e) Exotopia.</p>
+<p><strong>Resposta comentada:</strong> A alternativa correta é a (c). Bakhtin sustenta que os gêneros do discurso se organizam e se diversificam a partir das esferas (ou campos) de utilização da língua, cada qual elaborando seus tipos relativamente estáveis de enunciados. A BNCC incorpora essa ideia ao estruturar o ensino de Língua Portuguesa por "campos de atuação". Polifonia, dialogismo interdiscursivo, cronotopo e exotopia são conceitos bakhtinianos legítimos, mas voltados a outras dimensões (multiplicidade de vozes, relação entre discursos, tempo-espaço na narrativa e o "excedente de visão" do outro, respectivamente), não à origem social dos gêneros.</p>
+</div>
+<h3 style="color:#1976d2; margin-top:16px;">1.4 Tipologia textual/discursiva: gênero x tipo textual</h3>
+<p>Ponto crucial e classicamente cobrado em provas de Português para concurso é a distinção, sistematizada por Marcuschi, entre <strong>gênero textual</strong> e <strong>tipo textual</strong>:</p>
+<table style="width:100%; border-collapse:collapse; margin:10px 0; font-size:12px;">
+<tr style="background:#1976d2; color:#fff;">
+<td style="padding:6px; border:1px solid #ccc;"><strong>Critério</strong></td>
+<td style="padding:6px; border:1px solid #ccc;"><strong>Tipo textual</strong></td>
+<td style="padding:6px; border:1px solid #ccc;"><strong>Gênero textual</strong></td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Natureza</td>
+<td style="padding:6px; border:1px solid #ccc;">Categoria teórica/formal definida por sua natureza linguística (aspectos lexicais, sintáticos, tempos verbais, relações lógicas)</td>
+<td style="padding:6px; border:1px solid #ccc;">Categoria sócio-histórica e comunicativa, ligada à vida cultural, com formato e função reconhecíveis</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Quantidade</td>
+<td style="padding:6px; border:1px solid #ccc;">Conjunto limitado e estável (cerca de 5 a 6 tipos)</td>
+<td style="padding:6px; border:1px solid #ccc;">Conjunto aberto, ilimitado e em constante expansão</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Nomenclatura</td>
+<td style="padding:6px; border:1px solid #ccc;">Narração, descrição, dissertação/argumentação, exposição, injunção</td>
+<td style="padding:6px; border:1px solid #ccc;">Bula de remédio, notícia, sermão, e-mail, tuíte, receita culinária, editorial, etc.</td>
+</tr>
+<tr>
+<td style="padding:6px; border:1px solid #ccc;">Composição no texto real</td>
+<td style="padding:6px; border:1px solid #ccc;">Um mesmo gênero pode combinar internamente diversos tipos (sequências tipológicas)</td>
+<td style="padding:6px; border:1px solid #ccc;">É a unidade concreta de comunicação, materializada em um texto real, com propósito comunicativo específico</td>
+</tr>
+</table>
+<p>Um exemplo clássico e muito explorado pela UFPR: uma <strong>reportagem</strong> (gênero) pode conter trechos <strong>narrativos</strong> (relato dos fatos em ordem cronológica), trechos <strong>descritivos</strong> (caracterização do local ou das pessoas envolvidas) e trechos <strong>dissertativo-argumentativos</strong> (quando o jornalista tece considerações analíticas) — todos esses tipos textuais coexistindo dentro de um único gênero. Isso demonstra que tipo e gênero operam em planos diferentes e não são excludentes: o texto concreto (gênero) é tipologicamente heterogêneo, formado por sequências de tipos diversos, conforme também descreve Jean-Michel Adam com sua noção de sequências textuais.</p>
+<div style="background:#eef7ff; border-left:4px solid #1976d2; padding:10px 14px; margin:12px 0; font-size:12.5px;">
+<strong>Cuidado:</strong> Não confunda "tipo textual" com "gênero textual" nas questões de múltipla escolha da UFPR. Uma pegadinha comum é apresentar um gênero (por exemplo, "crônica") como se fosse um tipo, ou vice-versa. Memorize: tipos são poucos e definidos por traços linguísticos (narrar, descrever, argumentar, expor, instruir/injuncionar); gêneros são inúmeros e definidos por função social e forma de circulação.
+    </div>
+<p>Bronckart, na linha do interacionismo sociodiscursivo, reforça essa perspectiva ao tratar os gêneros como "megainstrumentos" que orientam a ação de linguagem, mediando a relação entre o sujeito e as práticas sociais, e propõe a noção de <strong>modelos de organização textual</strong> (equivalentes, em linhas gerais, aos tipos textuais) que se combinam dentro dos gêneros concretos.</p>
+</div>
+</div>
+<script>
+function __renderKatexNow(){
+  if (typeof renderMathInElement === "function") {
+    renderMathInElement(document.body, {
+      delimiters: [
+        {left: "$$", right: "$$", display: true},
+        {left: "$", right: "$", display: false}
+      ],
+      throwOnError: false
+    });
+  } else {
+    setTimeout(__renderKatexNow, 60);
+  }
+}
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", __renderKatexNow);
+} else {
+  __renderKatexNow();
+}
+window.addEventListener("load", __renderKatexNow);
+</script>
+</body>
+</html>
