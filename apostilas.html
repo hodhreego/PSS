@@ -115,28 +115,32 @@
   .ask-chip input{accent-color:var(--gold); width:13px; height:13px; flex-shrink:0; margin:0; cursor:pointer;}
   .ask-chip:has(input:checked){background:rgba(233,212,142,.22); border-color:var(--gold-light);}
 
-  .ask-results{display:flex; flex-direction:column; gap:8px; margin-top:14px;}
-
-  .ask-select{
-    width:100%; font-size:12.5px; font-family:'Source Sans 3', sans-serif; color:var(--ink);
-    padding:9px 10px; border-radius:8px; border:1px solid var(--line); background:#fff;
-  }
-  .ask-result{
-    display:flex; align-items:flex-start; gap:8px; text-decoration:none;
-    border-radius:9px; padding:10px 11px; margin-top:9px; font-size:12px; font-weight:600; line-height:1.4;
+  /* Badge que aparece colado na própria opção quando marcada */
+  .ask-chip-status{
+    display:flex; align-items:center; gap:5px; text-decoration:none;
+    border-radius:20px; padding:6px 11px; font-size:11px; font-weight:700; line-height:1.25;
     transition:transform .15s ease;
   }
-  .ask-result[hidden]{display:none;}
-  .ask-result:hover{transform:translateY(-1px);}
-  .ask-result .em{font-size:16px; flex-shrink:0; line-height:1.3;}
-  .ask-result-available{background:rgba(52,211,153,.16); border:1.5px solid rgba(52,211,153,.6); color:#fff;}
-  .ask-result-available a{color:#fff; text-decoration:underline; font-weight:800;}
-  .ask-result-unavailable{background:rgba(255,0,0,.12); border:1.5px solid rgba(255,0,0,.5); color:#fff;}
+  .ask-chip-status:hover{transform:translateY(-1px);}
+  .ask-chip-status.available{background:rgba(52,211,153,.22); border:1.5px solid rgba(52,211,153,.7); color:#fff;}
+  .ask-chip-status.unavailable{background:rgba(255,0,0,.16); border:1.5px solid rgba(255,0,0,.55); color:#fff;}
 
   /* Mini prévia da capa, índice e uma página de conteúdo — HTML/CSS reais das
      apostilas, renderizados ao vivo num iframe e reduzidos via transform:scale
      (não são screenshots/imagens estáticas). */
   .apostilas-preview-row{display:flex; justify-content:center; align-items:flex-start; gap:9px; text-decoration:none; transition:transform .15s ease;}
+
+  /* Deslize em cascata das miniaturas — só nas que não estavam visíveis
+     no primeiro carregamento da página (acima da dobra). */
+  .apostilas-preview-row .thumb-frame-col{
+    transition: opacity 1s ease, transform 1s ease;
+  }
+  .apostilas-preview-row.slide-pending .thumb-frame-col{
+    opacity:0; transform:translateX(55px);
+  }
+  .apostilas-preview-row .thumb-frame-col:nth-child(1){transition-delay:0s;}
+  .apostilas-preview-row .thumb-frame-col:nth-child(2){transition-delay:.5s;}
+  .apostilas-preview-row .thumb-frame-col:nth-child(3){transition-delay:1s;}
   .apostilas-preview-row:hover{transform:translateY(-1px);}
 
   .thumb-frame{
@@ -485,7 +489,6 @@
         <label class="ask-chip"><input type="checkbox" value="THL – Lazer"><span>THL – Lazer</span></label>
       </div>
 
-      <div id="askResults" class="ask-results"></div>
     </div>
   </div>
 
@@ -512,7 +515,6 @@
     "GN – Administração": "block-gestao-negocios"
   };
 
-  const askResults = document.getElementById('askResults');
   const askChecks = document.querySelectorAll('.ask-chip input[type="checkbox"]');
 
   function scrollToBlock(blockId) {
@@ -524,32 +526,67 @@
     }
   }
 
+  // Mostra o resultado colado na própria opção marcada (como badge logo
+  // depois do chip), em vez de numa lista separada.
   function renderResults() {
-    askResults.innerHTML = '';
     askChecks.forEach(chk => {
+      const chip = chk.closest('.ask-chip');
+      const grid = chip.parentElement;
+      const existing = chip.nextElementSibling;
+      if (existing && existing.classList.contains('ask-chip-status')) {
+        existing.remove();
+      }
       if (!chk.checked) return;
+
       const value = chk.value;
       const blockId = AVAILABLE[value];
+      const badge = document.createElement('a');
+      badge.href = '#';
+      badge.className = 'ask-chip-status';
+
       if (blockId) {
-        const div = document.createElement('div');
-        div.className = 'ask-result ask-result-available';
-        div.innerHTML = '<span class="em">✅</span><span>' + value + ' já está disponível! <a href="#">Veja mais acima ↑</a></span>';
-        div.querySelector('a').onclick = function (e) { e.preventDefault(); scrollToBlock(blockId); };
-        askResults.appendChild(div);
+        badge.classList.add('available');
+        badge.innerHTML = '<span class="em">✅</span><span>já disponível ↑</span>';
+        badge.onclick = function (e) { e.preventDefault(); scrollToBlock(blockId); };
       } else {
         const texto = 'Olá! Quero saber se já está disponível a apostila de ' + value + ' para o PSS SEED-PR 2027.';
-        const a = document.createElement('a');
-        a.className = 'ask-result ask-result-unavailable';
-        a.target = '_blank';
-        a.rel = 'noopener';
-        a.href = 'https://wa.me/554599699444?text=' + encodeURIComponent(texto);
-        a.innerHTML = '<span class="em">💬</span><span>' + value + ' ainda não está pronta — clique pra perguntar no WhatsApp</span>';
-        askResults.appendChild(a);
+        badge.classList.add('unavailable');
+        badge.target = '_blank';
+        badge.rel = 'noopener';
+        badge.href = 'https://wa.me/554599699444?text=' + encodeURIComponent(texto);
+        badge.innerHTML = '<span class="em">💬</span><span>perguntar disponibilidade</span>';
       }
+      grid.insertBefore(badge, chip.nextSibling);
     });
   }
 
   askChecks.forEach(chk => chk.addEventListener('change', renderResults));
+
+  // Deslize em cascata: só nas fileiras de miniaturas que não estavam
+  // visíveis (primeiro plano) no carregamento da página.
+  (function () {
+    const rows = document.querySelectorAll('.apostilas-preview-row');
+    const viewportH = window.innerHeight;
+    const pending = [];
+    rows.forEach(row => {
+      const rect = row.getBoundingClientRect();
+      const wasVisible = rect.top < viewportH && rect.bottom > 0;
+      if (!wasVisible) {
+        row.classList.add('slide-pending');
+        pending.push(row);
+      }
+    });
+    if (!pending.length) return;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.remove('slide-pending');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    pending.forEach(row => observer.observe(row));
+  })();
 </script>
 
 </body>
