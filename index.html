@@ -183,7 +183,8 @@
   .apostilas-summary .apostilas-text{font-size:13.5px; color:var(--navy-deep); display:inline-block;}
   .apostilas-summary .chev{font-size:12px; color:var(--navy-deep); transition:transform .2s ease; margin-left:2px;}
   .apostilas-box[open] .apostilas-summary .chev{transform:rotate(180deg);}
-  .apostilas-list{display:flex; flex-direction:column; gap:8px; margin-top:8px;}
+  .apostilas-list{display:flex; flex-direction:column; gap:14px; margin-top:8px;}
+  .apostila-block{display:flex; flex-direction:column; gap:8px; border-radius:12px; transition:box-shadow .4s ease;}
   .apostila-link{
     display:flex; align-items:center; gap:8px; text-decoration:none;
     background:rgba(255,255,255,.08); border:1px solid rgba(233,212,142,.35); border-radius:10px;
@@ -204,60 +205,57 @@
     0%,50%,100%{transform:translateY(0);}
     25%{transform:translateY(-5px);}
   }
-  .apostilas-list a:nth-child(1) .book{animation-delay:0s;} .apostilas-list a:nth-child(1) .subj{animation-delay:.12s;}
-  .apostilas-list a:nth-child(2) .book{animation-delay:.15s;} .apostilas-list a:nth-child(2) .subj{animation-delay:.27s;}
-  .apostilas-list a:nth-child(3) .book{animation-delay:.3s;} .apostilas-list a:nth-child(3) .subj{animation-delay:.42s;}
-  .apostilas-list a:nth-child(4) .book{animation-delay:.45s;} .apostilas-list a:nth-child(4) .subj{animation-delay:.57s;}
-  .apostilas-list a:nth-child(5) .book{animation-delay:.6s;} .apostilas-list a:nth-child(5) .subj{animation-delay:.72s;}
-  .apostilas-list a:nth-child(6) .book{animation-delay:.75s;} .apostilas-list a:nth-child(6) .subj{animation-delay:.87s;}
-  .apostilas-list a:nth-child(7) .book{animation-delay:.9s;} .apostilas-list a:nth-child(7) .subj{animation-delay:1.02s;}
-  .apostilas-list a:nth-child(8) .book{animation-delay:1.05s;} .apostilas-list a:nth-child(8) .subj{animation-delay:1.17s;}
-  .apostilas-list a:nth-child(9) .book{animation-delay:1.2s;} .apostilas-list a:nth-child(9) .subj{animation-delay:1.32s;}
-  .apostilas-list a:nth-child(10) .book{animation-delay:1.35s;} .apostilas-list a:nth-child(10) .subj{animation-delay:1.47s;}
-  .apostilas-list a:nth-child(11) .book{animation-delay:1.5s;} .apostilas-list a:nth-child(11) .subj{animation-delay:1.62s;}
-  .apostilas-list a:nth-child(12) .book{animation-delay:1.65s;} .apostilas-list a:nth-child(12) .subj{animation-delay:1.77s;}
+  .apostilas-list .apostila-block:nth-child(1) .book{animation-delay:0s;} .apostilas-list .apostila-block:nth-child(1) .subj{animation-delay:.12s;}
+  .apostilas-list .apostila-block:nth-child(2) .book{animation-delay:.15s;} .apostilas-list .apostila-block:nth-child(2) .subj{animation-delay:.27s;}
+  .apostilas-list .apostila-block:nth-child(3) .book{animation-delay:.3s;} .apostilas-list .apostila-block:nth-child(3) .subj{animation-delay:.42s;}
+  .apostilas-list .apostila-block:nth-child(4) .book{animation-delay:.45s;} .apostilas-list .apostila-block:nth-child(4) .subj{animation-delay:.57s;}
+  .apostilas-list .apostila-block:nth-child(5) .book{animation-delay:.6s;} .apostilas-list .apostila-block:nth-child(5) .subj{animation-delay:.72s;}
+  .apostilas-list .apostila-block:nth-child(6) .book{animation-delay:.75s;} .apostilas-list .apostila-block:nth-child(6) .subj{animation-delay:.87s;}
+  .apostilas-list .apostila-block:nth-child(7) .book{animation-delay:.9s;} .apostilas-list .apostila-block:nth-child(7) .subj{animation-delay:1.02s;}
+  .apostilas-list .apostila-block:nth-child(8) .book{animation-delay:1.05s;} .apostilas-list .apostila-block:nth-child(8) .subj{animation-delay:1.17s;}
+  .apostilas-list .apostila-block:nth-child(9) .book{animation-delay:1.2s;} .apostilas-list .apostila-block:nth-child(9) .subj{animation-delay:1.32s;}
+  .apostilas-list .apostila-block:nth-child(10) .book{animation-delay:1.35s;} .apostilas-list .apostila-block:nth-child(10) .subj{animation-delay:1.47s;}
+  .apostilas-list .apostila-block:nth-child(11) .book{animation-delay:1.5s;} .apostilas-list .apostila-block:nth-child(11) .subj{animation-delay:1.62s;}
+  .apostilas-list .apostila-block:nth-child(12) .book{animation-delay:1.65s;} .apostilas-list .apostila-block:nth-child(12) .subj{animation-delay:1.77s;}
 
-  /* Mini prévia da capa e do índice reais das apostilas */
-  .apostilas-preview{margin-top:6px; padding-top:10px; border-top:1px dashed rgba(233,212,142,.35);}
-  .apostilas-preview-caption{font-size:9.5px; color:var(--gold-light); text-align:center; margin-bottom:8px; font-weight:700;}
-  .apostilas-preview-row{display:flex; justify-content:center; gap:12px;}
+  /* Mini prévia da capa, índice e uma página de conteúdo — HTML/CSS reais das
+     apostilas, renderizados ao vivo num iframe e reduzidos via transform:scale
+     (não são screenshots/imagens estáticas). Mesmo sistema do apostilas.html. */
+  .apostilas-preview-row{display:flex; justify-content:center; align-items:flex-start; gap:9px; text-decoration:none; transition:transform .15s ease; perspective:1100px;}
+  .apostilas-preview-row .thumb-frame-col{
+    transition: opacity 1s ease, transform 1s ease;
+    transform-origin: left center;
+    backface-visibility: hidden;
+  }
+  .apostilas-preview-row.slide-pending .thumb-frame-col{
+    opacity:0; transform: rotateY(-100deg);
+  }
+  .apostilas-preview-row .thumb-frame-col:nth-child(1){transition-delay:0s;}
+  .apostilas-preview-row .thumb-frame-col:nth-child(2){transition-delay:.5s;}
+  .apostilas-preview-row .thumb-frame-col:nth-child(3){transition-delay:1s;}
+  .apostilas-preview-row:hover{transform:translateY(-1px);}
 
-  .capa-mini{
-    width:118px; height:167px; flex-shrink:0; position:relative; overflow:hidden;
-    background:linear-gradient(160deg, var(--navy-deep) 0%, var(--navy) 62%, #274A82 100%);
-    border-radius:6px; box-shadow:0 4px 12px rgba(0,0,0,.3);
-    padding:7px 7px 5px; display:flex; flex-direction:column;
+  .thumb-frame{
+    width:100px; height:141px; flex-shrink:0; position:relative; overflow:hidden;
+    border-radius:6px; box-shadow:0 4px 12px rgba(0,0,0,.3); background:#fff;
   }
-  .capa-mini::after{
-    content:""; position:absolute; left:50%; top:40%; width:130px; height:130px;
-    transform:translate(-50%,-50%); border-radius:50%; background:rgba(255,255,255,.055);
+  .thumb-frame.indice, .thumb-frame.meio{box-shadow:0 4px 12px rgba(0,0,0,.18); border:1.5px solid #B9B9B9;}
+  .thumb-frame iframe{
+    position:absolute; top:0; left:0; width:900px; height:1600px; border:0;
+    transform:scale(0.1111); transform-origin:top left;
+    pointer-events:none;
   }
-  .capa-mini .badge{
-    position:relative; z-index:1; background:#B23A3A; color:#fff;
-    font-size:4.4px; font-weight:800; text-align:center; border-radius:3px; padding:2px 3px; line-height:1.25;
-  }
-  .capa-mini .prog{position:relative; z-index:1; font-size:4px; letter-spacing:.1em; color:var(--gold-light); font-weight:700; margin-top:7px;}
-  .capa-mini .pss{position:relative; z-index:1; font-family:'Playfair Display', serif; font-weight:800; font-size:6.6px; color:#fff;}
-  .capa-mini .yr{position:relative; z-index:1; font-size:4px; color:var(--gold-light); letter-spacing:.08em;}
-  .capa-mini .title{position:relative; z-index:1; font-family:'Playfair Display', serif; font-weight:800; font-size:8px; color:#FFD700; line-height:1.15; margin-top:auto;}
-  .capa-mini .subttl{position:relative; z-index:1; font-size:4.4px; color:#fff; margin-top:3px; line-height:1.3;}
-  .capa-mini .badge-bottom{position:relative; z-index:1; margin-top:6px; background:#B23A3A; color:#fff; font-size:3.4px; font-weight:700; text-align:center; border-radius:3px; padding:2px 3px; line-height:1.25;}
+  .thumb-frame-label{font-size:6.5px; color:var(--gold-light); text-align:center; margin-top:3px; text-transform:uppercase; letter-spacing:.05em;}
+  .thumb-frame-col{display:flex; flex-direction:column; align-items:center;}
 
-  .indice-mini{
-    width:118px; height:167px; flex-shrink:0;
-    background:#fff; border:1.5px solid #B9B9B9; border-radius:6px;
-    padding:7px 8px 6px; box-shadow:0 4px 12px rgba(0,0,0,.18);
-    display:flex; flex-direction:column;
+  .zoom-note{
+    display:flex; align-items:flex-start; gap:8px;
+    background:rgba(255,255,255,.08); border:1px solid rgba(233,212,142,.35);
+    border-radius:10px; padding:9px 12px; margin-top:8px;
   }
-  .indice-mini .hd{font-family:'Playfair Display', serif; font-weight:800; font-size:6.6px; color:var(--navy); text-align:center;}
-  .indice-mini .rule{height:1.2px; background:var(--gold); margin:3px 0 5px;}
-  .indice-mini .item{
-    display:flex; justify-content:space-between; align-items:baseline; gap:3px;
-    font-size:4.4px; color:var(--ink); line-height:1.3;
-    border-bottom:1px dotted #CFCFCF; padding-bottom:2.4px; margin-bottom:3px;
-  }
-  .indice-mini .item span:first-child{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
-  .indice-mini .item .pg{color:var(--gold); font-weight:800; flex-shrink:0;}
+  .zoom-note .icon{font-size:15px; line-height:1.3;}
+  .zoom-note p{font-size:11px; line-height:1.45; color:#DCE5F5;}
+  .zoom-note strong{color:var(--gold-light);}
 
 
   .live-total{margin-top:9px; display:flex; flex-direction:column; gap:3px; background:rgba(255,255,255,.08); border:1px dashed rgba(233,212,142,.5); border-radius:10px; padding:7px 11px;}
@@ -637,45 +635,109 @@
           <span class="apostilas-text">APOSTILAS E SIMULADOS de acordo com o edital 52/2026 PSS-SEED-PR</span>
           <span class="chev">▾</span>
         </summary>
-        <div class="apostilas-list">
-          <a href="https://chk.eduzz.com/D0R8O6N19Y" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🎓</span> Apostila e Simulados SEED PR - PSS CONHECIMENTOS BÁSICOS</a>
-          <a href="https://chk.eduzz.com/7WXGBK340A" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🤝</span> Apostila e Simulados EDUCAÇÃO INCLUSIVA PSS SEED-PR 2027</a>
-          <a href="https://chk.eduzz.com/Z0B1JYOJ9A" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🔢</span> Apostila e Simulados SEED PR - PSS MATEMÁTICA</a>
-          <a href="https://chk.eduzz.com/E0DKVQ4N91" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🍎</span> Apostila e Simulados PEDAGOGO PSS SEED-PR 2027</a>
-          <a href="https://chk.eduzz.com/39ZR8NY7WE" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🔤</span> Apostila e Simulados LÍNGUA INGLESA PSS SEED-PR 2027</a>
-          <a href="https://chk.eduzz.com/797ZYRQ40E" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🌍</span> Apostila e Simulados GEOGRAFIA PSS SEED-PR 2027</a>
-          <a href="https://chk.eduzz.com/89AXR1860D" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🏛️</span> Apostila e Simulados HISTÓRIA PSS SEED-PR 2027</a>
-          <a href="https://chk.eduzz.com/G96RA585W1" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🎨</span> Apostila e Simulados ARTES PSS SEED-PR 2027</a>
-          <a href="https://chk.eduzz.com/G92KEVJKWE" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">💼</span> Apostila e Simulados ADMINISTRAÇÃO, GESTÃO E NEGÓCIOS PSS SEED-PR 2027</a>
-          <a href="https://chk.eduzz.com/39YNDBQ4WO" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">📝</span> Apostila e Simulados LÍNGUA PORTUGUESA PSS SEED-PR 2027</a>
-          <a href="https://chk.eduzz.com/7WXGQ5AD0A" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🧪</span> Apostila e Simulados QUÍMICA PSS SEED-PR 2027</a>
-          <a href="https://chk.eduzz.com/KW8ZK3BO01" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">⚽</span> Apostila e Simulados EDUCAÇÃO FÍSICA PSS SEED-PR 2027</a>
-          <div class="apostila-coming-soon"><span>🚀</span> Em breve mais disciplinas</div>
+        <div class="zoom-note">
+          <span class="icon">🔍</span>
+          <p><strong>Dica:</strong> dá para dar zoom nas miniaturas abaixo para ver os detalhes. E toda apostila já vem com a <strong>versão JUMBO</strong> — fonte ampliada, ideal para ler direto pelo celular.</p>
+        </div>
 
-          <div class="apostilas-preview">
-            <div class="apostilas-preview-caption">👀 Assim ficam a capa e o índice reais das suas apostilas</div>
-            <div class="apostilas-preview-row">
-              <div class="capa-mini">
-                <div class="badge">🚫 Proibido compartilhar</div>
-                <div class="prog">PROGRAMA</div>
-                <div class="pss">PSS SEED-PR</div>
-                <div class="yr">2027</div>
-                <div class="title">CONHECIMENTOS<br>BÁSICOS</div>
-                <div class="subttl">Língua Portuguesa · ECA · Direitos Humanos · Conhecimentos Didáticos</div>
-                <div class="badge-bottom">© Rodrigo G. Pereira — Todos os direitos reservados</div>
-              </div>
-              <div class="indice-mini">
-                <div class="hd">ÍNDICE</div>
-                <div class="rule"></div>
-                <div class="item"><span>1.1 Língua Portuguesa</span><span class="pg">05</span></div>
-                <div class="item"><span>1.2 ECA</span><span class="pg">18</span></div>
-                <div class="item"><span>1.3 Direitos Humanos</span><span class="pg">22</span></div>
-                <div class="item"><span>1.4 Conh. Didáticos</span><span class="pg">27</span></div>
-                <div class="item"><span>Resumo (Memorex)</span><span class="pg">41</span></div>
-                <div class="item"><span>Gabarito</span><span class="pg">47</span></div>
-              </div>
-            </div>
+        <div class="apostilas-list">
+          <div class="apostila-block">
+            <a href="https://chk.eduzz.com/D0R8O6N19Y" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🎓</span> Apostila e Simulados SEED PR - PSS CONHECIMENTOS BÁSICOS</a>
+            <a href="https://chk.eduzz.com/D0R8O6N19Y" target="_blank" rel="noopener" class="apostilas-preview-row">
+              <div class="thumb-frame-col"><div class="thumb-frame capa"><iframe src="previews/conhecimentos-basicos-capa.html" scrolling="no" tabindex="-1"></iframe></div><div class="thumb-frame-label">Capa</div></div>
+              <div class="thumb-frame-col"><div class="thumb-frame indice"><iframe src="previews/conhecimentos-basicos-indice.html" scrolling="no" tabindex="-1"></iframe></div><div class="thumb-frame-label">Índice</div></div>
+              <div class="thumb-frame-col"><div class="thumb-frame meio"><iframe src="previews/conhecimentos-basicos-meio.html" scrolling="no" tabindex="-1"></iframe></div><div class="thumb-frame-label">Conteúdo</div></div>
+            </a>
           </div>
+          <div class="apostila-block">
+            <a href="https://chk.eduzz.com/7WXGBK340A" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🤝</span> Apostila e Simulados EDUCAÇÃO INCLUSIVA PSS SEED-PR 2027</a>
+            <a href="https://chk.eduzz.com/7WXGBK340A" target="_blank" rel="noopener" class="apostilas-preview-row">
+              <div class="thumb-frame-col"><div class="thumb-frame capa"><iframe src="previews/educacao-especial-capa.html" scrolling="no" tabindex="-1"></iframe></div><div class="thumb-frame-label">Capa</div></div>
+              <div class="thumb-frame-col"><div class="thumb-frame indice"><iframe src="previews/educacao-especial-indice.html" scrolling="no" tabindex="-1"></iframe></div><div class="thumb-frame-label">Índice</div></div>
+              <div class="thumb-frame-col"><div class="thumb-frame meio"><iframe src="previews/educacao-especial-meio.html" scrolling="no" tabindex="-1"></iframe></div><div class="thumb-frame-label">Conteúdo</div></div>
+            </a>
+          </div>
+          <div class="apostila-block">
+            <a href="https://chk.eduzz.com/Z0B1JYOJ9A" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🔢</span> Apostila e Simulados SEED PR - PSS MATEMÁTICA</a>
+            <a href="https://chk.eduzz.com/Z0B1JYOJ9A" target="_blank" rel="noopener" class="apostilas-preview-row">
+              <div class="thumb-frame-col"><div class="thumb-frame capa"><iframe src="previews/matematica-capa.html" scrolling="no" tabindex="-1"></iframe></div><div class="thumb-frame-label">Capa</div></div>
+              <div class="thumb-frame-col"><div class="thumb-frame indice"><iframe src="previews/matematica-indice.html" scrolling="no" tabindex="-1"></iframe></div><div class="thumb-frame-label">Índice</div></div>
+              <div class="thumb-frame-col"><div class="thumb-frame meio"><iframe src="previews/matematica-meio.html" scrolling="no" tabindex="-1"></iframe></div><div class="thumb-frame-label">Conteúdo</div></div>
+            </a>
+          </div>
+          <div class="apostila-block">
+            <a href="https://chk.eduzz.com/E0DKVQ4N91" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🍎</span> Apostila e Simulados PEDAGOGO PSS SEED-PR 2027</a>
+            <a href="https://chk.eduzz.com/E0DKVQ4N91" target="_blank" rel="noopener" class="apostilas-preview-row">
+              <div class="thumb-frame-col"><div class="thumb-frame capa"><iframe src="previews/pedagogo-capa.html" scrolling="no" tabindex="-1"></iframe></div><div class="thumb-frame-label">Capa</div></div>
+              <div class="thumb-frame-col"><div class="thumb-frame indice"><iframe src="previews/pedagogo-indice.html" scrolling="no" tabindex="-1"></iframe></div><div class="thumb-frame-label">Índice</div></div>
+              <div class="thumb-frame-col"><div class="thumb-frame meio"><iframe src="previews/pedagogo-meio.html" scrolling="no" tabindex="-1"></iframe></div><div class="thumb-frame-label">Conteúdo</div></div>
+            </a>
+          </div>
+          <div class="apostila-block">
+            <a href="https://chk.eduzz.com/39ZR8NY7WE" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🔤</span> Apostila e Simulados LÍNGUA INGLESA PSS SEED-PR 2027</a>
+            <a href="https://chk.eduzz.com/39ZR8NY7WE" target="_blank" rel="noopener" class="apostilas-preview-row">
+              <div class="thumb-frame-col"><div class="thumb-frame capa"><iframe src="previews/lingua-inglesa-capa.html" scrolling="no" tabindex="-1"></iframe></div><div class="thumb-frame-label">Capa</div></div>
+              <div class="thumb-frame-col"><div class="thumb-frame indice"><iframe src="previews/lingua-inglesa-indice.html" scrolling="no" tabindex="-1"></iframe></div><div class="thumb-frame-label">Índice</div></div>
+              <div class="thumb-frame-col"><div class="thumb-frame meio"><iframe src="previews/lingua-inglesa-meio.html" scrolling="no" tabindex="-1"></iframe></div><div class="thumb-frame-label">Conteúdo</div></div>
+            </a>
+          </div>
+          <div class="apostila-block">
+            <a href="https://chk.eduzz.com/797ZYRQ40E" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🌍</span> Apostila e Simulados GEOGRAFIA PSS SEED-PR 2027</a>
+            <a href="https://chk.eduzz.com/797ZYRQ40E" target="_blank" rel="noopener" class="apostilas-preview-row">
+              <div class="thumb-frame-col"><div class="thumb-frame capa"><iframe src="previews/geografia-capa.html" scrolling="no" tabindex="-1"></iframe></div><div class="thumb-frame-label">Capa</div></div>
+              <div class="thumb-frame-col"><div class="thumb-frame indice"><iframe src="previews/geografia-indice.html" scrolling="no" tabindex="-1"></iframe></div><div class="thumb-frame-label">Índice</div></div>
+              <div class="thumb-frame-col"><div class="thumb-frame meio"><iframe src="previews/geografia-meio.html" scrolling="no" tabindex="-1"></iframe></div><div class="thumb-frame-label">Conteúdo</div></div>
+            </a>
+          </div>
+          <div class="apostila-block">
+            <a href="https://chk.eduzz.com/89AXR1860D" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🏛️</span> Apostila e Simulados HISTÓRIA PSS SEED-PR 2027</a>
+            <a href="https://chk.eduzz.com/89AXR1860D" target="_blank" rel="noopener" class="apostilas-preview-row">
+              <div class="thumb-frame-col"><div class="thumb-frame capa"><iframe src="previews/historia-capa.html" scrolling="no" tabindex="-1"></iframe></div><div class="thumb-frame-label">Capa</div></div>
+              <div class="thumb-frame-col"><div class="thumb-frame indice"><iframe src="previews/historia-indice.html" scrolling="no" tabindex="-1"></iframe></div><div class="thumb-frame-label">Índice</div></div>
+              <div class="thumb-frame-col"><div class="thumb-frame meio"><iframe src="previews/historia-meio.html" scrolling="no" tabindex="-1"></iframe></div><div class="thumb-frame-label">Conteúdo</div></div>
+            </a>
+          </div>
+          <div class="apostila-block">
+            <a href="https://chk.eduzz.com/G96RA585W1" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🎨</span> Apostila e Simulados ARTES PSS SEED-PR 2027</a>
+            <a href="https://chk.eduzz.com/G96RA585W1" target="_blank" rel="noopener" class="apostilas-preview-row">
+              <div class="thumb-frame-col"><div class="thumb-frame capa"><iframe src="previews/artes-capa.html" scrolling="no" tabindex="-1"></iframe></div><div class="thumb-frame-label">Capa</div></div>
+              <div class="thumb-frame-col"><div class="thumb-frame indice"><iframe src="previews/artes-indice.html" scrolling="no" tabindex="-1"></iframe></div><div class="thumb-frame-label">Índice</div></div>
+              <div class="thumb-frame-col"><div class="thumb-frame meio"><iframe src="previews/artes-meio.html" scrolling="no" tabindex="-1"></iframe></div><div class="thumb-frame-label">Conteúdo</div></div>
+            </a>
+          </div>
+          <div class="apostila-block">
+            <a href="https://chk.eduzz.com/G92KEVJKWE" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">💼</span> Apostila e Simulados ADMINISTRAÇÃO, GESTÃO E NEGÓCIOS PSS SEED-PR 2027</a>
+            <a href="https://chk.eduzz.com/G92KEVJKWE" target="_blank" rel="noopener" class="apostilas-preview-row">
+              <div class="thumb-frame-col"><div class="thumb-frame capa"><iframe src="previews/gestao-negocios-capa.html" scrolling="no" tabindex="-1"></iframe></div><div class="thumb-frame-label">Capa</div></div>
+              <div class="thumb-frame-col"><div class="thumb-frame indice"><iframe src="previews/gestao-negocios-indice.html" scrolling="no" tabindex="-1"></iframe></div><div class="thumb-frame-label">Índice</div></div>
+              <div class="thumb-frame-col"><div class="thumb-frame meio"><iframe src="previews/gestao-negocios-meio.html" scrolling="no" tabindex="-1"></iframe></div><div class="thumb-frame-label">Conteúdo</div></div>
+            </a>
+          </div>
+          <div class="apostila-block">
+            <a href="https://chk.eduzz.com/39YNDBQ4WO" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">📝</span> Apostila e Simulados LÍNGUA PORTUGUESA PSS SEED-PR 2027</a>
+            <a href="https://chk.eduzz.com/39YNDBQ4WO" target="_blank" rel="noopener" class="apostilas-preview-row">
+              <div class="thumb-frame-col"><div class="thumb-frame capa"><iframe src="previews/lingua-portuguesa-capa.html" scrolling="no" tabindex="-1"></iframe></div><div class="thumb-frame-label">Capa</div></div>
+              <div class="thumb-frame-col"><div class="thumb-frame indice"><iframe src="previews/lingua-portuguesa-indice.html" scrolling="no" tabindex="-1"></iframe></div><div class="thumb-frame-label">Índice</div></div>
+              <div class="thumb-frame-col"><div class="thumb-frame meio"><iframe src="previews/lingua-portuguesa-meio.html" scrolling="no" tabindex="-1"></iframe></div><div class="thumb-frame-label">Conteúdo</div></div>
+            </a>
+          </div>
+          <div class="apostila-block">
+            <a href="https://chk.eduzz.com/7WXGQ5AD0A" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">🧪</span> Apostila e Simulados QUÍMICA PSS SEED-PR 2027</a>
+            <a href="https://chk.eduzz.com/7WXGQ5AD0A" target="_blank" rel="noopener" class="apostilas-preview-row">
+              <div class="thumb-frame-col"><div class="thumb-frame capa"><iframe src="previews/quimica-capa.html" scrolling="no" tabindex="-1"></iframe></div><div class="thumb-frame-label">Capa</div></div>
+              <div class="thumb-frame-col"><div class="thumb-frame indice"><iframe src="previews/quimica-indice.html" scrolling="no" tabindex="-1"></iframe></div><div class="thumb-frame-label">Índice</div></div>
+              <div class="thumb-frame-col"><div class="thumb-frame meio"><iframe src="previews/quimica-meio.html" scrolling="no" tabindex="-1"></iframe></div><div class="thumb-frame-label">Conteúdo</div></div>
+            </a>
+          </div>
+          <div class="apostila-block">
+            <a href="https://chk.eduzz.com/KW8ZK3BO01" target="_blank" rel="noopener" class="apostila-link"><span class="book">📘</span><span class="subj">⚽</span> Apostila e Simulados EDUCAÇÃO FÍSICA PSS SEED-PR 2027</a>
+            <a href="https://chk.eduzz.com/KW8ZK3BO01" target="_blank" rel="noopener" class="apostilas-preview-row">
+              <div class="thumb-frame-col"><div class="thumb-frame capa"><iframe src="previews/educacao-fisica-capa.html" scrolling="no" tabindex="-1"></iframe></div><div class="thumb-frame-label">Capa</div></div>
+              <div class="thumb-frame-col"><div class="thumb-frame indice"><iframe src="previews/educacao-fisica-indice.html" scrolling="no" tabindex="-1"></iframe></div><div class="thumb-frame-label">Índice</div></div>
+              <div class="thumb-frame-col"><div class="thumb-frame meio"><iframe src="previews/educacao-fisica-meio.html" scrolling="no" tabindex="-1"></iframe></div><div class="thumb-frame-label">Conteúdo</div></div>
+            </a>
+          </div>
+          <div class="apostila-coming-soon"><span>🚀</span> Em breve mais disciplinas</div>
         </div>
       </details>
 
@@ -1612,6 +1674,28 @@
   update();
   firstRender = false;
 
+</script>
+
+<script>
+  // Deslize/virada de página em 3D nas miniaturas das apostilas — mesmo
+  // comportamento do apostilas.html (anima toda vez que a fileira sai e
+  // volta a entrar no foco da tela).
+  (function () {
+    const rows = document.querySelectorAll('.apostilas-preview-row');
+    const viewportH = window.innerHeight;
+    rows.forEach(row => {
+      const rect = row.getBoundingClientRect();
+      const wasVisible = rect.top < viewportH && rect.bottom > 0;
+      if (!wasVisible) row.classList.add('slide-pending');
+    });
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.remove('slide-pending');
+        else entry.target.classList.add('slide-pending');
+      });
+    }, { threshold: 0.15 });
+    rows.forEach(row => observer.observe(row));
+  })();
 </script>
 
 </body>
