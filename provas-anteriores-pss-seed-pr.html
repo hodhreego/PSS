@@ -63,6 +63,21 @@
     font-family:'Noto Sans',Arial,sans-serif; font-size:13px; line-height:1.6; color:#2a3542;
   }
 
+  .simulado{ margin-top:16px; border-top:1px dashed #dfe6ee; padding-top:14px; }
+  .sim-titulo{ font-size:13px; font-weight:700; color:var(--navy2); margin-bottom:10px; }
+  .sim-pergunta{ margin-bottom:14px; }
+  .sim-enunciado{ font-size:13.5px; font-weight:600; margin-bottom:8px; color:#1c2733; }
+  .sim-opcoes{ display:flex; flex-direction:column; gap:6px; }
+  .sim-opcao{ text-align:left; border:1px solid #dfe6ee; background:#f7f9fb; border-radius:6px;
+    padding:8px 12px; font-size:13px; cursor:pointer; transition:background .15s,border-color .15s;
+    font-family:'Noto Sans',Arial,sans-serif; }
+  .sim-opcao:hover:not([disabled]){ background:#eef2f7; }
+  .sim-opcao.certa{ background:#e6f7ec; border-color:#2ea44f; color:#166b3a; font-weight:700; }
+  .sim-opcao.errada{ background:#fdeaea; border-color:#c0392b; color:#96281b; font-weight:700; }
+  .sim-opcao[disabled]{ cursor:default; }
+  .sim-resultado{ margin-top:6px; background:#eef4fb; border-radius:8px; padding:12px 16px;
+    font-size:14px; font-weight:700; color:var(--navy2); text-align:center; }
+
   .cta-wrap{ text-align:center; margin:38px 0 28px; }
   .cta-hand{ display:block; font-size:26px; margin-bottom:6px; animation:bounce 1s infinite; }
   @keyframes bounce{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-6px); } }
@@ -95,7 +110,9 @@
     (na seção de Matemática) já foram baixadas e convertidas para texto — clique em "📖 Clique para ler a prova completa"
     pra expandir e ler direto aqui na página. As demais foram localizadas e confirmadas na plataforma pública
     PCI Concursos, mas o download do PDF nessas plataformas exige clique manual no navegador — use
-    "Ver prova na fonte" para acessá-las lá.
+    "Ver prova na fonte" para acessá-las lá. Todo cargo também tem um <b>🎯 mini-simulado de 5 perguntas</b>:
+    clique numa alternativa e o sistema mostra na hora se acertou (verde) ou errou (vermelho), com a
+    porcentagem de acertos ao final.
   </div>
 
   <h2 class="section">Provas por disciplina — Concurso SEED-PR/UFPR (Edital 09/2007)</h2>
@@ -111,7 +128,13 @@
       <a class="btn" target="_blank" rel="noopener" href="https://www.pciconcursos.com.br/provas/download/professor-matematica-seed-pr-ufpr-2007">↗ Ver prova na fonte (PCI Concursos)</a>
       <a class="btn comprar" target="_blank" rel="noopener" href="https://chk.eduzz.com/Z0B1JYOJ9A">📘 Quero a apostila de Matemática</a>
     </div>
-    
+
+    <div class="simulado" data-simulado="matematica">
+      <p class="sim-titulo">🎯 Mini-simulado — teste seus conhecimentos (5 perguntas)</p>
+      <div class="sim-perguntas"></div>
+      <div class="sim-resultado" style="display:none"></div>
+    </div>
+
     <p style="margin-top:14px;font-size:12.5px;color:#8592a0;font-weight:700;">📁 Provas com texto completo já disponível nesta página:</p>
     <details class="prova-texto"><summary>📖 Clique para ler a prova completa</summary><pre>ESTADO DO PARANÁ SECRETARIA DE ESTADO DA EDUCAÇÃO
 
@@ -2832,7 +2855,13 @@ www.pciconcursos.com.br</pre></details>
       <div>
         <h3>Professor — Pedagogo (Edital 09/2007, SEED-PR/UFPR)</h3>
         <div class="fonte-info">Mesma banca (NC/UFPR) que organiza o PSS SEED-PR atual.</div>
-      </div>
+      
+    <div class="simulado" data-simulado="matematica">
+      <p class="sim-titulo">🎯 Mini-simulado — teste seus conhecimentos (5 perguntas)</p>
+      <div class="sim-perguntas"></div>
+      <div class="sim-resultado" style="display:none"></div>
+    </div>
+  </div>
     </div>
     <div class="botoes">
       <a class="btn" target="_blank" rel="noopener" href="https://www.pciconcursos.com.br/provas/download/professor-pedagogo-seed-pr-ufpr-2007">↗ Ver prova na fonte (PCI Concursos)</a>
@@ -2854,6 +2883,12 @@ www.pciconcursos.com.br</pre></details>
       <a class="btn comprar" target="_blank" rel="noopener" href="https://chk.eduzz.com/39YNDBQ4WO">📘 Quero a apostila de Língua Portuguesa</a>
     </div>
     
+  
+    <div class="simulado" data-simulado="portugues">
+      <p class="sim-titulo">🎯 Mini-simulado — teste seus conhecimentos (5 perguntas)</p>
+      <div class="sim-perguntas"></div>
+      <div class="sim-resultado" style="display:none"></div>
+    </div>
   </div>
 
   <div class="disciplina">
@@ -2869,6 +2904,12 @@ www.pciconcursos.com.br</pre></details>
       <a class="btn comprar" target="_blank" rel="noopener" href="https://chk.eduzz.com/39ZR8NY7WE">📘 Quero a apostila de Língua Inglesa</a>
     </div>
     
+  
+    <div class="simulado" data-simulado="ingles">
+      <p class="sim-titulo">🎯 Mini-simulado — teste seus conhecimentos (5 perguntas)</p>
+      <div class="sim-perguntas"></div>
+      <div class="sim-resultado" style="display:none"></div>
+    </div>
   </div>
 
   <div class="disciplina">
@@ -2884,6 +2925,12 @@ www.pciconcursos.com.br</pre></details>
       <a class="btn comprar" target="_blank" rel="noopener" href="https://chk.eduzz.com/797ZYRQ40E">📘 Quero a apostila de Geografia</a>
     </div>
     
+  
+    <div class="simulado" data-simulado="geografia">
+      <p class="sim-titulo">🎯 Mini-simulado — teste seus conhecimentos (5 perguntas)</p>
+      <div class="sim-perguntas"></div>
+      <div class="sim-resultado" style="display:none"></div>
+    </div>
   </div>
 
   <div class="disciplina">
@@ -2899,6 +2946,12 @@ www.pciconcursos.com.br</pre></details>
       <a class="btn comprar" target="_blank" rel="noopener" href="https://chk.eduzz.com/89AXR1860D">📘 Quero a apostila de História</a>
     </div>
     
+  
+    <div class="simulado" data-simulado="historia">
+      <p class="sim-titulo">🎯 Mini-simulado — teste seus conhecimentos (5 perguntas)</p>
+      <div class="sim-perguntas"></div>
+      <div class="sim-resultado" style="display:none"></div>
+    </div>
   </div>
 
   <div class="disciplina">
@@ -2914,6 +2967,12 @@ www.pciconcursos.com.br</pre></details>
       <a class="btn comprar" target="_blank" rel="noopener" href="https://chk.eduzz.com/7WXGQ5AD0A">📘 Quero a apostila de Química</a>
     </div>
     
+  
+    <div class="simulado" data-simulado="quimica">
+      <p class="sim-titulo">🎯 Mini-simulado — teste seus conhecimentos (5 perguntas)</p>
+      <div class="sim-perguntas"></div>
+      <div class="sim-resultado" style="display:none"></div>
+    </div>
   </div>
 
   <div class="disciplina">
@@ -2929,6 +2988,12 @@ www.pciconcursos.com.br</pre></details>
       <a class="btn comprar" target="_blank" rel="noopener" href="https://chk.eduzz.com/KW8ZK3BO01">📘 Quero a apostila de Educação Física</a>
     </div>
     
+  
+    <div class="simulado" data-simulado="edfisica">
+      <p class="sim-titulo">🎯 Mini-simulado — teste seus conhecimentos (5 perguntas)</p>
+      <div class="sim-perguntas"></div>
+      <div class="sim-resultado" style="display:none"></div>
+    </div>
   </div>
 
   <div class="disciplina">
@@ -2944,6 +3009,12 @@ www.pciconcursos.com.br</pre></details>
       <a class="btn comprar" target="_blank" rel="noopener" href="https://chk.eduzz.com/G96RA585W1">📘 Quero a apostila de Artes</a>
     </div>
     
+  
+    <div class="simulado" data-simulado="artes">
+      <p class="sim-titulo">🎯 Mini-simulado — teste seus conhecimentos (5 perguntas)</p>
+      <div class="sim-perguntas"></div>
+      <div class="sim-resultado" style="display:none"></div>
+    </div>
   </div>
 
   <div class="disciplina">
@@ -2959,6 +3030,12 @@ www.pciconcursos.com.br</pre></details>
       <a class="btn comprar" target="_blank" rel="noopener" href="https://chk.eduzz.com/G92KEVJKWE">📘 Quero a apostila de Administração, Gestão e Negócios</a>
     </div>
     
+  
+    <div class="simulado" data-simulado="administracao">
+      <p class="sim-titulo">🎯 Mini-simulado — teste seus conhecimentos (5 perguntas)</p>
+      <div class="sim-perguntas"></div>
+      <div class="sim-resultado" style="display:none"></div>
+    </div>
   </div>
 
   <div class="disciplina">
@@ -2974,6 +3051,12 @@ www.pciconcursos.com.br</pre></details>
       <a class="btn comprar" target="_blank" rel="noopener" href="https://chk.eduzz.com/7WXGBK340A">📘 Quero a apostila de Educação Inclusiva</a>
     </div>
     
+  
+    <div class="simulado" data-simulado="edespecial">
+      <p class="sim-titulo">🎯 Mini-simulado — teste seus conhecimentos (5 perguntas)</p>
+      <div class="sim-perguntas"></div>
+      <div class="sim-resultado" style="display:none"></div>
+    </div>
   </div>
 
 
@@ -2996,6 +3079,12 @@ www.pciconcursos.com.br</pre></details>
       <a class="btn" target="_blank" rel="noopener" href="https://www.pciconcursos.com.br/provas/download/professor-matematica-seed-pr-instituto-consulplan-2024">↗ Ver prova na fonte (PCI Concursos)</a>
       <a class="btn comprar" target="_blank" rel="noopener" href="https://chk.eduzz.com/Z0B1JYOJ9A">📘 Quero a apostila de Matemática</a>
     </div>
+  
+    <div class="simulado" data-simulado="matematica">
+      <p class="sim-titulo">🎯 Mini-simulado — teste seus conhecimentos (5 perguntas)</p>
+      <div class="sim-perguntas"></div>
+      <div class="sim-resultado" style="display:none"></div>
+    </div>
   </div>
 
   <div class="disciplina">
@@ -3009,6 +3098,12 @@ www.pciconcursos.com.br</pre></details>
     <div class="botoes">
       <a class="btn" target="_blank" rel="noopener" href="https://www.pciconcursos.com.br/provas/download/professor-pedagogo-seed-pr-instituto-consulplan-2024">↗ Ver prova na fonte (PCI Concursos)</a>
       <a class="btn comprar" target="_blank" rel="noopener" href="https://chk.eduzz.com/E0DKVQ4N91">📘 Quero a apostila de Pedagogo</a>
+    </div>
+  
+    <div class="simulado" data-simulado="pedagogia">
+      <p class="sim-titulo">🎯 Mini-simulado — teste seus conhecimentos (5 perguntas)</p>
+      <div class="sim-perguntas"></div>
+      <div class="sim-resultado" style="display:none"></div>
     </div>
   </div>
 
@@ -3024,6 +3119,12 @@ www.pciconcursos.com.br</pre></details>
       <a class="btn" target="_blank" rel="noopener" href="https://www.pciconcursos.com.br/provas/download/professor-lingua-portuguesa-seed-pr-instituto-consulplan-2024">↗ Ver prova na fonte (PCI Concursos)</a>
       <a class="btn comprar" target="_blank" rel="noopener" href="https://chk.eduzz.com/39YNDBQ4WO">📘 Quero a apostila de Língua Portuguesa</a>
     </div>
+  
+    <div class="simulado" data-simulado="portugues">
+      <p class="sim-titulo">🎯 Mini-simulado — teste seus conhecimentos (5 perguntas)</p>
+      <div class="sim-perguntas"></div>
+      <div class="sim-resultado" style="display:none"></div>
+    </div>
   </div>
 
   <div class="disciplina">
@@ -3037,6 +3138,12 @@ www.pciconcursos.com.br</pre></details>
     <div class="botoes">
       <a class="btn" target="_blank" rel="noopener" href="https://www.pciconcursos.com.br/provas/download/area-de-conhecimento-lem-ingles-seed-pr-instituto-consulplan-2022">↗ Ver prova na fonte (PCI Concursos)</a>
       <a class="btn comprar" target="_blank" rel="noopener" href="https://chk.eduzz.com/39ZR8NY7WE">📘 Quero a apostila de Língua Inglesa (LEM-Inglês)</a>
+    </div>
+  
+    <div class="simulado" data-simulado="ingles">
+      <p class="sim-titulo">🎯 Mini-simulado — teste seus conhecimentos (5 perguntas)</p>
+      <div class="sim-perguntas"></div>
+      <div class="sim-resultado" style="display:none"></div>
     </div>
   </div>
 
@@ -3052,6 +3159,12 @@ www.pciconcursos.com.br</pre></details>
       <a class="btn" target="_blank" rel="noopener" href="https://www.pciconcursos.com.br/provas/download/professor-geografia-seed-pr-instituto-consulplan-2024">↗ Ver prova na fonte (PCI Concursos)</a>
       <a class="btn comprar" target="_blank" rel="noopener" href="https://chk.eduzz.com/797ZYRQ40E">📘 Quero a apostila de Geografia</a>
     </div>
+  
+    <div class="simulado" data-simulado="geografia">
+      <p class="sim-titulo">🎯 Mini-simulado — teste seus conhecimentos (5 perguntas)</p>
+      <div class="sim-perguntas"></div>
+      <div class="sim-resultado" style="display:none"></div>
+    </div>
   </div>
 
   <div class="disciplina">
@@ -3065,6 +3178,12 @@ www.pciconcursos.com.br</pre></details>
     <div class="botoes">
       <a class="btn" target="_blank" rel="noopener" href="https://www.pciconcursos.com.br/provas/download/professor-historia-seed-pr-instituto-consulplan-2024">↗ Ver prova na fonte (PCI Concursos)</a>
       <a class="btn comprar" target="_blank" rel="noopener" href="https://chk.eduzz.com/89AXR1860D">📘 Quero a apostila de História</a>
+    </div>
+  
+    <div class="simulado" data-simulado="historia">
+      <p class="sim-titulo">🎯 Mini-simulado — teste seus conhecimentos (5 perguntas)</p>
+      <div class="sim-perguntas"></div>
+      <div class="sim-resultado" style="display:none"></div>
     </div>
   </div>
 
@@ -3080,6 +3199,12 @@ www.pciconcursos.com.br</pre></details>
       <a class="btn" target="_blank" rel="noopener" href="https://www.pciconcursos.com.br/provas/download/professor-quimica-seed-pr-instituto-consulplan-2024">↗ Ver prova na fonte (PCI Concursos)</a>
       <a class="btn comprar" target="_blank" rel="noopener" href="https://chk.eduzz.com/7WXGQ5AD0A">📘 Quero a apostila de Química</a>
     </div>
+  
+    <div class="simulado" data-simulado="quimica">
+      <p class="sim-titulo">🎯 Mini-simulado — teste seus conhecimentos (5 perguntas)</p>
+      <div class="sim-perguntas"></div>
+      <div class="sim-resultado" style="display:none"></div>
+    </div>
   </div>
 
   <div class="disciplina">
@@ -3093,6 +3218,12 @@ www.pciconcursos.com.br</pre></details>
     <div class="botoes">
       <a class="btn" target="_blank" rel="noopener" href="https://www.pciconcursos.com.br/provas/download/professor-educacao-fisica-seed-pr-instituto-consulplan-2024-93">↗ Ver prova na fonte (PCI Concursos)</a>
       <a class="btn comprar" target="_blank" rel="noopener" href="https://chk.eduzz.com/KW8ZK3BO01">📘 Quero a apostila de Educação Física</a>
+    </div>
+  
+    <div class="simulado" data-simulado="edfisica">
+      <p class="sim-titulo">🎯 Mini-simulado — teste seus conhecimentos (5 perguntas)</p>
+      <div class="sim-perguntas"></div>
+      <div class="sim-resultado" style="display:none"></div>
     </div>
   </div>
 
@@ -3108,6 +3239,12 @@ www.pciconcursos.com.br</pre></details>
       <a class="btn" target="_blank" rel="noopener" href="https://www.pciconcursos.com.br/provas/download/professor-arte-seed-pr-instituto-consulplan-2024">↗ Ver prova na fonte (PCI Concursos)</a>
       <a class="btn comprar" target="_blank" rel="noopener" href="https://chk.eduzz.com/G96RA585W1">📘 Quero a apostila de Artes</a>
     </div>
+  
+    <div class="simulado" data-simulado="artes">
+      <p class="sim-titulo">🎯 Mini-simulado — teste seus conhecimentos (5 perguntas)</p>
+      <div class="sim-perguntas"></div>
+      <div class="sim-resultado" style="display:none"></div>
+    </div>
   </div>
 
   <div class="disciplina">
@@ -3121,6 +3258,12 @@ www.pciconcursos.com.br</pre></details>
     <div class="botoes">
       <a class="btn" target="_blank" rel="noopener" href="https://www.pciconcursos.com.br/provas/download/professor-da-educacao-especial-seed-pr-instituto-consulplan-2024">↗ Ver prova na fonte (PCI Concursos)</a>
       <a class="btn comprar" target="_blank" rel="noopener" href="https://chk.eduzz.com/7WXGBK340A">📘 Quero a apostila de Educação Especial</a>
+    </div>
+  
+    <div class="simulado" data-simulado="edespecial">
+      <p class="sim-titulo">🎯 Mini-simulado — teste seus conhecimentos (5 perguntas)</p>
+      <div class="sim-perguntas"></div>
+      <div class="sim-resultado" style="display:none"></div>
     </div>
   </div>
   <div class="disciplina" style="border-left-color:#8592a0;">
@@ -3153,6 +3296,140 @@ www.pciconcursos.com.br</pre></details>
   Material de apoio complementar às apostilas PSS SEED-PR. Links verificados e atualizados em 2026.
   <br><span class="rodape-badge">© Todos os direitos reservados — uso exclusivo dos alunos</span>
 </footer>
+
+<script>
+(function(){
+  var SIMULADOS = {
+    matematica: [
+      { enunciado: "Quanto é 2/3 + 1/6?", alternativas: ["1/2", "5/6", "3/9", "1"], correta: 1 },
+      { enunciado: "A soma dos ângulos internos de um triângulo é:", alternativas: ["90°", "180°", "270°", "360°"], correta: 1 },
+      { enunciado: "A fração 3/4 corresponde a qual porcentagem?", alternativas: ["34%", "43%", "75%", "80%"], correta: 2 },
+      { enunciado: "Na PA (2, 5, 8, 11, ...), qual é o 5º termo?", alternativas: ["12", "13", "14", "15"], correta: 2 },
+      { enunciado: "O Teorema de Pitágoras se aplica a triângulos:", alternativas: ["equiláteros", "retângulos", "isósceles quaisquer", "obtusângulos"], correta: 1 }
+    ],
+    pedagogia: [
+      { enunciado: "Paulo Freire é o principal expoente de qual pedagogia?", alternativas: ["Pedagogia Tradicional", "Pedagogia da Escola Nova", "Pedagogia Libertadora", "Pedagogia Tecnicista"], correta: 2 },
+      { enunciado: "A sigla BNCC significa:", alternativas: ["Base Nacional Comum Curricular", "Base Nacional de Currículo e Conteúdo", "Boletim Nacional do Censo Curricular", "Banco Nacional de Conteúdos Curriculares"], correta: 0 },
+      { enunciado: "Para Vygotsky, a Zona de Desenvolvimento Proximal é:", alternativas: ["o nível máximo que a criança já domina sozinha", "a distância entre o que a criança faz sozinha e o que faz com ajuda", "o período pré-escolar do desenvolvimento", "a fase de alfabetização"], correta: 1 },
+      { enunciado: "A avaliação formativa tem como principal objetivo:", alternativas: ["classificar o aluno ao final do ano", "acompanhar e ajustar a aprendizagem continuamente", "aplicar apenas provas somativas", "eliminar a autoavaliação"], correta: 1 },
+      { enunciado: "A sigla LDB refere-se à:", alternativas: ["Lei de Diretrizes e Bases da Educação Nacional", "Lei de Desenvolvimento Básico", "Lei Distrital de Bolsas", "Lei de Direitos Básicos do Estudante"], correta: 0 }
+    ],
+    portugues: [
+      { enunciado: "Na frase \"Ele correu rapidamente\", a palavra destacada é classificada como:", alternativas: ["substantivo", "advérbio", "adjetivo", "conjunção"], correta: 1 },
+      { enunciado: "Atribuir características humanas a seres inanimados é a figura de linguagem chamada:", alternativas: ["metáfora", "hipérbole", "prosopopeia (personificação)", "metonímia"], correta: 2 },
+      { enunciado: "Em \"Ele chegou, porém não avisou\", a conjunção \"porém\" é classificada como:", alternativas: ["aditiva", "adversativa", "conclusiva", "explicativa"], correta: 1 },
+      { enunciado: "Em \"Choveu muito ontem\", o sujeito da oração é:", alternativas: ["simples", "composto", "oculto", "inexistente"], correta: 3 },
+      { enunciado: "Em \"Curitiba, capital do Paraná, é fria\", o trecho destacado é um(a):", alternativas: ["aposto", "vocativo", "predicativo", "objeto direto"], correta: 0 }
+    ],
+    ingles: [
+      { enunciado: "Complete: \"She ___ to school every day.\"", alternativas: ["go", "goes", "going", "gone"], correta: 1 },
+      { enunciado: "What is the past tense of \"go\"?", alternativas: ["goed", "went", "gone", "going"], correta: 1 },
+      { enunciado: "\"Although it was raining, we went out.\" The word \"although\" introduces an idea of:", alternativas: ["cause", "concession/contrast", "purpose", "condition"], correta: 1 },
+      { enunciado: "Choose the correct comparative: \"This book is ___ than that one.\"", alternativas: ["gooder", "more good", "better", "best"], correta: 2 },
+      { enunciado: "The relative pronoun \"who\" is normally used to refer to:", alternativas: ["places", "people", "objects", "time"], correta: 1 }
+    ],
+    geografia: [
+      { enunciado: "O aquecimento anormal das águas do Oceano Pacífico é conhecido como:", alternativas: ["La Niña", "El Niño", "Efeito Estufa", "Corrente do Golfo"], correta: 1 },
+      { enunciado: "A Região Sul do Brasil é formada pelos estados:", alternativas: ["PR, SC e RS", "SP, RJ e MG", "PR, SP e RJ", "SC, RS e SP"], correta: 0 },
+      { enunciado: "Uma pirâmide etária é um gráfico que representa:", alternativas: ["a renda da população por classe social", "a distribuição da população por idade e sexo", "o relevo de uma região", "a divisão política de um território"], correta: 1 },
+      { enunciado: "O principal bioma original do estado do Paraná é:", alternativas: ["Cerrado", "Caatinga", "Mata Atlântica", "Pampa"], correta: 2 },
+      { enunciado: "\"Êxodo rural\" é o termo que descreve:", alternativas: ["a migração do campo para a cidade", "o crescimento da produção agrícola", "a seca prolongada no campo", "a divisão de terras rurais"], correta: 0 }
+    ],
+    historia: [
+      { enunciado: "A Revolução Farroupilha ocorreu principalmente em qual região?", alternativas: ["Paraná", "Rio Grande do Sul", "Bahia", "Minas Gerais"], correta: 1 },
+      { enunciado: "Em que ano o Brasil se tornou uma república?", alternativas: ["1822", "1889", "1930", "1945"], correta: 1 },
+      { enunciado: "Getúlio Vargas governou o Brasil durante o período conhecido como:", alternativas: ["Era Vargas", "República Velha", "Nova República", "Período Regencial"], correta: 0 },
+      { enunciado: "A Guerra do Contestado foi um conflito de limites territoriais entre:", alternativas: ["Paraná e São Paulo", "Paraná e Santa Catarina", "Santa Catarina e Rio Grande do Sul", "Paraná e Mato Grosso"], correta: 1 },
+      { enunciado: "O tratado que definiu a divisão de terras na América entre Portugal e Espanha foi:", alternativas: ["Tratado de Madrid", "Tratado de Tordesilhas", "Tratado de Utrecht", "Tratado de Methuen"], correta: 1 }
+    ],
+    quimica: [
+      { enunciado: "Qual é o símbolo químico do sódio?", alternativas: ["S", "So", "Na", "Nd"], correta: 2 },
+      { enunciado: "O pH de uma solução neutra é:", alternativas: ["0", "7", "10", "14"], correta: 1 },
+      { enunciado: "A tabela periódica organiza os elementos principalmente por:", alternativas: ["massa molar", "número atômico", "ordem alfabética", "estado físico"], correta: 1 },
+      { enunciado: "Reações químicas que liberam calor são chamadas de:", alternativas: ["endotérmicas", "exotérmicas", "catalíticas", "reversíveis"], correta: 1 },
+      { enunciado: "Qual é a fórmula química da água?", alternativas: ["CO2", "H2O", "O2", "NaCl"], correta: 1 }
+    ],
+    edfisica: [
+      { enunciado: "No Brasil, a Educação Física escolar é orientada principalmente por qual documento curricular?", alternativas: ["PCN apenas", "BNCC", "LDB exclusivamente", "PPP da escola apenas"], correta: 1 },
+      { enunciado: "O sistema cardiovascular é composto principalmente por:", alternativas: ["ossos e articulações", "coração e vasos sanguíneos", "músculos e tendões", "pulmões e brônquios"], correta: 1 },
+      { enunciado: "A capacidade física relacionada à amplitude de movimento das articulações é a:", alternativas: ["força", "flexibilidade", "velocidade", "resistência"], correta: 1 },
+      { enunciado: "O handebol é classificado como um esporte:", alternativas: ["individual", "de invasão/coletivo", "de rede", "de precisão"], correta: 1 },
+      { enunciado: "A FIFA é a entidade internacional que rege qual esporte?", alternativas: ["Basquete", "Vôlei", "Futebol", "Handebol"], correta: 2 }
+    ],
+    artes: [
+      { enunciado: "Qual movimento artístico brasileiro tem a Semana de Arte Moderna de 1922 como marco?", alternativas: ["Barroco", "Modernismo", "Romantismo", "Impressionismo"], correta: 1 },
+      { enunciado: "Tarsila do Amaral é uma importante pintora ligada a qual movimento?", alternativas: ["Modernismo brasileiro", "Barroco mineiro", "Cubismo francês", "Realismo"], correta: 0 },
+      { enunciado: "As cores primárias, na teoria das cores, são:", alternativas: ["verde, laranja e roxo", "azul, vermelho e amarelo", "preto, branco e cinza", "rosa, azul e verde"], correta: 1 },
+      { enunciado: "Uma escultura é, por definição, uma obra de arte:", alternativas: ["bidimensional", "tridimensional", "sonora", "apenas digital"], correta: 1 },
+      { enunciado: "O Barroco no Brasil teve forte expressão especialmente em qual estado?", alternativas: ["Paraná", "Minas Gerais", "Rio Grande do Sul", "Amazonas"], correta: 1 }
+    ],
+    administracao: [
+      { enunciado: "A sigla PDCA representa o ciclo:", alternativas: ["Plan, Do, Check, Act", "Plan, Design, Create, Assess", "People, Data, Cost, Analysis", "Process, Development, Control, Audit"], correta: 0 },
+      { enunciado: "A missão de uma organização refere-se principalmente a:", alternativas: ["sua meta financeira anual", "sua razão de existir", "seu organograma", "seu plano de marketing"], correta: 1 },
+      { enunciado: "Em administração, \"gestão de pessoas\" trata principalmente de:", alternativas: ["controle de estoque", "recursos humanos da organização", "logística de transporte", "análise contábil"], correta: 1 },
+      { enunciado: "O planejamento estratégico é elaborado geralmente para qual horizonte de tempo?", alternativas: ["curtíssimo prazo (dias)", "curto prazo (semanas)", "longo prazo (anos)", "não tem prazo definido"], correta: 2 },
+      { enunciado: "A liderança democrática se caracteriza por:", alternativas: ["decisões centralizadas no líder", "ausência total de direção", "participação da equipe nas decisões", "punição como principal ferramenta"], correta: 2 }
+    ],
+    edespecial: [
+      { enunciado: "Na perspectiva inclusiva, a Educação Especial deve ocorrer preferencialmente:", alternativas: ["em instituições exclusivas e separadas", "na rede regular de ensino", "apenas em ambiente domiciliar", "somente em turno integral"], correta: 1 },
+      { enunciado: "O Atendimento Educacional Especializado (AEE) deve ser oferecido, em regra:", alternativas: ["no mesmo horário da sala regular", "no contraturno escolar", "somente aos sábados", "apenas nas férias"], correta: 1 },
+      { enunciado: "A Lei Brasileira de Inclusão (LBI) também é conhecida como:", alternativas: ["Estatuto da Criança e do Adolescente", "Estatuto da Pessoa com Deficiência", "Estatuto do Idoso", "Lei de Diretrizes e Bases"], correta: 1 },
+      { enunciado: "A sigla TEA refere-se a:", alternativas: ["Transtorno do Espectro Autista", "Transtorno de Estresse Agudo", "Transtorno Emocional Agudo", "Terapia Educacional Assistida"], correta: 0 },
+      { enunciado: "O Desenho Universal para a Aprendizagem (DUA) tem como objetivo principal:", alternativas: ["padronizar uma única forma de ensinar", "garantir acesso ao currículo para todos os estudantes", "reduzir o currículo de alunos com deficiência", "substituir o AEE"], correta: 1 }
+    ]
+  };
+
+  function montarSimulados(){
+    document.querySelectorAll('.simulado[data-simulado]').forEach(function(box){
+      var key = box.getAttribute('data-simulado');
+      var perguntas = SIMULADOS[key];
+      if(!perguntas) return;
+      var wrap = box.querySelector('.sim-perguntas');
+      var resultado = box.querySelector('.sim-resultado');
+      var acertos = 0, respondidas = 0;
+      perguntas.forEach(function(p, qi){
+        var pDiv = document.createElement('div');
+        pDiv.className = 'sim-pergunta';
+        var enun = document.createElement('div');
+        enun.className = 'sim-enunciado';
+        enun.textContent = (qi + 1) + '. ' + p.enunciado;
+        pDiv.appendChild(enun);
+        var opts = document.createElement('div');
+        opts.className = 'sim-opcoes';
+        p.alternativas.forEach(function(alt, ai){
+          var b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'sim-opcao';
+          b.textContent = alt;
+          b.addEventListener('click', function(){
+            if(b.disabled) return;
+            var opcoes = opts.querySelectorAll('.sim-opcao');
+            opcoes.forEach(function(o){ o.disabled = true; });
+            if(ai === p.correta){
+              b.classList.add('certa');
+              acertos++;
+            } else {
+              b.classList.add('errada');
+              opcoes[p.correta].classList.add('certa');
+            }
+            respondidas++;
+            if(respondidas === perguntas.length){
+              var pct = Math.round(acertos / perguntas.length * 100);
+              resultado.style.display = 'block';
+              resultado.textContent = '✅ Você acertou ' + acertos + ' de ' + perguntas.length + ' (' + pct + '% de acertos)';
+            }
+          });
+          opts.appendChild(b);
+        });
+        pDiv.appendChild(opts);
+        wrap.appendChild(pDiv);
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', montarSimulados);
+})();
+</script>
 
 </body>
 </html>
