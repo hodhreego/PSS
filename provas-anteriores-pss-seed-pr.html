@@ -68,13 +68,22 @@
   .sim-pergunta{ margin-bottom:14px; }
   .sim-enunciado{ font-size:13.5px; font-weight:600; margin-bottom:8px; color:#1c2733; }
   .sim-opcoes{ display:flex; flex-direction:column; gap:6px; }
-  .sim-opcao{ text-align:left; border:1px solid #dfe6ee; background:#f7f9fb; border-radius:6px;
+  .sim-opcao{ position:relative; text-align:left; border:1px solid #dfe6ee; background:#f7f9fb; border-radius:6px;
     padding:8px 12px; font-size:13px; cursor:pointer; transition:background .15s,border-color .15s;
     font-family:'Noto Sans',Arial,sans-serif; }
   .sim-opcao:hover:not([disabled]){ background:#eef2f7; }
-  .sim-opcao.certa{ background:#e6f7ec; border-color:#2ea44f; color:#166b3a; font-weight:700; }
-  .sim-opcao.errada{ background:#fdeaea; border-color:#c0392b; color:#96281b; font-weight:700; }
   .sim-opcao[disabled]{ cursor:default; }
+  .sim-opcao.marcada-certa{ border-color:#2ea44f; }
+  .sim-opcao.marcada-errada{ border-color:#c0392b; }
+  .sim-balao{
+    position:absolute; right:10px; top:50%; transform:translateY(-50%) scale(.4); opacity:0;
+    font-size:12px; font-weight:800; padding:4px 12px; border-radius:20px; color:#fff;
+    pointer-events:none; white-space:nowrap; animation:balaoPop .5s ease forwards, balaoPisca 1s ease .5s 2;
+  }
+  .sim-balao.ok{ background:#2ea44f; box-shadow:0 2px 8px rgba(46,164,79,.4); }
+  .sim-balao.no{ background:#c0392b; box-shadow:0 2px 8px rgba(192,57,43,.4); }
+  @keyframes balaoPop{ 0%{ transform:translateY(-50%) scale(.4); opacity:0; } 60%{ transform:translateY(-50%) scale(1.15); opacity:1; } 100%{ transform:translateY(-50%) scale(1); opacity:1; } }
+  @keyframes balaoPisca{ 0%,100%{ opacity:1; } 50%{ opacity:.35; } }
   .sim-resultado{ margin-top:6px; background:#eef4fb; border-radius:8px; padding:12px 16px;
     font-size:14px; font-weight:700; color:var(--navy2); text-align:center; }
 
@@ -3405,13 +3414,19 @@ www.pciconcursos.com.br</pre></details>
             if(b.disabled) return;
             var opcoes = opts.querySelectorAll('.sim-opcao');
             opcoes.forEach(function(o){ o.disabled = true; });
+            var balao = document.createElement('span');
+            balao.className = 'sim-balao';
             if(ai === p.correta){
-              b.classList.add('certa');
+              b.classList.add('marcada-certa');
+              balao.classList.add('ok');
+              balao.textContent = '✅ Certo!';
               acertos++;
             } else {
-              b.classList.add('errada');
-              opcoes[p.correta].classList.add('certa');
+              b.classList.add('marcada-errada');
+              balao.classList.add('no');
+              balao.textContent = '❌ Errado';
             }
+            b.appendChild(balao);
             respondidas++;
             if(respondidas === perguntas.length){
               var pct = Math.round(acertos / perguntas.length * 100);
