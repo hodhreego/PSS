@@ -73,17 +73,21 @@
     font-family:'Noto Sans',Arial,sans-serif; }
   .sim-opcao:hover:not([disabled]){ background:#eef2f7; }
   .sim-opcao[disabled]{ cursor:default; }
-  .sim-opcao.marcada-certa{ border-color:#2ea44f; }
-  .sim-opcao.marcada-errada{ border-color:#c0392b; }
+  .sim-opcao.marcada-certa{ border-color:#bfe6cc; }
+  .sim-opcao.marcada-errada{ border-color:#f3c9c3; }
   .sim-balao{
-    position:absolute; right:10px; top:50%; transform:translateY(-50%) scale(.4); opacity:0;
-    font-size:12px; font-weight:800; padding:4px 12px; border-radius:20px; color:#fff;
-    pointer-events:none; white-space:nowrap; animation:balaoPop .5s ease forwards, balaoPisca 1s ease .5s 2;
+    position:absolute; right:10px; top:50%; transform:translateY(-50%);
+    display:inline-flex; align-items:center; gap:6px;
+    background:#fff; border-radius:14px; padding:3px 10px 3px 8px;
+    font-size:10.5px; font-weight:700; letter-spacing:.2px;
+    pointer-events:none; white-space:nowrap; box-shadow:0 1px 4px rgba(0,0,0,.12);
   }
-  .sim-balao.ok{ background:#2ea44f; box-shadow:0 2px 8px rgba(46,164,79,.4); }
-  .sim-balao.no{ background:#c0392b; box-shadow:0 2px 8px rgba(192,57,43,.4); }
-  @keyframes balaoPop{ 0%{ transform:translateY(-50%) scale(.4); opacity:0; } 60%{ transform:translateY(-50%) scale(1.15); opacity:1; } 100%{ transform:translateY(-50%) scale(1); opacity:1; } }
-  @keyframes balaoPisca{ 0%,100%{ opacity:1; } 50%{ opacity:.35; } }
+  .sim-balao.ok{ color:#166b3a; border:1px solid #bfe6cc; }
+  .sim-balao.no{ color:#96281b; border:1px solid #f3c9c3; }
+  .sim-balao .ponto{ width:7px; height:7px; border-radius:50%; flex-shrink:0; animation:pontoPisca 1s ease infinite; }
+  .sim-balao.ok .ponto{ background:#2ea44f; }
+  .sim-balao.no .ponto{ background:#c0392b; }
+  @keyframes pontoPisca{ 0%,100%{ opacity:1; } 50%{ opacity:.25; } }
   .sim-resultado{ margin-top:6px; background:#eef4fb; border-radius:8px; padding:12px 16px;
     font-size:14px; font-weight:700; color:var(--navy2); text-align:center; }
 
@@ -3416,16 +3420,21 @@ www.pciconcursos.com.br</pre></details>
             opcoes.forEach(function(o){ o.disabled = true; });
             var balao = document.createElement('span');
             balao.className = 'sim-balao';
+            var ponto = document.createElement('span');
+            ponto.className = 'ponto';
+            var texto = document.createElement('span');
             if(ai === p.correta){
               b.classList.add('marcada-certa');
               balao.classList.add('ok');
-              balao.textContent = '✅ Certo!';
+              texto.textContent = 'Certo';
               acertos++;
             } else {
               b.classList.add('marcada-errada');
               balao.classList.add('no');
-              balao.textContent = '❌ Errado';
+              texto.textContent = 'Errado';
             }
+            balao.appendChild(ponto);
+            balao.appendChild(texto);
             b.appendChild(balao);
             respondidas++;
             if(respondidas === perguntas.length){
