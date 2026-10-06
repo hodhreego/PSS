@@ -63,7 +63,7 @@ h1{font-family:'Playfair Display',serif;font-size:clamp(30px,5vw,50px);line-heig
 h1 em{color:var(--gold-light);font-style:normal}
 .hero p{max-width:620px;color:#d6e1f5;font-size:18px}
 .perks{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
-.pdfbtn{background:#f0c75e!important;color:#1a2540;border-color:#f0c75e!important;text-decoration:none;font-weight:800}
+.pdfbtn{background:#c0392b!important;color:#fff;border-color:#c0392b!important;text-decoration:none;font-weight:900;letter-spacing:.04em}
 .perk{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:7px 14px;border-radius:99px;font-size:14px;font-weight:600}
 .hero-wa{white-space:nowrap;position:absolute;top:16px;right:16px;z-index:5;background:#1f9d57;color:#fff;border:0;border-radius:99px;padding:10px 18px;font:700 15px 'Source Sans 3';cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.35);display:inline-flex;align-items:center;gap:8px}
 .hero-wa small{display:none}.hero-wa:hover{background:#188047}
