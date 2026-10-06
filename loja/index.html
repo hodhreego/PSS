@@ -228,18 +228,23 @@ function chips(){
   $("#chips").innerHTML=[["todos","Todos os certames"],...GR].map(([k,n])=>`<button class="cert ${filtro===k?'on':''}" onclick="filtro='${k}';chips();render();document.getElementById('infoc').scrollIntoView({behavior:'smooth',block:'nearest'})"><b>${n}</b><small>${c(k)} ${c(k)===1?'material':'materiais'}</small></button>`).join("");
 }
 /* miniaturas animadas: as páginas sobem (scroll vertical) enquanto o card está visível */
-let io=null;
+let io=null,rolando=false,tRol=null;
+addEventListener("scroll",()=>{rolando=true;clearTimeout(tRol);tRol=setTimeout(()=>rolando=false,500)},{passive:true});
 function anima(){
   if(io)io.disconnect();
   if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  const CAPA=5000,PAG=2200;               /* a capa fica mais tempo na tela */
   const run=cv=>{if(cv._t)return;const n=+cv.dataset.n;if(n<2)return;let k=0;
     const bk=cv.querySelector(".book"),pgs=[...bk.querySelectorAll(".pg:not(.base)")],ds=cv.querySelectorAll(".dots i");
     const dot=i=>ds.forEach((d,j)=>d.classList.toggle("on",j===i%n));
+    bk.classList.add("nt");pgs.forEach(p=>p.classList.remove("flip"));void bk.offsetHeight;bk.classList.remove("nt");dot(0);
     cv.onmouseenter=()=>cv._p=1;cv.onmouseleave=()=>cv._p=0;
-    const go=()=>{if(cv._p)return;
+    const passo=()=>{
+      if(rolando||cv._p){cv._t=setTimeout(passo,250);return}   /* não anima enquanto rola; retoma 0,5 s depois de parar */
       if(k<n){pgs[k].classList.add("flip");k++;dot(k);
-        if(k===n){setTimeout(()=>{bk.classList.add("nt");pgs.forEach(p=>p.classList.remove("flip"));void bk.offsetHeight;bk.classList.remove("nt");k=0;dot(0)},1500)}}};
-    cv._t=setTimeout(function loop(){go();cv._t=setTimeout(loop,2200)},700+Math.random()*1500);};
+        if(k===n){cv._t=setTimeout(()=>{bk.classList.add("nt");pgs.forEach(p=>p.classList.remove("flip"));void bk.offsetHeight;bk.classList.remove("nt");k=0;dot(0);cv._t=setTimeout(passo,CAPA)},1500);return}}
+      cv._t=setTimeout(passo,PAG)};
+    cv._t=setTimeout(passo,CAPA*.6+Math.random()*1800);};
   const stop=cv=>{clearTimeout(cv._t);cv._t=null};
   io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting?run(e.target):stop(e.target)),{threshold:.4});
   document.querySelectorAll(".cover").forEach(cv=>io.observe(cv));
