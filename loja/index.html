@@ -125,7 +125,7 @@ footer b{color:#fff}.warn{margin-top:12px;background:#a1262a;color:#fff;border-r
   <label class="t" for="wmsg">Sua mensagem (você pode editar)</label>
   <textarea id="wmsg"></textarea>
   <a class="btn wa" id="wgo" target="_blank" rel="noopener" href="#">Abrir WhatsApp</a>
-  <small>Você será levado ao WhatsApp com a mensagem pronta; só precisa tocar em enviar.</small>
+  <small>Você será levado ao WhatsApp com a mensagem pronta (o link da loja vai junto no final); só precisa tocar em enviar.</small>
  </div></div>
 <div class="modal" id="modal" onclick="if(event.target===this)fecha()"><button class="x" onclick="fecha()" aria-label="Fechar">×</button>
   <div class="box"><div class="stage"><img class="big" id="big" alt=""><div class="thumbs" id="th"></div><div class="lab" id="lab"></div></div>
@@ -188,7 +188,8 @@ const WOPT=[
  ["Outro assunto","Olá, Prof. Rodrigo! "]];
 function wprod(){const v=$("#wprod").value;return v?" "+v:""}
 function wbuild(){const i=+(document.querySelector('input[name=wo]:checked')||{value:0}).value;$("#wmsg").value=WOPT[i][1].replace("{P}",wprod()?" ("+wprod().trim()+")":"");wlink()}
-function wlink(){$("#wgo").href="https://wa.me/"+WNUM+"?text="+encodeURIComponent($("#wmsg").value)}
+const LOJA="https://hodhreego.github.io/PSS/loja/";
+function wlink(){const m=$("#wmsg").value.trim()+"\n\n🛒 Enviado pela loja: "+LOJA;$("#wgo").href="https://wa.me/"+WNUM+"?text="+encodeURIComponent(m)}
 function winit(){
   $("#wopts").innerHTML=WOPT.map((o,i)=>`<label class="opt"><input type="radio" name="wo" value="${i}" ${i?'':'checked'} onchange="wbuild()"><span>${o[0]}</span></label>`).join("");
   $("#wprod").innerHTML='<option value="">— nenhum / não sei —</option>'+ITENS.map(i=>`<option value="Apostila ${i.nome} · ${i.grupoNome}">${i.nome} · ${i.grupoNome}</option>`).join("");
