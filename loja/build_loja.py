@@ -22,12 +22,12 @@ P = [
  ("informacao-comunicacao", "Informação e Comunicação", "pss", None, 20, "Eixo Informação e Comunicação."),
  ("simulado-matematica", "Simulado de Matemática", "simulado", "linutiqk", 10, "Questões para treinar com o estilo da prova."),
  ("pedagogo-abaetetuba", "Pedagogo · Abaetetuba-PA", "outros", "x3khho43", 20, "Apostila completa para a Prefeitura de Abaetetuba-PA 2026."),
- ("cisop-artesao", "Artesão", "cisop", None, 20, "CISOP Cascavel 2026 · concurso do Consórcio Intermunicipal de Saúde do Oeste do Paraná · banca Fafipa · prova 18/10/2026."),
- ("cisop-agente-administrativo", "Agente Administrativo", "cisop", None, 20, "CISOP Cascavel 2026 · concurso do Consórcio Intermunicipal de Saúde do Oeste do Paraná · banca Fafipa · prova 18/10/2026."),
- ("cisop-tecnico-enfermagem", "Técnico em Enfermagem", "cisop", None, 20, "CISOP Cascavel 2026 · concurso do Consórcio Intermunicipal de Saúde do Oeste do Paraná · banca Fafipa · prova 18/10/2026."),
- ("cisop-monitor-biblioteca", "Monitor de Biblioteca", "prefeitura", None, 20, "Prefeitura de Cascavel 2026 · teste seletivo · banca Fafipa · prova 29/11/2026."),
- ("cisop-professor-ed-infantil", "Professor de Educação Infantil", "prefeitura", None, 20, "Prefeitura de Cascavel 2026 · teste seletivo · banca Fafipa · prova 29/11/2026."),
- ("cisop-professor-temporario", "Professor Temporário", "prefeitura", None, 20, "Prefeitura de Cascavel 2026 · teste seletivo · banca Fafipa · prova 29/11/2026."),
+ ("cisop-artesao", "Artesão", "cisop", "d2w5agmt", 20, "CISOP Cascavel 2026 · concurso do Consórcio Intermunicipal de Saúde do Oeste do Paraná · banca Fafipa · prova 18/10/2026."),
+ ("cisop-agente-administrativo", "Agente Administrativo", "cisop", "4loe6tq7", 20, "CISOP Cascavel 2026 · concurso do Consórcio Intermunicipal de Saúde do Oeste do Paraná · banca Fafipa · prova 18/10/2026."),
+ ("cisop-tecnico-enfermagem", "Técnico em Enfermagem", "cisop", "afuewgiv", 20, "CISOP Cascavel 2026 · concurso do Consórcio Intermunicipal de Saúde do Oeste do Paraná · banca Fafipa · prova 18/10/2026."),
+ ("cisop-monitor-biblioteca", "Monitor de Biblioteca", "prefeitura", "njnvex3v", 20, "Prefeitura de Cascavel 2026 · teste seletivo · banca Fafipa · prova 29/11/2026."),
+ ("cisop-professor-ed-infantil", "Professor de Educação Infantil", "prefeitura", "enxexhh2", 20, "Prefeitura de Cascavel 2026 · teste seletivo · banca Fafipa · prova 29/11/2026."),
+ ("cisop-professor-temporario", "Professor Temporário", "prefeitura", "55drvhe3", 20, "Prefeitura de Cascavel 2026 · teste seletivo · banca Fafipa · prova 29/11/2026."),
 ]
 GRUPOS = {"pss": "PSS SEED-PR 2027", "cisop": "CISOP Cascavel 2026", "prefeitura": "Prefeitura de Cascavel 2026", "simulado": "Simulados", "outros": "Outros concursos"}
 items = []
