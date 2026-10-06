@@ -42,6 +42,8 @@ HTML = r'''<!DOCTYPE html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Loja de Matemática — Apostilas e Simulados</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext x='50' y='80' font-size='84' text-anchor='middle'%3E🏛️%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#1B3A6B">
 <meta name="description" content="Apostilas e simulados para PSS SEED-PR 2027, CISOP Cascavel, Prefeitura de Cascavel e outros concursos. Veja as páginas antes de comprar.">
 <meta property="og:title" content="Loja de Matemática — Apostilas e Simulados">
 <meta property="og:description" content="Apostilas e simulados para PSS SEED-PR 2027, CISOP Cascavel, Prefeitura de Cascavel e mais.">
@@ -54,7 +56,7 @@ HTML = r'''<!DOCTYPE html>
 html{scroll-behavior:smooth}
 body{font-family:'Source Sans 3',system-ui,sans-serif;color:var(--ink);background:var(--bg);line-height:1.45}
 .wrap{max-width:1180px;margin:0 auto;padding:0 18px}
-header.hero{background:linear-gradient(135deg,var(--navy-deep),var(--navy) 60%,#27508f);color:#fff;padding:46px 0 64px;position:relative;overflow:hidden}
+header.hero{background:linear-gradient(135deg,var(--navy-deep),var(--navy) 60%,#27508f);color:#fff;padding:74px 0 64px;position:relative;overflow:hidden}
 header.hero:after{content:"";position:absolute;right:-90px;top:-90px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(201,162,39,.35),transparent 70%)}
 .eyebrow{letter-spacing:.22em;font-size:12px;color:var(--gold-light);font-weight:600;text-transform:uppercase}
 h1{font-family:'Playfair Display',serif;font-size:clamp(30px,5vw,50px);line-height:1.1;margin:10px 0 12px}
@@ -62,9 +64,8 @@ h1 em{color:var(--gold-light);font-style:normal}
 .hero p{max-width:620px;color:#d6e1f5;font-size:18px}
 .perks{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
 .perk{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:7px 14px;border-radius:99px;font-size:14px;font-weight:600}
-.hero-wa{margin-top:20px;background:#1f9d57;color:#fff;border:0;border-radius:99px;padding:13px 24px;font:700 16px 'Source Sans 3';cursor:pointer;box-shadow:0 8px 22px rgba(0,0,0,.3);display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;position:relative;z-index:1}
-.wai{width:1.35em;height:1.35em;flex:none}
-.hero-wa small{font-weight:500;opacity:.9;font-size:13px}.hero-wa:hover{background:#188047}
+.hero-wa{position:absolute;top:16px;right:16px;z-index:5;background:#1f9d57;color:#fff;border:0;border-radius:99px;padding:10px 18px;font:700 15px 'Source Sans 3';cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.35);display:inline-flex;align-items:center;gap:8px}
+.hero-wa small{display:none}.hero-wa:hover{background:#188047}
 .tools{margin-top:-30px;position:relative;z-index:2}
 .bar{background:#fff;border-radius:16px;box-shadow:0 10px 30px rgba(15,37,71,.15);padding:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .chips{display:flex;flex-wrap:wrap;gap:8px;flex:1}
@@ -162,7 +163,7 @@ footer b{color:#fff}.warn{margin-top:12px;background:#a1262a;color:#fff;border-r
 </head>
 <body>
 <header class="hero"><div class="wrap">
-  <div class="eyebrow">Prof. Rodrigo Gonçalves Pereira</div>
+  <div class="eyebrow"><span style="font-size:22px;vertical-align:-3px;margin-right:6px">🏛️</span>Prof. Rodrigo Gonçalves Pereira</div>
   <h1>Loja de <em>Matemática</em><br>Apostilas &amp; Simulados</h1>
   <p>Material de estudo organizado, direto ao ponto e atualizado com os editais. Confira capa, índice e páginas internas antes de comprar.</p>
   <div class="perks"><span class="perk">📄 Entrega digital em PDF</span><span class="perk">🔎 Veja as páginas antes</span><span class="perk">🔠 Versão JUMBO (letra grande)</span><span class="perk">⚡ Pagamento seguro pela Eduzz</span></div>
