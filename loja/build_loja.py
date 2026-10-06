@@ -30,8 +30,10 @@ P = [
  ("cisop-professor-temporario", "Professor Temporário", "prefeitura", "55drvhe3", 20, "Prefeitura de Cascavel 2026 · teste seletivo · banca Fafipa · prova 29/11/2026."),
 ]
 GRUPOS = {"pss": "PSS SEED-PR 2027", "cisop": "CISOP Cascavel 2026", "prefeitura": "Prefeitura de Cascavel 2026", "simulado": "Simulados", "outros": "Outros concursos"}
+SEM_SIMULADO = {"conhecimentos-basicos", "simulado-matematica", "pedagogo-abaetetuba", "informacao-comunicacao"}
 items = []
 for slug, nome, g, code, preco, sub in P:
+    if slug not in SEM_SIMULADO: nome = "Apostila + Simulados: " + nome
     imgs = [f"img/{slug}-{k}.webp" for k in range(1, 5) if os.path.exists(os.path.join(HERE, "img", f"{slug}-{k}.webp"))]
     items.append({"slug": slug, "nome": nome, "grupo": g, "grupoNome": GRUPOS[g], "link": (CHK + code) if code else None,
                   "preco": preco, "sub": sub, "imgs": imgs, "paginas": pag.get(slug, {}).get("paginas")})
