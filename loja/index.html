@@ -77,7 +77,7 @@ footer b{color:#fff}.warn{margin-top:12px;background:#a1262a;color:#fff;border-r
 .lab{font-size:12px;color:var(--mut);text-align:center}
 
 /* whatsapp */
-.fab{position:fixed;right:16px;bottom:16px;z-index:40;background:#1f9d57;color:#fff;border:0;border-radius:99px;padding:13px 20px;font:700 15px 'Source Sans 3';box-shadow:0 8px 22px rgba(0,0,0,.28);cursor:pointer;display:flex;gap:8px;align-items:center}
+.fab{white-space:nowrap;position:fixed;right:16px;bottom:16px;z-index:40;background:#1f9d57;color:#fff;border:0;border-radius:99px;padding:13px 20px;font:700 15px 'Source Sans 3';box-shadow:0 8px 22px rgba(0,0,0,.28);cursor:pointer;display:flex;gap:8px;align-items:center}
 .fab:hover{background:#188047}
 .wpanel{position:fixed;right:16px;bottom:74px;z-index:45;width:min(360px,calc(100vw - 32px));background:#fff;border-radius:18px;box-shadow:0 18px 44px rgba(10,20,40,.35);display:none;overflow:hidden}
 .wpanel.open{display:block}
@@ -108,6 +108,9 @@ footer b{color:#fff}.warn{margin-top:12px;background:#a1262a;color:#fff;border-r
 .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:8px 0 14px}
 .fact{background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px 12px}.fact small{display:block;color:var(--mut);font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}.fact span{font-weight:700;color:var(--navy-deep)}
 .links{display:flex;flex-wrap:wrap;gap:8px}.links a{text-decoration:none;font:700 14px 'Source Sans 3';padding:9px 14px;border-radius:10px;background:var(--navy);color:#fff}.links a.alt{background:#fff;color:var(--navy);border:1.5px solid var(--navy)}
+.dt{color:#c62828;font-weight:800;font-size:1.16em;white-space:nowrap}
+.fact.hot span{font-size:1.3em}
+.fact.hot{border-color:#f0b4b4;background:#fff5f5}
 .note{font-size:13px;color:var(--mut);margin-top:10px}
 /* miniaturas animadas: páginas viram como num livro folheado */
 .cover{perspective:1100px}
@@ -180,7 +183,7 @@ function card(it){
   const strip=it.imgs.map((u,k)=>`<img class="pg" style="z-index:${n-k+1}" ${k?'loading="lazy"':''} src="${u}" alt="${k?'Página '+(k+1)+' da':'Capa da'} apostila ${it.nome}">`).join("")+`<img class="pg base" style="z-index:0" src="${it.imgs[0]}" alt="">`;
   const dots=it.imgs.length>1?`<div class="dots">${it.imgs.map((_,k)=>`<i class="${k?'':'on'}"></i>`).join("")}</div>`:"";
   return `<article class="card" data-s="${it.slug}"><div class="cover" data-n="${it.imgs.length}" onclick="abre('${it.slug}')"><div class="book">${strip}</div>${dots}<span class="badge ${soon?'soon':''}">${soon?'Em breve':'Disponível'}</span><span class="peek">👁 ver páginas</span></div>
-  <div class="info"><small>${it.grupoNome}</small><h3>${it.nome}</h3><p>${it.sub}${it.paginas?` · ${it.paginas} págs.`:''}</p>
+  <div class="info"><small>${it.grupoNome}</small><h3>${it.nome}</h3><p>${dt(it.sub)}${it.paginas?` · ${it.paginas} págs.`:''}</p>
   <div class="row"><div class="price"><span>R$</span>${brl(it.preco)}</div>${act}</div></div></article>`;
 }
 const CERT={
@@ -200,19 +203,20 @@ const CERT={
  simulado:{nome:"Simulados",orgao:"Treino com questões",desc:"Simulados para treinar no estilo da prova e conferir seu desempenho.",links:[]}
 };
 const fmt=d=>d.split("-").reverse().join("/");
+const dt=t=>String(t).replace(/\d{2}\/\d{2}\/\d{4}|\d{2}\/\d{2}(?= a )|\b\d{2} a \d{2}\/\d{2}\/\d{4}/g,m=>`<b class="dt">${m}</b>`);
 function status(c){if(!c.insc)return "";const h=new Date().toISOString().slice(0,10);
-  if(h<c.insc[0])return `<span class="st soon">Inscrições a partir de ${fmt(c.insc[0])}</span>`;
-  if(h<=c.insc[1])return `<span class="st open">● Inscrições abertas até ${fmt(c.insc[1])}</span>`;
-  if(h<=c.prova)return `<span class="st closed">Inscrições encerradas em ${fmt(c.insc[1])} · prova em ${fmt(c.prova)}</span>`;
-  return `<span class="st done">Prova realizada em ${fmt(c.prova)}</span>`;}
+  if(h<c.insc[0])return `<span class="st soon">Inscrições a partir de ${dt(fmt(c.insc[0]))}</span>`;
+  if(h<=c.insc[1])return `<span class="st open">● Inscrições abertas até ${dt(fmt(c.insc[1]))}</span>`;
+  if(h<=c.prova)return `<span class="st closed">Inscrições encerradas em ${dt(fmt(c.insc[1]))} · prova em ${dt(fmt(c.prova))}</span>`;
+  return `<span class="st done">Prova realizada em ${dt(fmt(c.prova))}</span>`;}
 function infoCert(){const el=$("#infoc");const c=CERT[filtro];
   if(!c){el.className="info-cert";el.innerHTML="";return}
   const f=[];if(c.orgao)f.push(["Órgão / banca",c.orgao]);if(c.edital)f.push(["Edital",c.edital]);
-  if(c.insc)f.push(["Inscrições",fmt(c.insc[0])+" a "+fmt(c.insc[1])]);if(c.prova)f.push(["Prova objetiva",fmt(c.prova)]);
+  if(c.insc)f.push(["Inscrições",fmt(c.insc[0])+" a "+fmt(c.insc[1]),1]);if(c.prova)f.push(["Prova objetiva",fmt(c.prova),1]);
   el.className="info-cert show";
-  el.innerHTML=`<h2>${c.nome}</h2>${status(c)}<p>${c.desc}</p><div class="facts">${f.map(x=>`<div class="fact"><small>${x[0]}</small><span>${x[1]}</span></div>`).join("")}</div>
+  el.innerHTML=`<h2>${c.nome}</h2>${status(c)}<p>${dt(c.desc)}</p><div class="facts">${f.map(x=>`<div class="fact ${x[2]?'hot':''}"><small>${x[0]}</small><span>${dt(x[1])}</span></div>`).join("")}</div>
    ${c.links.length?`<div class="links">${c.links.map(l=>`<a class="${l[2]?'':'alt'}" target="_blank" rel="noopener" href="${l[1]}">${l[0]} ↗</a>`).join("")}</div>`:""}
-   ${c.nota?`<p class="note">ℹ️ ${c.nota}</p>`:""}`;}
+   ${c.nota?`<p class="note">ℹ️ ${dt(c.nota)}</p>`:""}`;}
 function render(){
   const q=busca.toLowerCase();let total=0;
   $("#main").innerHTML=GR.map(([g,nome])=>{
