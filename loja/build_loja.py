@@ -161,7 +161,14 @@ footer b{color:#fff}.warn{margin-top:12px;background:#a1262a;color:#fff;border-r
 .dots i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.55);transition:.3s}.dots i.on{background:var(--gold);width:16px;border-radius:4px}
 .cover:before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,transparent 70%,rgba(15,37,71,.35));pointer-events:none}
 .badge,.peek{z-index:2}
-@media(prefers-reduced-motion:reduce){.pg{transition:none}}
+/* 3D: livro inclinado com espessura, sombra projetada e página que levanta */
+.cover{perspective:900px;background:radial-gradient(ellipse at 50% 85%,#c9d6ee,#e6edf8 70%)}
+.book{inset:7% 9% 7% 9%;transform-style:preserve-3d;transform:rotateY(-16deg) rotateX(4deg);transform-origin:50% 60%;transition:transform .6s ease;filter:drop-shadow(16px 20px 14px rgba(15,37,71,.38))}
+.cover:hover .book{transform:rotateY(-6deg) rotateX(2deg)}
+.pg.base{box-shadow:1px 1px 0 #efe8d8,2px 2px 0 #e2d9c5,3px 3px 0 #d6ccb6,4px 4px 0 #c9bfa8,5px 5px 0 #bdb29a}
+.pg.flip{transform:rotateY(-172deg) translateZ(2px) rotateX(-3deg);box-shadow:-26px 6px 30px rgba(0,0,0,.35)}
+.book:after{width:10px}
+@media(prefers-reduced-motion:reduce){.pg{transition:none}.book{transition:none}}
 @media(max-width:720px){.certs{display:grid;grid-template-columns:1fr 1fr;overflow:visible;gap:8px}.cert{min-width:0;max-width:none;min-height:56px;padding:12px;display:flex;flex-direction:column;justify-content:center}.cert:first-child{grid-column:1/-1}.cert b{font-size:15px}.box{grid-template-columns:1fr}.stage img.big{max-height:52vh}.grid{grid-template-columns:repeat(2,1fr);gap:12px}.info h3{font-size:15px}.price{font-size:20px}.row{flex-direction:column;align-items:stretch;gap:6px}.row .btn{text-align:center}.info{padding:12px}#q{width:100%}.fab{padding:11px 16px}}
 </style>
 </head>
