@@ -22,14 +22,14 @@ P = [
  ("informacao-comunicacao", "Informação e Comunicação", "pss", None, 20, "Eixo Informação e Comunicação."),
  ("simulado-matematica", "Simulado de Matemática", "simulado", "linutiqk", 10, "Questões para treinar com o estilo da prova."),
  ("pedagogo-abaetetuba", "Pedagogo · Abaetetuba-PA", "outros", "x3khho43", 20, "Apostila completa para a Prefeitura de Abaetetuba-PA 2026."),
- ("cisop-artesao", "Artesão", "cisop", None, 20, "CISOP Cascavel 2026 · banca Fundação Fafipa."),
- ("cisop-agente-administrativo", "Agente Administrativo", "cisop", None, 20, "CISOP Cascavel 2026."),
- ("cisop-tecnico-enfermagem", "Técnico em Enfermagem", "cisop", None, 20, "CISOP Cascavel 2026."),
- ("cisop-monitor-biblioteca", "Monitor de Biblioteca", "cisop", None, 20, "CISOP Cascavel 2026."),
- ("cisop-professor-ed-infantil", "Professor de Educação Infantil", "cisop", None, 20, "CISOP Cascavel 2026."),
- ("cisop-professor-temporario", "Professor Temporário", "cisop", None, 20, "CISOP Cascavel 2026."),
+ ("cisop-artesao", "Artesão", "cisop", None, 20, "CISOP Cascavel 2026 · concurso do Consórcio Intermunicipal de Saúde do Oeste do Paraná · banca Fafipa · prova 18/10/2026."),
+ ("cisop-agente-administrativo", "Agente Administrativo", "cisop", None, 20, "CISOP Cascavel 2026 · concurso do Consórcio Intermunicipal de Saúde do Oeste do Paraná · banca Fafipa · prova 18/10/2026."),
+ ("cisop-tecnico-enfermagem", "Técnico em Enfermagem", "cisop", None, 20, "CISOP Cascavel 2026 · concurso do Consórcio Intermunicipal de Saúde do Oeste do Paraná · banca Fafipa · prova 18/10/2026."),
+ ("cisop-monitor-biblioteca", "Monitor de Biblioteca", "prefeitura", None, 20, "Prefeitura de Cascavel 2026 · teste seletivo · banca Fafipa · prova 29/11/2026."),
+ ("cisop-professor-ed-infantil", "Professor de Educação Infantil", "prefeitura", None, 20, "Prefeitura de Cascavel 2026 · teste seletivo · banca Fafipa · prova 29/11/2026."),
+ ("cisop-professor-temporario", "Professor Temporário", "prefeitura", None, 20, "Prefeitura de Cascavel 2026 · teste seletivo · banca Fafipa · prova 29/11/2026."),
 ]
-GRUPOS = {"pss": "PSS SEED-PR 2027", "cisop": "CISOP Cascavel 2026", "simulado": "Simulados", "outros": "Outros concursos"}
+GRUPOS = {"pss": "PSS SEED-PR 2027", "cisop": "CISOP Cascavel 2026", "prefeitura": "Prefeitura de Cascavel 2026", "simulado": "Simulados", "outros": "Outros concursos"}
 items = []
 for slug, nome, g, code, preco, sub in P:
     imgs = [f"img/{slug}-{k}.jpg" for k in range(1, 5) if os.path.exists(os.path.join(HERE, "img", f"{slug}-{k}.jpg"))]
@@ -42,9 +42,9 @@ HTML = r'''<!DOCTYPE html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Loja de Matemática — Apostilas e Simulados</title>
-<meta name="description" content="Apostilas e simulados para PSS SEED-PR 2027, CISOP Cascavel 2026 e outros concursos. Veja as páginas antes de comprar.">
+<meta name="description" content="Apostilas e simulados para PSS SEED-PR 2027, CISOP Cascavel, Prefeitura de Cascavel e outros concursos. Veja as páginas antes de comprar.">
 <meta property="og:title" content="Loja de Matemática — Apostilas e Simulados">
-<meta property="og:description" content="Apostilas e simulados para PSS SEED-PR 2027, CISOP Cascavel 2026 e mais.">
+<meta property="og:description" content="Apostilas e simulados para PSS SEED-PR 2027, CISOP Cascavel, Prefeitura de Cascavel e mais.">
 <meta property="og:image" content="https://hodhreego.github.io/PSS/loja/img/matematica-1.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -173,7 +173,7 @@ footer b{color:#fff}.warn{margin-top:12px;background:#a1262a;color:#fff;border-r
 <script>
 const ITENS=__DATA__;
 const WA="__WA__";
-const GR=[["pss","PSS SEED-PR 2027"],["cisop","CISOP Cascavel 2026"],["simulado","Simulados"],["outros","Outros concursos"]];
+const GR=[["pss","PSS SEED-PR 2027"],["cisop","CISOP Cascavel 2026"],["prefeitura","Prefeitura de Cascavel 2026"],["simulado","Simulados"],["outros","Outros concursos"]];
 let filtro="todos",busca="";
 const $=s=>document.querySelector(s);
 const brl=n=>n.toFixed(2).replace(".",",");
@@ -204,7 +204,7 @@ function abre(s){cur=ITENS.find(i=>i.slug===s);
   $("#th").innerHTML=cur.imgs.map((u,k)=>`<img src="${u}" onclick="foto(${k})" alt="">`).join("");
   const soon=!cur.link;
   $("#side").innerHTML=`<small style="color:var(--mut);font-weight:700;text-transform:uppercase;letter-spacing:.06em">${cur.grupoNome}</small><h3>${cur.nome}</h3><p>${cur.sub}</p>
-   <p style="font-size:14px;color:var(--mut)">${cur.paginas?cur.paginas+' páginas · ':''}PDF digital${cur.slug.startsWith('cisop')||cur.grupo==='pss'?' · inclui versão JUMBO (letra grande) quando disponível':''}</p>
+   <p style="font-size:14px;color:var(--mut)">${cur.paginas?cur.paginas+' páginas · ':''}PDF digital${cur.slug.startsWith('cisop')||cur.grupo==='pss'||cur.grupo==='prefeitura'?' · inclui versão JUMBO (letra grande) quando disponível':''}</p>
    <div class="row"><div class="price"><span>R$</span>${brl(cur.preco)}</div>${soon?`<button class="btn wa" onclick="fecha();wabre('${cur.slug}')">Falar no WhatsApp</button>`:`<a class="btn buy" target="_blank" rel="noopener" href="${cur.link}">Comprar agora</a>`}</div>`;
   foto(0);$("#modal").classList.add("open");document.body.style.overflow="hidden";}
 function foto(k){$("#big").src=cur.imgs[k];$("#lab").textContent=(cur.imgs.length>2?NOMES[k]:(k?"Índice":"Capa"))+" · "+(k+1)+"/"+cur.imgs.length;
@@ -220,7 +220,7 @@ const WOPT=[
  ["Tenho uma dúvida sobre um material","Olá, Prof. Rodrigo! Tenho uma dúvida sobre o material{P}.\nMinha dúvida é: ",
   "<b>Talvez já esteja respondido:</b><br>• Todos os materiais são <b>PDF digital</b>, para ler no celular, tablet ou computador.<br>• Antes de comprar, toque em <b>“ver páginas”</b> no card para conferir capa, índice e páginas internas.<br>• A versão <b>JUMBO</b> tem o mesmo conteúdo com letra maior.<br>Se ainda restar dúvida, escreva-a na mensagem abaixo."],
  ["Quero ajuda para escolher o material certo para o meu cargo","Olá, Prof. Rodrigo! Quero ajuda para escolher o material certo.\nConcurso: \nCargo/disciplina: ",
-  "<b>Para eu indicar o material certo, informe:</b><br>• o <b>concurso</b> (PSS SEED-PR 2027, CISOP Cascavel 2026 ou outro);<br>• o <b>cargo ou disciplina</b>;<br>• Dica: no PSS, a apostila <b>Conhecimentos Básicos</b> serve para todos os cargos, e a específica do seu cargo complementa."],
+  "<b>Para eu indicar o material certo, informe:</b><br>• o <b>concurso</b> (PSS SEED-PR 2027, CISOP Cascavel, Prefeitura de Cascavel ou outro);<br>• o <b>cargo ou disciplina</b>;<br>• Dica: no PSS, a apostila <b>Conhecimentos Básicos</b> serve para todos os cargos, e a específica do seu cargo complementa."],
  ["Já paguei e não recebi o PDF","Olá, Prof. Rodrigo! Já fiz o pagamento{P}, mas ainda não recebi o PDF.\nNome completo: \nE-mail usado na compra: \nForma de pagamento (Pix, cartão ou boleto): \nJá olhei o spam/promoções: ",
   "<b>Antes de enviar, confira (resolve na maioria dos casos):</b><br>1. Olhe a caixa de <b>spam</b>, <b>lixo eletrônico</b> e <b>promoções</b> do e-mail usado na compra.<br>2. Veja se você digitou <b>o e-mail certo</b> no checkout.<br>3. Pix e cartão costumam liberar em poucos minutos; <b>boleto</b> só libera após a compensação, que pode levar alguns dias úteis.<br>4. Entre na sua conta Eduzz (<b>Minhas compras</b>) e baixe o arquivo por lá.<br><b>Se não resolver</b>, envie a mensagem abaixo com os dados preenchidos e, se puder, anexe o <b>comprovante</b> depois."],
  ["Quero a versão JUMBO (letra grande)","Olá, Prof. Rodrigo! Gostaria da versão JUMBO (letra grande){P}. Pode me orientar?",
