@@ -32,7 +32,7 @@ P = [
 GRUPOS = {"pss": "PSS SEED-PR 2027", "cisop": "CISOP Cascavel 2026", "prefeitura": "Prefeitura de Cascavel 2026", "simulado": "Simulados", "outros": "Outros concursos"}
 items = []
 for slug, nome, g, code, preco, sub in P:
-    imgs = [f"img/{slug}-{k}.jpg" for k in range(1, 5) if os.path.exists(os.path.join(HERE, "img", f"{slug}-{k}.jpg"))]
+    imgs = [f"img/{slug}-{k}.webp" for k in range(1, 5) if os.path.exists(os.path.join(HERE, "img", f"{slug}-{k}.webp"))]
     items.append({"slug": slug, "nome": nome, "grupo": g, "grupoNome": GRUPOS[g], "link": (CHK + code) if code else None,
                   "preco": preco, "sub": sub, "imgs": imgs, "paginas": pag.get(slug, {}).get("paginas")})
 
@@ -63,7 +63,7 @@ h1{font-family:'Playfair Display',serif;font-size:clamp(30px,5vw,50px);line-heig
 h1 em{color:var(--gold-light);font-style:normal}
 .hero p{max-width:620px;color:#d6e1f5;font-size:18px}
 .perks{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
-.pdfbtn{background:#c0392b!important;color:#fff;border-color:#c0392b!important;text-decoration:none;font-weight:900;letter-spacing:.04em;font-size:34px;padding:20px 44px;border-radius:99px}
+.pdfbtn{display:inline-flex;align-items:center;gap:12px;background:#c0392b!important;color:#fff;border-color:#c0392b!important;text-decoration:none;font-weight:900;letter-spacing:.04em;font-size:34px;padding:20px 44px;border-radius:99px}
 .perk{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:7px 14px;border-radius:99px;font-size:14px;font-weight:600}
 .hero-wa{white-space:nowrap;position:absolute;top:16px;right:16px;z-index:5;background:#1f9d57;color:#fff;border:0;border-radius:99px;padding:10px 18px;font:700 15px 'Source Sans 3';cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.35);display:inline-flex;align-items:center;gap:8px}
 .perks .hero-wa{position:static;top:auto;right:auto;font-size:17px;padding:10px 22px;box-shadow:none}
@@ -185,7 +185,7 @@ footer b{color:#fff}.warn{margin-top:12px;background:#a1262a;color:#fff;border-r
   <div class="eyebrow"><span style="font-size:22px;vertical-align:-3px;margin-right:6px">🏛️</span>Prof. Rodrigo Gonçalves Pereira</div>
   <h1>Loja de <em>Matemática</em><br>Apostilas &amp; Simulados</h1>
   <p>Material de estudo organizado, direto ao ponto e atualizado com os editais. Confira capa, índice e páginas internas antes de comprar.</p>
-  <div class="perks"><a class="perk pdfbtn" href="#main" onclick="event.preventDefault();var g=document.querySelector('.grupo .card')||document.getElementById('main');g.scrollIntoView({behavior:'smooth',block:'center'})">📚 PDF</a><button class="hero-wa" onclick="wtoggle(true)"><img class="wai" src="img/whatsapp.png" alt="" width="26" height="26"> Falar no WhatsApp <small>tire dúvidas · peça seu material</small></button><span class="perk">🔎 Veja as páginas antes</span><span class="perk">🔠 Versão JUMBO (letra grande)</span><span class="perk">⚡ Pagamento seguro pela Eduzz</span><span class="perk">📄 Versão para encadernar, JUMBO para ler no celular e simulados</span></div>
+  <div class="perks"><a class="perk pdfbtn" href="#main" onclick="event.preventDefault();var g=document.querySelector('.grupo .card')||document.getElementById('main');g.scrollIntoView({behavior:'smooth',block:'center'})"><img class="wai" src="img/pdf.png" alt="" width="40" height="40">PDF</a><button class="hero-wa" onclick="wtoggle(true)"><img class="wai" src="img/whatsapp.png" alt="" width="26" height="26"> Falar no WhatsApp <small>tire dúvidas · peça seu material</small></button><span class="perk">🔎 Veja as páginas antes</span><span class="perk">🔠 Versão JUMBO (letra grande)</span><span class="perk">⚡ Pagamento seguro pela Eduzz</span><span class="perk">📄 Versão para encadernar, JUMBO para ler no celular e simulados</span></div>
 </div></header>
 
 <div class="wrap tools"><div class="bar">
