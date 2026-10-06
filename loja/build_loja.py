@@ -150,25 +150,31 @@ footer b{color:#fff}.warn{margin-top:12px;background:#a1262a;color:#fff;border-r
 .fact.hot span{font-size:1.3em}
 .fact.hot{border-color:#f0b4b4;background:#fff5f5}
 .note{font-size:13px;color:var(--mut);margin-top:10px}
-/* miniaturas animadas: páginas viram como num livro folheado */
-.cover{perspective:1100px}
-.book{position:absolute;inset:0;z-index:0}
-.pg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;transform-origin:left center;backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:transform 1.2s cubic-bezier(.55,0,.25,1),box-shadow 1.2s;box-shadow:inset 8px 0 14px -8px rgba(0,0,0,.35)}
-.pg.flip{transform:rotateY(-179deg);box-shadow:-22px 0 34px rgba(0,0,0,.4)}
-.book.nt .pg{transition:none}
+/* miniaturas: virada de página como papel de verdade (frente, verso, sombra e dobra) */
+.cover{perspective:1300px}
+.book{position:absolute;inset:0;z-index:0;transform-style:preserve-3d}
+.pg{position:absolute;inset:0;transform-origin:left center;transform-style:preserve-3d;background:#fff}
+.pg>.f,.pg>.b{position:absolute;inset:0;width:100%;height:100%;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.pg>.f{object-fit:cover;object-position:top}
+.pg>.b{transform:rotateY(180deg);background:linear-gradient(90deg,#d9d2c2,#f6f1e6 18%,#fbf8f0)}
+.pg .sh{position:absolute;inset:0;pointer-events:none;opacity:0;background:linear-gradient(90deg,rgba(0,0,0,.55),rgba(0,0,0,.05) 70%)}
+.pg>.f::after{content:none}
+.pg.flip{animation:turn 1.5s cubic-bezier(.45,.05,.3,1) forwards}
+.pg.flip .f+.sh{animation:shf 1.5s ease-in forwards}
+@keyframes turn{
+ 0%{transform:rotateY(0) skewY(0);box-shadow:0 0 0 rgba(0,0,0,0)}
+ 25%{transform:rotateY(-40deg) skewY(-1.2deg);box-shadow:14px 0 26px rgba(0,0,0,.28)}
+ 50%{transform:rotateY(-92deg) skewY(-2.5deg);box-shadow:26px 0 38px rgba(0,0,0,.36)}
+ 75%{transform:rotateY(-142deg) skewY(-1.2deg);box-shadow:18px 0 28px rgba(0,0,0,.26)}
+ 100%{transform:rotateY(-180deg) skewY(0);box-shadow:0 0 0 rgba(0,0,0,0)}}
+@keyframes shf{0%{opacity:0}60%{opacity:.8}100%{opacity:.9}}
+.book.nt .pg{animation:none!important}
 .book:after{content:"";position:absolute;left:0;top:0;bottom:0;width:7px;background:linear-gradient(90deg,rgba(0,0,0,.35),transparent);z-index:99;pointer-events:none}
 .dots{position:absolute;left:0;right:0;bottom:10px;display:flex;gap:5px;justify-content:center;pointer-events:none;z-index:2}
 .dots i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.55);transition:.3s}.dots i.on{background:var(--gold);width:16px;border-radius:4px}
 .cover:before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,transparent 70%,rgba(15,37,71,.35));pointer-events:none}
 .badge,.peek{z-index:2}
-/* 3D: livro inclinado com espessura, sombra projetada e página que levanta */
-.cover{perspective:900px;background:radial-gradient(ellipse at 50% 85%,#c9d6ee,#e6edf8 70%)}
-.book{inset:7% 9% 7% 9%;transform-style:preserve-3d;transform:rotateY(-16deg) rotateX(4deg);transform-origin:50% 60%;transition:transform .6s ease;filter:drop-shadow(16px 20px 14px rgba(15,37,71,.38))}
-.cover:hover .book{transform:rotateY(-6deg) rotateX(2deg)}
-.pg.base{box-shadow:1px 1px 0 #efe8d8,2px 2px 0 #e2d9c5,3px 3px 0 #d6ccb6,4px 4px 0 #c9bfa8,5px 5px 0 #bdb29a}
-.pg.flip{transform:rotateY(-172deg) translateZ(2px) rotateX(-3deg);box-shadow:-26px 6px 30px rgba(0,0,0,.35)}
-.book:after{width:10px}
-@media(prefers-reduced-motion:reduce){.pg{transition:none}.book{transition:none}}
+@media(prefers-reduced-motion:reduce){.pg.flip{animation:none;transform:rotateY(-180deg)}}
 @media(max-width:720px){.certs{display:grid;grid-template-columns:1fr 1fr;overflow:visible;gap:8px}.cert{min-width:0;max-width:none;min-height:56px;padding:12px;display:flex;flex-direction:column;justify-content:center}.cert:first-child{grid-column:1/-1}.cert b{font-size:15px}.box{grid-template-columns:1fr}.stage img.big{max-height:52vh}.grid{grid-template-columns:repeat(2,1fr);gap:12px}.info h3{font-size:15px}.price{font-size:20px}.row{flex-direction:column;align-items:stretch;gap:6px}.row .btn{text-align:center}.info{padding:12px}#q{width:100%}.fab{padding:11px 16px}}
 </style>
 </head>
@@ -225,7 +231,8 @@ function card(it){
   const act=soon?`<button class="btn wa" onclick="wabre('${it.slug}',5)">Avisar-me</button>`
                  :`<a class="btn buy" target="_blank" rel="noopener" href="${it.link}">Comprar</a>`;
   const n=it.imgs.length;
-  const strip=it.imgs.map((u,k)=>`<img class="pg" style="z-index:${n-k+1}" ${k?'loading="lazy"':''} src="${u}" alt="${k?'Página '+(k+1)+' da':'Capa da'} apostila ${it.nome}">`).join("")+`<img class="pg base" style="z-index:0" src="${it.imgs[0]}" alt="">`;
+  const leaf=(u,k)=>`<div class="pg" style="z-index:${n-k+1}"><img class="f" ${k?'loading="lazy"':''} src="${u}" alt="${k?'Página '+(k+1)+' da':'Capa da'} apostila ${it.nome}"><i class="sh"></i><i class="b"></i></div>`;
+  const strip=it.imgs.map(leaf).join("")+`<div class="pg base" style="z-index:0"><img class="f" src="${it.imgs[0]}" alt=""></div>`;
   const dots=it.imgs.length>1?`<div class="dots">${it.imgs.map((_,k)=>`<i class="${k?'':'on'}"></i>`).join("")}</div>`:"";
   return `<article class="card" data-s="${it.slug}"><div class="cover" data-n="${it.imgs.length}" onclick="abre('${it.slug}')"><div class="book">${strip}</div>${dots}<span class="badge ${soon?'soon':''}">${soon?'Em breve':'Disponível'}</span><span class="peek">👁 ver páginas</span></div>
   <div class="info"><small>${it.grupoNome}</small><h3>${it.nome}</h3><p>${dt(it.sub)}${it.paginas?` · ${it.paginas} págs.`:''}</p>
