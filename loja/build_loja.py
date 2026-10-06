@@ -67,6 +67,10 @@ h1 em{color:var(--gold-light);font-style:normal}
 .perk{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:7px 14px;border-radius:99px;font-size:14px;font-weight:600}
 .hero-wa{white-space:nowrap;position:absolute;top:16px;right:16px;z-index:5;background:#1f9d57;color:#fff;border:0;border-radius:99px;padding:10px 18px;font:700 15px 'Source Sans 3';cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.35);display:inline-flex;align-items:center;gap:8px}
 .perks .hero-wa{position:static;top:auto;right:auto;font-size:17px;padding:10px 22px;box-shadow:none}
+.perks{display:grid!important;grid-template-columns:1fr 1fr;gap:10px;max-width:760px}
+.perks .perk,.perks .hero-wa{box-sizing:border-box;width:100%;min-height:52px;display:flex;align-items:center;justify-content:center;text-align:center;white-space:normal;line-height:1.25;border-radius:18px}
+.perks .pdfbtn,.perks .hero-wa{font-size:24px;min-height:84px;padding:12px 18px;gap:12px}
+.perks .hero-wa .wai,.perks .pdfbtn .wai{width:40px;height:40px;flex:none}
 .hero-wa small{display:none}.hero-wa:hover{background:#188047}
 .tools{margin-top:-30px;position:relative;z-index:2}
 .bar{background:#fff;border-radius:16px;box-shadow:0 10px 30px rgba(15,37,71,.15);padding:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
