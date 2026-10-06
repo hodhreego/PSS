@@ -56,7 +56,7 @@ HTML = r'''<!DOCTYPE html>
 html{scroll-behavior:smooth}
 body{font-family:'Source Sans 3',system-ui,sans-serif;color:var(--ink);background:var(--bg);line-height:1.45}
 .wrap{max-width:1180px;margin:0 auto;padding:0 18px}
-header.hero{background:linear-gradient(135deg,var(--navy-deep),var(--navy) 60%,#27508f);color:#fff;padding:74px 0 64px;position:relative;overflow:hidden}
+header.hero{background:linear-gradient(135deg,var(--navy-deep),var(--navy) 60%,#27508f);color:#fff;padding:84px 0 64px;position:relative;overflow:hidden}
 header.hero:after{content:"";position:absolute;right:-90px;top:-90px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(201,162,39,.35),transparent 70%)}
 .eyebrow{letter-spacing:.22em;font-size:12px;color:var(--gold-light);font-weight:600;text-transform:uppercase}
 h1{font-family:'Playfair Display',serif;font-size:clamp(30px,5vw,50px);line-height:1.1;margin:10px 0 12px}
@@ -64,7 +64,7 @@ h1 em{color:var(--gold-light);font-style:normal}
 .hero p{max-width:620px;color:#d6e1f5;font-size:18px}
 .perks{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
 .perk{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:7px 14px;border-radius:99px;font-size:14px;font-weight:600}
-.hero-wa{position:absolute;top:16px;right:16px;z-index:5;background:#1f9d57;color:#fff;border:0;border-radius:99px;padding:10px 18px;font:700 15px 'Source Sans 3';cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.35);display:inline-flex;align-items:center;gap:8px}
+.hero-wa{white-space:nowrap;position:absolute;top:16px;right:16px;z-index:5;background:#1f9d57;color:#fff;border:0;border-radius:99px;padding:10px 18px;font:700 15px 'Source Sans 3';cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.35);display:inline-flex;align-items:center;gap:8px}
 .hero-wa small{display:none}.hero-wa:hover{background:#188047}
 .tools{margin-top:-30px;position:relative;z-index:2}
 .bar{background:#fff;border-radius:16px;box-shadow:0 10px 30px rgba(15,37,71,.15);padding:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
@@ -129,6 +129,7 @@ footer b{color:#fff}.warn{margin-top:12px;background:#a1262a;color:#fff;border-r
 .wbody select,.wbody textarea{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:9px 10px;font:500 14px 'Source Sans 3';outline:none}
 .wbody textarea{min-height:92px;resize:vertical}
 .wbody .btn.wa{text-align:center;padding:12px}
+.wfoot{position:sticky;bottom:-16px;background:#fff;margin:0 -16px -16px;padding:10px 16px 14px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:6px;box-shadow:0 -8px 14px -10px rgba(0,0,0,.25)}
 .tip{background:#fff8e1;border:1.5px solid #ecd58a;border-radius:10px;padding:10px 12px;font-size:13.5px;line-height:1.5;color:#4a3d00}.wbody small{color:var(--mut);font-size:12px}
 
 /* certames */
@@ -195,8 +196,8 @@ footer b{color:#fff}.warn{margin-top:12px;background:#a1262a;color:#fff;border-r
   <select id="wprod"></select>
   <label class="t" for="wmsg">Sua mensagem (você pode editar)</label>
   <textarea id="wmsg"></textarea>
-  <a class="btn wa" id="wgo" target="_blank" rel="noopener" href="#">Abrir WhatsApp</a>
-  <small>Você será levado ao WhatsApp com a mensagem pronta (o link da loja vai junto no final); só precisa tocar em enviar.</small>
+  <div class="wfoot"><a class="btn wa" id="wgo" target="_blank" rel="noopener" href="#">Abrir WhatsApp</a>
+  <small>Você será levado ao WhatsApp com a mensagem pronta (o link da loja vai junto no final); só precisa tocar em enviar.</small></div>
  </div></div>
 <div class="modal" id="modal" onclick="if(event.target===this)fecha()"><button class="x" onclick="fecha()" aria-label="Fechar">×</button>
   <div class="box"><div class="stage"><img class="big" id="big" alt=""><div class="thumbs" id="th"></div><div class="lab" id="lab"></div></div>
@@ -211,7 +212,7 @@ const $=s=>document.querySelector(s);
 const brl=n=>n.toFixed(2).replace(".",",");
 function card(it){
   const soon=!it.link;
-  const act=soon?`<button class="btn wa" onclick="wabre('${it.slug}')">Avisar-me</button>`
+  const act=soon?`<button class="btn wa" onclick="wabre('${it.slug}',5)">Avisar-me</button>`
                  :`<a class="btn buy" target="_blank" rel="noopener" href="${it.link}">Comprar</a>`;
   const n=it.imgs.length;
   const strip=it.imgs.map((u,k)=>`<img class="pg" style="z-index:${n-k+1}" ${k?'loading="lazy"':''} src="${u}" alt="${k?'Página '+(k+1)+' da':'Capa da'} apostila ${it.nome}">`).join("")+`<img class="pg base" style="z-index:0" src="${it.imgs[0]}" alt="">`;
@@ -331,7 +332,7 @@ function winit(){
   $("#wprod").innerHTML='<option value="">— nenhum / não sei —</option>'+ITENS.map(i=>`<option value="Apostila ${i.nome} · ${i.grupoNome}">${i.nome} · ${i.grupoNome}</option>`).join("");
   $("#wprod").onchange=wbuild;$("#wmsg").oninput=wlink;wbuild();}
 function wtoggle(force){const p=$("#wp");const on=force===undefined?!p.classList.contains("open"):force;p.classList.toggle("open",on);}
-function wabre(slug){const it=ITENS.find(i=>i.slug===slug);if(it)$("#wprod").value="Apostila "+it.nome+" · "+it.grupoNome;wbuild();wtoggle(true);}
+function wabre(slug,op){const it=ITENS.find(i=>i.slug===slug);if(it)$("#wprod").value="Apostila "+it.nome+" · "+it.grupoNome;const r=document.querySelector('input[name=wo][value="'+(op||0)+'"]');if(r)r.checked=true;wbuild();wtoggle(true);const w=document.querySelector(".wbody");if(w)w.scrollTop=0;}
 winit();
 </script>
 </body>
