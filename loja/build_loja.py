@@ -127,7 +127,7 @@ footer b{color:#fff}.warn{margin-top:12px;background:#a1262a;color:#fff;border-r
 .wbody select,.wbody textarea{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:9px 10px;font:500 14px 'Source Sans 3';outline:none}
 .wbody textarea{min-height:92px;resize:vertical}
 .wbody .btn.wa{text-align:center;padding:12px}
-.wbody small{color:var(--mut);font-size:12px}
+.tip{background:#fff8e1;border:1.5px solid #ecd58a;border-radius:10px;padding:10px 12px;font-size:13.5px;line-height:1.5;color:#4a3d00}.wbody small{color:var(--mut);font-size:12px}
 @media(max-width:720px){.box{grid-template-columns:1fr}.stage img.big{max-height:52vh}.grid{grid-template-columns:repeat(2,1fr);gap:12px}.info h3{font-size:15px}.price{font-size:20px}.row{flex-direction:column;align-items:stretch;gap:6px}.row .btn{text-align:center}.info{padding:12px}#q{width:100%}.fab{padding:11px 16px}}
 </style>
 </head>
@@ -158,6 +158,7 @@ footer b{color:#fff}.warn{margin-top:12px;background:#a1262a;color:#fff;border-r
  <div class="wbody">
   <label class="t">Sobre o que você quer falar?</label>
   <div id="wopts"></div>
+  <div id="wtip" class="tip"></div>
   <label class="t" for="wprod">Material (opcional)</label>
   <select id="wprod"></select>
   <label class="t" for="wmsg">Sua mensagem (você pode editar)</label>
@@ -216,16 +217,24 @@ $("#q").addEventListener("input",e=>{busca=e.target.value;render()});
 chips();render();
 const WNUM="5545999699444";
 const WOPT=[
- ["Tenho uma dúvida sobre um material","Olá, Prof. Rodrigo! Tenho uma dúvida sobre o material{P}."],
- ["Quero ajuda para escolher o material certo para o meu cargo","Olá, Prof. Rodrigo! Quero ajuda para escolher o material certo para o meu cargo. Meu cargo/concurso é: "],
- ["Já paguei e não recebi o PDF","Olá, Prof. Rodrigo! Já fiz o pagamento{P}, mas ainda não recebi o PDF. O e-mail da compra é: "],
- ["Quero a versão JUMBO (letra grande)","Olá, Prof. Rodrigo! Gostaria da versão JUMBO (letra grande){P}. Pode me orientar?"],
- ["Pedir um material de outra disciplina ou concurso","Olá, Prof. Rodrigo! Gostaria de pedir um material de outra disciplina/concurso: "],
- ["Quero ser avisado de novos materiais","Olá, Prof. Rodrigo! Quero ser avisado(a) quando sair material novo do concurso: "],
- ["Mentoria (plano de aula, ação ou atendimento)","Olá, Prof. Rodrigo! Tenho interesse na mentoria para a Prova Prática do PSS. Pode me passar mais informações?"],
- ["Outro assunto","Olá, Prof. Rodrigo! "]];
+ ["Tenho uma dúvida sobre um material","Olá, Prof. Rodrigo! Tenho uma dúvida sobre o material{P}.\nMinha dúvida é: ",
+  "<b>Talvez já esteja respondido:</b><br>• Todos os materiais são <b>PDF digital</b>, para ler no celular, tablet ou computador.<br>• Antes de comprar, toque em <b>“ver páginas”</b> no card para conferir capa, índice e páginas internas.<br>• A versão <b>JUMBO</b> tem o mesmo conteúdo com letra maior.<br>Se ainda restar dúvida, escreva-a na mensagem abaixo."],
+ ["Quero ajuda para escolher o material certo para o meu cargo","Olá, Prof. Rodrigo! Quero ajuda para escolher o material certo.\nConcurso: \nCargo/disciplina: ",
+  "<b>Para eu indicar o material certo, informe:</b><br>• o <b>concurso</b> (PSS SEED-PR 2027, CISOP Cascavel 2026 ou outro);<br>• o <b>cargo ou disciplina</b>;<br>• Dica: no PSS, a apostila <b>Conhecimentos Básicos</b> serve para todos os cargos, e a específica do seu cargo complementa."],
+ ["Já paguei e não recebi o PDF","Olá, Prof. Rodrigo! Já fiz o pagamento{P}, mas ainda não recebi o PDF.\nNome completo: \nE-mail usado na compra: \nForma de pagamento (Pix, cartão ou boleto): \nJá olhei o spam/promoções: ",
+  "<b>Antes de enviar, confira (resolve na maioria dos casos):</b><br>1. Olhe a caixa de <b>spam</b>, <b>lixo eletrônico</b> e <b>promoções</b> do e-mail usado na compra.<br>2. Veja se você digitou <b>o e-mail certo</b> no checkout.<br>3. Pix e cartão costumam liberar em poucos minutos; <b>boleto</b> só libera após a compensação, que pode levar alguns dias úteis.<br>4. Entre na sua conta Eduzz (<b>Minhas compras</b>) e baixe o arquivo por lá.<br><b>Se não resolver</b>, envie a mensagem abaixo com os dados preenchidos e, se puder, anexe o <b>comprovante</b> depois."],
+ ["Quero a versão JUMBO (letra grande)","Olá, Prof. Rodrigo! Gostaria da versão JUMBO (letra grande){P}. Pode me orientar?",
+  "<b>O que é:</b> a versão <b>JUMBO</b> tem o mesmo conteúdo da apostila, com letra maior, mais confortável para ler na tela ou imprimir.<br>Em alguns materiais ela já vem junto na compra. Se não vier no seu, é só pedir pela mensagem abaixo."],
+ ["Pedir um material de outra disciplina ou concurso","Olá, Prof. Rodrigo! Gostaria de pedir um material de outra disciplina/concurso.\nConcurso: \nCargo/disciplina: \nBanca (se souber): \nEdital (link ou nome): ",
+  "<b>Para eu avaliar o pedido, informe:</b><br>• concurso e <b>cargo/disciplina</b>;<br>• <b>banca</b> e data da prova, se souber;<br>• o <b>edital</b> (link ou nome), pois monto o material em cima do conteúdo programático."],
+ ["Quero ser avisado de novos materiais","Olá, Prof. Rodrigo! Quero ser avisado(a) quando sair material novo.\nConcurso/cargo de interesse: ",
+  "Informe o <b>concurso e o cargo</b> de interesse. Você será avisado(a) assim que o material for publicado. Os itens marcados <b>“Em breve”</b> na loja já estão em produção."],
+ ["Mentoria (plano de aula, ação ou atendimento)","Olá, Prof. Rodrigo! Tenho interesse na mentoria para a Prova Prática do PSS.\nQual serviço: (plano de aula, plano de ação, plano de atendimento, vídeo ou cadastro na plataforma)\nMinha disciplina: ",
+  "<b>Conte qual serviço você quer:</b> plano de aula, plano de ação, plano de atendimento, orientação para o vídeo ou ajuda com o cadastro na plataforma.<br>Informe também a sua <b>disciplina</b>."],
+ ["Outro assunto","Olá, Prof. Rodrigo! ",
+  "Escreva sua mensagem abaixo. Se for sobre uma compra, inclua o <b>nome</b> e o <b>e-mail usado</b> no pedido para agilizar."]];
 function wprod(){const v=$("#wprod").value;return v?" "+v:""}
-function wbuild(){const i=+(document.querySelector('input[name=wo]:checked')||{value:0}).value;$("#wmsg").value=WOPT[i][1].replace("{P}",wprod()?" ("+wprod().trim()+")":"");wlink()}
+function wbuild(){const i=+(document.querySelector('input[name=wo]:checked')||{value:0}).value;$("#wmsg").value=WOPT[i][1].replace("{P}",wprod()?" ("+wprod().trim()+")":"");$("#wtip").innerHTML=WOPT[i][2];wlink()}
 const LOJA="https://hodhreego.github.io/PSS/loja/";
 function wlink(){const m=$("#wmsg").value.trim()+"\n\n🛒 Enviado pela loja: "+LOJA;$("#wgo").href="https://wa.me/"+WNUM+"?text="+encodeURIComponent(m)}
 function winit(){
