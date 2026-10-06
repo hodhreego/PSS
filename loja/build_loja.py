@@ -20,7 +20,7 @@ P = [
  ("educacao-fisica", "Educação Física", "pss", "zsa3iutj", 20, "Conteúdo específico do cargo de Professor de Educação Física."),
  ("quimica", "Química", "pss", "jg3vxafi", 20, "Conteúdo específico do cargo de Professor de Química."),
  ("informacao-comunicacao", "Informação e Comunicação", "pss", None, 20, "Eixo Informação e Comunicação."),
- ("simulado-matematica", "Simulado de Matemática", "simulado", "linutiqk", 10, "Questões para treinar com o estilo da prova."),
+ ("simulado-matematica", "Simulado de Matemática", "pss", "linutiqk", 10, "Questões para treinar com o estilo da prova."),
  ("pedagogo-abaetetuba", "Pedagogo · Abaetetuba-PA", "outros", "x3khho43", 20, "Apostila completa para a Prefeitura de Abaetetuba-PA 2026."),
  ("cisop-artesao", "Artesão", "cisop", "d2w5agmt", 20, "CISOP Cascavel 2026 · concurso do Consórcio Intermunicipal de Saúde do Oeste do Paraná · banca Fafipa · prova 18/10/2026."),
  ("cisop-agente-administrativo", "Agente Administrativo", "cisop", "4loe6tq7", 20, "CISOP Cascavel 2026 · concurso do Consórcio Intermunicipal de Saúde do Oeste do Paraná · banca Fafipa · prova 18/10/2026."),
@@ -209,7 +209,7 @@ footer b{color:#fff}.warn{margin-top:12px;background:#a1262a;color:#fff;border-r
 <script>
 const ITENS=__DATA__;
 const WA="__WA__";
-const GR=[["pss","PSS SEED-PR 2027"],["cisop","CISOP Cascavel 2026"],["prefeitura","Prefeitura de Cascavel 2026"],["simulado","Simulados"],["outros","Outros concursos"]];
+const GR=[["pss","PSS SEED-PR 2027"],["cisop","CISOP Cascavel 2026"],["prefeitura","Prefeitura de Cascavel 2026"],["outros","Outros concursos"]];
 let filtro="todos",busca="";{const h=location.hash.slice(1);if(["pss","cisop","prefeitura","simulado","outros"].includes(h))filtro=h}
 const $=s=>document.querySelector(s);
 const brl=n=>n.toFixed(2).replace(".",",");
