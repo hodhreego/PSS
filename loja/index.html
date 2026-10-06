@@ -234,25 +234,34 @@ function chips(){
 }
 /* miniaturas animadas: as páginas sobem (scroll vertical) enquanto o card está visível */
 let io=null,rolando=false,tRol=null;
-addEventListener("scroll",()=>{rolando=true;clearTimeout(tRol);tRol=setTimeout(()=>rolando=false,500)},{passive:true});
+const todas=()=>[...document.querySelectorAll(".cover")];
+addEventListener("scroll",()=>{
+  rolando=true;clearTimeout(tRol);
+  todas().forEach(cv=>{if(cv._reset)cv._reset()});          /* rolando: só a capa aparece */
+  tRol=setTimeout(()=>{rolando=false;todas().forEach(cv=>{if(cv._vis&&cv._start)cv._start(250+Math.random()*500)})},140);   /* parou: anima já */
+},{passive:true});
 function anima(){
   if(io)io.disconnect();
   if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
-  const CAPA=5000,PAG=2200;               /* a capa fica mais tempo na tela */
-  const run=cv=>{if(cv._t)return;const n=+cv.dataset.n;if(n<2)return;let k=0;
+  const CAPA=5000,PAG=2200;
+  todas().forEach(cv=>{const n=+cv.dataset.n;if(n<2)return;let k=0;
     const bk=cv.querySelector(".book"),pgs=[...bk.querySelectorAll(".pg:not(.base)")],ds=cv.querySelectorAll(".dots i");
     const dot=i=>ds.forEach((d,j)=>d.classList.toggle("on",j===i%n));
-    bk.classList.add("nt");pgs.forEach(p=>p.classList.remove("flip"));void bk.offsetHeight;bk.classList.remove("nt");dot(0);
     cv.onmouseenter=()=>cv._p=1;cv.onmouseleave=()=>cv._p=0;
+    cv._reset=()=>{clearTimeout(cv._t);cv._t=null;if(k||bk.querySelector(".flip")){bk.classList.add("nt");pgs.forEach(p=>p.classList.remove("flip"));void bk.offsetHeight;bk.classList.remove("nt")}k=0;dot(0)};
     const passo=()=>{
-      if(rolando||cv._p){cv._t=setTimeout(passo,250);return}   /* não anima enquanto rola; retoma 0,5 s depois de parar */
+      if(rolando||!cv._vis)return;
+      if(cv._p){cv._t=setTimeout(passo,300);return}
       if(k<n){pgs[k].classList.add("flip");k++;dot(k);
         if(k===n){cv._t=setTimeout(()=>{bk.classList.add("nt");pgs.forEach(p=>p.classList.remove("flip"));void bk.offsetHeight;bk.classList.remove("nt");k=0;dot(0);cv._t=setTimeout(passo,CAPA)},1500);return}}
       cv._t=setTimeout(passo,PAG)};
-    cv._t=setTimeout(passo,CAPA*.6+Math.random()*1800);};
-  const stop=cv=>{clearTimeout(cv._t);cv._t=null};
-  io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting?run(e.target):stop(e.target)),{threshold:.4});
-  document.querySelectorAll(".cover").forEach(cv=>io.observe(cv));
+    cv._start=d=>{clearTimeout(cv._t);cv._t=setTimeout(passo,d)};
+    cv._reset();
+  });
+  io=new IntersectionObserver(es=>es.forEach(e=>{const cv=e.target;cv._vis=e.isIntersecting;
+    if(!cv._start)return;
+    if(e.isIntersecting){if(!rolando)cv._start(400+Math.random()*600)}else cv._reset()}),{threshold:.4});
+  todas().forEach(cv=>io.observe(cv));
 }
 const NOMES=["Capa","Índice","Página interna","Página interna"];
 let cur=null;
