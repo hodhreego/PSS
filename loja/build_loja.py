@@ -168,8 +168,8 @@ footer b{color:#fff}.warn{margin-top:12px;background:#a1262a;color:#fff;border-r
 .pg>.b{transform:rotateY(180deg);background:linear-gradient(90deg,#d9d2c2,#f6f1e6 18%,#fbf8f0)}
 .pg .sh{position:absolute;inset:0;pointer-events:none;opacity:0;background:linear-gradient(90deg,rgba(0,0,0,.55),rgba(0,0,0,.05) 70%)}
 .pg>.f::after{content:none}
-.pg.flip{animation:turn 1.5s cubic-bezier(.45,.05,.3,1) forwards}
-.pg.flip .f+.sh{animation:shf 1.5s ease-in forwards}
+.pg.flip{animation:turn .5s cubic-bezier(.45,.05,.3,1) forwards}
+.pg.flip .f+.sh{animation:shf .5s ease-in forwards}
 @keyframes turn{
  0%{transform:rotateY(0) skewY(0);box-shadow:0 0 0 rgba(0,0,0,0)}
  25%{transform:rotateY(-40deg) skewY(-1.2deg);box-shadow:14px 0 26px rgba(0,0,0,.28)}
@@ -303,7 +303,7 @@ addEventListener("scroll",()=>{
 function anima(){
   if(io)io.disconnect();
   if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
-  const CAPA=5000,PAG=2200;
+  const CAPA=1667,PAG=733;
   todas().forEach(cv=>{const n=+cv.dataset.n;if(n<2)return;let k=0;
     const bk=cv.querySelector(".book"),pgs=[...bk.querySelectorAll(".pg:not(.base)")],ds=cv.querySelectorAll(".dots i");
     const dot=i=>ds.forEach((d,j)=>d.classList.toggle("on",j===i%n));
@@ -313,7 +313,7 @@ function anima(){
       if(rolando||!cv._vis)return;
       if(cv._p){cv._t=setTimeout(passo,300);return}
       if(k<n){pgs[k].classList.add("flip");k++;dot(k);
-        if(k===n){cv._t=setTimeout(()=>{bk.classList.add("nt");pgs.forEach(p=>p.classList.remove("flip"));void bk.offsetHeight;bk.classList.remove("nt");k=0;dot(0);cv._t=setTimeout(passo,CAPA)},1500);return}}
+        if(k===n){cv._t=setTimeout(()=>{bk.classList.add("nt");pgs.forEach(p=>p.classList.remove("flip"));void bk.offsetHeight;bk.classList.remove("nt");k=0;dot(0);cv._t=setTimeout(passo,CAPA)},500);return}}
       cv._t=setTimeout(passo,PAG)};
     cv._start=d=>{clearTimeout(cv._t);cv._t=setTimeout(passo,d)};
     cv._reset();
