@@ -1330,9 +1330,10 @@
               <p class="hint">O que você escrever aqui vai na mensagem e no link, e o professor vê igualzinho ao abrir.</p>
             </div>
             <div>
-              <p class="lb">Renovação do contrato</p>
+              <p class="lb">Renovação do contrato ou aulas avulsas</p>
               <div class="opts" role="radiogroup" aria-label="Renovação do contrato" id="renovOpts"></div>
-              <p class="hint">O contrato é renovado a cada período escolhido, com pagamento antecipado de cada período.</p>
+              <p class="hint">O contrato é renovado a cada período escolhido, com pagamento antecipado de cada período. Para só uma substituição, escolha uma das três últimas opções: sem contrato, sem desconto e sem renovação.</p>
+              <p class="hint" id="avNota" hidden></p>
             </div>
             <div>
               <p class="lb">Metodologia de ensino</p>
@@ -1517,7 +1518,11 @@ const RENOVACOES = [
   { m: 2,  nome: 'Bimestral',  cada: 'a cada 2 meses',   per: 'bimestre',  desc: 0.125,   sub: 'Renovado a cada 2 meses' },
   { m: 3,  nome: 'Trimestral', cada: 'a cada 3 meses',   per: 'trimestre', desc: 0.15,   sub: 'Renovado a cada 3 meses' },
   { m: 6,  nome: 'Semestral',  cada: 'a cada 6 meses',   per: 'semestre',  desc: 0.20,   sub: 'Renovado a cada 6 meses' },
-  { m: 12, nome: 'Anual',      cada: 'a cada 12 meses',  per: 'ano',       desc: 0.25,   sub: 'Renovado a cada 12 meses' }
+  { m: 12, nome: 'Anual',      cada: 'a cada 12 meses',  per: 'ano',       desc: 0.25,   sub: 'Renovado a cada 12 meses' },
+  // Sem contrato (substituição): cobra só as aulas marcadas, uma única vez, sem desconto e sem renovação. Posições 5, 6 e 7: NÃO reordene.
+  { m: 1, avulso: true, dias: 1, nome: 'Cobertura de um dia',     cada: '', per: 'dia',    desc: 0, sub: 'Sem contrato · marque só os horários de um dia' },
+  { m: 1, avulso: true, nome: 'Cobertura de uma semana', cada: '', per: 'semana', desc: 0, sub: 'Sem contrato · marque os horários da semana' },
+  { m: 1, avulso: true, nome: 'Aulas avulsas',           cada: '', per: 'aulas',  desc: 0, sub: 'Sem contrato · só as aulas marcadas, como substituição' }
   // "desc" é o desconto sobre o valor de tabela de cada contrato (0.10 = 10%). NÃO reordene: links já enviados guardam a posição.
 ];
 
@@ -2062,9 +2067,10 @@ function calcular() {
   const local = document.querySelector('input[name=local]:checked').value;
   const inicio = $('inicio').value;
   const renov = RENOVACOES[+document.querySelector('input[name=renov]:checked').value];
+  const av = !!renov.avulso;
   const diaN = inicio ? parseInt(inicio.split('-')[2], 10) : 0;
   const diaTxt = inicio ? 'no dia ' + diaN + (diaN > 28 ? ' (ou no último dia do mês)' : '') : '';
-  $('hintInicio').textContent = inicio ? 'Primeiro pagamento em ' + fmtData(inicio) + '. Contrato renovado ' + renov.cada + ', ' + diaTxt + '.' : 'Informe a data em que o contrato começa. O primeiro pagamento vence nesse dia.';
+  $('hintInicio').textContent = av ? 'Informe a data da primeira aula. O pagamento é à vista, antes das aulas.' : inicio ? 'Primeiro pagamento em ' + fmtData(inicio) + '. Contrato renovado ' + renov.cada + ', ' + diaTxt + '.' : 'Informe a data em que o contrato começa. O primeiro pagamento vence nesse dia.';
   const regime = document.querySelector('input[name=regime]:checked').value;
   const relogio = regime === 'relogio';
   const unidade = relogio ? 'hora-relógio (60 min)' : 'hora-aula (' + DURACAO_AULA_MIN + ' min)';
@@ -2076,12 +2082,12 @@ function calcular() {
   if (modo === 'grade') {
     const porDia = {};
     aulas.forEach(a => { porDia[a.dia] = (porDia[a.dia] || 0) + 1; });
-    const descontadas = DIAS_VISIVEIS.reduce((s, d) => s + FERIADOS[d] * (porDia[d] || 0), 0);   // aulas que caem em feriado ou dia sem aula
-    horasAula = Math.max(0, aulas.length * SEMANAS_POR_MES - descontadas);
+    const descontadas = av ? 0 : DIAS_VISIVEIS.reduce((s, d) => s + FERIADOS[d] * (porDia[d] || 0), 0);   // aulas que caem em feriado ou dia sem aula
+    horasAula = av ? aulas.length : Math.max(0, aulas.length * SEMANAS_POR_MES - descontadas);
     turmas = new Set(aulas.map(a => a.turma)).size;
     disciplinas = new Set(aulas.map(a => a.disc)).size;
     preparos = new Set(aulas.map(a => a.disc + '|' + a.turma.split(' · ')[0])).size;   // disciplina + ano; letras de turma são espelhadas
-    origem = aulas.length + ' por semana × ' + num(SEMANAS_POR_MES) + ' semanas' + (descontadas ? ' − ' + descontadas + ' em dias sem aula' : '');
+    origem = av ? aulas.length + ' aula(s) marcada(s), uma vez' : aulas.length + ' por semana × ' + num(SEMANAS_POR_MES) + ' semanas' + (descontadas ? ' − ' + descontadas + ' em dias sem aula' : '');
     analisarGeminadas(aulas);
     const ep = extrasPagos(aulas, a => a.disc + '|' + a.turma.split(' · ')[0]);
     const et = extrasPagos(aulas, a => a.turma);
@@ -2094,7 +2100,7 @@ function calcular() {
     $('stats').innerHTML = [aulas.length + ' aula(s)/semana', turmas + ' turma(s)', disciplinas + ' disciplina(s)', preparos + ' preparo(s)'].concat(geminadas ? [geminadas + ' geminada(s)'] : [])
       .map(s => '<span class="stat">' + s + '</span>').join('');
   } else {
-    horasAula = lerNumero('horas', 0, false);
+    horasAula = lerNumero('horas', 0, false);   // em aulas avulsas, é a quantidade de aulas
     turmas = lerNumero('turmas', 1, true);
     disciplinas = Math.min(DISCIPLINAS.length, lerNumero('disciplinas', 1, true));
     preparos = lerNumero('preparos', 1, true);
@@ -2115,8 +2121,8 @@ function calcular() {
   let horasExtras = 0;
   const detalheExtras = [];
   SERVICOS_EXTRAS.forEach(s => {
-    const h = lerNumero('extra_' + s.id, 0, false);
-    if ($('ep_' + s.id)) $('ep_' + s.id).textContent = h > 0 ? h + ' h por mês × ' + brl(valorHora) + ' = ' + brl(h * valorHora) + ' por mês' : brl(valorHora) + ' por hora · 0 h por mês';
+    const h = av ? 0 : lerNumero('extra_' + s.id, 0, false);
+    if ($('ep_' + s.id)) $('ep_' + s.id).textContent = av ? 'Não entra em aulas avulsas' : h > 0 ? h + ' h por mês × ' + brl(valorHora) + ' = ' + brl(h * valorHora) + ' por mês' : brl(valorHora) + ' por hora · 0 h por mês';
     if (h > 0) { horasExtras += h; detalheExtras.push(['+ ' + s.nome, brl(h * valorHora), num(h) + ' h por mês × ' + brl(valorHora)]); }
   });
   const valorExtras = horasExtras * valorHora;
@@ -2125,9 +2131,13 @@ function calcular() {
   const total = totalTabela - descValor;   // valor de cada mês, com desconto
   const valorContrato = total * renov.m;   // valor do contrato inteiro (1, 2, 3, 6 ou 12 meses)
 
+  const diasMarcados = new Set(aulas.map(a => a.dia)).size;
+  $('avNota').hidden = !av;
+  $('avNota').textContent = av ? 'Sem contrato: vale só o que está marcado, uma única vez. Serviços adicionais e dias sem aula não entram na conta.' + (renov.dias && modo === 'grade' && diasMarcados > 1 ? ' Você marcou ' + diasMarcados + ' dias; para um dia só, deixe horários de um único dia.' : '') : '';
+  const rotAulas = relogio ? 'Horas de regência' : 'Aulas de regência';
   const linhas = [
     ['Regime de cobrança', relogio ? 'hora-relógio' : 'hora-aula', unidade + (relogio ? ', ' + pct(ACRESCIMO_HORA_RELOGIO) + ' acima da hora-aula' : '')],
-    [relogio ? 'Horas de regência por mês' : 'Aulas de regência por mês', num(horasAula) + (relogio ? ' h' : ''), origem],
+    [av ? rotAulas : rotAulas + ' por mês', num(horasAula) + (relogio ? ' h' : ''), origem],
     ['Horas de planejamento (1/3)', num(horasPlan) + ' h', 'Local: ' + local],
     ['Total a faturar', num(horasFaturar) + ' h', null, true],
     ['Valor da hora base', brl(valorHora)],
@@ -2137,17 +2147,18 @@ function calcular() {
     ['Acréscimo por disciplinas extras', brl(adDisc), discExtras + ' extra(s) × ' + pct(ACRESCIMO_POR_DISCIPLINA_EXTRA) + (isentos.d ? ' · ' + isentos.d + ' geminada(s) sem acréscimo' : '')],
     ['Total de complexidade', brl(adTotal), null, true]
   ].concat(detalheExtras.length ? detalheExtras.concat([['Total de serviços adicionais', brl(valorExtras), num(horasExtras) + ' h por mês', true]]) : [])
-   .concat([['Valor de tabela (mensal)', brl(totalTabela), null, true], ['Desconto por contrato ' + renov.nome.toLowerCase() + ' (' + pct(renov.desc) + ')', '− ' + brl(descValor), null, true]])
-   .concat([['Valor mensal com desconto', brl(total), null, true], ['Valor do contrato (' + renov.nome.toLowerCase() + (renov.m > 1 ? ', ' + renov.m + ' meses' : '') + ')', brl(valorContrato), (renov.m > 1 ? renov.m + ' meses × ' + brl(total) + ' · ' : '') + num(horasAula * renov.m) + (relogio ? ' horas' : ' aulas') + ' no contrato', true]])
+   .concat(av ? [['Valor das aulas (' + renov.nome.toLowerCase() + ')', brl(valorContrato), num(horasAula) + (relogio ? ' horas' : ' aulas') + ' · sem contrato, sem desconto', true]] : [['Valor de tabela (mensal)', brl(totalTabela), null, true], ['Desconto por contrato ' + renov.nome.toLowerCase() + ' (' + pct(renov.desc) + ')', '− ' + brl(descValor), null, true]])
+   .concat(av ? [] : [['Valor mensal com desconto', brl(total), null, true], ['Valor do contrato (' + renov.nome.toLowerCase() + (renov.m > 1 ? ', ' + renov.m + ' meses' : '') + ')', brl(valorContrato), (renov.m > 1 ? renov.m + ' meses × ' + brl(total) + ' · ' : '') + num(horasAula * renov.m) + (relogio ? ' horas' : ' aulas') + ' no contrato', true]])
    .concat([['Pagamento', 'à vista, antecipado', (inicio ? 'A ser pago em ' + fmtData(inicio) + ' (início do contrato)' : 'A ser pago no início do contrato (data a definir)') + ' · renovação ' + renov.nome.toLowerCase(), false, true]]);
+  if (av) linhas[linhas.length - 1] = ['Pagamento', 'à vista, antes das aulas', 'Sem contrato nem renovação' + (inicio ? ' · primeira aula em ' + fmtData(inicio) : ''), false, true];
 
   $('extrato').innerHTML = linhas.map(([a, b, c, hi]) =>
     '<div class="row' + (hi ? ' hi' : '') + '"><span>' + esc(a) + (c ? '<small>' + esc(c) + '</small>' : '') + '</span><span>' + esc(b) + '</span></div>'
   ).join('');
   $('total').textContent = brl(valorContrato);
-  $('totalRot').textContent = 'Valor do contrato · ' + renov.nome.toLowerCase() + (renov.m > 1 ? ' (' + renov.m + ' meses)' : '');
-  $('de').innerHTML = '<s>' + brl(totalTabela * renov.m) + '</s> <b>−' + pct(renov.desc) + '</b> contrato ' + renov.nome.toLowerCase();
-  $('cnt').innerHTML = '<b>' + num(horasAula) + '</b><span>' + (relogio ? 'horas de aula por mês' : 'aulas por mês') + '</span><small>' +
+  $('totalRot').textContent = av ? 'Valor das aulas · ' + renov.nome.toLowerCase() : 'Valor do contrato · ' + renov.nome.toLowerCase() + (renov.m > 1 ? ' (' + renov.m + ' meses)' : '');
+  $('de').innerHTML = av ? 'sem contrato, sem desconto' : '<s>' + brl(totalTabela * renov.m) + '</s> <b>−' + pct(renov.desc) + '</b> contrato ' + renov.nome.toLowerCase();
+  $('cnt').innerHTML = av ? '<b>' + num(horasAula) + '</b><span>' + (relogio ? 'horas de aula avulsas' : 'aulas avulsas') + '</span><small>' + (modo === 'grade' ? origem + ' · ' : '') + 'planejamento e materiais inclusos</small><small>Sem contrato · pagas à vista, antes das aulas</small>' : '<b>' + num(horasAula) + '</b><span>' + (relogio ? 'horas de aula por mês' : 'aulas por mês') + '</span><small>' +
     (modo === 'grade' ? origem + ' · ' : '') + 'planejamento e materiais inclusos</small>' +
     '<small>' + (renov.m > 1 ? 'No contrato: ' + num(horasAula * renov.m) + (relogio ? ' horas' : ' aulas') + ' em ' + renov.m + ' meses · ' : 'Contrato mensal · ') + 'equivale a ' + brl(total) + ' por mês</small>';
 
@@ -2159,22 +2170,22 @@ function calcular() {
 
   const metodo = METODOLOGIAS[+document.querySelector('input[name=metod]:checked').value];
   const divisao = DIVISOES[+$('divisao').value];
-  const cond = CONDICOES.concat([metodo.cond, frasTemas()]).concat(divisao.txt ? ['Divisão do ano letivo da escola: ' + divisao.txt + '.'] : []);
+  const cond = CONDICOES.concat(av ? ['Aulas avulsas (substituição), sem contrato nem renovação: valor de tabela, sem desconto, pagas à vista, antes das aulas.'] : []).concat([metodo.cond, frasTemas()]).concat(divisao.txt ? ['Divisão do ano letivo da escola: ' + divisao.txt + '.'] : []);
   $('condLista').innerHTML = cond.map(c => '<li>' + icone(iconeDaCondicao(c), 'ci') + '<span>' + fmtCond(c) + '</span></li>').join('');
   const est = codificarEstado();
   const escolaTxt = $('escola').value.replace(/\s+/g, ' ').trim(), obsTxt = $('obs').value.replace(/\s+/g, ' ').trim();
-  textoResumo = 'Orçamento do contrato · Prof. Rodrigo Gonçalves Pereira\n' + (escolaTxt ? 'Escola/contratante: ' + escolaTxt + '\n' : '') +
+  textoResumo = (av ? 'Orçamento de aulas avulsas (sem contrato) · Prof. Rodrigo Gonçalves Pereira\n' : 'Orçamento do contrato · Prof. Rodrigo Gonçalves Pereira\n') + (escolaTxt ? 'Escola/contratante: ' + escolaTxt + '\n' : '') +
     linhas.map(([a, b, c]) => a + ': ' + b + (c ? ' (' + c + ')' : '')).join('\n') +
     (modo === 'grade' && aulas.length ? '\n\nGrade:\n' + aulas.map(a => a.dia + ' ' + a.turno + ' ' + a.aula + ' (' + a.hora + ') · ' + a.turma + ' · ' + a.disc).join('\n') : '') +
-    '\n\n' + num(horasAula) + (relogio ? ' horas de aula por mês' : ' aulas por mês') + (renov.m > 1 ? ' · ' + num(horasAula * renov.m) + ' no contrato (' + renov.m + ' meses)' : '') +
-    '\nVALOR DO CONTRATO (' + renov.nome.toLowerCase() + '): ' + brl(valorContrato) + (renov.m > 1 ? '\nEquivale a ' + brl(total) + ' por mês, com ' + pct(renov.desc) + ' de desconto' : '') +
+    '\n\n' + num(horasAula) + (av ? (relogio ? ' horas de aula avulsas' : ' aulas avulsas') : relogio ? ' horas de aula por mês' : ' aulas por mês') + (renov.m > 1 ? ' · ' + num(horasAula * renov.m) + ' no contrato (' + renov.m + ' meses)' : '') +
+    '\n' + (av ? 'VALOR DAS AULAS (' : 'VALOR DO CONTRATO (') + renov.nome.toLowerCase() + '): ' + brl(valorContrato) + (renov.m > 1 ? '\nEquivale a ' + brl(total) + ' por mês, com ' + pct(renov.desc) + ' de desconto' : '') +
     '\nVisual escolhido: ' + nomeTema() + (obsTxt ? '\nObservações: ' + obsTxt : '') +
     '\n\nCondições:\n- ' + cond.map(semMarca).join('\n- ') +
     '\n\nCódigo do orçamento: ' + est.codigo + '\nAbrir a mesma página: ' + est.link;
   const waHref = 'https://wa.me/5545999699444?text=' + encodeURIComponent('Olá, professor! Fiz uma simulação de contrato:\n\n' + textoResumo);
   $('wa').href = waHref; $('wa2').href = waHref; $('wa3').href = waHref;
   estadoAtual = est;
-  atualizarRecibo({ escolaTxt, obsTxt, est, aulas, linhas, total, valorContrato, horasAula, relogio, unidade, local, inicio, renov, diaTxt, cond });
+  atualizarRecibo({ av, escolaTxt, obsTxt, est, aulas, linhas, total, valorContrato, horasAula, relogio, unidade, local, inicio, renov, diaTxt, cond });
 }
 
 /* ---------- Código do orçamento: o estado da página vai dentro do link ---------- */
@@ -2354,17 +2365,17 @@ function atualizarRecibo(d) {
     }).join('') + '</div></div>').join('');
   } else horarios = '<p class="rc-empty">' + (modo === 'grade' ? 'Nenhum horário marcado.' : 'Carga informada por quantidade, sem horários definidos.') + '</p>';
   $('recibo').innerHTML =
-    '<div class="rc-h"><h4>Prof. Rodrigo G. Pereira</h4><p>Prestação de serviços educacionais · MEI</p><p>ORÇAMENTO DO CONTRATO</p>' + (d.escolaTxt ? '<p><b>' + esc(d.escolaTxt) + '</b></p>' : '') + '</div>' +
+    '<div class="rc-h"><h4>Prof. Rodrigo G. Pereira</h4><p>Prestação de serviços educacionais · MEI</p><p>' + (d.av ? 'ORÇAMENTO DE AULAS AVULSAS · SEM CONTRATO' : 'ORÇAMENTO DO CONTRATO') + '</p>' + (d.escolaTxt ? '<p><b>' + esc(d.escolaTxt) + '</b></p>' : '') + '</div>' +
     '<div class="rc-meta"><span>' + esc(quando) + '</span><b>' + d.est.codigo + '</b></div>' +
     '<div class="rc-sec"><h5>Itens</h5>' + linhasHtml + '</div>' +
-    '<div class="rc-total"><span>VALOR DO CONTRATO<br><small style="font-weight:400">' + d.renov.nome.toUpperCase() + (d.renov.m > 1 ? ' · ' + d.renov.m + ' MESES' : '') + '</small></span><strong>' + brl(d.valorContrato) + '</strong></div>' +
+    '<div class="rc-total"><span>' + (d.av ? 'VALOR DAS AULAS' : 'VALOR DO CONTRATO') + '<br><small style="font-weight:400">' + d.renov.nome.toUpperCase() + (d.renov.m > 1 ? ' · ' + d.renov.m + ' MESES' : '') + '</small></span><strong>' + brl(d.valorContrato) + '</strong></div>' +
     (d.renov.m > 1 ? '<div class="rc-total" style="padding-top:8px;font-weight:400"><span>EQUIVALE A, POR MÊS</span><strong style="font-size:1.05rem">' + brl(d.total) + '</strong></div>' : '') +
-    '<div class="rc-sec"><h5>Pagamento</h5><div class="rc-pay"><b>À VISTA, ANTECIPADO</b><br>' +
-      (d.inicio ? 'A ser pago em <b>' + fmtData(d.inicio) + '</b>, no início do contrato' : 'A ser pago no início do contrato (data a definir)') + (d.renov.m > 1 ? ': <b>' + brl(d.valorContrato) + '</b> (' + d.renov.m + ' meses)' : '') + '.</div>' +
-      '<p class="rc-note">Contrato renovado ' + d.renov.cada + (d.inicio ? ', ' + d.diaTxt : '') + '.</p></div>' +
+    '<div class="rc-sec"><h5>Pagamento</h5><div class="rc-pay"><b>' + (d.av ? 'À VISTA, ANTES DAS AULAS' : 'À VISTA, ANTECIPADO') + '</b><br>' +
+      (d.av ? (d.inicio ? 'Primeira aula em <b>' + fmtData(d.inicio) + '</b>. ' : '') + 'Sem contrato nem renovação' : d.inicio ? 'A ser pago em <b>' + fmtData(d.inicio) + '</b>, no início do contrato' : 'A ser pago no início do contrato (data a definir)') + (d.renov.m > 1 ? ': <b>' + brl(d.valorContrato) + '</b> (' + d.renov.m + ' meses)' : '') + '.</div>' +
+      (d.av ? '' : '<p class="rc-note">Contrato renovado ' + d.renov.cada + (d.inicio ? ', ' + d.diaTxt : '') + '.</p>') + '</div>' +
     (d.obsTxt ? '<div class="rc-sec"><h5>Observações</h5><p class="rc-note">' + esc(d.obsTxt) + '</p></div>' : '') +
     '<div class="rc-sec"><h5>Condições</h5><ul class="rc-cond">' + d.cond.map(c => '<li>' + fmtCond(c) + '</li>').join('') + '</ul></div>' +
-    '<p class="rc-count">' + num(d.horasAula) + (d.relogio ? ' horas de aula por mês' : ' aulas por mês') + (d.renov.m > 1 ? ' · ' + num(d.horasAula * d.renov.m) + ' no contrato' : '') + ' · planejamento incluso</p>' +
+    '<p class="rc-count">' + num(d.horasAula) + (d.av ? (d.relogio ? ' horas de aula avulsas' : ' aulas avulsas') : d.relogio ? ' horas de aula por mês' : ' aulas por mês') + (d.renov.m > 1 ? ' · ' + num(d.horasAula * d.renov.m) + ' no contrato' : '') + ' · planejamento incluso</p>' +
     '<div class="rc-sec" style="border-bottom:0"><h5>Horários do professor</h5>' + horarios + '</div>' +
     '<div class="rc-code" style="border-top:2px dashed var(--rline)">' + barras(d.est.h) + '<b>' + d.est.codigo + '</b></div>' +
     '<div class="rc-link">' + esc(d.est.link) + '</div>' +
@@ -2429,7 +2440,7 @@ $('fergrid').addEventListener('click', e => {
 
 /* ---------- Renovação do contrato ---------- */
 $('renovOpts').innerHTML = RENOVACOES.map((r, i) =>
-  '<label class="opt"><input type="radio" name="renov" value="' + i + '"' + (i === 0 ? ' checked' : '') + '><span><b>' + r.nome + '</b><small>' + r.sub + ' · ' + pct(r.desc) + ' de desconto</small></span></label>').join('');
+  '<label class="opt"><input type="radio" name="renov" value="' + i + '"' + (i === 0 ? ' checked' : '') + '><span><b>' + r.nome + '</b><small>' + r.sub + (r.avulso ? '' : ' · ' + pct(r.desc) + ' de desconto') + '</small></span></label>').join('');
 
 /* ---------- Extras e eventos ---------- */
 function linhaExtra(s) { return (s =>
