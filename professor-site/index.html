@@ -123,7 +123,7 @@
   .tsw button{display:flex;align-items:center;gap:6px;padding:6px 11px;border:0;background:transparent;color:var(--mut);font:600 .68rem var(--display);cursor:pointer}
   .tsw button i{width:11px;height:11px;border-radius:50%;flex:none;border:1px solid rgba(0,0,0,.25)}
   .tsw button[aria-pressed=true]{background:var(--gbtn);color:var(--on-grad)}
-  .tsw .sa i{background:linear-gradient(135deg,#FF8A2B,#7A5CFF)}.tsw .ss i{background:linear-gradient(135deg,#1B3A6B,#D9B75E)}.tsw .sc i{background:linear-gradient(135deg,#FF2A6D,#05D9E8)}.tsw .sp i{background:linear-gradient(135deg,#6BBF45,#8B5A2B)}
+  .tsw .sa i{background:linear-gradient(135deg,#FF8A2B,#7A5CFF)}.tsw .ss i{background:linear-gradient(135deg,#1B3A6B,#D9B75E)}.tsw .sc i{background:linear-gradient(135deg,#FF2A6D,#05D9E8)}.tsw .sp i{background:linear-gradient(135deg,#6BBF45,#8B5A2B)}.tsw .sx i{background:linear-gradient(135deg,#3D95FF,#3C9A3C)}.tsw .s9 i{background:linear-gradient(135deg,#008080,#C0C0C0)}
   .navwa{flex:none}
   @media(max-width:1340px){.links{display:none}.navwa{margin-left:auto}}
   @media(max-width:640px){.theme{order:3;width:100%}.navwa{margin-left:auto}.brand b{font-size:.72rem}}
@@ -280,6 +280,15 @@
   .cond{margin-top:4px;padding:14px 16px;border-radius:calc(var(--r-card)*.6);border:1px dashed var(--sel-line);background:var(--sel)}
   .cond ul{margin:6px 0 0;padding-left:20px;font-size:.95rem;display:flex;flex-direction:column;gap:6px}
   .rc-cond{margin:4px 0 0;padding-left:16px;font-size:.74rem;line-height:1.4;display:flex;flex-direction:column;gap:4px}
+
+  /* marcador de canetão: destaque grande para "não será cobrado" (vermelho no claro, verde no escuro) */
+  :root{--alerta:#B3121F;--canetao:rgba(255,226,0,.72)}
+  :root[data-mode="dark"]{--alerta:#A6FFCB;--canetao:rgba(46,204,113,.30)}
+  :root[data-style="cyber"][data-mode="dark"]{--alerta:#39FF88;--canetao:rgba(57,255,136,.20)}
+  .canetao{font-size:2em;font-weight:800;line-height:1.55;color:var(--alerta);padding:.02em .45em;margin:0 .05em;
+    background:linear-gradient(103deg,transparent .35em,var(--canetao) .5em,var(--canetao) calc(100% - .6em),transparent calc(100% - .3em));
+    border-radius:.35em .9em .4em .8em / .8em .4em .9em .5em;-webkit-box-decoration-break:clone;box-decoration-break:clone;font-style:normal}
+  .recibo .canetao{color:#B3121F;background:linear-gradient(103deg,transparent .35em,rgba(255,226,0,.8) .5em,rgba(255,226,0,.8) calc(100% - .6em),transparent calc(100% - .3em))}
   .rule{font-size:.9rem;color:var(--mut);border-left:3px solid var(--gold);padding:4px 0 4px 12px;margin-bottom:14px}
 
   /* Agenda em cartões por dia (sem tabela) */
@@ -372,6 +381,8 @@
   .row small{display:block;color:var(--mut);font-weight:400;font-size:.8rem;line-height:1.25}
   .row.hi>span:last-child{color:var(--gold)}
   .total{margin-top:16px;border-radius:calc(var(--r-card)*.8);padding:18px;background:var(--total-bg);color:#fff}
+  .total .de{font:400 .78rem var(--mono);color:#F6D9A0;margin:2px 0 4px}
+  .total .de s{opacity:.75}
   .total small{display:block;font:400 .68rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:#F6D9A0}
   .total .v{font:800 clamp(1.5rem,3vw,2.1rem)/1.2 var(--display);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
   .total .cnt{margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.28);display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 10px}
@@ -505,6 +516,132 @@
   :root[data-style="pixel"] .tile{border-width:2px}
   :root[data-style="pixel"] nav{border-bottom:3px solid var(--line)}
   :root[data-style="pixel"] .quote::before{font-family:var(--titulo)}
+
+  /* ===== Janelas clássicas: Windows 95 e Windows XP ===== */
+  :root[data-style="w95"]{
+    --bg:#008080; --bg2:#00A0A0; --card:#C0C0C0; --card2:#D4D0C8; --line:#808080; --field:#FFFFFF;
+    --ink:#000000; --mut:#2A2A2A; --gold:#000080; --focus:#000080;
+    --orange:#000080; --pink:#800000; --violet:#800080; --teal:#006060; --cyan:#0000FF;
+    --on-grad:#FFFFFF; --nav-bg:#C0C0C0;
+    --gbtn:linear-gradient(#000080,#000080); --gtext:linear-gradient(#000080,#000080);
+    --gband:linear-gradient(90deg,#000080,#1084D0); --total-bg:linear-gradient(#000,#000);
+    --sel:#FFFFC0; --sel-line:#000080; --hero-bg:#008080;
+    --cv1:#800000; --cv2:#000080; --cv3:#808000; --cv4:#006400; --cv5:#800080;
+    --r-card:0; --r-pill:0; --r-chip:0; --r-btn:0; --r-cover:0; --shadow:none;
+    --display:"MS Sans Serif","Microsoft Sans Serif",Tahoma,"Segoe UI",Arial,sans-serif; --serif:var(--display); --mono:var(--display); --titulo:var(--display); --tw:700; --dw:700;
+    --bv-l:#FFFFFF; --bv-m:#808080; --bv-d:#404040; --bv-h:#DFDFDF;
+  }
+  :root[data-style="w95"][data-mode="dark"]{
+    --bg:#000040; --card:#3C3C3C; --card2:#4A4A4A; --line:#808080; --field:#101010;
+    --ink:#EDEDED; --mut:#C4C4C4; --gold:#7FB2FF; --focus:#FFFF00; --nav-bg:#3C3C3C;
+    --orange:#7FB2FF; --pink:#FF8080; --violet:#D08CFF; --teal:#60E0E0; --cyan:#8CA8FF;
+    --gbtn:linear-gradient(#1E3A9F,#1E3A9F); --gtext:linear-gradient(#7FB2FF,#7FB2FF);
+    --gband:linear-gradient(90deg,#000070,#1060B0); --sel:#14143C; --sel-line:#7FB2FF; --hero-bg:#000040;
+    --bv-l:#7A7A7A; --bv-m:#202020; --bv-d:#000000; --bv-h:#5A5A5A;
+  }
+  :root[data-style="xp"]{
+    --bg:#3A6FD8; --bg2:#CFE6FA; --card:#ECE9D8; --card2:#F7F5EA; --line:#C9C4AE; --field:#FFFFFF;
+    --ink:#000000; --mut:#3E3E3E; --gold:#0A246A; --focus:#316AC5;
+    --orange:#E8741A; --pink:#D7355B; --violet:#7B4FD0; --teal:#2E9E77; --cyan:#245EDC;
+    --on-grad:#FFFFFF; --nav-bg:#245EDC;
+    --gbtn:linear-gradient(#3D95FF,#0A5CE6); --gtext:linear-gradient(#0A3CC4,#0A3CC4);
+    --gband:linear-gradient(#0A5CE6,#0058E6 8%,#3D95FF 38%,#0A5CE6 85%,#0831D9); --total-bg:linear-gradient(#0A5CE6,#0831D9);
+    --sel:#FFF6C8; --sel-line:#E8A317; --hero-bg:transparent;
+    --cv1:#C1342C; --cv2:#245EDC; --cv3:#D49A12; --cv4:#3C9A3C; --cv5:#7B4FD0;
+    --r-card:8px; --r-pill:4px; --r-chip:4px; --r-btn:6px; --r-cover:6px; --shadow:2px 3px 6px rgba(0,0,0,.32);
+    --display:Tahoma,"Segoe UI",Verdana,Arial,sans-serif; --serif:var(--display); --mono:var(--display); --titulo:var(--display); --tw:700; --dw:700;
+  }
+  :root[data-style="xp"][data-mode="dark"]{
+    --bg:#0B1E4D; --card:#2B2F3A; --card2:#353B49; --line:#4A5266; --field:#1B1F28;
+    --ink:#ECECEC; --mut:#B8BDCC; --gold:#8DB8FF; --focus:#FFD54A; --nav-bg:#0F2A5C;
+    --gband:linear-gradient(#17356B,#1D4FA8 40%,#0F2A5C); --total-bg:linear-gradient(#17356B,#0F2A5C);
+    --sel:#3A3520; --sel-line:#E8A317; --gtext:linear-gradient(#8DB8FF,#8DB8FF); --shadow:2px 3px 6px rgba(0,0,0,.5);
+  }
+  :root:is([data-style="w95"],[data-style="xp"]) #stars{display:none}
+  :root:is([data-style="w95"],[data-style="xp"]) :is(.rays,.orbit,.planet,#galaxia){display:none}
+  :root:is([data-style="w95"],[data-style="xp"]) body{font-size:15.5px;font-weight:400;line-height:1.5}
+  :root:is([data-style="w95"],[data-style="xp"]) :is(h1,h2,h3,b,strong){letter-spacing:0;text-transform:none;text-shadow:none}
+  :root:is([data-style="w95"],[data-style="xp"]) h1{font-size:clamp(1.6rem,4vw,2.6rem);line-height:1.15}
+  :root:is([data-style="w95"],[data-style="xp"]) h2{font-size:clamp(1.3rem,3vw,1.9rem)}
+  :root:is([data-style="w95"],[data-style="xp"]) .tag{font-style:normal}
+  :root:is([data-style="w95"],[data-style="xp"]) .cover::before,:root:is([data-style="w95"],[data-style="xp"]) .cover::after{display:none}
+  :root:is([data-style="w95"],[data-style="xp"]) .ev::before{border-radius:0;background:var(--c);border:2px solid #000;box-shadow:none}
+  :root:is([data-style="w95"],[data-style="xp"]) .line::before{border-radius:0;width:3px}
+  :root:is([data-style="w95"],[data-style="xp"]) .ph i{border-radius:0;width:22px;height:22px;font-size:.78rem;background:var(--card);color:var(--ink);border:1px solid var(--line)}
+  /* janela: janelas do site viram janelas do sistema, com barra de título */
+  :root:is([data-style="w95"],[data-style="xp"]) .panel{padding:14px;overflow:hidden}
+  :root:is([data-style="w95"],[data-style="xp"]) .panel>.ph:first-child{margin:-14px -14px 14px;padding:5px 10px;background:var(--gband);color:#fff}
+  :root:is([data-style="w95"],[data-style="xp"]) .panel>.ph:first-child h3{color:#fff;font-size:.95rem}
+  :root:is([data-style="w95"],[data-style="xp"]) :is(.q-head,.bh){padding:6px 12px}
+  :root:is([data-style="w95"],[data-style="xp"]) .q-head b,:root:is([data-style="w95"],[data-style="xp"]) .q-head small{font-size:.9rem}
+  :root:is([data-style="w95"],[data-style="xp"]) .q-head img{border-radius:0;width:34px;height:34px}
+  :root:is([data-style="w95"],[data-style="xp"]) .quote-p{padding:0}
+  :root:is([data-style="w95"],[data-style="xp"]) .hero{background:var(--hero-bg);padding-block:30px 40px}
+  :root:is([data-style="w95"],[data-style="xp"]) .hero-in{background:var(--card);align-items:start;padding:0 0 24px;margin-top:0}
+  :root:is([data-style="w95"],[data-style="xp"]) .hero-in::before{grid-column:1/-1;display:block;padding:5px 10px;margin-bottom:22px;background:var(--gband);color:#fff;font-weight:700;font-size:.95rem}
+  :root:is([data-style="w95"],[data-style="xp"]) .hero-in>div{margin-inline:24px}
+  :root:is([data-style="w95"],[data-style="xp"]) .porthole{inset:4% 10%;border-radius:0;padding:6px;background:var(--card2);clip-path:none;box-shadow:none}
+  :root:is([data-style="w95"],[data-style="xp"]) .porthole img{border-radius:0;border:2px solid var(--line)}
+  :root:is([data-style="w95"],[data-style="xp"]) .hero .stats{background:var(--card);margin-top:22px}
+  :root:is([data-style="w95"],[data-style="xp"]) .total .v{font-size:clamp(1.4rem,3vw,2rem)}
+  /* --- Windows 95 --- */
+  :root[data-style="w95"] nav{background:var(--card);border-bottom:2px solid var(--bv-l);box-shadow:0 2px 0 var(--bv-m)}
+  :root[data-style="w95"] .hero-in::before{content:"Rodrigo Gonçalves Pereira - Professor.exe"}
+  :root[data-style="w95"] :is(.panel,.svc div,.board,.cond,.temas,.way,.balao,.recebido,.day,.hero-in,.stats,.quote-p,.egrp .gcnt,.tsw,.seg,.stat,.ferrow){
+    border:2px solid;border-color:var(--bv-l) var(--bv-d) var(--bv-d) var(--bv-l);box-shadow:inset -1px -1px 0 var(--bv-m),inset 1px 1px 0 var(--bv-h)}
+  :root[data-style="w95"] .hero-in{border:2px solid;border-color:var(--bv-l) var(--bv-d) var(--bv-d) var(--bv-l)}
+  :root[data-style="w95"] .hero .stats{border-top:2px solid var(--bv-l)}
+  :root[data-style="w95"] .stats div{border-left:2px groove var(--bv-l)}
+  :root[data-style="w95"] .svc div{border-top:2px solid var(--bv-l)}
+  :root[data-style="w95"] :is(.btn,.pill,.seg button,.tsw button,.sb,.bbtns button,.tseg button,.way button,.ghost){
+    background:var(--card);color:var(--ink);border:2px solid;border-color:var(--bv-l) var(--bv-d) var(--bv-d) var(--bv-l);box-shadow:inset -1px -1px 0 var(--bv-m),inset 1px 1px 0 var(--bv-h);border-radius:0;font-weight:700;letter-spacing:0;text-shadow:none}
+  :root[data-style="w95"] :is(.btn,.pill,.sb,.bbtns button):active{border-color:var(--bv-d) var(--bv-l) var(--bv-l) var(--bv-d);box-shadow:inset 1px 1px 0 var(--bv-m)}
+  :root[data-style="w95"] :is(.seg button,.tsw button,.tseg button)[aria-pressed=true]{background:#000080;color:#fff;border-color:var(--bv-d) var(--bv-l) var(--bv-l) var(--bv-d);box-shadow:none}
+  :root[data-style="w95"][data-mode="dark"] :is(.seg button,.tsw button,.tseg button)[aria-pressed=true]{background:#1E3A9F}
+  :root[data-style="w95"] .btn.wa,:root[data-style="w95"] .btn.ghost{background:var(--card);color:var(--ink)}
+  :root[data-style="w95"] :is(input[type=number],input[type=date],select,.opt,.ferrow){background:var(--field);color:var(--ink);border:2px solid;border-color:var(--bv-m) var(--bv-l) var(--bv-l) var(--bv-m);box-shadow:inset 1px 1px 0 var(--bv-d),inset -1px -1px 0 var(--bv-h);border-radius:0}
+  :root[data-style="w95"] .opt:has(input:checked){background:var(--sel)}
+  :root[data-style="w95"] .tile{background:var(--card);border:2px solid;border-color:var(--bv-l) var(--bv-d) var(--bv-d) var(--bv-l);box-shadow:inset -1px -1px 0 var(--bv-m);color:var(--ink);border-radius:0}
+  :root[data-style="w95"] .chk input:checked + .tile{background:#000080;color:#fff;border-color:var(--bv-d) var(--bv-l) var(--bv-l) var(--bv-d);box-shadow:none}
+  :root[data-style="w95"] .off .tile,:root[data-style="w95"] .day.off{opacity:.6}
+  :root[data-style="w95"] .cover{border:2px solid;border-color:var(--bv-l) var(--bv-d) var(--bv-d) var(--bv-l);box-shadow:none}
+  :root[data-style="w95"] .total{border:2px solid;border-color:var(--bv-m) var(--bv-l) var(--bv-l) var(--bv-m);color:#C0C0C0}
+  :root[data-style="w95"] .total .v{color:#00FF00;font-family:"Courier New",monospace}
+  :root[data-style="w95"] .total small,:root[data-style="w95"] .total .de{color:#C0C0C0}
+  :root[data-style="w95"] .contact{background:var(--hero-bg);color:#fff}
+  :root[data-style="w95"] footer{background:var(--card);color:var(--ink);border-top:2px solid var(--bv-l);box-shadow:0 -2px 0 var(--bv-m)}
+  :root[data-style="w95"] .quote{background:var(--gband)}
+  /* --- Windows XP --- */
+  :root[data-style="xp"] body{background:linear-gradient(to top,#3E8E1E 0,#5EAF2E 8%,transparent 8.3%),linear-gradient(#245EDC 0,#5B9BF0 14%,#A9D1F7 38%,#D4E8FA 62%);background-attachment:fixed}
+  :root[data-style="xp"][data-mode="dark"] body{background:linear-gradient(to top,#1E4D17 0,#2F6B22 8%,transparent 8.3%),linear-gradient(#071535 0,#0B1E4D 30%,#1B3A7A 70%,#2B4C8C);background-attachment:fixed}
+  :root[data-style="xp"] nav{background:linear-gradient(#3C8CF5,#245EDC 8%,#245EDC 55%,#1941A5);border-bottom:2px solid #0A246A}
+  :root[data-style="xp"] :is(.brand b,.links a,.theme .lab){color:#fff}
+  :root[data-style="xp"] .links a:hover{border-color:#fff}
+  :root[data-style="xp"] .hero-in::before{content:"Rodrigo Gonçalves Pereira - Professor";border-radius:6px 6px 0 0;text-shadow:1px 1px 0 #0F1089}
+  :root[data-style="xp"] :is(.panel,.hero-in,.quote-p,.balao,.board){border:1px solid #0831D9;border-radius:8px 8px 0 0;box-shadow:var(--shadow)}
+  :root[data-style="xp"] .panel>.ph:first-child{border-radius:7px 7px 0 0;text-shadow:1px 1px 0 #0F1089}
+  :root[data-style="xp"] .panel>.ph:first-child i{border-radius:3px}
+  :root[data-style="xp"] :is(.svc div,.cond,.temas,.way,.day,.ferrow,.stats,.recebido){border:1px solid #7F9DB9;box-shadow:none}
+  :root[data-style="xp"] .stats{background:var(--card);border-radius:0 0 8px 8px}
+  :root[data-style="xp"] .tsw{border:1px solid #003C74;background:#fff;border-radius:4px}
+  :root[data-style="xp"] .tsw button{color:#1B2733}
+  :root[data-style="xp"] .tsw button[aria-pressed=true]{color:#fff}
+  :root[data-style="xp"] .btn{background:linear-gradient(#6DC46D,#3C9A3C 50%,#2E8B2E);color:#fff;font-style:italic;border:1px solid #1E6B1E;border-radius:6px 14px 14px 6px;text-shadow:1px 1px 1px #1B4D1B;box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
+  :root[data-style="xp"] .btn.ghost{background:linear-gradient(#FFFFFF,#ECE9D8 85%,#D6D0C0);color:#000;font-style:normal;text-shadow:none;border:1px solid #003C74;border-radius:4px}
+  :root[data-style="xp"] :is(.pill,.bbtns button,.way button){background:linear-gradient(#FFFFFF,#ECE9D8 85%,#D6D0C0);color:#000;border:1px solid #003C74;border-radius:4px;font-weight:600}
+  :root[data-style="xp"] .sb.minus{background:linear-gradient(#FFFFFF,#ECE9D8 85%,#D6D0C0);color:#000;border:1px solid #003C74}
+  :root[data-style="xp"] .sb{border:1px solid #003C74}
+  :root[data-style="xp"] :is(input[type=number],input[type=date],select,.opt){background:#fff;color:#000;border:1px solid #7F9DB9;border-radius:3px;box-shadow:none}
+  :root[data-style="xp"][data-mode="dark"] :is(input[type=number],input[type=date],select,.opt){background:var(--field);color:var(--ink)}
+  :root[data-style="xp"] .opt:has(input:checked){background:var(--sel);border-color:var(--sel-line)}
+  :root[data-style="xp"] .tile{background:linear-gradient(#FFFFFF,#ECE9D8);color:#000;border:1px solid #7F9DB9;border-radius:4px}
+  :root[data-style="xp"][data-mode="dark"] .tile{background:var(--card2);color:var(--ink)}
+  :root[data-style="xp"] .chk input:checked + .tile{background:var(--gbtn);color:#fff;border-color:#003C74}
+  :root[data-style="xp"] .total{border:1px solid #003C74;border-radius:6px}
+  :root[data-style="xp"] .contact{background:var(--gband);box-shadow:0 -2px 0 #0A246A}
+  :root[data-style="xp"] footer{background:linear-gradient(#3C8CF5,#245EDC 8%,#245EDC 55%,#1941A5);color:#fff;border-top:2px solid #0A246A}
+  :root[data-style="xp"] .egrp summary{color:#0A246A}
+  :root[data-style="xp"][data-mode="dark"] .egrp summary{color:#8DB8FF}
 </style>
 
 <nav>
@@ -518,6 +655,8 @@
         <button type="button" class="ss" data-style="serio" aria-pressed="false"><i></i>Sério</button>
         <button type="button" class="sc" data-style="cyber" aria-pressed="false"><i></i>Cyberpunk</button>
         <button type="button" class="sp" data-style="pixel" aria-pressed="false"><i></i>Pixel</button>
+        <button type="button" class="sx" data-style="xp" aria-pressed="false"><i></i>Windows XP</button>
+        <button type="button" class="s9" data-style="w95" aria-pressed="false"><i></i>Windows 95</button>
       </div>
       <div class="tsw" id="swMode">
         <button type="button" data-mode="light" aria-pressed="true">Claro</button>
@@ -655,7 +794,7 @@
             <p class="rule">Turmas do mesmo ano e da mesma disciplina são aulas <b>espelhadas</b> (mesmo preparo). Cada preparo diferente, além do primeiro, soma 5% ao total das aulas. <b>Aulas geminadas</b> (seguidas, na mesma turma e disciplina) ficam no preço normal, sem acréscimo.</p>
             <div class="temas" id="temasBox">
               <h4>Temas sensíveis em sala</h4>
-              <p class="hint">Religião, política e outros temas. Escolha como o professor deve tratá-los. Sem escolha, ele aborda com neutralidade.</p>
+              <p class="hint">Religião, política e outros temas. Escolha como o professor deve tratá-los. Sem escolha, ele aborda com neutralidade. Esse tema é conversado pessoalmente com a escola, sobre a posição dela, e pode ser ajustado no contrato.</p>
               <div id="temasLista"></div>
             </div>
             <div class="legend" id="legend"></div>
@@ -666,7 +805,7 @@
             </div>
             <div class="fer">
               <h4>Dias sem aula no mês</h4>
-              <p class="hint">Feriados e dias sem aula do calendário escolar não são cobrados. Diga quantos de cada dia da semana ficam sem aula neste mês.</p>
+              <p class="hint">Feriados, recessos e dias sem aula do calendário escolar: <mark class="canetao">não será cobrado</mark>. Diga quantos de cada dia da semana ficam sem aula neste mês.</p>
               <div class="fergrid" id="fergrid"></div>
             </div>
           </div>
@@ -750,7 +889,7 @@
           </div>
           <div class="q-body">
             <div id="extrato"></div>
-            <div class="total"><small>Valor total estimado do contrato</small><div class="v" id="total">R$ 0,00</div><div class="cnt" id="cnt"></div></div>
+            <div class="total"><small>Valor total estimado do contrato</small><div class="de" id="de"></div><div class="v" id="total">R$ 0,00</div><div class="cnt" id="cnt"></div></div>
             <div class="agenda" id="agenda"></div>
             <button type="button" class="btn block" id="copiar">Copiar resumo</button>
             <a class="btn wa block" id="wa" href="https://wa.me/5545999699444" target="_blank" rel="noopener">Enviar orçamento pelo WhatsApp</a>
@@ -829,18 +968,22 @@ const ACRESCIMO_POR_DISCIPLINA_EXTRA = 0.05;
 // Se o site for publicado em outro lugar (por exemplo GitHub Pages), troque aqui.
 const PAGE_URL = 'https://claude.ai/artifact/XqhrVmiB4Vkyhh5vbjvHuv';
 
-// Períodos de renovação do contrato que o contratante pode escolher. m = meses de cada período.
+// Períodos de renovação do contrato que o contratante pode escolher, cada um com seu desconto. m = meses de cada período.
 // O pagamento é à vista, antecipado, no início de cada período (valor mensal × m).
 const RENOVACOES = [
-  { m: 1, nome: 'Mensal',     cada: 'todo mês',         per: 'mês',       sub: 'Renovado todo mês' },
-  { m: 2, nome: 'Bimestral',  cada: 'a cada 2 meses',   per: 'bimestre',  sub: 'Renovado a cada 2 meses' },
-  { m: 3, nome: 'Trimestral', cada: 'a cada 3 meses',   per: 'trimestre', sub: 'Renovado a cada 3 meses' },
-  { m: 6, nome: 'Semestral',  cada: 'a cada 6 meses',   per: 'semestre',  sub: 'Renovado a cada 6 meses' }
+  { m: 1,  nome: 'Mensal',     cada: 'todo mês',         per: 'mês',       desc: 0.10,   sub: 'Renovado todo mês' },
+  { m: 2,  nome: 'Bimestral',  cada: 'a cada 2 meses',   per: 'bimestre',  desc: 0.1125, sub: 'Renovado a cada 2 meses' },
+  { m: 3,  nome: 'Trimestral', cada: 'a cada 3 meses',   per: 'trimestre', desc: 0.125,  sub: 'Renovado a cada 3 meses' },
+  { m: 6,  nome: 'Semestral',  cada: 'a cada 6 meses',   per: 'semestre',  desc: 0.15,   sub: 'Renovado a cada 6 meses' },
+  { m: 12, nome: 'Anual',      cada: 'a cada 12 meses',  per: 'ano',       desc: 0.20,   sub: 'Renovado a cada 12 meses' }
+  // "desc" é o desconto sobre o valor de tabela de cada contrato (0.10 = 10%). NÃO reordene: links já enviados guardam a posição.
 ];
 
 // Condições do contrato exibidas ao contratante, na nota e na mensagem do WhatsApp.
+const semMarca = c => c.replace(/\[\[|\]\]/g, '');
+const fmtCond = c => esc(c).replace(/\[\[(.+?)\]\]/g, '<mark class="canetao">$1</mark>');
 const CONDICOES = [
-  'Feriados e dias sem aula previstos no calendário escolar não são cobrados.',
+  'Feriados, recessos e dias sem aula previstos no calendário escolar ou no contrato: [[não será cobrado]].',
   'As aulas previstas no contrato, dentro do calendário escolar, são pagas conforme o contrato.',
   'Se o professor faltar, a escola é compensada com a reposição da aula ou com a devolução proporcional do valor.'
 ];
@@ -936,7 +1079,7 @@ function aplicarTema(estilo, modo) {
   if (typeof desenharCeu === 'function' && document.getElementById('stars')) desenharCeu();
 }
 let tema = { estilo: 'asimov', modo: 'light' };
-try { const s = JSON.parse(localStorage.getItem('tema-prof')); if (s && ['asimov', 'serio', 'cyber', 'pixel'].includes(s.estilo) && ['light', 'dark'].includes(s.modo)) tema = s; } catch (e) {}
+try { const s = JSON.parse(localStorage.getItem('tema-prof')); if (s && ['asimov', 'serio', 'cyber', 'pixel', 'xp', 'w95'].includes(s.estilo) && ['light', 'dark'].includes(s.modo)) tema = s; } catch (e) {}
 document.querySelectorAll('#swStyle button').forEach(b => b.addEventListener('click', () => { tema.estilo = b.dataset.style; aplicarTema(tema.estilo, tema.modo); }));
 document.querySelectorAll('#swMode button').forEach(b => b.addEventListener('click', () => { tema.modo = b.dataset.mode; aplicarTema(tema.estilo, tema.modo); }));
 aplicarTema(tema.estilo, tema.modo);
@@ -954,7 +1097,7 @@ function desenharCeu() {   // o céu da capa muda com o visual: estrelas e galá
       out += '<g fill="' + (claro ? '#FFFFFF' : '#6C7FB3') + '" opacity="' + (claro ? 0.95 : 0.7) + '"><rect x="' + x + '%" y="' + y + '%" width="' + w + '%" height="14"/><rect x="' + (x + 2) + '%" y="' + (y - 0) + '%" width="' + (w - 4) + '%" height="14" transform="translate(0,-10)"/></g>';
     }
     if (!claro) for (let i = 0; i < 40; i++) out += '<rect x="' + (rnd() * 100).toFixed(1) + '%" y="' + (rnd() * 70).toFixed(1) + '%" width="3" height="3" fill="#FFF3B0" opacity="' + (0.4 + rnd() * 0.5).toFixed(2) + '"/>';
-  } else if (est !== 'serio') {
+  } else if (est === 'asimov' || est === 'cyber') {
     const cores = est === 'cyber' ? ['#FFFFFF', '#05D9E8', '#FF2A6D', '#B517FF'] : ['#FFFFFF', '#F6C453', '#4FD8F7', '#F0489F'];
     for (let i = 0; i < 90; i++) out += '<circle cx="' + (rnd() * 100).toFixed(2) + '%" cy="' + (rnd() * 100).toFixed(2) + '%" r="' + (0.6 + rnd() * 1.6).toFixed(2) + '" fill="' + cores[Math.floor(rnd() * 4)] + '" opacity="' + (0.25 + rnd() * 0.6).toFixed(2) + '"/>';
   }
@@ -1216,7 +1359,9 @@ function calcular() {
     if (h > 0) { horasExtras += h; detalheExtras.push(['+ ' + s.nome, brl(h * valorHora), num(h) + ' h por mês × ' + brl(valorHora)]); }
   });
   const valorExtras = horasExtras * valorHora;
-  const total = subtotal + adTotal + valorExtras;
+  const totalTabela = subtotal + adTotal + valorExtras;   // valor de tabela do mês, antes do desconto do contrato
+  const descValor = totalTabela * renov.desc;
+  const total = totalTabela - descValor;
 
   const linhas = [
     ['Regime de cobrança', relogio ? 'hora-relógio' : 'hora-aula', unidade + (relogio ? ', ' + pct(ACRESCIMO_HORA_RELOGIO) + ' acima da hora-aula' : '')],
@@ -1230,6 +1375,7 @@ function calcular() {
     ['Acréscimo por disciplinas extras', brl(adDisc), discExtras + ' extra(s) × ' + pct(ACRESCIMO_POR_DISCIPLINA_EXTRA) + (isentos.d ? ' · ' + isentos.d + ' geminada(s) sem acréscimo' : '')],
     ['Total de complexidade', brl(adTotal), null, true]
   ].concat(detalheExtras.length ? detalheExtras.concat([['Total de serviços adicionais', brl(valorExtras), num(horasExtras) + ' h por mês', true]]) : [])
+   .concat([['Valor de tabela (mensal)', brl(totalTabela), null, true], ['Desconto por contrato ' + renov.nome.toLowerCase() + ' (' + pct(renov.desc) + ')', '− ' + brl(descValor), null, true]])
    .concat(renov.m > 1 ? [['Valor do ' + renov.per, brl(total * renov.m), renov.m + ' meses × ' + brl(total), true]] : [])
    .concat([['Pagamento', 'à vista, antecipado', (inicio ? 'A ser pago em ' + fmtData(inicio) + ' (início do contrato)' : 'A ser pago no início do contrato (data a definir)') + ' · renovação ' + renov.nome.toLowerCase(), false, true]]);
 
@@ -1237,6 +1383,7 @@ function calcular() {
     '<div class="row' + (hi ? ' hi' : '') + '"><span>' + esc(a) + (c ? '<small>' + esc(c) + '</small>' : '') + '</span><span>' + esc(b) + '</span></div>'
   ).join('');
   $('total').textContent = brl(total);
+  $('de').innerHTML = '<s>' + brl(totalTabela) + '</s> <b>−' + pct(renov.desc) + '</b> contrato ' + renov.nome.toLowerCase();
   $('cnt').innerHTML = '<b>' + num(horasAula) + '</b><span>' + (relogio ? 'horas de aula por mês' : 'aulas por mês') + '</span><small>' +
     (modo === 'grade' ? origem + ' · ' : '') + 'planejamento e materiais inclusos</small>' +
     (renov.m > 1 ? '<small>Cobrança ' + renov.nome.toLowerCase() + ': ' + brl(total * renov.m) + ' ' + renov.cada + '</small>' : '');
@@ -1250,13 +1397,13 @@ function calcular() {
   const metodo = METODOLOGIAS[+document.querySelector('input[name=metod]:checked').value];
   const divisao = DIVISOES[+$('divisao').value];
   const cond = CONDICOES.concat([metodo.cond, frasTemas()]).concat(divisao.txt ? ['Divisão do ano letivo da escola: ' + divisao.txt + '.'] : []);
-  $('condLista').innerHTML = cond.map(c => '<li>' + esc(c) + '</li>').join('');
+  $('condLista').innerHTML = cond.map(c => '<li>' + fmtCond(c) + '</li>').join('');
   const est = codificarEstado();
   textoResumo = 'Orçamento mensal · Prof. Rodrigo Gonçalves Pereira\n' +
     linhas.map(([a, b, c]) => a + ': ' + b + (c ? ' (' + c + ')' : '')).join('\n') +
     (modo === 'grade' && aulas.length ? '\n\nGrade:\n' + aulas.map(a => a.dia + ' ' + a.turno + ' ' + a.aula + ' (' + a.hora + ') · ' + a.turma + ' · ' + a.disc).join('\n') : '') +
     '\n\n' + num(horasAula) + (relogio ? ' horas de aula por mês' : ' aulas por mês') + '\nVALOR TOTAL ESTIMADO (mensal): ' + brl(total) +
-    '\n\nCondições:\n- ' + cond.join('\n- ') +
+    '\n\nCondições:\n- ' + cond.map(semMarca).join('\n- ') +
     '\n\nCódigo do orçamento: ' + est.codigo + '\nAbrir a mesma página: ' + est.link;
   const waHref = 'https://wa.me/5545999699444?text=' + encodeURIComponent('Olá, professor! Fiz uma simulação de contrato:\n\n' + textoResumo);
   $('wa').href = waHref; $('wa2').href = waHref;
@@ -1307,7 +1454,7 @@ function codificarEstado() {
   put(tempos.length, 5);
   tempos.forEach(([ti, hi, a, b]) => { put(ti, 2); put(hi, 3); put(a, 11); put(b, 11); });
   put(dataParaDias($('inicio').value), 16);
-  put(+document.querySelector('input[name=renov]:checked').value, 2);
+  put(+document.querySelector('input[name=renov]:checked').value, 3);
   DIAS_VISIVEIS.forEach(d => put(FERIADOS[d], 3));
   put(+document.querySelector('input[name=metod]:checked').value, 1);
   put(+$('divisao').value, 2);
@@ -1316,7 +1463,7 @@ function codificarEstado() {
   let h = hash32(payload), codigo = '';
   for (let i = 0; i < 6; i++) { codigo += CROCK[h & 31]; h = h >>> 5; }
   codigo = 'ORC-' + codigo;
-  return { payload, codigo, link: PAGE_URL + '#o2.' + payload, h: hash32(payload) };
+  return { payload, codigo, link: PAGE_URL + '#o3.' + payload, h: hash32(payload) };
 }
 
 function decodificarEstado(payload, versao) {
@@ -1350,7 +1497,8 @@ function decodificarEstado(payload, versao) {
     }
   }
   e.inicio = bits.length - p >= 16 ? get(16) : 0;
-  e.renov = bits.length - p >= 2 ? get(2) : 0;
+  const bR = versao >= 3 ? 3 : 2;   // a partir da v3 a renovação usa 3 bits (cabem 5 períodos)
+  e.renov = bits.length - p >= bR ? get(bR) : 0;
   e.fer = DIAS_VISIVEIS.map(() => 0);
   if (bits.length - p >= DIAS_VISIVEIS.length * 3) e.fer = DIAS_VISIVEIS.map(() => Math.min(get(3), MAX_FER));
   e.metod = 0; e.divisao = 0;
@@ -1385,7 +1533,7 @@ function restaurarEstado(e) {
 
 function abrirDoLink() {
   const h = (location.hash || '').replace(/^#/, '');
-  const versao = h.indexOf('o1.') === 0 ? 1 : h.indexOf('o2.') === 0 ? 2 : 0;
+  const versao = h.indexOf('o1.') === 0 ? 1 : h.indexOf('o2.') === 0 ? 2 : h.indexOf('o3.') === 0 ? 3 : 0;
   if (!versao) return;
   const e = decodificarEstado(h.slice(3), versao);
   if (!e) return;
@@ -1431,7 +1579,7 @@ function atualizarRecibo(d) {
     '<div class="rc-sec"><h5>Pagamento</h5><div class="rc-pay"><b>À VISTA, ANTECIPADO</b><br>' +
       (d.inicio ? 'A ser pago em <b>' + fmtData(d.inicio) + '</b>, no início do contrato' : 'A ser pago no início do contrato (data a definir)') + (d.renov.m > 1 ? ': <b>' + brl(d.total * d.renov.m) + '</b> (' + d.renov.m + ' meses)' : '') + '.</div>' +
       '<p class="rc-note">Contrato renovado ' + d.renov.cada + (d.inicio ? ', ' + d.diaTxt : '') + '.</p></div>' +
-    '<div class="rc-sec"><h5>Condições</h5><ul class="rc-cond">' + d.cond.map(c => '<li>' + esc(c) + '</li>').join('') + '</ul></div>' +
+    '<div class="rc-sec"><h5>Condições</h5><ul class="rc-cond">' + d.cond.map(c => '<li>' + fmtCond(c) + '</li>').join('') + '</ul></div>' +
     '<p class="rc-count">' + num(d.horasAula) + (d.relogio ? ' horas de aula por mês' : ' aulas por mês') + ' · planejamento incluso</p>' +
     '<div class="rc-sec" style="border-bottom:0"><h5>Horários do professor</h5>' + horarios + '</div>' +
     '<div class="rc-code" style="border-top:2px dashed var(--rline)">' + barras(d.est.h) + '<b>' + d.est.codigo + '</b></div>' +
@@ -1464,8 +1612,9 @@ $('temasLista').addEventListener('click', e => {
   calcular();
 });
 function frasTemas() {
-  if (TEMAS_VAL.every(v => v === TEMAS_VAL[0])) return 'Temas sensíveis (religião, política e outros): ' + TRATOS[TEMAS_VAL[0]].frase + '.';
-  return 'Temas sensíveis: ' + TEMAS.map((tm, i) => tm.nome.toLowerCase() + ' (' + TRATOS[TEMAS_VAL[i]].curto + ')').join('; ') + '.';
+  const nota = ' A posição da escola é conversada pessoalmente e pode ser ajustada no contrato.';
+  if (TEMAS_VAL.every(v => v === TEMAS_VAL[0])) return 'Temas sensíveis (religião, política e outros): ' + TRATOS[TEMAS_VAL[0]].frase + '.' + nota;
+  return 'Temas sensíveis: ' + TEMAS.map((tm, i) => tm.nome.toLowerCase() + ' (' + TRATOS[TEMAS_VAL[i]].curto + ')').join('; ') + '.' + nota;
 }
 function mostrarBalao() { if (!balaoVisto) { balaoVisto = true; $('balao').hidden = false; } }
 $('balaoX').addEventListener('click', () => { $('balao').hidden = true; });
@@ -1496,7 +1645,7 @@ $('fergrid').addEventListener('click', e => {
 
 /* ---------- Renovação do contrato ---------- */
 $('renovOpts').innerHTML = RENOVACOES.map((r, i) =>
-  '<label class="opt"><input type="radio" name="renov" value="' + i + '"' + (i === 0 ? ' checked' : '') + '><span><b>' + r.nome + '</b><small>' + r.sub + '</small></span></label>').join('');
+  '<label class="opt"><input type="radio" name="renov" value="' + i + '"' + (i === 0 ? ' checked' : '') + '><span><b>' + r.nome + '</b><small>' + r.sub + ' · ' + pct(r.desc) + ' de desconto</small></span></label>').join('');
 
 /* ---------- Extras e eventos ---------- */
 function linhaExtra(s) { return (s =>
@@ -1603,7 +1752,7 @@ function tocarCofre(ctx, c, sobe, t) {   // várias moedas caindo no cofre: amos
     tt += gap * (0.5 + Math.random()); gap = Math.max(c.gap * 0.45, gap * 0.93);
   }
 }
-const SOM_DO_VISUAL = { asimov: 'ting', serio: 'caixa', cyber: 'bipe', pixel: 'k3' };
+const SOM_DO_VISUAL = { asimov: 'ting', serio: 'caixa', cyber: 'bipe', pixel: 'k3', xp: 'ug_p', w95: 'um_p' };
 function tocarMoedas(ctx, estilo, sobe, t, tipo) {
   let qual = !tipo || tipo === 'auto' ? (SOM_DO_VISUAL[estilo] || 'ting') : tipo;
   const am = AMOSTRAS.find(a => a.id === qual), cofre = COFRES.find(c => c.id === qual);
