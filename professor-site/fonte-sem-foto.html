@@ -2,7 +2,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,800;1,8..60,400&family=Space+Mono:wght@400;700&family=Bebas+Neue&family=Pixelify+Sans:wght@400;500;600;700&family=Press+Start+2P&family=Patrick+Hand&family=Caveat:wght@600;700&family=Gloria+Hallelujah&family=Orbitron:wght@500;800&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&family=UnifrakturCook:wght@700&family=IM+Fell+English:ital@0;1&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&family=Special+Elite&family=Courier+Prime:wght@400;700&family=Anton&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,800;1,8..60,400&family=Space+Mono:wght@400;700&family=Bebas+Neue&family=Pixelify+Sans:wght@400;500;600;700&family=Press+Start+2P&family=Patrick+Hand&family=Caveat:wght@600;700&family=Gloria+Hallelujah&family=Orbitron:wght@500;800&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&family=UnifrakturCook:wght@700&family=IM+Fell+English:ital@0;1&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&family=Special+Elite&family=Courier+Prime:wght@400;700&family=Anton&family=Inter:wght@400;600;700;800&family=Playwrite+BR:wght@100..400&display=swap" rel="stylesheet">
 <style>
   /* Conceito: um site, três visuais trocáveis no topo (Asimov, Sério, Cyberpunk), cada um com modo claro (padrão) e escuro.
      Tudo é guiado por tokens no <html data-style data-mode>. Abaixo da capa: trajetória, disciplinas, serviços, simulador em cartões por dia e contato. */
@@ -1087,15 +1087,15 @@
     --sel:#447F63; --sel-line:#FFE27A; --hero-bg:transparent;
     --cv1:#C94F5E; --cv2:#3A7BB5; --cv3:#C98A2B; --cv4:#3E9A63; --cv5:#8566C9;
     --r-card:12px; --r-pill:99px; --r-chip:99px; --r-btn:99px; --r-cover:10px; --shadow:0 3px 0 rgba(0,0,0,.22);
-    --display:"Patrick Hand","Comic Sans MS","Segoe Print",sans-serif; --serif:var(--display); --mono:var(--display);
-    --titulo:"Gloria Hallelujah","Patrick Hand",cursive; --tw:400; --dw:400;
+    --display:"Playwrite BR","Patrick Hand","Segoe Script","Brush Script MT",cursive; --serif:var(--display); --mono:var(--display);
+    --titulo:"Playwrite BR","Patrick Hand","Segoe Script",cursive; --tw:400; --dw:400;
   }
   :root[data-style="quadro"][data-mode="dark"]{
     --bg:#1B3427; --bg2:#152A20; --card:#234434; --card2:#2B5240; --line:rgba(255,255,255,.45); --field:#172C21;
     --ink:#F3F1E4; --mut:#C3D8C8; --nav-bg:rgba(24,48,36,.98);
     --gband:linear-gradient(#132A1F,#132A1F); --total-bg:linear-gradient(#10241A,#10241A); --sel:#2F5A45; --shadow:none;
   }
-  :root[data-style="quadro"] body{font-size:20px;line-height:1.45;background-color:var(--bg);
+  :root[data-style="quadro"] body{font-size:16.5px;line-height:1.7;background-color:var(--bg);
     background-image:radial-gradient(700px 300px at 15% 12%,rgba(255,255,255,.07),transparent 70%),radial-gradient(900px 260px at 80% 45%,rgba(255,255,255,.05),transparent 70%),radial-gradient(600px 260px at 30% 85%,rgba(255,255,255,.06),transparent 70%),linear-gradient(rgba(255,255,255,.02),rgba(0,0,0,.08))}
   :root[data-style="quadro"] body::before{content:"";position:fixed;inset:0;z-index:80;pointer-events:none;border:12px solid #8B5A2B;box-shadow:inset 0 0 0 3px #5C3A18,inset 0 0 46px rgba(0,0,0,.45)}
   :root[data-style="quadro"] body{padding-top:12px}
@@ -1103,11 +1103,11 @@
   :root[data-style="quadro"] #stars{display:none}
   :root[data-style="quadro"] :is(.rays,.orbit,.planet,#galaxia){display:none}
   :root[data-style="quadro"] :is(h1,h2,h3,b,strong){letter-spacing:0;text-transform:none}
-  :root[data-style="quadro"] h1{font-size:clamp(1.6rem,4.4vw,3rem);line-height:1.3;margin:14px 0}
-  :root[data-style="quadro"] h2{font-family:var(--titulo);font-size:clamp(1.3rem,3vw,2rem);line-height:1.35;text-decoration:underline wavy rgba(255,226,122,.7);text-underline-offset:8px;text-decoration-thickness:2px}
+  :root[data-style="quadro"] h1{font-size:clamp(1.5rem,3.8vw,2.7rem);line-height:1.4;margin:14px 0}
+  :root[data-style="quadro"] h2{font-family:var(--titulo);font-size:clamp(1.15rem,2.6vw,1.75rem);line-height:1.5;text-decoration:underline wavy rgba(255,226,122,.7);text-underline-offset:8px;text-decoration-thickness:2px}
   :root[data-style="quadro"] .grad{background:none;-webkit-text-fill-color:currentColor;color:var(--gold)}
   :root[data-style="quadro"] :is(.panel,.svc div,.board,.cond,.temas,.way,.day,.ferrow,.recebido,.stats,.quote-p,.balao,.boasvindas,.passos>div,.stat,.total,.quote){border:2px dashed var(--line);box-shadow:none}
-  :root[data-style="quadro"] .btn{font-size:1.1rem;font-weight:400;border:2px solid #fff;color:#1F3D2E}
+  :root[data-style="quadro"] .btn{font-size:.95rem;font-weight:400;border:2px solid #fff;color:#1F3D2E}
   :root[data-style="quadro"] .btn.ghost{color:var(--ink);background:transparent;border-color:rgba(255,255,255,.8)}
   :root[data-style="quadro"] .btn.wa{color:#fff;border-color:#0B5D2A}
   :root[data-style="quadro"] .hero{position:relative;padding-bottom:70px}
@@ -1126,7 +1126,10 @@
   :root[data-style="quadro"] .tile{border-radius:99px 40px 99px 50px / 50px 99px 40px 99px}
   :root[data-style="quadro"] .contact{margin-top:60px}
   :root[data-style="quadro"] input,:root[data-style="quadro"] select{color:var(--ink);border:2px solid rgba(255,255,255,.55)}
-  :root[data-style="quadro"] .tag{font-style:normal;font-size:1.4rem}
+  :root[data-style="quadro"] :is(div,span,p,li,small,b,strong,label,a,button,output,h3,h4,h5,td,th){line-height:1.6}
+  :root[data-style="quadro"] .tag{font-style:normal;font-size:1.15rem}
+  :root[data-style="quadro"] .porthole::after{font-size:1.05rem}
+  :root[data-style="quadro"] :is(.kicker,.eyebrow,.lb,small,.hint){letter-spacing:.02em}
 
   /* ===== Balão de boas-vindas com miniaturas dos visuais ===== */
   .boasvindas{position:fixed;z-index:70;left:50%;top:calc(env(safe-area-inset-top,0px) + 86px);transform:translateX(-50%);width:min(540px,calc(100vw - 28px));max-height:calc(100vh - 110px);overflow:auto;
