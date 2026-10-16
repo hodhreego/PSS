@@ -1160,7 +1160,8 @@
     <div class="theme" role="group" aria-label="Aparência do site">
       <span class="lab">Visual</span>
       <div class="tsw" id="swStyle">
-        <button type="button" class="sa" data-style="asimov" aria-pressed="true"><i></i>Asimov</button>
+        <button type="button" class="sg" data-style="quadro" aria-pressed="true"><i></i>Quadro verde</button>
+        <button type="button" class="sa" data-style="asimov" aria-pressed="false"><i></i>Asimov</button>
         <button type="button" class="ss" data-style="serio" aria-pressed="false"><i></i>Sério</button>
         <button type="button" class="sc" data-style="cyber" aria-pressed="false"><i></i>Cyber</button>
         <button type="button" class="sp" data-style="pixel" aria-pressed="false"><i></i>Pixel</button>
@@ -1175,7 +1176,6 @@
         <button type="button" class="sq" data-style="arquivo" aria-pressed="false"><i></i>Arquivo</button>
         <button type="button" class="se" data-style="meme" aria-pressed="false"><i></i>Meme</button>
         <button type="button" class="sv" data-style="vidro" aria-pressed="false"><i></i>Liquid Glass</button>
-        <button type="button" class="sg" data-style="quadro" aria-pressed="false"><i></i>Quadro verde</button>
       </div>
       <div class="tsw" id="swMode">
         <button type="button" data-mode="light" aria-pressed="true">Claro</button>
@@ -1722,7 +1722,7 @@ function desenharMiniaturas() {
   const el = document.getElementById('bvThumbs');
   if (!el) return;
   const escuro = root.dataset.mode === 'dark';
-  el.innerHTML = STYLES.map(s => '<button type="button" class="th" data-style="' + s + '" aria-pressed="' + (s === root.dataset.style) + '">' + miniatura(s, escuro) + '<span>' + STYLE_NOMES[s] + '</span></button>').join('');
+  el.innerHTML = ['quadro'].concat(STYLES.filter(x => x !== 'quadro')).map(s => '<button type="button" class="th" data-style="' + s + '" aria-pressed="' + (s === root.dataset.style) + '">' + miniatura(s, escuro) + '<span>' + STYLE_NOMES[s] + '</span></button>').join('');
 }
 /* ---------- Ornamentos em SVG: divisor de seção e figurinha da capa, desenhados de acordo com o visual ---------- */
 const ORN = (() => {
@@ -1830,7 +1830,7 @@ const STYLES = ['asimov', 'serio', 'cyber', 'pixel', 'xp', 'w95', 'lousa', 'cade
 const STYLE_NOMES = { asimov: 'Asimov', serio: 'Sério', cyber: 'Cyberpunk', pixel: 'Pixel', xp: 'Windows XP', w95: 'Windows 95', lousa: 'Lousa', caderno: 'Caderno', contrato: 'Contrato', medieval: 'Medieval', partitura: 'Partitura', maquina: 'Máquina', arquivo: 'Arquivo morto', meme: 'Meme', vidro: 'Liquid Glass', quadro: 'Quadro verde' };
 const nomeTema = () => STYLE_NOMES[root.dataset.style] + ' (' + (root.dataset.mode === 'dark' ? 'escuro' : 'claro') + ')';
 let appPronto = false;
-let tema = { estilo: 'asimov', modo: 'light' };
+let tema = { estilo: 'quadro', modo: 'light' };   // o Quadro verde é o visual principal
 try { const s = JSON.parse(localStorage.getItem('tema-prof')); if (s && STYLES.includes(s.estilo) && ['light', 'dark'].includes(s.modo)) tema = s; } catch (e) {}
 document.querySelectorAll('#swStyle button').forEach(b => b.addEventListener('click', () => { tema.estilo = b.dataset.style; aplicarTema(tema.estilo, tema.modo); }));
 document.querySelectorAll('#swMode button').forEach(b => b.addEventListener('click', () => { tema.modo = b.dataset.mode; aplicarTema(tema.estilo, tema.modo); }));
