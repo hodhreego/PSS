@@ -2,7 +2,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,800;1,8..60,400&family=Space+Mono:wght@400;700&family=Bebas+Neue&family=Pixelify+Sans:wght@400;500;600;700&family=Press+Start+2P&family=Patrick+Hand&family=Caveat:wght@600;700&family=Gloria+Hallelujah&family=Orbitron:wght@500;800&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,800;1,8..60,400&family=Space+Mono:wght@400;700&family=Bebas+Neue&family=Pixelify+Sans:wght@400;500;600;700&family=Press+Start+2P&family=Patrick+Hand&family=Caveat:wght@600;700&family=Gloria+Hallelujah&family=Orbitron:wght@500;800&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&family=UnifrakturCook:wght@700&family=IM+Fell+English:ital@0;1&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&family=Special+Elite&family=Courier+Prime:wght@400;700&family=Anton&display=swap" rel="stylesheet">
 <style>
   /* Conceito: um site, três visuais trocáveis no topo (Asimov, Sério, Cyberpunk), cada um com modo claro (padrão) e escuro.
      Tudo é guiado por tokens no <html data-style data-mode>. Abaixo da capa: trajetória, disciplinas, serviços, simulador em cartões por dia e contato. */
@@ -123,6 +123,8 @@
   .tsw button{display:flex;align-items:center;gap:6px;padding:6px 11px;border:0;background:transparent;color:var(--mut);font:600 .68rem var(--display);cursor:pointer}
   .tsw button i{width:11px;height:11px;border-radius:50%;flex:none;border:1px solid rgba(0,0,0,.25)}
   .tsw button[aria-pressed=true]{background:var(--gbtn);color:var(--on-grad)}
+  #swStyle{flex-wrap:wrap;border-radius:14px;max-width:min(100%,640px)}
+  .tsw .sj i{background:linear-gradient(135deg,#fff,#111)}.tsw .sm i{background:linear-gradient(135deg,#F0E3C0,#8A1C1C)}.tsw .sn i{background:linear-gradient(135deg,#fff,#111 50%,#fff)}.tsw .sd i{background:linear-gradient(135deg,#EEE9DA,#555)}.tsw .sq i{background:linear-gradient(135deg,#E8D9A8,#9A6B2F)}.tsw .se i{background:linear-gradient(135deg,#FFE600,#111)}
   .tsw .sa i{background:linear-gradient(135deg,#FF8A2B,#7A5CFF)}.tsw .ss i{background:linear-gradient(135deg,#1B3A6B,#D9B75E)}.tsw .sc i{background:linear-gradient(135deg,#FF2A6D,#05D9E8)}.tsw .sp i{background:linear-gradient(135deg,#6BBF45,#8B5A2B)}.tsw .sx i{background:linear-gradient(135deg,#3D95FF,#3C9A3C)}.tsw .s9 i{background:linear-gradient(135deg,#008080,#C0C0C0)}.tsw .sl i{background:linear-gradient(135deg,#1E3B2B,#FFE27A)}.tsw .sk i{background:linear-gradient(135deg,#FFFDF2,#C62828)}
   #swStyle{flex-wrap:wrap;max-width:100%}
   .navwa{flex:none}
@@ -365,7 +367,8 @@
   :root[data-style="cyber"] .sb{border-radius:4px}
   .somrow{display:flex;align-items:center;gap:10px 14px;flex-wrap:wrap;margin-bottom:10px}
   .somsel{display:flex;align-items:center;gap:8px;font:400 .7rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
-  .somsel select{width:auto;padding:6px 10px;font-size:.9rem;text-transform:none;letter-spacing:0;font-family:var(--serif)}
+  .somsel{max-width:100%;min-width:0}
+  .somsel select{min-width:0;max-width:100%;width:auto;padding:6px 10px;font-size:.9rem;text-transform:none;letter-spacing:0;font-family:var(--serif)}
 
   .side{position:sticky;top:calc(env(safe-area-inset-top,0px) + 96px);min-width:0}
   @media(max-width:1000px){.side{position:static}}
@@ -736,6 +739,260 @@
   :root[data-style="caderno"] .tile{border-color:var(--ink)}
   :root:is([data-style="lousa"],[data-style="caderno"]) .hero .stats{background:var(--card)}
 
+  /* ===== Ícones e passos ilustrados ===== */
+  .ico{width:1.9em;height:1.9em;flex:none}
+  .cond ul{list-style:none;padding-left:0}
+  .cond li{display:flex;gap:10px;align-items:flex-start}
+  .cond li .ci{width:26px;height:26px;margin-top:2px;color:var(--sel-line)}
+  .passos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:18px 0 22px}
+  .passos>div{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;padding:16px 10px 12px;background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-card);box-shadow:var(--shadow)}
+  .passos .pi{width:44px;height:44px;color:var(--sel-line)}
+  .passos .pn{position:absolute;top:-10px;left:-6px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--gbtn);color:var(--on-grad);font:800 .85rem var(--display)}
+  .passos b{font:800 1.05rem var(--display)}
+  .passos small{font-size:.85rem;color:var(--mut);line-height:1.3}
+  @media(max-width:640px){.passos{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+  /* ===== Visuais de documento: Contrato, Medieval, Partitura, Datilografia, Arquivo morto, Meme ===== */
+  :root[data-style="contrato"]{
+    --bg:#E9E7E1; --bg2:#DDDAD1; --card:#FFFFFF; --card2:#F6F4EE; --line:#2A2A2A; --field:#FFFFFF;
+    --ink:#111111; --mut:#444444; --gold:#7A1F1F; --focus:#7A1F1F;
+    --orange:#111; --pink:#7A1F1F; --violet:#1B3A6B; --teal:#1F4D3A; --cyan:#1B3A6B;
+    --on-grad:#FFFFFF; --nav-bg:rgba(255,255,255,.97);
+    --gbtn:linear-gradient(#111,#111); --gtext:linear-gradient(#7A1F1F,#7A1F1F);
+    --gband:linear-gradient(#222,#222); --total-bg:linear-gradient(#111,#111);
+    --sel:#F1EEE4; --sel-line:#7A1F1F; --hero-bg:#FFFFFF;
+    --cv1:#222; --cv2:#1B3A6B; --cv3:#7A1F1F; --cv4:#1F4D3A; --cv5:#555;
+    --r-card:0px; --r-pill:0px; --r-chip:0px; --r-btn:0px; --r-cover:0; --shadow:0 1px 0 rgba(0,0,0,.25);
+    --display:"Source Serif 4","Times New Roman",Times,serif; --serif:var(--display); --mono:var(--display);
+    --titulo:var(--display); --tw:700; --dw:700;
+  }
+  :root[data-style="contrato"][data-mode="dark"]{
+    --bg:#161616; --bg2:#1F1F1F; --card:#262626; --card2:#2E2E2E; --line:#8A8A8A; --field:#1D1D1D;
+    --ink:#EDEBE4; --mut:#B5B2A8; --gold:#E2B6B6; --focus:#E2B6B6; --pink:#E2B6B6; --violet:#9FB6DA; --teal:#8FC7AE; --cyan:#9FB6DA; --orange:#EDEBE4;
+    --on-grad:#111; --nav-bg:rgba(30,30,30,.97);
+    --gbtn:linear-gradient(#EDEBE4,#EDEBE4); --gtext:linear-gradient(#E2B6B6,#E2B6B6);
+    --gband:linear-gradient(#333,#333); --total-bg:linear-gradient(#0C0C0C,#0C0C0C);
+    --sel:#333; --sel-line:#E2B6B6; --hero-bg:#262626; --shadow:none;
+  }
+  :root[data-style="medieval"]{
+    --bg:#EBDDB5; --bg2:#E0CE9C; --card:#F7EBCB; --card2:#F1E2B8; --line:#6B4A22; --field:#FBF3DC;
+    --ink:#2B1B0E; --mut:#5C4426; --gold:#8A1C1C; --focus:#8A1C1C;
+    --orange:#8A1C1C; --pink:#8A1C1C; --violet:#3F2B6B; --teal:#245A3E; --cyan:#1E4A7A;
+    --on-grad:#FBF3DC; --nav-bg:rgba(240,227,192,.97);
+    --gbtn:linear-gradient(#8A1C1C,#6E1414); --gtext:linear-gradient(#8A1C1C,#8A1C1C);
+    --gband:linear-gradient(#4A2E12,#3A220B); --total-bg:linear-gradient(#4A2E12,#2B1A0A);
+    --sel:#EBD9A6; --sel-line:#8A1C1C; --hero-bg:linear-gradient(#F3E6C2,#E6D4A0);
+    --cv1:#8A1C1C; --cv2:#1E4A7A; --cv3:#B7791F; --cv4:#245A3E; --cv5:#3F2B6B;
+    --r-card:4px; --r-pill:3px; --r-chip:3px; --r-btn:3px; --r-cover:3px; --shadow:0 2px 0 rgba(75,45,15,.35);
+    --display:"IM Fell English","Cormorant Garamond",Georgia,serif; --serif:var(--display); --mono:var(--display);
+    --titulo:"UnifrakturCook","IM Fell English",serif; --tw:400; --dw:400;
+  }
+  :root[data-style="medieval"][data-mode="dark"]{
+    --bg:#1A120A; --bg2:#140D07; --card:#261A0F; --card2:#30210F; --line:#8A6A32; --field:#1E150B;
+    --ink:#EAD9B0; --mut:#C2AB78; --gold:#E0B04F; --focus:#E0B04F;
+    --orange:#E0B04F; --pink:#E27A6B; --violet:#B9A3E8; --teal:#7FC8A0; --cyan:#8DB8E8;
+    --on-grad:#1A120A; --nav-bg:rgba(26,18,10,.97);
+    --gbtn:linear-gradient(#C99A3B,#A97D24); --gtext:linear-gradient(#E0B04F,#E0B04F);
+    --gband:linear-gradient(#3A260F,#2A1A09); --total-bg:linear-gradient(#3A260F,#1E1307);
+    --sel:#3A2A12; --sel-line:#E0B04F; --hero-bg:linear-gradient(#261A0F,#1A120A); --shadow:0 2px 0 rgba(0,0,0,.5);
+  }
+  :root[data-style="partitura"]{
+    --bg:#FFFEFA; --bg2:#F4F1E8; --card:#FFFFFF; --card2:#F8F6EF; --line:#2A2A2A; --field:#FFFFFF;
+    --ink:#111111; --mut:#4B4B4B; --gold:#111111; --focus:#B3261E;
+    --orange:#111; --pink:#B3261E; --violet:#333; --teal:#333; --cyan:#333;
+    --on-grad:#FFFFFF; --nav-bg:rgba(255,254,250,.97);
+    --gbtn:linear-gradient(#111,#111); --gtext:linear-gradient(#111,#111);
+    --gband:linear-gradient(#111,#111); --total-bg:linear-gradient(#111,#111);
+    --sel:#F1EFE6; --sel-line:#111; --hero-bg:transparent;
+    --cv1:#222; --cv2:#444; --cv3:#B3261E; --cv4:#2E5E4E; --cv5:#555;
+    --r-card:2px; --r-pill:2px; --r-chip:2px; --r-btn:2px; --r-cover:2px; --shadow:0 1px 0 rgba(0,0,0,.3);
+    --display:"Cormorant Garamond","Source Serif 4",Georgia,serif; --serif:"Source Serif 4",Georgia,serif; --mono:var(--display);
+    --titulo:var(--display); --tw:700; --dw:700;
+  }
+  :root[data-style="partitura"][data-mode="dark"]{
+    --bg:#14110F; --bg2:#1B1714; --card:#211C18; --card2:#2A241F; --line:#B8AE98; --field:#1A1613;
+    --ink:#F1E9D6; --mut:#C9BFA8; --gold:#F1E9D6; --focus:#FF8A80;
+    --orange:#F1E9D6; --pink:#FF8A80; --violet:#D8D0BC; --teal:#BFD8CC; --cyan:#D8D0BC;
+    --on-grad:#14110F; --nav-bg:rgba(20,17,15,.97);
+    --gbtn:linear-gradient(#F1E9D6,#F1E9D6); --gtext:linear-gradient(#F1E9D6,#F1E9D6);
+    --gband:linear-gradient(#2A241F,#2A241F); --total-bg:linear-gradient(#0C0A09,#0C0A09);
+    --sel:#2E2721; --sel-line:#F1E9D6; --shadow:none;
+  }
+  :root[data-style="maquina"]{
+    --bg:#EFEADB; --bg2:#E6DFCB; --card:#F6F2E5; --card2:#EFE9D8; --line:#4A4A46; --field:#FAF7EC;
+    --ink:#2F2F2C; --mut:#5E5D56; --gold:#8C1D1D; --focus:#8C1D1D;
+    --orange:#2F2F2C; --pink:#8C1D1D; --violet:#3C4A66; --teal:#3F5A4A; --cyan:#3C4A66;
+    --on-grad:#F6F2E5; --nav-bg:rgba(246,242,229,.97);
+    --gbtn:linear-gradient(#3A3A36,#3A3A36); --gtext:linear-gradient(#8C1D1D,#8C1D1D);
+    --gband:linear-gradient(#3A3A36,#3A3A36); --total-bg:linear-gradient(#34342F,#34342F);
+    --sel:#E8E1CB; --sel-line:#8C1D1D; --hero-bg:transparent;
+    --cv1:#3A3A36; --cv2:#3C4A66; --cv3:#8C1D1D; --cv4:#3F5A4A; --cv5:#6B5A3C;
+    --r-card:1px; --r-pill:1px; --r-chip:1px; --r-btn:1px; --r-cover:1px; --shadow:2px 2px 0 rgba(47,47,44,.18);
+    --display:"Special Elite","Courier Prime","Courier New",monospace; --serif:var(--display); --mono:var(--display);
+    --titulo:var(--display); --tw:400; --dw:400;
+  }
+  :root[data-style="maquina"][data-mode="dark"]{
+    --bg:#1D1C19; --bg2:#171614; --card:#25241F; --card2:#2D2C26; --line:#8C8A7E; --field:#1A1916;
+    --ink:#D3CFC0; --mut:#A7A396; --gold:#E39A8E; --focus:#E39A8E;
+    --orange:#D3CFC0; --pink:#E39A8E; --violet:#A9B8D8; --teal:#A5C8B4; --cyan:#A9B8D8;
+    --on-grad:#1D1C19; --nav-bg:rgba(29,28,25,.97);
+    --gbtn:linear-gradient(#D3CFC0,#D3CFC0); --gtext:linear-gradient(#E39A8E,#E39A8E);
+    --gband:linear-gradient(#34322C,#34322C); --total-bg:linear-gradient(#0F0F0D,#0F0F0D);
+    --sel:#34322B; --sel-line:#E39A8E; --shadow:2px 2px 0 rgba(0,0,0,.4);
+  }
+  :root[data-style="arquivo"]{
+    --bg:#D9C68F; --bg2:#CDB87A; --card:#EBDCAB; --card2:#E4D39C; --line:#6B5128; --field:#F2E6BE;
+    --ink:#3B2E14; --mut:#6A5731; --gold:#9A1F1F; --focus:#9A1F1F;
+    --orange:#6B3F12; --pink:#9A1F1F; --violet:#4A3A6B; --teal:#3D5A3A; --cyan:#3A5670;
+    --on-grad:#F2E6BE; --nav-bg:rgba(220,200,143,.97);
+    --gbtn:linear-gradient(#6B3F12,#5A3410); --gtext:linear-gradient(#9A1F1F,#9A1F1F);
+    --gband:linear-gradient(#6B5128,#5A4220); --total-bg:linear-gradient(#5A4220,#3E2C12);
+    --sel:#DCC98C; --sel-line:#9A1F1F; --hero-bg:transparent;
+    --cv1:#8A5A1F; --cv2:#3A5670; --cv3:#9A1F1F; --cv4:#3D5A3A; --cv5:#6B5128;
+    --r-card:3px; --r-pill:3px; --r-chip:3px; --r-btn:3px; --r-cover:3px; --shadow:1px 2px 0 rgba(75,50,10,.3);
+    --display:"Courier Prime","Special Elite","Courier New",monospace; --serif:var(--display); --mono:var(--display);
+    --titulo:"Special Elite","Courier Prime",monospace; --tw:700; --dw:700;
+  }
+  :root[data-style="arquivo"][data-mode="dark"]{
+    --bg:#241C10; --bg2:#1C160C; --card:#30261A; --card2:#3A2E1E; --line:#8F7646; --field:#2A2115;
+    --ink:#E5D3A0; --mut:#BDA976; --gold:#E27B6B; --focus:#E27B6B;
+    --orange:#E5C07A; --pink:#E27B6B; --violet:#B9A8E0; --teal:#9CC8A2; --cyan:#9CC0E0;
+    --on-grad:#241C10; --nav-bg:rgba(36,28,16,.97);
+    --gbtn:linear-gradient(#D6B26B,#B8924A); --gtext:linear-gradient(#E27B6B,#E27B6B);
+    --gband:linear-gradient(#4A3A22,#3A2D18); --total-bg:linear-gradient(#4A3A22,#241C10);
+    --sel:#463721; --sel-line:#E27B6B; --shadow:1px 2px 0 rgba(0,0,0,.5);
+  }
+  :root[data-style="meme"]{
+    --bg:#EDEDED; --bg2:#DEDEDE; --card:#FFFFFF; --card2:#F4F4F4; --line:#111111; --field:#FFFFFF;
+    --ink:#111111; --mut:#444444; --gold:#B88F00; --focus:#111111;
+    --orange:#FFE600; --pink:#FF3B3B; --violet:#6B3FD6; --teal:#00A88F; --cyan:#0A8FD6;
+    --on-grad:#111111; --nav-bg:rgba(237,237,237,.97);
+    --gbtn:linear-gradient(#FFE600,#FFD400); --gtext:linear-gradient(#FFE600,#FFE600);
+    --gband:linear-gradient(#111,#111); --total-bg:linear-gradient(#111,#111);
+    --sel:#FFF8B8; --sel-line:#111; --hero-bg:transparent;
+    --cv1:#FF3B3B; --cv2:#0A8FD6; --cv3:#FF9500; --cv4:#12A150; --cv5:#6B3FD6;
+    --r-card:10px; --r-pill:99px; --r-chip:99px; --r-btn:8px; --r-cover:10px; --shadow:4px 4px 0 #111;
+    --display:"Anton",Impact,"Arial Narrow Bold",sans-serif; --serif:"Rajdhani",Arial,sans-serif; --mono:"Rajdhani",Arial,sans-serif;
+    --titulo:"Anton",Impact,sans-serif; --tw:400; --dw:400;
+  }
+  :root[data-style="meme"][data-mode="dark"]{
+    --bg:#0E0E0E; --bg2:#161616; --card:#1B1B1B; --card2:#242424; --line:#FFE600; --field:#121212;
+    --ink:#F4F4F4; --mut:#BDBDBD; --gold:#FFE600; --focus:#FFE600;
+    --on-grad:#111111; --nav-bg:rgba(14,14,14,.97);
+    --gband:linear-gradient(#000,#000); --total-bg:linear-gradient(#000,#000);
+    --sel:#2B2A12; --sel-line:#FFE600; --shadow:4px 4px 0 #FFE600;
+    --cv1:#E23B3B; --cv2:#1E88C8; --cv3:#E08A12; --cv4:#14944A; --cv5:#7B55E0;
+  }
+
+  /* base comum aos seis visuais de documento */
+  :root:is([data-style="contrato"],[data-style="medieval"],[data-style="partitura"],[data-style="maquina"],[data-style="arquivo"],[data-style="meme"]){font-synthesis:none}
+  :root:is([data-style="contrato"],[data-style="medieval"],[data-style="partitura"],[data-style="maquina"],[data-style="arquivo"],[data-style="meme"]) #stars{display:none}
+  :root:is([data-style="contrato"],[data-style="medieval"],[data-style="partitura"],[data-style="maquina"],[data-style="arquivo"],[data-style="meme"]) :is(.rays,.orbit,.planet,#galaxia){display:none}
+  :root:is([data-style="contrato"],[data-style="medieval"],[data-style="partitura"],[data-style="maquina"],[data-style="arquivo"],[data-style="meme"]) :is(h1,h2,h3,b,strong){letter-spacing:0;text-transform:none}
+  :root:is([data-style="contrato"],[data-style="medieval"],[data-style="partitura"],[data-style="maquina"],[data-style="arquivo"],[data-style="meme"]) .tag{font-style:normal}
+  :root:is([data-style="contrato"],[data-style="medieval"],[data-style="partitura"],[data-style="maquina"],[data-style="arquivo"],[data-style="meme"]) .cover::before,:root:is([data-style="contrato"],[data-style="medieval"],[data-style="partitura"],[data-style="maquina"],[data-style="arquivo"],[data-style="meme"]) .cover::after{display:none}
+  :root:is([data-style="contrato"],[data-style="medieval"],[data-style="partitura"],[data-style="maquina"],[data-style="arquivo"],[data-style="meme"]) .ev::before{border-radius:0;background:var(--c);box-shadow:none;border:2px solid var(--ink)}
+  :root:is([data-style="contrato"],[data-style="medieval"],[data-style="partitura"],[data-style="maquina"],[data-style="arquivo"],[data-style="meme"]) .line::before{border-radius:0;width:2px;background:var(--ink)}
+  :root:is([data-style="contrato"],[data-style="medieval"],[data-style="partitura"],[data-style="maquina"],[data-style="arquivo"],[data-style="meme"]) .ph i{border-radius:0;border:1.5px solid var(--ink);background:var(--card);color:var(--ink)}
+  :root:is([data-style="contrato"],[data-style="medieval"],[data-style="partitura"],[data-style="maquina"],[data-style="arquivo"],[data-style="meme"]) .hero{background:var(--hero-bg);padding-block:46px 40px}
+  :root:is([data-style="contrato"],[data-style="medieval"],[data-style="partitura"],[data-style="maquina"],[data-style="arquivo"],[data-style="meme"]) .porthole{inset:5% 14% 9%;border-radius:0;padding:12px 12px 44px;background:#fff;clip-path:none;transform:rotate(-2deg);box-shadow:0 8px 20px rgba(0,0,0,.3)}
+  :root:is([data-style="contrato"],[data-style="medieval"],[data-style="partitura"],[data-style="maquina"],[data-style="arquivo"],[data-style="meme"]) .porthole img{border-radius:0;border:1px solid #bbb}
+  :root:is([data-style="contrato"],[data-style="medieval"],[data-style="partitura"],[data-style="maquina"],[data-style="arquivo"],[data-style="meme"]) .porthole::after{content:"Prof. Rodrigo";position:absolute;left:0;right:0;bottom:10px;text-align:center;font:400 1.15rem var(--titulo);color:#222}
+  :root:is([data-style="contrato"],[data-style="medieval"],[data-style="partitura"],[data-style="maquina"],[data-style="arquivo"],[data-style="meme"]) .grad{background:none;-webkit-text-fill-color:currentColor;color:var(--gold)}
+  :root:is([data-style="contrato"],[data-style="medieval"],[data-style="partitura"],[data-style="maquina"],[data-style="arquivo"],[data-style="meme"]) :is(.panel,.svc div,.board,.cond,.temas,.way,.day,.ferrow,.recebido,.stats,.quote-p,.balao,.boasvindas,.passos>div){border:1.5px solid var(--line);box-shadow:var(--shadow)}
+  :root:is([data-style="contrato"],[data-style="medieval"],[data-style="partitura"],[data-style="maquina"],[data-style="arquivo"],[data-style="meme"]) .hero .stats{background:var(--card)}
+  :root:is([data-style="contrato"],[data-style="medieval"],[data-style="partitura"],[data-style="maquina"],[data-style="arquivo"],[data-style="meme"]) .btn.wa{color:#fff}
+  :root:is([data-style="contrato"],[data-style="medieval"],[data-style="partitura"],[data-style="maquina"],[data-style="arquivo"],[data-style="meme"]) .contact{margin-top:60px}
+  :root:is([data-style="contrato"],[data-style="medieval"],[data-style="partitura"],[data-style="maquina"],[data-style="arquivo"],[data-style="meme"]) .tile{border-radius:var(--r-chip)}
+
+  /* Contrato: documento oficial, cláusulas numeradas em algarismos romanos */
+  :root[data-style="contrato"] body{counter-reset:clausula;font-size:17px;background:var(--bg)}
+  :root[data-style="contrato"] h1{font-size:clamp(1.7rem,4.4vw,3rem);line-height:1.1;text-transform:uppercase;letter-spacing:.04em;text-align:left;border-bottom:3px double var(--ink);padding-bottom:10px}
+  :root[data-style="contrato"] .sec>h2,:root[data-style="contrato"] .sec h2:first-of-type{counter-increment:clausula;font-size:clamp(1.15rem,2.6vw,1.6rem);text-transform:uppercase;letter-spacing:.03em}
+  :root[data-style="contrato"] .sec>h2::before{content:"CLÁUSULA " counter(clausula, upper-roman);color:var(--gold);font-size:.62em;letter-spacing:.08em;display:block;margin-bottom:2px}
+  :root[data-style="contrato"] .panel .ph h3::before{content:"§ ";color:var(--gold)}
+  :root[data-style="contrato"] :is(.panel,.quote-p,.cond,.temas){background-image:linear-gradient(var(--card),var(--card))}
+  :root[data-style="contrato"] .hero-in::after{content:"Documento particular de prestação de serviços educacionais · via única";position:absolute;right:6%;bottom:6px;font:italic 400 .75rem var(--display);color:var(--mut)}
+  :root[data-style="contrato"] .btn{border:1.5px solid var(--ink);text-transform:uppercase;letter-spacing:.06em;font-size:.82rem}
+  :root[data-style="contrato"] .porthole{transform:none}
+  :root[data-style="contrato"] .porthole::before{content:"FOTO 3×4";position:absolute;top:6px;right:8px;font:700 .6rem var(--display);color:#777;letter-spacing:.1em}
+
+  /* Medieval: suma teológica — pergaminho, capitulares vermelhas, "Quaestio" */
+  :root[data-style="medieval"] body{counter-reset:quaestio;font-size:20px;background-color:var(--bg);background-image:radial-gradient(1200px 700px at 20% 0,rgba(255,250,225,.55),transparent 60%),radial-gradient(900px 600px at 100% 100%,rgba(120,80,20,.2),transparent 60%)}
+  :root[data-style="medieval"][data-mode="dark"] body{background-image:radial-gradient(1000px 700px at 20% 0,rgba(224,176,79,.1),transparent 60%)}
+  :root[data-style="medieval"] h1{font-family:var(--titulo);font-size:clamp(2.6rem,7vw,4.8rem);line-height:1;margin:10px 0}
+  :root[data-style="medieval"] h2{font-family:var(--titulo);font-size:clamp(1.9rem,4.4vw,3rem);line-height:1.05;counter-increment:quaestio}
+  :root[data-style="medieval"] .sec>h2::before{content:"Quæstio " counter(quaestio, upper-roman) ".";display:block;font:italic 400 .42em var(--display);color:var(--gold);margin-bottom:2px}
+  :root[data-style="medieval"] .lead::first-letter{font:400 3.2em/.8 var(--titulo);float:left;color:var(--gold);padding:.08em .08em 0 0}
+  :root[data-style="medieval"] :is(.panel,.quote-p,.board,.cond,.temas,.stats,.balao,.boasvindas){border:2px double var(--line);border-width:4px;border-style:double}
+  :root[data-style="medieval"] .btn{border:2px solid #3A220B;font-family:var(--display);font-weight:700;letter-spacing:.04em}
+  :root[data-style="medieval"] .porthole{border-radius:50% 50% 0 0/38% 38% 0 0;background:#C9A227;padding:10px 10px 44px;transform:none}
+  :root[data-style="medieval"] .porthole img{border-radius:50% 50% 0 0/38% 38% 0 0;border:3px solid #6E1414}
+  :root[data-style="medieval"] .porthole::after{color:#3A220B}
+  :root[data-style="medieval"] .ph h3,:root[data-style="medieval"] .panel h3{font-family:var(--display);font-weight:700}
+
+  /* Partitura: pauta de cinco linhas ao fundo, notas nos títulos */
+  :root[data-style="partitura"] body{font-size:19px;background-color:var(--bg);background-image:
+    linear-gradient(rgba(0,0,0,.30) 1px,transparent 1px),linear-gradient(rgba(0,0,0,.30) 1px,transparent 1px),linear-gradient(rgba(0,0,0,.30) 1px,transparent 1px),linear-gradient(rgba(0,0,0,.30) 1px,transparent 1px),linear-gradient(rgba(0,0,0,.30) 1px,transparent 1px);
+    background-size:100% 120px;background-position:0 30px,0 40px,0 50px,0 60px,0 70px;background-repeat:repeat-y}
+  :root[data-style="partitura"][data-mode="dark"] body{background-image:
+    linear-gradient(rgba(241,233,214,.22) 1px,transparent 1px),linear-gradient(rgba(241,233,214,.22) 1px,transparent 1px),linear-gradient(rgba(241,233,214,.22) 1px,transparent 1px),linear-gradient(rgba(241,233,214,.22) 1px,transparent 1px),linear-gradient(rgba(241,233,214,.22) 1px,transparent 1px)}
+  :root[data-style="partitura"] h1{font-size:clamp(2.4rem,7vw,4.6rem);line-height:.95;font-style:italic;margin:10px 0}
+  :root[data-style="partitura"] h2{font-size:clamp(1.8rem,4.2vw,2.8rem);line-height:1;font-style:italic}
+  :root[data-style="partitura"] .sec>h2::before{content:"♪ ♫ ";color:var(--pink);font-style:normal;font-size:.7em}
+  :root[data-style="partitura"] .eyebrow::before{content:"♩ "}
+  :root[data-style="partitura"] :is(.panel,.quote-p,.board,.cond,.temas,.stats,.way,.svc div,.balao,.boasvindas,.recebido,.day,.ferrow,.passos>div){background:var(--card)}
+  :root[data-style="partitura"] .btn{border:1.5px solid var(--ink);font-family:var(--display);font-weight:700;font-size:1rem;letter-spacing:.02em}
+  :root[data-style="partitura"] .porthole{transform:none;border:1px solid var(--ink)}
+  :root[data-style="partitura"] .porthole::after{font-style:italic}
+
+  /* Datilografia: máquina de escrever, tinta um pouco apagada e irregular */
+  :root[data-style="maquina"] body{font-size:17.5px;line-height:1.55;color:var(--ink);text-shadow:.5px .3px 0 rgba(0,0,0,.22),-.3px 0 0 rgba(0,0,0,.08)}
+  :root[data-style="maquina"][data-mode="dark"] body{text-shadow:.4px .2px 0 rgba(255,255,255,.16)}
+  :root[data-style="maquina"] body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:90;opacity:.18;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' seed='4'/><feColorMatrix values='0 0 0 0 .2  0 0 0 0 .2  0 0 0 0 .18  0 0 0 1.4 -.55'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>")}
+  :root[data-style="maquina"][data-mode="dark"] body::after{mix-blend-mode:screen;opacity:.1}
+  :root[data-style="maquina"] h1{font-size:clamp(1.8rem,5vw,3.4rem);line-height:1.15;text-transform:uppercase;margin:10px 0}
+  :root[data-style="maquina"] h2{font-size:clamp(1.3rem,3vw,2rem);text-transform:uppercase;text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:2px}
+  :root[data-style="maquina"] :is(p,li,small,.lead,.sub,.hint){opacity:.93}
+  :root[data-style="maquina"] .btn{border:1.5px solid var(--ink);text-transform:uppercase;font-size:.85rem}
+  :root[data-style="maquina"] .porthole{filter:grayscale(1) contrast(.95);transform:rotate(-1.5deg)}
+  :root[data-style="maquina"] .porthole::after{content:"foto anexa."}
+  :root[data-style="maquina"] .hero .eyebrow::after{content:"_";animation:cursor 1s steps(1) infinite}
+  @keyframes cursor{50%{opacity:0}}
+
+  /* Arquivo morto: papel amarelado, manchas, pasta de papelão e carimbo */
+  :root[data-style="arquivo"] body{font-size:17.5px;line-height:1.55;background-color:var(--bg);background-image:radial-gradient(500px 380px at 8% 18%,rgba(120,80,20,.22),transparent 70%),radial-gradient(420px 320px at 92% 55%,rgba(120,80,20,.18),transparent 70%),radial-gradient(600px 400px at 30% 100%,rgba(90,60,10,.22),transparent 70%),repeating-linear-gradient(0deg,rgba(90,60,10,.035) 0 2px,transparent 2px 5px)}
+  :root[data-style="arquivo"][data-mode="dark"] body{background-image:radial-gradient(500px 380px at 8% 18%,rgba(224,176,79,.08),transparent 70%),radial-gradient(420px 320px at 92% 55%,rgba(224,176,79,.06),transparent 70%)}
+  :root[data-style="arquivo"] h1{font-size:clamp(1.8rem,5vw,3.4rem);line-height:1.1;text-transform:uppercase;margin:10px 0}
+  :root[data-style="arquivo"] h2{font-size:clamp(1.4rem,3.2vw,2.1rem);text-transform:uppercase;border-bottom:3px solid var(--ink);display:inline-block;padding-bottom:3px}
+  :root[data-style="arquivo"] .panel,:root[data-style="arquivo"] .board,:root[data-style="arquivo"] .quote-p,:root[data-style="arquivo"] .cond,:root[data-style="arquivo"] .temas{position:relative;border-top-width:3px}
+  :root[data-style="arquivo"] .hero-in::after{content:"ARQUIVO MORTO";position:absolute;right:7%;bottom:14%;font:700 clamp(1rem,2.6vw,1.8rem) var(--titulo);letter-spacing:.12em;color:#B3121F;border:4px solid #B3121F;padding:2px 12px;transform:rotate(-8deg);opacity:.62;pointer-events:none;mix-blend-mode:multiply}
+  :root[data-style="arquivo"][data-mode="dark"] .hero-in::after{color:#FF9A8A;border-color:#FF9A8A;mix-blend-mode:normal;opacity:.55}
+  :root[data-style="arquivo"] .btn{border:2px solid var(--ink);text-transform:uppercase;font-size:.85rem}
+  :root[data-style="arquivo"] .porthole{filter:sepia(.7) contrast(.95);transform:rotate(2deg)}
+  :root[data-style="arquivo"] .porthole::before{content:"";position:absolute;top:-18px;left:18px;width:20px;height:54px;border:3px solid #8C8C8C;border-radius:10px;transform:rotate(8deg);z-index:2}
+  :root[data-style="arquivo"] .porthole::after{content:"anexo 1"}
+
+  /* Meme: legendas amarelas com contorno preto, estilo Impact */
+  :root[data-style="meme"] body{font-size:19px;font-weight:600}
+  :root[data-style="meme"] :is(h1,h2){font-family:var(--titulo);font-weight:400;text-transform:uppercase;color:#FFE600;letter-spacing:.02em;line-height:1.08;
+    -webkit-text-stroke:0;text-shadow:-3px -3px 0 #000,3px -3px 0 #000,-3px 3px 0 #000,3px 3px 0 #000,0 4px 0 #000,0 -3px 0 #000,3px 0 0 #000,-3px 0 0 #000}
+  :root[data-style="meme"] h1{font-size:clamp(2.2rem,7vw,4.6rem);margin:12px 0}
+  :root[data-style="meme"] h2{font-size:clamp(1.8rem,4.6vw,3rem)}
+  :root[data-style="meme"] .grad{color:#FFE600;-webkit-text-fill-color:#FFE600}
+  :root[data-style="meme"] h3{font-family:var(--titulo);font-weight:400;text-transform:uppercase;letter-spacing:.02em}
+  :root[data-style="meme"] .btn{border:3px solid #000;box-shadow:3px 3px 0 #000;font-family:var(--titulo);font-weight:400;text-transform:uppercase;letter-spacing:.04em;font-size:1rem;color:#111}
+  :root[data-style="meme"] .btn.ghost{background:#fff}
+  :root[data-style="meme"][data-mode="dark"] .btn{border-color:#FFE600;box-shadow:3px 3px 0 #FFE600}
+  :root[data-style="meme"] :is(.panel,.quote-p,.board,.cond,.temas,.stats,.way,.svc div,.balao,.boasvindas,.recebido,.day,.ferrow,.passos>div){border-width:3px;border-radius:12px}
+  :root[data-style="meme"] .porthole{transform:rotate(-2deg);padding:10px;border:4px solid #000;background:#222;box-shadow:6px 6px 0 #000}
+  :root[data-style="meme"][data-mode="dark"] .porthole{border-color:#FFE600;box-shadow:6px 6px 0 #FFE600}
+  :root[data-style="meme"] .porthole::after{content:"Nota 10 em didática";left:6px;right:6px;bottom:12px;font:400 clamp(1rem,2.4vw,1.5rem) var(--titulo);text-transform:uppercase;color:#FFE600;text-shadow:-2px -2px 0 #000,2px -2px 0 #000,-2px 2px 0 #000,2px 2px 0 #000}
+  :root[data-style="meme"] .porthole::before{content:"Quando o professor chega";position:absolute;left:6px;right:6px;top:12px;text-align:center;z-index:2;font:400 clamp(1rem,2.4vw,1.5rem) var(--titulo);text-transform:uppercase;color:#FFE600;text-shadow:-2px -2px 0 #000,2px -2px 0 #000,-2px 2px 0 #000,2px 2px 0 #000}
+  :root[data-style="meme"] .porthole img{border:0}
+  :root[data-style="meme"] .total .v,:root[data-style="meme"] .total .v *{font-family:var(--titulo);text-shadow:-2px -2px 0 #000,2px -2px 0 #000,-2px 2px 0 #000,2px 2px 0 #000;color:#FFE600}
+
   /* ===== Balão de boas-vindas com miniaturas dos visuais ===== */
   .boasvindas{position:fixed;z-index:70;left:50%;top:calc(env(safe-area-inset-top,0px) + 86px);transform:translateX(-50%);width:min(540px,calc(100vw - 28px));max-height:calc(100vh - 110px);overflow:auto;
     background:var(--card);color:var(--ink);border:2px solid var(--sel-line);border-radius:calc(var(--r-card)*.9);padding:18px 20px 18px;box-shadow:0 22px 60px rgba(0,0,0,.45);animation:surgir2 .35s ease-out}
@@ -771,6 +1028,12 @@
         <button type="button" class="s9" data-style="w95" aria-pressed="false"><i></i>Win95</button>
         <button type="button" class="sl" data-style="lousa" aria-pressed="false"><i></i>Lousa</button>
         <button type="button" class="sk" data-style="caderno" aria-pressed="false"><i></i>Caderno</button>
+        <button type="button" class="sj" data-style="contrato" aria-pressed="false"><i></i>Contrato</button>
+        <button type="button" class="sm" data-style="medieval" aria-pressed="false"><i></i>Medieval</button>
+        <button type="button" class="sn" data-style="partitura" aria-pressed="false"><i></i>Partitura</button>
+        <button type="button" class="sd" data-style="maquina" aria-pressed="false"><i></i>Máquina</button>
+        <button type="button" class="sq" data-style="arquivo" aria-pressed="false"><i></i>Arquivo</button>
+        <button type="button" class="se" data-style="meme" aria-pressed="false"><i></i>Meme</button>
       </div>
       <div class="tsw" id="swMode">
         <button type="button" data-mode="light" aria-pressed="true">Claro</button>
@@ -880,6 +1143,7 @@
     <h2>Monte a grade e veja o <span class="grad">valor do contrato</span></h2>
     <p class="lead">Escolha o regime de cobrança, marque cada horário e defina a turma e a disciplina. O orçamento atualiza na hora.</p>
 
+    <div class="passos" id="passos" aria-label="Como funciona em quatro passos"></div>
     <div class="recebido" id="recebido" hidden><b>Orçamento recebido</b><span id="recebidoTxt"></span><a href="#recibo">Ver a nota</a></div>
 
     <div class="layout">
@@ -908,7 +1172,7 @@
             <p class="rule">Turmas do mesmo ano e da mesma disciplina são aulas <b>espelhadas</b> (mesmo preparo). Cada preparo diferente, além do primeiro, soma 5% ao total das aulas. <b>Aulas geminadas</b> (seguidas, na mesma turma e disciplina) ficam no preço normal, sem acréscimo.</p>
             <div class="temas" id="temasBox">
               <h4>Temas sensíveis em sala</h4>
-              <p class="hint">Religião, política e outros temas. Escolha como o professor deve tratá-los. Sem escolha, ele aborda com neutralidade. Esse tema é conversado pessoalmente com a escola, sobre a posição dela, e pode ser ajustado no contrato.</p>
+              <p class="hint">Religião, política e outros temas. Escolha como o professor deve tratá-los. O padrão é a liberdade de cátedra: ética, sem impor preferências, respeitando o ideário da escola. Esse tema é conversado pessoalmente com a escola, sobre a posição dela, e pode ser ajustado no contrato.</p>
               <div id="temasLista"></div>
             </div>
             <div class="legend" id="legend"></div>
@@ -962,8 +1226,8 @@
         <section class="panel" aria-labelledby="h4">
           <div class="ph"><i>4</i><h3 id="h4">Serviços adicionais</h3></div>
           <p class="sub">Serviços do MEI e atividades além da regência, cobrados pelo mesmo valor-hora. Abra o grupo e toque no + para adicionar horas por mês.</p>
-          <div class="somrow"><button type="button" class="pill" id="som" aria-pressed="true">Som das moedas: ligado</button>
-            <label class="somsel"><span>Tipo de som</span><select id="somTipo" aria-label="Tipo de som das moedas"></select></label></div>
+          <div class="somrow"><button type="button" class="pill" id="som" aria-pressed="true">Sons: ligados</button>
+            <label class="somsel"><span>Som das moedas</span><select id="somTipo" aria-label="Tipo de som das moedas (ao somar serviços)"></select></label></div>
           <div id="extras"></div>
         </section>
 
@@ -1125,8 +1389,10 @@ const TEMAS = [{ nome: 'Religião' }, { nome: 'Política' }, { nome: 'Outros tem
 const TRATOS = [
   { nome: 'Neutralidade', curto: 'neutralidade', frase: 'o professor aborda com neutralidade, apresentando fatos e diferentes pontos de vista, sem opinião pessoal' },
   { nome: 'Não abordar', curto: 'não abordar', frase: 'o professor não aborda esses temas em sala' },
-  { nome: 'Com opinião do professor', curto: 'com opinião do professor', frase: 'o professor pode dar a sua opinião quando perguntado' }
+  { nome: 'Com opinião do professor', curto: 'com opinião do professor', frase: 'o professor pode dar a sua opinião quando perguntado' },
+  { nome: 'Liberdade de cátedra', curto: 'liberdade de cátedra', frase: 'o professor tem liberdade de cátedra e aborda com ética e respeito, sem impor preferências políticas ou religiosas a ninguém, e, em escola confessional (por exemplo, católica), respeita o ideário da escola' }
 ];
+const TRATO_PADRAO = 3;   // liberdade de cátedra é a escolha inicial; o índice 3 é novo, então links antigos continuam iguais
 
 // Divisão do ano letivo da escola (ex.: 4 bimestres, 3 trimestres, 2 semestres).
 const DIVISOES = [
@@ -1192,6 +1458,36 @@ const $ = id => document.getElementById(id);
 const brl = n => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 const num = n => n.toLocaleString('pt-BR', { maximumFractionDigits: 2 });
 const pct = n => (n * 100).toLocaleString('pt-BR', { maximumFractionDigits: 2 }) + '%';
+/* ---------- Ícones em SVG: quem não lê o texto entende pelo desenho ---------- */
+const ICONES = {
+  calendario: '<rect x="4" y="6" width="24" height="22" rx="3"/><path d="M4 13h24M10 3v6M22 3v6M11 20l10 4M21 20l-10 4"/>',
+  moeda: '<circle cx="16" cy="16" r="12"/><path d="M16 8v16M20 12c-1-2-7-2-7 1s7 2 7 5-6 3-8 1"/>',
+  reposicao: '<path d="M6 16a10 10 0 0 1 17-7l3 3M26 16a10 10 0 0 1-17 7l-3-3M26 5v7h-7M6 27v-7h7"/>',
+  livro: '<path d="M5 6c4-2 8-2 11 1 3-3 7-3 11-1v19c-4-2-8-2-11 1-3-3-7-3-11-1z M16 7v19"/>',
+  balanca: '<path d="M16 5v21M9 26h14M6 10h20M6 10l-3 8a4 3 0 0 0 8 0zM26 10l-3 8a4 3 0 0 0 6 0z"/>',
+  escola: '<path d="M3 13l13-8 13 8M6 13v13h20V13M13 26v-8h6v8"/>',
+  relogio: '<circle cx="16" cy="16" r="12"/><path d="M16 9v7l5 3"/>',
+  zap: '<path d="M18 3L7 18h8l-2 11 12-16h-8z"/>',
+  mensagem: '<path d="M4 6h24v16H15l-7 6v-6H4z"/>',
+  toque: '<path d="M12 14V6a2 2 0 0 1 4 0v8l6 1a3 3 0 0 1 3 3l-1 7a4 4 0 0 1-4 3h-6a4 4 0 0 1-3-1l-5-6a2 2 0 0 1 3-3l3 2"/>',
+  grade: '<rect x="4" y="5" width="24" height="22" rx="2"/><path d="M4 12h24M12 12v15M20 12v15M14 19l2 2 4-4"/>',
+  papel: '<path d="M8 3h12l6 6v20H8zM20 3v6h6M12 16h10M12 21h10"/>'
+};
+const icone = (n, cls) => '<svg class="ico ' + (cls || '') + '" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (ICONES[n] || ICONES.papel) + '</svg>';
+function desenharPassos() {
+  const P = [['grade', 'Marque', 'os horários, turmas e disciplinas'], ['moeda', 'Veja', 'o valor do contrato mudar na hora'], ['mensagem', 'Envie', 'a mensagem pelo WhatsApp'], ['escola', 'Combine', 'os detalhes pessoalmente comigo']];
+  document.getElementById('passos').innerHTML = P.map((x, i) => '<div><span class="pn">' + (i + 1) + '</span>' + icone(x[0], 'pi') + '<b>' + x[1] + '</b><small>' + x[2] + '</small></div>').join('');
+}
+function iconeDaCondicao(c) {
+  if (/Feriados|calendário/.test(c)) return 'calendario';
+  if (/pagas|pagamento/i.test(c)) return 'moeda';
+  if (/faltar|reposição/.test(c)) return 'reposicao';
+  if (/metodologia/i.test(c)) return 'livro';
+  if (/sensíveis/.test(c)) return 'balanca';
+  if (/Divisão/.test(c)) return 'escola';
+  return 'papel';
+}
+document.addEventListener('DOMContentLoaded', () => {});
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
 /* ---------- Aparência: visual (Asimov, Sério, Cyberpunk) e modo (claro é o padrão) ---------- */
@@ -1199,7 +1495,7 @@ const root = document.documentElement;
 // Miniaturas (SVG) de cada visual, desenhadas na hora, para o contratante escolher olhando.
 function miniatura(est, escuro) {
   const R = (x, y, w, h, c, extra) => '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" fill="' + c + '"' + (extra || '') + '/>';
-  const C = (x, y, r, c) => '<circle cx="' + x + '" cy="' + y + '" r="' + r + '" fill="' + c + '"/>';
+  const C = (x, y, r, c, extra) => '<circle cx="' + x + '" cy="' + y + '" r="' + r + '" fill="' + c + '"' + (extra || '') + '/>';
   let g = '';
   if (est === 'asimov') {
     g = R(0, 0, 100, 70, '#0D0A2C') + C(76, 30, 24, '#4B22A8') + C(24, 62, 26, '#B81F5B') + C(78, 30, 13, '#FFB347') + C(78, 30, 7, '#FFE9A8') + C(40, 20, 4, '#19C7B5') +
@@ -1231,6 +1527,31 @@ function miniatura(est, escuro) {
     const bg = escuro ? '#17203A' : '#FFFDF2', ln = escuro ? '#3B4E7C' : '#9EC5E8', ink = escuro ? '#E9EEFF' : '#1F2A44';
     g = R(0, 0, 100, 70, bg) + [12, 22, 32, 42, 52, 62].map(y => R(0, y, 100, 1, ln)).join('') + R(14, 0, 1.5, 70, escuro ? '#FF8A80' : '#E53935') + R(22, 16, 36, 4, ink) + R(22, 27, 26, 3, escuro ? '#FFD54F' : '#C62828') +
       R(22, 44, 24, 7, escuro ? '#FFD54F' : '#FFE066', ' rx="3"') + R(64, 14, 28, 34, '#fff', ' transform="rotate(-4 78 31)"') + R(67, 17, 22, 20, escuro ? '#82B1FF' : '#9ECBF5', ' transform="rotate(-4 78 31)"') + R(71, 10, 12, 5, '#FFE066');
+  } else if (est === 'contrato') {
+    const bg = escuro ? '#1B1B1B' : '#E9E7E1', pg = escuro ? '#2A2A2A' : '#FFFFFF', ink = escuro ? '#E8E6DF' : '#111';
+    g = R(0, 0, 100, 70, bg) + R(18, 3, 64, 64, pg, ' stroke="' + ink + '" stroke-width=".8"') + R(32, 9, 36, 3.5, ink) + R(24, 17, 52, 1.6, ink, ' opacity=".6"') + [23, 30, 37].map(y => R(24, y, 4, 2, ink) + R(30, y, 46, 2, ink, ' opacity=".55"')).join('') +
+      R(24, 44, 22, .8, ink) + R(54, 44, 22, .8, ink) + '<path d="M26 42c3-6 4 2 7-2s3 4 6 0" fill="none" stroke="#1B3A9E" stroke-width="1"/>' + C(66, 55, 6, '#B3121F') + C(66, 55, 3.3, 'none').replace('fill="none"', 'fill="none" stroke="#fff" stroke-width=".8"');
+  } else if (est === 'medieval') {
+    const bg = escuro ? '#1C130B' : '#F0E3C0', ink = escuro ? '#EAD9B0' : '#2B1B0E', ru = escuro ? '#D4A64A' : '#8A1C1C';
+    g = R(0, 0, 100, 70, bg) + R(3, 3, 94, 64, 'none', ' stroke="' + ru + '" stroke-width="1.6"') + R(6, 6, 88, 58, 'none', ' stroke="' + ink + '" stroke-width=".6"') + R(10, 11, 18, 18, ru) + R(14, 15, 3, 11, bg) + R(17, 15, 7, 3, bg) +
+      [11, 17, 23].map(y => R(32, y, 56, 2.4, ink, ' opacity=".7"')).join('') + [33, 39, 45, 51, 57].map(y => R(10, y, 78, 2.2, ink, ' opacity=".55"')).join('') + C(80, 18, 3, escuro ? '#F6C453' : '#C9A227');
+  } else if (est === 'partitura') {
+    const bg = escuro ? '#14110F' : '#FFFEFA', ink = escuro ? '#EFE6D2' : '#111';
+    const stf = y0 => [0, 1, 2, 3, 4].map(i => R(6, y0 + i * 4, 88, .7, ink, ' opacity=".8"')).join('');
+    const nota = (x, y, cima) => '<ellipse cx="' + x + '" cy="' + y + '" rx="2.6" ry="1.9" fill="' + ink + '" transform="rotate(-18 ' + x + ' ' + y + ')"/>' + R(cima ? x - 2.5 : x + 1.8, cima ? y : y - 11, .8, 11, ink);
+    g = R(0, 0, 100, 70, bg) + stf(12) + stf(42) + '<path d="M13 8c-3 3-3 8 0 10s5 2 5 8-4 8-6 5 0-5 2-4" fill="none" stroke="' + ink + '" stroke-width="1.2"/>' + nota(30, 24, true) + nota(44, 20, true) + nota(58, 16, true) + nota(72, 22, true) + R(88, 12, 1, 16, ink) + nota(30, 50, true) + nota(50, 54, true) + nota(70, 46, true);
+  } else if (est === 'maquina') {
+    const bg = escuro ? '#1E1D1A' : '#F1ECDD', ink = escuro ? '#CFCBBE' : '#3A3A38';
+    g = R(0, 0, 100, 70, bg) + R(10, 8, 40, 3, ink, ' opacity=".8"') + [18, 24, 30, 36].map((y, i) => R(10, y, 78 - i * 9, 2.2, ink, ' opacity="' + (0.75 - i * 0.12) + '"')).join('') + R(10, 42, 30, 2.2, ink, ' opacity=".5"') + R(10, 45, 30, .8, ink) +
+      R(8, 54, 84, 12, escuro ? '#3A3834' : '#2B2B2B', ' rx="2"') + [0, 1, 2, 3, 4, 5, 6, 7].map(i => C(15 + i * 10, 60, 3.2, escuro ? '#BDB8A8' : '#D8D3C2')).join('') + R(70, 40, 18, 2, '#B3121F', ' opacity=".8"');
+  } else if (est === 'arquivo') {
+    const bg = escuro ? '#2A2216' : '#E8D9A8', ink = escuro ? '#E5D3A0' : '#3B2E14';
+    g = R(0, 0, 100, 70, bg) + C(22, 56, 20, 'rgba(120,80,20,.18)') + C(84, 12, 14, 'rgba(120,80,20,.14)') + R(12, 6, 30, 7, escuro ? '#6B5530' : '#C9A55B', ' rx="2"') + R(12, 11, 76, 52, escuro ? '#3A2F1E' : '#F0E2B6', ' stroke="' + ink + '" stroke-width=".8"') +
+      R(18, 20, 40, 2.4, ink, ' opacity=".75"') + R(18, 27, 52, 2.2, ink, ' opacity=".55"') + R(18, 33, 44, 2.2, ink, ' opacity=".55"') + R(18, 39, 30, 2.2, ink, ' opacity=".55"') + '<g transform="rotate(-12 68 50)">' + R(52, 42, 32, 14, 'none', ' stroke="#B3121F" stroke-width="1.6"') + R(56, 47, 24, 3.4, '#B3121F') + '</g>';
+  } else if (est === 'meme') {
+    const bg = escuro ? '#101010' : '#EDEDED';
+    const tx = (x, y, w) => R(x - 1, y - 1, w + 2, 9, '#000') + R(x, y, w, 7, '#FFE600');
+    g = R(0, 0, 100, 70, bg) + C(50, 36, 17, '#F2C14E', ' stroke="#000" stroke-width="1.5"').replace('/>', '/>') + C(44, 32, 2.4, '#000') + C(56, 32, 2.4, '#000') + '<path d="M42 41q8 7 16 0" fill="none" stroke="#000" stroke-width="1.6"/>' + tx(14, 5, 72) + tx(24, 58, 52);
   }
   return '<svg viewBox="0 0 100 70" aria-hidden="true">' + g + '</svg>';
 }
@@ -1250,14 +1571,15 @@ function aplicarTema(estilo, modo) {
   document.querySelectorAll('#bvModo button').forEach(b => b.setAttribute('aria-pressed', b.dataset.mode === modo));
   if (appPronto) calcular();   // o código do orçamento guarda o visual escolhido
 }
-const STYLES = ['asimov', 'serio', 'cyber', 'pixel', 'xp', 'w95', 'lousa', 'caderno'];   // NÃO reordene: o código do orçamento guarda a posição
-const STYLE_NOMES = { asimov: 'Asimov', serio: 'Sério', cyber: 'Cyberpunk', pixel: 'Pixel', xp: 'Windows XP', w95: 'Windows 95', lousa: 'Lousa', caderno: 'Caderno' };
+const STYLES = ['asimov', 'serio', 'cyber', 'pixel', 'xp', 'w95', 'lousa', 'caderno', 'contrato', 'medieval', 'partitura', 'maquina', 'arquivo', 'meme'];   // NÃO reordene: o código do orçamento guarda a posição
+const STYLE_NOMES = { asimov: 'Asimov', serio: 'Sério', cyber: 'Cyberpunk', pixel: 'Pixel', xp: 'Windows XP', w95: 'Windows 95', lousa: 'Lousa', caderno: 'Caderno', contrato: 'Contrato', medieval: 'Medieval', partitura: 'Partitura', maquina: 'Máquina', arquivo: 'Arquivo morto', meme: 'Meme' };
 const nomeTema = () => STYLE_NOMES[root.dataset.style] + ' (' + (root.dataset.mode === 'dark' ? 'escuro' : 'claro') + ')';
 let appPronto = false;
 let tema = { estilo: 'asimov', modo: 'light' };
 try { const s = JSON.parse(localStorage.getItem('tema-prof')); if (s && STYLES.includes(s.estilo) && ['light', 'dark'].includes(s.modo)) tema = s; } catch (e) {}
 document.querySelectorAll('#swStyle button').forEach(b => b.addEventListener('click', () => { tema.estilo = b.dataset.style; aplicarTema(tema.estilo, tema.modo); }));
 document.querySelectorAll('#swMode button').forEach(b => b.addEventListener('click', () => { tema.modo = b.dataset.mode; aplicarTema(tema.estilo, tema.modo); }));
+desenharPassos();
 aplicarTema(tema.estilo, tema.modo);
 $('bvThumbs').addEventListener('click', e => { const b = e.target.closest('.th'); if (!b) return; tema.estilo = b.dataset.style; aplicarTema(tema.estilo, tema.modo); });
 document.querySelectorAll('#bvModo button').forEach(b => b.addEventListener('click', () => { tema.modo = b.dataset.mode; aplicarTema(tema.estilo, tema.modo); }));
@@ -1583,7 +1905,7 @@ function calcular() {
   const metodo = METODOLOGIAS[+document.querySelector('input[name=metod]:checked').value];
   const divisao = DIVISOES[+$('divisao').value];
   const cond = CONDICOES.concat([metodo.cond, frasTemas()]).concat(divisao.txt ? ['Divisão do ano letivo da escola: ' + divisao.txt + '.'] : []);
-  $('condLista').innerHTML = cond.map(c => '<li>' + fmtCond(c) + '</li>').join('');
+  $('condLista').innerHTML = cond.map(c => '<li>' + icone(iconeDaCondicao(c), 'ci') + '<span>' + fmtCond(c) + '</span></li>').join('');
   const est = codificarEstado();
   textoResumo = 'Orçamento do contrato · Prof. Rodrigo Gonçalves Pereira\n' +
     linhas.map(([a, b, c]) => a + ': ' + b + (c ? ' (' + c + ')' : '')).join('\n') +
@@ -1647,13 +1969,13 @@ function codificarEstado() {
   put(+document.querySelector('input[name=metod]:checked').value, 1);
   put(+$('divisao').value, 2);
   TEMAS_VAL.forEach(v => put(v, 2));
-  put(Math.max(0, STYLES.indexOf(root.dataset.style)), 3);
+  put(Math.max(0, STYLES.indexOf(root.dataset.style)), 4);
   put(root.dataset.mode === 'dark' ? 1 : 0, 1);
   const payload = bitsParaTexto(bits);
   let h = hash32(payload), codigo = '';
   for (let i = 0; i < 6; i++) { codigo += CROCK[h & 31]; h = h >>> 5; }
   codigo = 'ORC-' + codigo;
-  return { payload, codigo, link: PAGE_URL + '#o4.' + payload, h: hash32(payload) };
+  return { payload, codigo, link: PAGE_URL + '#o5.' + payload, h: hash32(payload) };
 }
 
 function decodificarEstado(payload, versao) {
@@ -1692,11 +2014,12 @@ function decodificarEstado(payload, versao) {
   e.fer = DIAS_VISIVEIS.map(() => 0);
   if (bits.length - p >= DIAS_VISIVEIS.length * 3) e.fer = DIAS_VISIVEIS.map(() => Math.min(get(3), MAX_FER));
   e.metod = 0; e.divisao = 0;
-  e.temas = TEMAS.map(() => 0);
+  e.temas = TEMAS.map(() => TRATO_PADRAO);
   if (bits.length - p >= 3) { e.metod = get(1); e.divisao = get(2); }
   if (bits.length - p >= TEMAS.length * 2) e.temas = TEMAS.map(() => Math.min(get(2), TRATOS.length - 1));
   e.estilo = null; e.modoTema = null;
-  if (versao >= 4 && bits.length - p >= 4) { const si = get(3), mo = get(1); if (si < STYLES.length) { e.estilo = STYLES[si]; e.modoTema = mo ? 'dark' : 'light'; } }
+  const bEst = versao >= 5 ? 4 : 3;
+  if (versao >= 4 && bits.length - p >= bEst + 1) { const si = get(bEst), mo = get(1); if (si < STYLES.length) { e.estilo = STYLES[si]; e.modoTema = mo ? 'dark' : 'light'; } }
   return falhou ? null : e;
 }
 
@@ -1726,7 +2049,7 @@ function restaurarEstado(e) {
 
 function abrirDoLink() {
   const h = (location.hash || '').replace(/^#/, '');
-  const versao = h.indexOf('o1.') === 0 ? 1 : h.indexOf('o2.') === 0 ? 2 : h.indexOf('o3.') === 0 ? 3 : h.indexOf('o4.') === 0 ? 4 : 0;
+  const versao = h.indexOf('o1.') === 0 ? 1 : h.indexOf('o2.') === 0 ? 2 : h.indexOf('o3.') === 0 ? 3 : h.indexOf('o4.') === 0 ? 4 : h.indexOf('o5.') === 0 ? 5 : 0;
   if (!versao) return;
   const e = decodificarEstado(h.slice(3), versao);
   if (!e) return;
@@ -1789,11 +2112,11 @@ $('copiarLink').addEventListener('click', () => {
 window.addEventListener('hashchange', abrirDoLink);
 
 /* ---------- Temas sensíveis (religião, política e outros) ---------- */
-const TEMAS_VAL = TEMAS.map(() => 0);
+const TEMAS_VAL = TEMAS.map(() => TRATO_PADRAO);
 let balaoVisto = false;
 $('temasLista').innerHTML = TEMAS.map((tm, i) =>
   '<div class="temarow"><span class="tnome">' + tm.nome + '</span><div class="tseg" role="radiogroup" aria-label="' + tm.nome + '">' +
-  TRATOS.map((tr, v) => '<button type="button" data-t="' + i + '" data-v="' + v + '" aria-pressed="' + (v === 0) + '">' + tr.nome + '</button>').join('') + '</div></div>').join('');
+  TRATOS.map((tr, v) => '<button type="button" data-t="' + i + '" data-v="' + v + '" aria-pressed="' + (v === TRATO_PADRAO) + '">' + tr.nome + '</button>').join('') + '</div></div>').join('');
 function atualizarTemas() {
   document.querySelectorAll('#temasLista button').forEach(b => b.setAttribute('aria-pressed', TEMAS_VAL[+b.dataset.t] === +b.dataset.v));
 }
@@ -1945,7 +2268,7 @@ function tocarCofre(ctx, c, sobe, t) {   // várias moedas caindo no cofre: amos
     tt += gap * (0.5 + Math.random()); gap = Math.max(c.gap * 0.45, gap * 0.93);
   }
 }
-const SOM_DO_VISUAL = { asimov: 'ting', serio: 'caixa', cyber: 'bipe', pixel: 'k3', xp: 'ug_p', w95: 'um_p', lousa: 'contar', caderno: 'plim' };
+const SOM_DO_VISUAL = { asimov: 'ting', serio: 'caixa', cyber: 'bipe', pixel: 'k3', xp: 'ug_p', w95: 'um_p', lousa: 'contar', caderno: 'plim', contrato: 'caixa', medieval: 'k5', partitura: 'ting', maquina: 'caixa', arquivo: 'contar', meme: 'cofre1' };
 function tocarMoedas(ctx, estilo, sobe, t, tipo) {
   let qual = !tipo || tipo === 'auto' ? (SOM_DO_VISUAL[estilo] || 'ting') : tipo;
   const am = AMOSTRAS.find(a => a.id === qual), cofre = COFRES.find(c => c.id === qual);
@@ -2006,6 +2329,92 @@ function somMoeda(sobe) {
     tocarMoedas(ctxAudio, root.dataset.style || 'asimov', sobe, ctxAudio.currentTime + 0.01, somTipo);
   } catch (e) {}
 }
+/* ---------- Sons de seleção: cada visual tem o seu clique (tudo sintetizado na hora, sem arquivos nem direitos autorais) ---------- */
+function toqueNota(ctx, out, t, f, dur, g, tipo, ate) {   // nota com glissando opcional
+  const o = ctx.createOscillator(), v = ctx.createGain();
+  o.type = tipo || 'sine'; o.frequency.setValueAtTime(f, t);
+  if (ate) o.frequency.exponentialRampToValueAtTime(ate, t + dur * 0.9);
+  v.gain.setValueAtTime(0.0001, t); v.gain.exponentialRampToValueAtTime(Math.max(g, 0.0002), t + 0.004); v.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+  o.connect(v); v.connect(out); o.start(t); o.stop(t + dur + 0.03);
+}
+function pancada(ctx, out, t, f0, f1, dur, g) { toqueNota(ctx, out, t, f0, dur, g, 'sine', f1); }   // "tum" grave
+let notaPartitura = 0;
+const ESCALA = [523.25, 587.33, 659.25, 783.99, 880, 1046.5, 880, 783.99, 659.25, 587.33];
+function cliqueDoVisual(ctx, est, tipo, t) {   // tipo: 'sel' (marcou), 'off' (desmarcou) ou 'tema' (trocou o visual)
+  const out = ctx.createGain(); out.gain.value = 1.5; out.connect(ctx.destination);
+  const on = tipo !== 'off', tm = tipo === 'tema';
+  if (est === 'w95') {   // clique seco de mouse antigo; ao trocar o visual, um "ding" curto de aviso
+    ruido(ctx, out, t, 0.012, 0.22, 'highpass', 2500); pancada(ctx, out, t, on ? 420 : 300, 120, 0.035, 0.12);
+    if (tm) { toqueNota(ctx, out, t + 0.04, 1319, 0.5, 0.12, 'triangle'); toqueNota(ctx, out, t + 0.04, 1976, 0.4, 0.05, 'sine'); }
+  } else if (est === 'xp') {   // clique macio e arredondado, com o "plim" suave do XP
+    pancada(ctx, out, t, on ? 900 : 650, on ? 620 : 420, 0.06, 0.16); ruido(ctx, out, t, 0.01, 0.07, 'highpass', 4000);
+    if (tm) [[0, 784], [0.09, 988], [0.18, 1319]].forEach(([d, f]) => toqueNota(ctx, out, t + d, f, 0.5, 0.1, 'sine'));
+  } else if (est === 'pixel') {   // 8 bits: ondas quadradas, como num console NES
+    const n = on ? [659.25, 987.77] : [987.77, 659.25];
+    toqueNota(ctx, out, t, n[0], 0.06, 0.09, 'square'); toqueNota(ctx, out, t + 0.06, n[1], 0.09, 0.09, 'square');
+    if (tm) [523.25, 659.25, 783.99, 1046.5].forEach((f, k) => toqueNota(ctx, out, t + 0.16 + k * 0.07, f, 0.08, 0.08, 'square'));
+  } else if (est === 'cyber') {   // varredura de sintetizador com chiado digital
+    toqueNota(ctx, out, t, on ? 220 : 900, 0.16, 0.07, 'sawtooth', on ? 1400 : 180); toqueNota(ctx, out, t, on ? 440 : 1200, 0.1, 0.04, 'square', on ? 2400 : 300);
+    ruido(ctx, out, t, 0.05, 0.05, 'highpass', 7000);
+    if (tm) [0, 0.06, 0.12].forEach((d, k) => toqueNota(ctx, out, t + 0.12 + d, 880 * Math.pow(1.5, k), 0.12, 0.05, 'sawtooth'));
+  } else if (est === 'asimov') {   // sininho cósmico
+    toqueNota(ctx, out, t, on ? 1568 : 1175, 0.45, 0.13, 'sine'); toqueNota(ctx, out, t + 0.05, on ? 2349 : 1760, 0.4, 0.07, 'sine'); toqueNota(ctx, out, t, 3136, 0.2, 0.03, 'sine');
+    if (tm) [1046.5, 1318.5, 1568, 2093].forEach((f, k) => toqueNota(ctx, out, t + 0.1 + k * 0.08, f, 0.6, 0.07, 'sine'));
+  } else if (est === 'serio') {   // clique discreto e requintado: madeira fina e um tom curto
+    ruido(ctx, out, t, 0.015, 0.09, 'bandpass', 3200); pancada(ctx, out, t, on ? 1040 : 780, 700, 0.1, 0.08);
+    if (tm) toqueNota(ctx, out, t + 0.05, 1568, 0.5, 0.06, 'sine');
+  } else if (est === 'lousa') {   // giz batendo no quadro
+    ruido(ctx, out, t, 0.05, 0.3, 'bandpass', on ? 2600 : 1800); ruido(ctx, out, t + 0.03, 0.05, 0.18, 'highpass', 5000); pancada(ctx, out, t, 220, 140, 0.05, 0.07);
+    if (tm) ruido(ctx, out, t + 0.1, 0.18, 0.2, 'bandpass', 2200);
+  } else if (est === 'caderno') {   // lápis tocando o papel
+    ruido(ctx, out, t, 0.04, 0.22, 'highpass', 4500); pancada(ctx, out, t, on ? 520 : 380, 260, 0.05, 0.06);
+    if (tm) { ruido(ctx, out, t + 0.07, 0.22, 0.14, 'bandpass', 5200); }
+  } else if (est === 'contrato') {   // carimbo: pancada grave e papel
+    pancada(ctx, out, t, on ? 160 : 120, 55, 0.11, 0.3); ruido(ctx, out, t, 0.03, 0.12, 'lowpass', 900);
+    if (tm) { pancada(ctx, out, t + 0.16, 140, 50, 0.12, 0.3); ruido(ctx, out, t + 0.16, 0.04, 0.12, 'lowpass', 900); }
+  } else if (est === 'medieval') {   // alaúde dedilhado; sino de mosteiro ao trocar o visual
+    const f = on ? 293.66 : 220; [1, 2, 3].forEach((m, k) => toqueNota(ctx, out, t, f * m * (k === 2 ? 1.5 : 1), 0.5 / (1 + k * 0.5), 0.14 / (1 + k), 'triangle'));
+    if (tm) [0, 0.35].forEach(d => { [220, 551, 905].forEach((f2, k) => toqueNota(ctx, out, t + 0.1 + d, f2, 1.3 - k * 0.3, 0.1 / (1 + k), 'sine')); });
+  } else if (est === 'partitura') {   // cada clique toca a próxima nota de uma escala
+    const f = on ? ESCALA[notaPartitura++ % ESCALA.length] : ESCALA[(notaPartitura + 3) % ESCALA.length] / 2;
+    [1, 2, 3, 4].forEach((m, k) => toqueNota(ctx, out, t, f * m, 0.55 / (1 + k * 0.6), 0.12 / (1 + k * 0.9), 'sine'));
+    if (tm) [523.25, 659.25, 783.99].forEach(ff => toqueNota(ctx, out, t + 0.08, ff, 0.6, 0.06, 'sine'));
+  } else if (est === 'maquina') {   // tecla de máquina de escrever; sininho do carro ao trocar o visual
+    ruido(ctx, out, t, 0.025, 0.4, 'bandpass', 1800); pancada(ctx, out, t, on ? 200 : 150, 80, 0.06, 0.2); ruido(ctx, out, t + 0.03, 0.015, 0.2, 'highpass', 4000);
+    if (tm) { toqueNota(ctx, out, t + 0.12, 2637, 0.9, 0.1, 'sine'); toqueNota(ctx, out, t + 0.12, 3951, 0.5, 0.04, 'sine'); }
+  } else if (est === 'arquivo') {   // gaveta de madeira e papel velho
+    ruido(ctx, out, t, 0.09, 0.2, 'bandpass', 900); pancada(ctx, out, t + 0.02, on ? 130 : 100, 60, 0.1, 0.22);
+    if (tm) { ruido(ctx, out, t + 0.12, 0.2, 0.18, 'bandpass', 2400); }
+  } else if (est === 'meme') {   // "bum" de efeito de vídeo e um estalo
+    pancada(ctx, out, t, on ? 150 : 110, 38, 0.3, 0.45); ruido(ctx, out, t, 0.04, 0.2, 'lowpass', 1200);
+    if (tm) { toqueNota(ctx, out, t + 0.05, 700, 0.18, 0.12, 'square', 350); }
+  } else {
+    toqueNota(ctx, out, t, 1200, 0.05, 0.1, 'sine');
+  }
+}
+let ultimoClique = 0;
+function somClique(tipo) {
+  if (!somLigado) return;
+  const agora = performance.now();
+  if (agora - ultimoClique < 45) return;   // um rótulo e o campo dele geram dois cliques: toca só um som
+  ultimoClique = agora;
+  try {
+    ctxAudio = ctxAudio || new (window.AudioContext || window.webkitAudioContext)();
+    if (ctxAudio.state === 'suspended') ctxAudio.resume();
+    cliqueDoVisual(ctxAudio, root.dataset.style || 'asimov', tipo, ctxAudio.currentTime + 0.005);
+  } catch (e) {}
+}
+document.addEventListener('click', e => {
+  const t = e.target.closest && e.target.closest('button, input, select, summary, label, a.btn, .th');
+  if (!t || t.closest('.sb') || t.closest('#extras .extra') && t.matches('label')) return;   // + e − dos serviços tocam moedas
+  if (t.disabled) return;
+  const ehTema = t.closest('#swStyle, #bvThumbs');
+  let tipo = 'sel';
+  if (ehTema) tipo = 'tema';
+  else if (t.tagName === 'INPUT' && t.type === 'checkbox' && !t.checked) tipo = 'off';
+  else if (t.tagName === 'LABEL') { const i = t.querySelector('input[type=checkbox]'); if (i && i.checked) tipo = 'off'; }
+  setTimeout(() => somClique(tipo), 0);   // espera o clique mudar o visual, para tocar o som do visual novo
+}, true);
 function atualizarStepper(id) {
   const v = lerNumero('extra_' + id, 0, true);
   document.querySelector('.extra[data-id="' + id + '"]').classList.toggle('on', v > 0);
@@ -2045,12 +2454,12 @@ $('extras').addEventListener('click', e => {
 $('som').addEventListener('click', () => {
   somLigado = !somLigado;
   $('som').setAttribute('aria-pressed', somLigado);
-  $('som').textContent = 'Som das moedas: ' + (somLigado ? 'ligado' : 'desligado');
+  $('som').textContent = 'Sons: ' + (somLigado ? 'ligados' : 'desligados');
   try { localStorage.setItem('som-prof', somLigado ? '1' : '0'); } catch (e) {}
   if (somLigado) somMoeda(true);
 });
 $('som').setAttribute('aria-pressed', somLigado);
-$('som').textContent = 'Som das moedas: ' + (somLigado ? 'ligado' : 'desligado');
+$('som').textContent = 'Sons: ' + (somLigado ? 'ligados' : 'desligados');
 const GRUPOS_SOM = [['', [['auto', 'Automático (conforme o visual)']]], ['Sintetizados', SONS_SINT], ['Cofre: várias moedas', COFRES.map(c => [c.id, c.nome])]]
   .concat(AMOSTRAS.map(a => a.grupo).filter((g, i, arr) => arr.indexOf(g) === i).map(g => [g, AMOSTRAS.filter(a => a.grupo === g).map(a => [a.id, a.nome])]));
 $('somTipo').innerHTML = GRUPOS_SOM.map(([g, lista]) => {
