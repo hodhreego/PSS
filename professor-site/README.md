@@ -13,6 +13,6 @@ No começo do `<script>` ficam as configurações: valor da hora, piso, percentu
 turnos e horários), lista de serviços, períodos de renovação e condições do contrato.
 
 A constante `PAGE_URL` guarda o endereço da página. Os links de orçamento enviados pelos contratantes são
-`PAGE_URL` + `#o3.` + o código do orçamento. Troque o valor quando publicar em outro endereço.
+`PAGE_URL` + `#o4.` + o código do orçamento. Troque o valor quando publicar em outro endereço.
 
 Não coloque no site o CPF nem o endereço do certificado do MEI.

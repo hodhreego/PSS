@@ -2,7 +2,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,800;1,8..60,400&family=Space+Mono:wght@400;700&family=Bebas+Neue&family=Pixelify+Sans:wght@400;500;600;700&family=Press+Start+2P&family=Orbitron:wght@500;800&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,800;1,8..60,400&family=Space+Mono:wght@400;700&family=Bebas+Neue&family=Pixelify+Sans:wght@400;500;600;700&family=Press+Start+2P&family=Patrick+Hand&family=Caveat:wght@600;700&family=Gloria+Hallelujah&family=Orbitron:wght@500;800&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
   /* Conceito: um site, três visuais trocáveis no topo (Asimov, Sério, Cyberpunk), cada um com modo claro (padrão) e escuro.
      Tudo é guiado por tokens no <html data-style data-mode>. Abaixo da capa: trajetória, disciplinas, serviços, simulador em cartões por dia e contato. */
@@ -123,7 +123,8 @@
   .tsw button{display:flex;align-items:center;gap:6px;padding:6px 11px;border:0;background:transparent;color:var(--mut);font:600 .68rem var(--display);cursor:pointer}
   .tsw button i{width:11px;height:11px;border-radius:50%;flex:none;border:1px solid rgba(0,0,0,.25)}
   .tsw button[aria-pressed=true]{background:var(--gbtn);color:var(--on-grad)}
-  .tsw .sa i{background:linear-gradient(135deg,#FF8A2B,#7A5CFF)}.tsw .ss i{background:linear-gradient(135deg,#1B3A6B,#D9B75E)}.tsw .sc i{background:linear-gradient(135deg,#FF2A6D,#05D9E8)}.tsw .sp i{background:linear-gradient(135deg,#6BBF45,#8B5A2B)}.tsw .sx i{background:linear-gradient(135deg,#3D95FF,#3C9A3C)}.tsw .s9 i{background:linear-gradient(135deg,#008080,#C0C0C0)}
+  .tsw .sa i{background:linear-gradient(135deg,#FF8A2B,#7A5CFF)}.tsw .ss i{background:linear-gradient(135deg,#1B3A6B,#D9B75E)}.tsw .sc i{background:linear-gradient(135deg,#FF2A6D,#05D9E8)}.tsw .sp i{background:linear-gradient(135deg,#6BBF45,#8B5A2B)}.tsw .sx i{background:linear-gradient(135deg,#3D95FF,#3C9A3C)}.tsw .s9 i{background:linear-gradient(135deg,#008080,#C0C0C0)}.tsw .sl i{background:linear-gradient(135deg,#1E3B2B,#FFE27A)}.tsw .sk i{background:linear-gradient(135deg,#FFFDF2,#C62828)}
+  #swStyle{flex-wrap:wrap;max-width:100%}
   .navwa{flex:none}
   @media(max-width:1340px){.links{display:none}.navwa{margin-left:auto}}
   @media(max-width:640px){.theme{order:3;width:100%}.navwa{margin-left:auto}.brand b{font-size:.72rem}}
@@ -642,6 +643,117 @@
   :root[data-style="xp"] footer{background:linear-gradient(#3C8CF5,#245EDC 8%,#245EDC 55%,#1941A5);color:#fff;border-top:2px solid #0A246A}
   :root[data-style="xp"] .egrp summary{color:#0A246A}
   :root[data-style="xp"][data-mode="dark"] .egrp summary{color:#8DB8FF}
+
+  /* ===== Lousa (quadro branco no claro, quadro-negro no escuro) e Caderno (folha pautada) ===== */
+  :root[data-style="lousa"]{
+    --bg:#DCE3E8; --bg2:#C9D3DA; --card:#FFFFFF; --card2:#F2F6F9; --line:#AEBBC6; --field:#FFFFFF;
+    --ink:#1D2B3A; --mut:#4A5B6B; --gold:#0D47A1; --focus:#D32F2F;
+    --orange:#EF6C00; --pink:#D32F2F; --violet:#6A1B9A; --teal:#00796B; --cyan:#1565C0;
+    --on-grad:#FFFFFF; --nav-bg:rgba(236,240,243,.97);
+    --gbtn:linear-gradient(#1976D2,#1976D2); --gtext:linear-gradient(#1565C0,#1565C0);
+    --gband:linear-gradient(#37474F,#37474F); --total-bg:linear-gradient(#263238,#263238);
+    --sel:#E3F0FF; --sel-line:#1976D2; --hero-bg:#F3F6F8;
+    --cv1:#D32F2F; --cv2:#1976D2; --cv3:#EF6C00; --cv4:#2E7D32; --cv5:#6A1B9A;
+    --r-card:12px; --r-pill:99px; --r-chip:99px; --r-btn:99px; --r-cover:10px; --shadow:0 3px 0 rgba(60,80,100,.25);
+    --display:"Patrick Hand","Comic Sans MS","Segoe Print",sans-serif; --serif:var(--display); --mono:var(--display);
+    --titulo:"Gloria Hallelujah","Patrick Hand",cursive; --tw:400; --dw:400;
+  }
+  :root[data-style="lousa"][data-mode="dark"]{
+    --bg:#1E3B2B; --bg2:#173022; --card:#244A35; --card2:#2B5640; --line:rgba(255,255,255,.38); --field:#1A3325;
+    --ink:#F6F3E8; --mut:#CFE3D4; --gold:#FFE27A; --focus:#FFE27A;
+    --orange:#FFB36B; --pink:#FF9EC4; --violet:#C9A8FF; --teal:#8FE3C8; --cyan:#8EC8FF;
+    --on-grad:#1E3B2B; --nav-bg:rgba(30,59,43,.97);
+    --gbtn:linear-gradient(#FFE27A,#FFE27A); --gtext:linear-gradient(#FFE27A,#FFE27A);
+    --gband:linear-gradient(#173022,#173022); --total-bg:linear-gradient(#142A1D,#142A1D);
+    --sel:#33603F; --sel-line:#FFE27A; --hero-bg:#1E3B2B;
+    --cv1:#C94F5E; --cv2:#3A7BB5; --cv3:#C98A2B; --cv4:#3E9A63; --cv5:#8566C9; --shadow:none;
+  }
+  :root[data-style="caderno"]{
+    --bg:#FFFDF2; --bg2:#F6F0DC; --card:#FFFFFF; --card2:#FFF9E3; --line:#9EC5E8; --field:#FFFFFF;
+    --ink:#1F2A44; --mut:#4A5878; --gold:#C62828; --focus:#C62828;
+    --orange:#E65100; --pink:#C62828; --violet:#4527A0; --teal:#00695C; --cyan:#1565C0;
+    --on-grad:#1F2A44; --nav-bg:rgba(255,253,242,.97);
+    --gbtn:linear-gradient(#FFE066,#FFE066); --gtext:linear-gradient(#C62828,#C62828);
+    --gband:linear-gradient(#1F2A44,#1F2A44); --total-bg:linear-gradient(#1F2A44,#1F2A44);
+    --sel:#FFF3B0; --sel-line:#C62828; --hero-bg:transparent;
+    --cv1:#D9534F; --cv2:#4A90D9; --cv3:#E8962E; --cv4:#4CAF73; --cv5:#9B6BD1;
+    --r-card:12px; --r-pill:99px; --r-chip:99px; --r-btn:99px; --r-cover:8px; --shadow:3px 3px 0 rgba(31,42,68,.18);
+    --display:"Patrick Hand","Comic Sans MS","Segoe Print",sans-serif; --serif:var(--display); --mono:var(--display);
+    --titulo:"Caveat","Patrick Hand",cursive; --tw:700; --dw:400;
+  }
+  :root[data-style="caderno"][data-mode="dark"]{
+    --bg:#17203A; --bg2:#121A30; --card:#1F2A4A; --card2:#26335A; --line:#3B4E7C; --field:#141C33;
+    --ink:#E9EEFF; --mut:#B7C2E6; --gold:#FFD54F; --focus:#FFD54F;
+    --orange:#FFB26B; --pink:#FF8A80; --violet:#B39DFF; --teal:#7FD9C8; --cyan:#82B1FF;
+    --on-grad:#17203A; --nav-bg:rgba(23,32,58,.97);
+    --gbtn:linear-gradient(#FFD54F,#FFD54F); --gtext:linear-gradient(#FFD54F,#FFD54F);
+    --gband:linear-gradient(#0F1730,#0F1730); --total-bg:linear-gradient(#0F1730,#0F1730);
+    --sel:#2E3C6B; --sel-line:#FFD54F; --shadow:3px 3px 0 rgba(0,0,0,.35);
+  }
+  :root:is([data-style="lousa"],[data-style="caderno"]){font-synthesis:none}
+  :root:is([data-style="lousa"],[data-style="caderno"]) body{font-size:20px;line-height:1.45}
+  :root:is([data-style="lousa"],[data-style="caderno"]) #stars{display:none}
+  :root:is([data-style="lousa"],[data-style="caderno"]) :is(.rays,.orbit,.planet,#galaxia){display:none}
+  :root:is([data-style="lousa"],[data-style="caderno"]) :is(h1,h2,h3,b,strong){letter-spacing:0;text-transform:none}
+  :root[data-style="lousa"] h1{font-size:clamp(1.5rem,4.2vw,2.8rem);line-height:1.3;margin:14px 0}
+  :root[data-style="lousa"] h2{font-family:var(--titulo);font-size:clamp(1.2rem,2.8vw,1.9rem);line-height:1.35}
+  :root[data-style="caderno"] h1{font-size:clamp(2.8rem,8vw,5.2rem);line-height:.95;margin:10px 0 12px}
+  :root[data-style="caderno"] h2{font-family:var(--titulo);font-weight:700;font-size:clamp(1.9rem,4.6vw,3rem);line-height:1}
+  :root:is([data-style="lousa"],[data-style="caderno"]) .tag{font-style:normal;font-size:1.4rem}
+  :root:is([data-style="lousa"],[data-style="caderno"]) .eyebrow{letter-spacing:.08em}
+  :root[data-style="lousa"] body{background:radial-gradient(1200px 600px at 18% -5%,rgba(255,255,255,.07),transparent 60%),radial-gradient(900px 500px at 92% 105%,rgba(255,255,255,.05),transparent 60%),var(--bg)}
+  :root[data-style="lousa"][data-mode="light"] body{background:linear-gradient(#E4EAEE,#D3DCE2)}
+  :root[data-style="caderno"] body{background-color:var(--bg);background-image:linear-gradient(90deg,transparent 58px,rgba(229,57,53,.55) 58px,rgba(229,57,53,.55) 60px,transparent 60px),repeating-linear-gradient(transparent 0 31px,rgba(100,160,220,.42) 31px 32px)}
+  :root[data-style="caderno"][data-mode="dark"] body{background-image:linear-gradient(90deg,transparent 58px,rgba(255,138,128,.45) 58px,rgba(255,138,128,.45) 60px,transparent 60px),repeating-linear-gradient(transparent 0 31px,rgba(130,160,230,.22) 31px 32px)}
+  :root:is([data-style="lousa"],[data-style="caderno"]) :is(.panel,.svc div,.board,.cond,.temas,.way,.day,.ferrow,.recebido,.stats,.quote-p,.balao,.boasvindas){
+    border:2px solid var(--line);border-radius:14px 8px 16px 9px / 9px 16px 8px 14px;box-shadow:var(--shadow)}
+  :root[data-style="lousa"][data-mode="light"] :is(.panel,.quote-p,.board){border-color:#90A4AE;border-width:3px}
+  :root[data-style="caderno"] :is(.panel,.svc div,.board,.cond,.temas,.way,.day,.ferrow,.stats,.quote-p,.balao,.boasvindas){border-color:var(--ink)}
+  :root[data-style="caderno"][data-mode="dark"] :is(.panel,.svc div,.board,.cond,.temas,.way,.day,.ferrow,.stats,.quote-p,.balao,.boasvindas){border-color:var(--line)}
+  :root:is([data-style="lousa"],[data-style="caderno"]) :is(.btn,.pill,.seg button,.tsw button,.sb,.bbtns button,.tseg button){font-weight:400;letter-spacing:0}
+  :root:is([data-style="lousa"],[data-style="caderno"]) .btn{font-size:1.1rem;border:2px solid currentColor;border-radius:99px 70px 99px 80px / 80px 99px 70px 99px}
+  :root[data-style="lousa"][data-mode="dark"] .btn{border-color:var(--ink)}
+  :root[data-style="caderno"] .btn{border-color:var(--ink)}
+  :root:is([data-style="lousa"],[data-style="caderno"]) .btn.wa{color:#fff;border-color:#0B5D2A}
+  :root:is([data-style="lousa"],[data-style="caderno"]) .btn.ghost{border-color:var(--ink)}
+  :root:is([data-style="lousa"],[data-style="caderno"]) .cover::before,:root:is([data-style="lousa"],[data-style="caderno"]) .cover::after{display:none}
+  :root:is([data-style="lousa"],[data-style="caderno"]) .cover{border:2px solid rgba(0,0,0,.4);box-shadow:var(--shadow)}
+  :root:is([data-style="lousa"],[data-style="caderno"]) .cover h3{font-size:1.5rem}
+  :root:is([data-style="lousa"],[data-style="caderno"]) .ev::before{border-radius:50%;background:var(--c);border:2px solid var(--ink);box-shadow:none}
+  :root:is([data-style="lousa"],[data-style="caderno"]) .line::before{width:3px;background:repeating-linear-gradient(var(--ink) 0 8px,transparent 8px 14px);border-radius:0}
+  :root:is([data-style="lousa"],[data-style="caderno"]) .ph i{border-radius:50%;border:2px solid var(--ink);font-size:.95rem}
+  :root:is([data-style="lousa"],[data-style="caderno"]) .hero{background:var(--hero-bg);padding-block:46px 40px}
+  :root:is([data-style="lousa"],[data-style="caderno"]) .porthole{inset:5% 14% 9%;border-radius:2px;padding:12px 12px 44px;background:#fff;clip-path:none;transform:rotate(-3deg);box-shadow:0 10px 22px rgba(0,0,0,.35)}
+  :root:is([data-style="lousa"],[data-style="caderno"]) .porthole img{border-radius:0;border:1px solid #ccc}
+  :root:is([data-style="lousa"],[data-style="caderno"]) .porthole::before{content:"";position:absolute;top:-16px;left:50%;width:96px;height:28px;margin-left:-48px;background:rgba(255,226,102,.8);transform:rotate(3deg);box-shadow:0 1px 3px rgba(0,0,0,.25)}
+  :root:is([data-style="lousa"],[data-style="caderno"]) .porthole::after{content:"Prof. Rodrigo";position:absolute;left:0;right:0;bottom:10px;text-align:center;font-family:var(--titulo);font-size:1.3rem;color:#222}
+  :root[data-style="caderno"] .grad{background:none;-webkit-text-fill-color:currentColor;color:var(--gold)}
+  :root[data-style="lousa"][data-mode="dark"] .stat,:root[data-style="lousa"][data-mode="dark"] .subj span{border-style:dashed}
+  :root[data-style="lousa"][data-mode="dark"] .total,:root[data-style="lousa"][data-mode="dark"] .quote,:root[data-style="lousa"][data-mode="dark"] .contact{border:2px dashed rgba(255,255,255,.5)}
+  :root:is([data-style="lousa"],[data-style="caderno"]) .contact{margin-top:60px}
+  :root:is([data-style="lousa"],[data-style="caderno"]) .quote{border-radius:14px 8px 16px 9px / 9px 16px 8px 14px}
+  :root:is([data-style="lousa"],[data-style="caderno"]) .tile{border-radius:99px 40px 99px 50px / 50px 99px 40px 99px}
+  :root[data-style="caderno"] .tile{border-color:var(--ink)}
+  :root:is([data-style="lousa"],[data-style="caderno"]) .hero .stats{background:var(--card)}
+
+  /* ===== Balão de boas-vindas com miniaturas dos visuais ===== */
+  .boasvindas{position:fixed;z-index:70;left:50%;top:calc(env(safe-area-inset-top,0px) + 86px);transform:translateX(-50%);width:min(540px,calc(100vw - 28px));max-height:calc(100vh - 110px);overflow:auto;
+    background:var(--card);color:var(--ink);border:2px solid var(--sel-line);border-radius:calc(var(--r-card)*.9);padding:18px 20px 18px;box-shadow:0 22px 60px rgba(0,0,0,.45);animation:surgir2 .35s ease-out}
+  .boasvindas[hidden]{display:none}
+  .boasvindas::before{content:"";position:absolute;top:-12px;left:44px;width:20px;height:20px;background:var(--card);border-left:2px solid var(--sel-line);border-top:2px solid var(--sel-line);transform:rotate(45deg)}
+  .boasvindas b{display:block;font:800 1.05rem/1.3 var(--display);padding-right:28px}
+  .boasvindas p{margin:6px 0 0;font-size:1rem;color:var(--mut)}
+  .boasvindas p strong{color:var(--ink)}
+  .boasvindas .bx{position:absolute;top:10px;right:12px;width:28px;height:28px;border:0;background:transparent;color:var(--mut);font-size:1.5rem;line-height:1;cursor:pointer}
+  .thumbs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px}
+  @media(max-width:460px){.thumbs{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}.th{font-size:.6rem;padding:3px;gap:3px;border-radius:7px}.boasvindas{padding:14px 14px}}
+  .th{display:flex;flex-direction:column;gap:5px;align-items:stretch;padding:5px;border:2px solid var(--line);border-radius:10px;background:var(--field);color:var(--ink);font:600 .78rem var(--display);cursor:pointer;text-align:center}
+  .th svg{display:block;width:100%;height:auto;border-radius:4px}
+  .th[aria-pressed=true]{border-color:var(--sel-line);background:var(--sel);box-shadow:0 0 0 3px var(--focus)}
+  .th:hover{border-color:var(--gold)}
+  .bvfoot{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-top:14px}
+  @keyframes surgir2{from{opacity:0;transform:translate(-50%,-12px)}to{opacity:1;transform:translate(-50%,0)}}
+  @media(prefers-reduced-motion:reduce){.boasvindas{animation:none}}
 </style>
 
 <nav>
@@ -653,10 +765,12 @@
       <div class="tsw" id="swStyle">
         <button type="button" class="sa" data-style="asimov" aria-pressed="true"><i></i>Asimov</button>
         <button type="button" class="ss" data-style="serio" aria-pressed="false"><i></i>Sério</button>
-        <button type="button" class="sc" data-style="cyber" aria-pressed="false"><i></i>Cyberpunk</button>
+        <button type="button" class="sc" data-style="cyber" aria-pressed="false"><i></i>Cyber</button>
         <button type="button" class="sp" data-style="pixel" aria-pressed="false"><i></i>Pixel</button>
-        <button type="button" class="sx" data-style="xp" aria-pressed="false"><i></i>Windows XP</button>
-        <button type="button" class="s9" data-style="w95" aria-pressed="false"><i></i>Windows 95</button>
+        <button type="button" class="sx" data-style="xp" aria-pressed="false"><i></i>XP</button>
+        <button type="button" class="s9" data-style="w95" aria-pressed="false"><i></i>Win95</button>
+        <button type="button" class="sl" data-style="lousa" aria-pressed="false"><i></i>Lousa</button>
+        <button type="button" class="sk" data-style="caderno" aria-pressed="false"><i></i>Caderno</button>
       </div>
       <div class="tsw" id="swMode">
         <button type="button" data-mode="light" aria-pressed="true">Claro</button>
@@ -705,9 +819,9 @@
     <h2>Da licenciatura em Matemática ao <span class="grad">Inglês</span>, e rumo à Geografia e à Filosofia</h2>
     <p class="lead">Experiência em sala de aula no Colégio Marcos Cláudio Schuster (SEED) e formação contínua em novas áreas.</p>
     <div class="line">
-      <div class="ev" style="--c:var(--orange)"><div class="y mono">2018</div><h3>Licenciatura em Matemática</h3><p>Universidade Norte do Paraná (Pitágoras).</p></div>
+      <div class="ev" style="--c:var(--orange)"><div class="y mono">2018</div><h3>Licenciatura em Matemática</h3></div>
       <div class="ev" style="--c:var(--pink)"><div class="y mono">2021 · atualmente</div><h3>Professor de Matemática e Educação Financeira</h3><p>SEED, Colégio Marcos Cláudio Schuster.</p></div>
-      <div class="ev" style="--c:var(--violet)"><div class="y mono">2024</div><h3>Licenciatura em Letras, Português e Inglês</h3><p>Faculdade Venda Nova do Imigrante.</p></div>
+      <div class="ev" style="--c:var(--violet)"><div class="y mono">2024</div><h3>Licenciatura em Letras, Português e Inglês</h3></div>
       <div class="ev" style="--c:var(--teal)"><div class="y mono">2025 · atualmente</div><h3>Professor de Língua Inglesa</h3><p>SEED, Colégio Marcos Cláudio Schuster.</p></div>
       <div class="ev" style="--c:var(--cyan)"><div class="y mono">Formação continuada</div><h3>Três pós-graduações lato sensu</h3><p>Gestão Escolar, Educação Especial e Inclusiva com Neuropsicopedagogia, e Metodologia do Ensino de Matemática.</p></div>
       <div class="ev" style="--c:var(--gold)"><div class="y mono">Em andamento</div><h3>Segunda graduação em Geografia e em Filosofia</h3><p>Cursos para licenciados, ampliando o leque de disciplinas.</p></div>
@@ -763,7 +877,7 @@
 
   <section class="sec" id="simulador">
     <div class="kicker mono">Simulador de contrato</div>
-    <h2>Monte a grade e veja o <span class="grad">valor mensal</span></h2>
+    <h2>Monte a grade e veja o <span class="grad">valor do contrato</span></h2>
     <p class="lead">Escolha o regime de cobrança, marque cada horário e defina a turma e a disciplina. O orçamento atualiza na hora.</p>
 
     <div class="recebido" id="recebido" hidden><b>Orçamento recebido</b><span id="recebidoTxt"></span><a href="#recibo">Ver a nota</a></div>
@@ -885,11 +999,11 @@
         <section class="panel quote-p" aria-live="polite">
           <div class="q-head">
             <img data-foto alt="">
-            <div><b id="hq">Orçamento mensal</b><small>Atualiza a cada alteração</small></div>
+            <div><b id="hq">Orçamento do contrato</b><small>Atualiza a cada alteração</small></div>
           </div>
           <div class="q-body">
             <div id="extrato"></div>
-            <div class="total"><small>Valor total estimado do contrato</small><div class="de" id="de"></div><div class="v" id="total">R$ 0,00</div><div class="cnt" id="cnt"></div></div>
+            <div class="total"><small id="totalRot">Valor do contrato</small><div class="de" id="de"></div><div class="v" id="total">R$ 0,00</div><div class="cnt" id="cnt"></div></div>
             <div class="agenda" id="agenda"></div>
             <button type="button" class="btn block" id="copiar">Copiar resumo</button>
             <a class="btn wa block" id="wa" href="https://wa.me/5545999699444" target="_blank" rel="noopener">Enviar orçamento pelo WhatsApp</a>
@@ -926,6 +1040,17 @@
   <b>Temas sensíveis</b>
   <p>Religião, política e outros temas: você decide como o professor deve tratá-los em sala. Quer opinião dele ou só neutralidade?</p>
   <div class="bbtns"><button type="button" class="on" id="balaoSim">Escolher agora</button><button type="button" id="balaoNao">Deixar neutro</button></div>
+</div>
+<div class="boasvindas" id="boasVindas" role="dialog" aria-labelledby="bvTit" hidden>
+  <button type="button" class="bx" id="bvX" aria-label="Fechar boas-vindas">×</button>
+  <b id="bvTit">Seja bem-vindo à página do professor Rodrigo!</b>
+  <p>Aqui você encontra: <strong>trajetória, serviços e orçamento</strong>.</p>
+  <p>Escolha o visual que você prefere para a página:</p>
+  <div class="thumbs" id="bvThumbs"></div>
+  <div class="bvfoot">
+    <div class="tsw" id="bvModo"><button type="button" data-mode="light" aria-pressed="true">Claro</button><button type="button" data-mode="dark" aria-pressed="false">Escuro</button></div>
+    <button type="button" class="btn" id="bvEntrar">Entrar no site</button>
+  </div>
 </div>
 <footer>Prof. Rodrigo Gonçalves Pereira · Matemática · Inglês · Educação Financeira · Geografia · Filosofia<br>Sons de moeda: Kenney (kenney.nl) e uisfx, domínio público (CC0)</footer>
 
@@ -969,7 +1094,7 @@ const ACRESCIMO_POR_DISCIPLINA_EXTRA = 0.05;
 const PAGE_URL = 'https://claude.ai/artifact/XqhrVmiB4Vkyhh5vbjvHuv';
 
 // Períodos de renovação do contrato que o contratante pode escolher, cada um com seu desconto. m = meses de cada período.
-// O pagamento é à vista, antecipado, no início de cada período (valor mensal × m).
+// O pagamento é à vista, antecipado, no início de cada período (valor mensal com desconto × m).
 const RENOVACOES = [
   { m: 1,  nome: 'Mensal',     cada: 'todo mês',         per: 'mês',       desc: 0.10,   sub: 'Renovado todo mês' },
   { m: 2,  nome: 'Bimestral',  cada: 'a cada 2 meses',   per: 'bimestre',  desc: 0.1125, sub: 'Renovado a cada 2 meses' },
@@ -1071,18 +1196,77 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;',
 
 /* ---------- Aparência: visual (Asimov, Sério, Cyberpunk) e modo (claro é o padrão) ---------- */
 const root = document.documentElement;
+// Miniaturas (SVG) de cada visual, desenhadas na hora, para o contratante escolher olhando.
+function miniatura(est, escuro) {
+  const R = (x, y, w, h, c, extra) => '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" fill="' + c + '"' + (extra || '') + '/>';
+  const C = (x, y, r, c) => '<circle cx="' + x + '" cy="' + y + '" r="' + r + '" fill="' + c + '"/>';
+  let g = '';
+  if (est === 'asimov') {
+    g = R(0, 0, 100, 70, '#0D0A2C') + C(76, 30, 24, '#4B22A8') + C(24, 62, 26, '#B81F5B') + C(78, 30, 13, '#FFB347') + C(78, 30, 7, '#FFE9A8') + C(40, 20, 4, '#19C7B5') +
+      R(0, 0, 100, 70, 'none', ' stroke="#F6C453" stroke-width="2" transform="translate(4 4) scale(.92)"') + R(10, 22, 34, 7, '#F7EFE0') + R(10, 33, 26, 7, '#FF8A8A') + R(10, 46, 22, 6, '#F0489F', ' rx="3"');
+  } else if (est === 'serio') {
+    const bg = escuro ? '#0E1626' : '#F4F6FA', ink = escuro ? '#E8EDF5' : '#1A2433', ac = escuro ? '#D9B75E' : '#1B3A6B';
+    g = R(0, 0, 100, 70, bg) + R(0, 0, 100, 9, escuro ? '#162238' : '#fff') + R(0, 9, 100, 1, escuro ? '#2C3D5C' : '#D3DAE6') + R(10, 20, 36, 7, ink) + R(10, 31, 28, 4, ac) + R(10, 40, 40, 3, escuro ? '#9AA9BF' : '#7C8798') +
+      R(10, 50, 22, 8, ac, ' rx="2"') + R(58, 18, 32, 40, escuro ? '#1B2A44' : '#FFFFFF', ' stroke="' + (escuro ? '#2C3D5C' : '#D3DAE6') + '"') + C(74, 32, 8, ac) + R(64, 46, 20, 3, ink);
+  } else if (est === 'cyber') {
+    const bg = escuro ? '#07040F' : '#F1EEFF', ink = escuro ? '#EAF6FF' : '#14052B';
+    g = R(0, 0, 100, 70, bg) + '<g stroke="#05D9E8" stroke-opacity=".35">' + [14, 28, 42, 56].map(y => '<line x1="0" x2="100" y1="' + y + '" y2="' + y + '"/>').join('') + [20, 40, 60, 80].map(x => '<line y1="0" y2="70" x1="' + x + '" x2="' + x + '"/>').join('') + '</g>' +
+      '<polygon points="8,16 86,16 92,22 92,60 14,60 8,54" fill="' + (escuro ? '#0E0A1F' : '#fff') + '" stroke="#FF2A6D" stroke-width="1.5"/>' + R(16, 26, 34, 6, ink) + R(16, 36, 24, 4, '#05D9E8') + '<polygon points="16,46 44,46 48,50 48,54 16,54" fill="#FF2A6D"/>' + C(72, 38, 11, '#B517FF') + C(72, 38, 6, '#05D9E8');
+  } else if (est === 'pixel') {
+    const sky = escuro ? '#0B1530' : '#8EC9F0';
+    g = R(0, 0, 100, 70, sky) + R(0, 56, 100, 14, '#8B5A2B') + R(0, 56, 100, 5, escuro ? '#2F6B2A' : '#6DB33F') + R(0, 55, 100, 2, '#2B1A0A') + R(8, 10, 22, 6, escuro ? '#6C7FB3' : '#fff') + R(14, 6, 12, 6, escuro ? '#6C7FB3' : '#fff') +
+      R(10, 26, 34, 6, '#2B1A0A') + R(10, 36, 24, 5, '#3E7D1F') + R(10, 44, 20, 7, '#6BBF45', ' stroke="#2B1A0A" stroke-width="1.5"') + R(58, 16, 32, 36, '#8B5A2B', ' stroke="#2B1A0A" stroke-width="2"') + R(62, 20, 24, 28, '#C98A43') + C(74, 32, 7, '#F2C14E');
+  } else if (est === 'xp') {
+    g = R(0, 0, 100, 70, escuro ? '#0B1E4D' : '#7FB2F0') + '<ellipse cx="30" cy="74" rx="80" ry="16" fill="' + (escuro ? '#1E4D17' : '#4E9A29') + '"/>' + R(10, 12, 80, 40, escuro ? '#2B2F3A' : '#ECE9D8', ' rx="3" stroke="#0831D9"') + R(10, 12, 80, 8, '#0A5CE6', ' rx="3"') +
+      R(16, 26, 30, 5, escuro ? '#ECECEC' : '#000') + R(16, 35, 22, 4, '#245EDC') + '<rect x="16" y="43" width="22" height="6" rx="3" fill="#3C9A3C"/>' + R(58, 25, 26, 22, '#fff', ' stroke="#7F9DB9"') + C(71, 33, 5, '#245EDC') + R(0, 62, 100, 8, '#245EDC');
+  } else if (est === 'w95') {
+    const bg = escuro ? '#000040' : '#008080', win = escuro ? '#3C3C3C' : '#C0C0C0';
+    g = R(0, 0, 100, 70, bg) + R(10, 10, 80, 44, win, ' stroke="' + (escuro ? '#7A7A7A' : '#fff') + '" stroke-width="1.5"') + R(12, 12, 76, 7, escuro ? '#000070' : '#000080') + R(18, 26, 30, 5, escuro ? '#EDEDED' : '#000') + R(18, 35, 22, 4, '#000080') +
+      R(18, 44, 22, 6, win, ' stroke="' + (escuro ? '#7A7A7A' : '#fff') + '"') + R(58, 25, 26, 22, escuro ? '#101010' : '#fff', ' stroke="#808080"') + C(71, 33, 5, '#000080') + R(0, 60, 100, 10, win, ' stroke="' + (escuro ? '#7A7A7A' : '#fff') + '"') + R(3, 62, 16, 6, win, ' stroke="#404040"');
+  } else if (est === 'lousa') {
+    const bg = escuro ? '#1E3B2B' : '#F3F6F8', ink = escuro ? '#F6F3E8' : '#1D2B3A';
+    g = R(0, 0, 100, 70, escuro ? '#6B4A2B' : '#B8C4CE') + R(4, 4, 92, 62, bg, ' rx="2"') + R(14, 18, 36, 3, ink, ' opacity=".9"') + R(14, 28, 26, 3, escuro ? '#FFE27A' : '#1976D2') + R(14, 38, 32, 3, escuro ? '#FF9EC4' : '#D32F2F') +
+      R(56, 14, 30, 36, '#fff', ' transform="rotate(-4 71 32)"') + R(59, 17, 24, 22, escuro ? '#8EC8FF' : '#9ECBF5', ' transform="rotate(-4 71 32)"') + R(64, 10, 14, 5, '#FFE266', ' opacity=".9"') + R(14, 52, 30, 4, escuro ? '#8FE3C8' : '#2E7D32');
+  } else if (est === 'caderno') {
+    const bg = escuro ? '#17203A' : '#FFFDF2', ln = escuro ? '#3B4E7C' : '#9EC5E8', ink = escuro ? '#E9EEFF' : '#1F2A44';
+    g = R(0, 0, 100, 70, bg) + [12, 22, 32, 42, 52, 62].map(y => R(0, y, 100, 1, ln)).join('') + R(14, 0, 1.5, 70, escuro ? '#FF8A80' : '#E53935') + R(22, 16, 36, 4, ink) + R(22, 27, 26, 3, escuro ? '#FFD54F' : '#C62828') +
+      R(22, 44, 24, 7, escuro ? '#FFD54F' : '#FFE066', ' rx="3"') + R(64, 14, 28, 34, '#fff', ' transform="rotate(-4 78 31)"') + R(67, 17, 22, 20, escuro ? '#82B1FF' : '#9ECBF5', ' transform="rotate(-4 78 31)"') + R(71, 10, 12, 5, '#FFE066');
+  }
+  return '<svg viewBox="0 0 100 70" aria-hidden="true">' + g + '</svg>';
+}
+function desenharMiniaturas() {
+  const el = document.getElementById('bvThumbs');
+  if (!el) return;
+  const escuro = root.dataset.mode === 'dark';
+  el.innerHTML = STYLES.map(s => '<button type="button" class="th" data-style="' + s + '" aria-pressed="' + (s === root.dataset.style) + '">' + miniatura(s, escuro) + '<span>' + STYLE_NOMES[s] + '</span></button>').join('');
+}
 function aplicarTema(estilo, modo) {
   root.dataset.style = estilo; root.dataset.mode = modo;
   document.querySelectorAll('#swStyle button').forEach(b => b.setAttribute('aria-pressed', b.dataset.style === estilo));
   document.querySelectorAll('#swMode button').forEach(b => b.setAttribute('aria-pressed', b.dataset.mode === modo));
   try { localStorage.setItem('tema-prof', JSON.stringify({ estilo, modo })); } catch (e) {}
   if (typeof desenharCeu === 'function' && document.getElementById('stars')) desenharCeu();
+  desenharMiniaturas();
+  document.querySelectorAll('#bvModo button').forEach(b => b.setAttribute('aria-pressed', b.dataset.mode === modo));
+  if (appPronto) calcular();   // o código do orçamento guarda o visual escolhido
 }
+const STYLES = ['asimov', 'serio', 'cyber', 'pixel', 'xp', 'w95', 'lousa', 'caderno'];   // NÃO reordene: o código do orçamento guarda a posição
+const STYLE_NOMES = { asimov: 'Asimov', serio: 'Sério', cyber: 'Cyberpunk', pixel: 'Pixel', xp: 'Windows XP', w95: 'Windows 95', lousa: 'Lousa', caderno: 'Caderno' };
+const nomeTema = () => STYLE_NOMES[root.dataset.style] + ' (' + (root.dataset.mode === 'dark' ? 'escuro' : 'claro') + ')';
+let appPronto = false;
 let tema = { estilo: 'asimov', modo: 'light' };
-try { const s = JSON.parse(localStorage.getItem('tema-prof')); if (s && ['asimov', 'serio', 'cyber', 'pixel', 'xp', 'w95'].includes(s.estilo) && ['light', 'dark'].includes(s.modo)) tema = s; } catch (e) {}
+try { const s = JSON.parse(localStorage.getItem('tema-prof')); if (s && STYLES.includes(s.estilo) && ['light', 'dark'].includes(s.modo)) tema = s; } catch (e) {}
 document.querySelectorAll('#swStyle button').forEach(b => b.addEventListener('click', () => { tema.estilo = b.dataset.style; aplicarTema(tema.estilo, tema.modo); }));
 document.querySelectorAll('#swMode button').forEach(b => b.addEventListener('click', () => { tema.modo = b.dataset.mode; aplicarTema(tema.estilo, tema.modo); }));
 aplicarTema(tema.estilo, tema.modo);
+$('bvThumbs').addEventListener('click', e => { const b = e.target.closest('.th'); if (!b) return; tema.estilo = b.dataset.style; aplicarTema(tema.estilo, tema.modo); });
+document.querySelectorAll('#bvModo button').forEach(b => b.addEventListener('click', () => { tema.modo = b.dataset.mode; aplicarTema(tema.estilo, tema.modo); }));
+const fecharBoasVindas = () => { $('boasVindas').hidden = true; };
+$('bvX').addEventListener('click', fecharBoasVindas);
+$('bvEntrar').addEventListener('click', fecharBoasVindas);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharBoasVindas(); });
+// Ao entrar, mostra as boas-vindas. Quem abre um link de orçamento (o professor) vai direto à nota.
+if (!/^#o[1-9]\./.test(location.hash || '')) $('boasVindas').hidden = false;
 
 /* ---------- Foto e céu estrelado ---------- */
 document.querySelectorAll('img[data-foto]').forEach(i => { i.src = $('foto').src; });
@@ -1361,7 +1545,8 @@ function calcular() {
   const valorExtras = horasExtras * valorHora;
   const totalTabela = subtotal + adTotal + valorExtras;   // valor de tabela do mês, antes do desconto do contrato
   const descValor = totalTabela * renov.desc;
-  const total = totalTabela - descValor;
+  const total = totalTabela - descValor;   // valor de cada mês, com desconto
+  const valorContrato = total * renov.m;   // valor do contrato inteiro (1, 2, 3, 6 ou 12 meses)
 
   const linhas = [
     ['Regime de cobrança', relogio ? 'hora-relógio' : 'hora-aula', unidade + (relogio ? ', ' + pct(ACRESCIMO_HORA_RELOGIO) + ' acima da hora-aula' : '')],
@@ -1376,17 +1561,18 @@ function calcular() {
     ['Total de complexidade', brl(adTotal), null, true]
   ].concat(detalheExtras.length ? detalheExtras.concat([['Total de serviços adicionais', brl(valorExtras), num(horasExtras) + ' h por mês', true]]) : [])
    .concat([['Valor de tabela (mensal)', brl(totalTabela), null, true], ['Desconto por contrato ' + renov.nome.toLowerCase() + ' (' + pct(renov.desc) + ')', '− ' + brl(descValor), null, true]])
-   .concat(renov.m > 1 ? [['Valor do ' + renov.per, brl(total * renov.m), renov.m + ' meses × ' + brl(total), true]] : [])
+   .concat([['Valor mensal com desconto', brl(total), null, true], ['Valor do contrato (' + renov.nome.toLowerCase() + (renov.m > 1 ? ', ' + renov.m + ' meses' : '') + ')', brl(valorContrato), (renov.m > 1 ? renov.m + ' meses × ' + brl(total) + ' · ' : '') + num(horasAula * renov.m) + (relogio ? ' horas' : ' aulas') + ' no contrato', true]])
    .concat([['Pagamento', 'à vista, antecipado', (inicio ? 'A ser pago em ' + fmtData(inicio) + ' (início do contrato)' : 'A ser pago no início do contrato (data a definir)') + ' · renovação ' + renov.nome.toLowerCase(), false, true]]);
 
   $('extrato').innerHTML = linhas.map(([a, b, c, hi]) =>
     '<div class="row' + (hi ? ' hi' : '') + '"><span>' + esc(a) + (c ? '<small>' + esc(c) + '</small>' : '') + '</span><span>' + esc(b) + '</span></div>'
   ).join('');
-  $('total').textContent = brl(total);
-  $('de').innerHTML = '<s>' + brl(totalTabela) + '</s> <b>−' + pct(renov.desc) + '</b> contrato ' + renov.nome.toLowerCase();
+  $('total').textContent = brl(valorContrato);
+  $('totalRot').textContent = 'Valor do contrato · ' + renov.nome.toLowerCase() + (renov.m > 1 ? ' (' + renov.m + ' meses)' : '');
+  $('de').innerHTML = '<s>' + brl(totalTabela * renov.m) + '</s> <b>−' + pct(renov.desc) + '</b> contrato ' + renov.nome.toLowerCase();
   $('cnt').innerHTML = '<b>' + num(horasAula) + '</b><span>' + (relogio ? 'horas de aula por mês' : 'aulas por mês') + '</span><small>' +
     (modo === 'grade' ? origem + ' · ' : '') + 'planejamento e materiais inclusos</small>' +
-    (renov.m > 1 ? '<small>Cobrança ' + renov.nome.toLowerCase() + ': ' + brl(total * renov.m) + ' ' + renov.cada + '</small>' : '');
+    '<small>' + (renov.m > 1 ? 'No contrato: ' + num(horasAula * renov.m) + (relogio ? ' horas' : ' aulas') + ' em ' + renov.m + ' meses · ' : 'Contrato mensal · ') + 'equivale a ' + brl(total) + ' por mês</small>';
 
   if (modo === 'grade') {
     $('agenda').innerHTML = '<h4>Grade escolhida</h4>' + (aulas.length
@@ -1399,16 +1585,18 @@ function calcular() {
   const cond = CONDICOES.concat([metodo.cond, frasTemas()]).concat(divisao.txt ? ['Divisão do ano letivo da escola: ' + divisao.txt + '.'] : []);
   $('condLista').innerHTML = cond.map(c => '<li>' + fmtCond(c) + '</li>').join('');
   const est = codificarEstado();
-  textoResumo = 'Orçamento mensal · Prof. Rodrigo Gonçalves Pereira\n' +
+  textoResumo = 'Orçamento do contrato · Prof. Rodrigo Gonçalves Pereira\n' +
     linhas.map(([a, b, c]) => a + ': ' + b + (c ? ' (' + c + ')' : '')).join('\n') +
     (modo === 'grade' && aulas.length ? '\n\nGrade:\n' + aulas.map(a => a.dia + ' ' + a.turno + ' ' + a.aula + ' (' + a.hora + ') · ' + a.turma + ' · ' + a.disc).join('\n') : '') +
-    '\n\n' + num(horasAula) + (relogio ? ' horas de aula por mês' : ' aulas por mês') + '\nVALOR TOTAL ESTIMADO (mensal): ' + brl(total) +
+    '\n\n' + num(horasAula) + (relogio ? ' horas de aula por mês' : ' aulas por mês') + (renov.m > 1 ? ' · ' + num(horasAula * renov.m) + ' no contrato (' + renov.m + ' meses)' : '') +
+    '\nVALOR DO CONTRATO (' + renov.nome.toLowerCase() + '): ' + brl(valorContrato) + (renov.m > 1 ? '\nEquivale a ' + brl(total) + ' por mês, com ' + pct(renov.desc) + ' de desconto' : '') +
+    '\nVisual escolhido: ' + nomeTema() +
     '\n\nCondições:\n- ' + cond.map(semMarca).join('\n- ') +
     '\n\nCódigo do orçamento: ' + est.codigo + '\nAbrir a mesma página: ' + est.link;
   const waHref = 'https://wa.me/5545999699444?text=' + encodeURIComponent('Olá, professor! Fiz uma simulação de contrato:\n\n' + textoResumo);
   $('wa').href = waHref; $('wa2').href = waHref;
   estadoAtual = est;
-  atualizarRecibo({ est, aulas, linhas, total, horasAula, relogio, unidade, local, inicio, renov, diaTxt, cond });
+  atualizarRecibo({ est, aulas, linhas, total, valorContrato, horasAula, relogio, unidade, local, inicio, renov, diaTxt, cond });
 }
 
 /* ---------- Código do orçamento: o estado da página vai dentro do link ---------- */
@@ -1459,11 +1647,13 @@ function codificarEstado() {
   put(+document.querySelector('input[name=metod]:checked').value, 1);
   put(+$('divisao').value, 2);
   TEMAS_VAL.forEach(v => put(v, 2));
+  put(Math.max(0, STYLES.indexOf(root.dataset.style)), 3);
+  put(root.dataset.mode === 'dark' ? 1 : 0, 1);
   const payload = bitsParaTexto(bits);
   let h = hash32(payload), codigo = '';
   for (let i = 0; i < 6; i++) { codigo += CROCK[h & 31]; h = h >>> 5; }
   codigo = 'ORC-' + codigo;
-  return { payload, codigo, link: PAGE_URL + '#o3.' + payload, h: hash32(payload) };
+  return { payload, codigo, link: PAGE_URL + '#o4.' + payload, h: hash32(payload) };
 }
 
 function decodificarEstado(payload, versao) {
@@ -1505,6 +1695,8 @@ function decodificarEstado(payload, versao) {
   e.temas = TEMAS.map(() => 0);
   if (bits.length - p >= 3) { e.metod = get(1); e.divisao = get(2); }
   if (bits.length - p >= TEMAS.length * 2) e.temas = TEMAS.map(() => Math.min(get(2), TRATOS.length - 1));
+  e.estilo = null; e.modoTema = null;
+  if (versao >= 4 && bits.length - p >= 4) { const si = get(3), mo = get(1); if (si < STYLES.length) { e.estilo = STYLES[si]; e.modoTema = mo ? 'dark' : 'light'; } }
   return falhou ? null : e;
 }
 
@@ -1525,6 +1717,7 @@ function restaurarEstado(e) {
   atualizarFeriados();
   document.querySelector('input[name=metod][value="' + (e.metod < METODOLOGIAS.length ? e.metod : 0) + '"]').checked = true;
   $('divisao').value = e.divisao < DIVISOES.length ? e.divisao : 0;
+  if (e.estilo) { tema.estilo = e.estilo; tema.modo = e.modoTema; aplicarTema(tema.estilo, tema.modo); }   // o visual que o contratante escolheu
   e.temas.forEach((v, i) => { TEMAS_VAL[i] = v; });
   atualizarTemas();
   balaoVisto = true; $('balao').hidden = true;
@@ -1533,7 +1726,7 @@ function restaurarEstado(e) {
 
 function abrirDoLink() {
   const h = (location.hash || '').replace(/^#/, '');
-  const versao = h.indexOf('o1.') === 0 ? 1 : h.indexOf('o2.') === 0 ? 2 : h.indexOf('o3.') === 0 ? 3 : 0;
+  const versao = h.indexOf('o1.') === 0 ? 1 : h.indexOf('o2.') === 0 ? 2 : h.indexOf('o3.') === 0 ? 3 : h.indexOf('o4.') === 0 ? 4 : 0;
   if (!versao) return;
   const e = decodificarEstado(h.slice(3), versao);
   if (!e) return;
@@ -1571,16 +1764,16 @@ function atualizarRecibo(d) {
     }).join('') + '</div></div>').join('');
   } else horarios = '<p class="rc-empty">' + (modo === 'grade' ? 'Nenhum horário marcado.' : 'Carga informada por quantidade, sem horários definidos.') + '</p>';
   $('recibo').innerHTML =
-    '<div class="rc-h"><h4>Prof. Rodrigo G. Pereira</h4><p>Prestação de serviços educacionais · MEI</p><p>ORÇAMENTO MENSAL</p></div>' +
+    '<div class="rc-h"><h4>Prof. Rodrigo G. Pereira</h4><p>Prestação de serviços educacionais · MEI</p><p>ORÇAMENTO DO CONTRATO</p></div>' +
     '<div class="rc-meta"><span>' + esc(quando) + '</span><b>' + d.est.codigo + '</b></div>' +
     '<div class="rc-sec"><h5>Itens</h5>' + linhasHtml + '</div>' +
-    '<div class="rc-total"><span>TOTAL MENSAL</span><strong>' + brl(d.total) + '</strong></div>' +
-    (d.renov.m > 1 ? '<div class="rc-total" style="padding-top:8px"><span>VALOR DO ' + d.renov.per.toUpperCase() + '</span><strong>' + brl(d.total * d.renov.m) + '</strong></div>' : '') +
+    '<div class="rc-total"><span>VALOR DO CONTRATO<br><small style="font-weight:400">' + d.renov.nome.toUpperCase() + (d.renov.m > 1 ? ' · ' + d.renov.m + ' MESES' : '') + '</small></span><strong>' + brl(d.valorContrato) + '</strong></div>' +
+    (d.renov.m > 1 ? '<div class="rc-total" style="padding-top:8px;font-weight:400"><span>EQUIVALE A, POR MÊS</span><strong style="font-size:1.05rem">' + brl(d.total) + '</strong></div>' : '') +
     '<div class="rc-sec"><h5>Pagamento</h5><div class="rc-pay"><b>À VISTA, ANTECIPADO</b><br>' +
-      (d.inicio ? 'A ser pago em <b>' + fmtData(d.inicio) + '</b>, no início do contrato' : 'A ser pago no início do contrato (data a definir)') + (d.renov.m > 1 ? ': <b>' + brl(d.total * d.renov.m) + '</b> (' + d.renov.m + ' meses)' : '') + '.</div>' +
+      (d.inicio ? 'A ser pago em <b>' + fmtData(d.inicio) + '</b>, no início do contrato' : 'A ser pago no início do contrato (data a definir)') + (d.renov.m > 1 ? ': <b>' + brl(d.valorContrato) + '</b> (' + d.renov.m + ' meses)' : '') + '.</div>' +
       '<p class="rc-note">Contrato renovado ' + d.renov.cada + (d.inicio ? ', ' + d.diaTxt : '') + '.</p></div>' +
     '<div class="rc-sec"><h5>Condições</h5><ul class="rc-cond">' + d.cond.map(c => '<li>' + fmtCond(c) + '</li>').join('') + '</ul></div>' +
-    '<p class="rc-count">' + num(d.horasAula) + (d.relogio ? ' horas de aula por mês' : ' aulas por mês') + ' · planejamento incluso</p>' +
+    '<p class="rc-count">' + num(d.horasAula) + (d.relogio ? ' horas de aula por mês' : ' aulas por mês') + (d.renov.m > 1 ? ' · ' + num(d.horasAula * d.renov.m) + ' no contrato' : '') + ' · planejamento incluso</p>' +
     '<div class="rc-sec" style="border-bottom:0"><h5>Horários do professor</h5>' + horarios + '</div>' +
     '<div class="rc-code" style="border-top:2px dashed var(--rline)">' + barras(d.est.h) + '<b>' + d.est.codigo + '</b></div>' +
     '<div class="rc-link">' + esc(d.est.link) + '</div>' +
@@ -1752,7 +1945,7 @@ function tocarCofre(ctx, c, sobe, t) {   // várias moedas caindo no cofre: amos
     tt += gap * (0.5 + Math.random()); gap = Math.max(c.gap * 0.45, gap * 0.93);
   }
 }
-const SOM_DO_VISUAL = { asimov: 'ting', serio: 'caixa', cyber: 'bipe', pixel: 'k3', xp: 'ug_p', w95: 'um_p' };
+const SOM_DO_VISUAL = { asimov: 'ting', serio: 'caixa', cyber: 'bipe', pixel: 'k3', xp: 'ug_p', w95: 'um_p', lousa: 'contar', caderno: 'plim' };
 function tocarMoedas(ctx, estilo, sobe, t, tipo) {
   let qual = !tipo || tipo === 'auto' ? (SOM_DO_VISUAL[estilo] || 'ting') : tipo;
   const am = AMOSTRAS.find(a => a.id === qual), cofre = COFRES.find(c => c.id === qual);
@@ -1895,6 +2088,7 @@ $('copiar').addEventListener('click', () => {
   marcar($('cell_' + k), true);
   $('tu_' + k).value = ultimo.turma; $('di_' + k).value = d;
 });
+appPronto = true;
 calcular();
 abrirDoLink();
 </script>
