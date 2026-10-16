@@ -241,7 +241,7 @@
   @media(max-width:560px){.grid2{grid-template-columns:minmax(0,1fr)}}
   .lb{display:block;font-weight:700;margin-bottom:6px}
   .hint{font-size:.88rem;color:var(--mut);margin-top:6px}
-  input[type=number],select{width:100%;padding:10px 12px;font:inherit;font-size:1rem;color:var(--ink);background:var(--field);border:1.5px solid var(--line);border-radius:calc(var(--r-card)/2)}
+  input[type=number],input[type=text],textarea,select{width:100%;padding:10px 12px;font:inherit;font-size:1rem;color:var(--ink);background:var(--field);border:1.5px solid var(--line);border-radius:calc(var(--r-card)/2)}
   .opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
   @media(max-width:560px){.opts{grid-template-columns:minmax(0,1fr)}}
   .opt{display:flex;gap:12px;align-items:center;padding:13px 14px;border:1.5px solid var(--line);border-radius:calc(var(--r-card)*.65);background:var(--field);cursor:pointer}
@@ -372,6 +372,12 @@
   :root[data-style="cyber"] .sb{border-radius:4px}
   .somrow{display:flex;align-items:center;gap:10px 14px;flex-wrap:wrap;margin-bottom:10px}
   .somsel{display:flex;align-items:center;gap:8px;font:400 .7rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
+  textarea{resize:vertical;min-height:84px;font-family:inherit}
+  .swrow{display:flex;align-items:center;gap:10px;font:600 .85rem var(--display);color:var(--mut)}
+  .sw{position:relative;width:46px;height:26px;border-radius:99px;border:2px solid var(--line);background:var(--field);cursor:pointer;padding:0;flex:none}
+  .sw::after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:var(--mut);transition:transform .18s}
+  .sw[aria-checked=true]{background:var(--gbtn);border-color:var(--sel-line)}
+  .sw[aria-checked=true]::after{transform:translateX(20px);background:var(--on-grad)}
   .somsel{max-width:100%;min-width:0}
   .somsel select{min-width:0;max-width:100%;width:auto;padding:6px 10px;font-size:.9rem;text-transform:none;letter-spacing:0;font-family:var(--serif)}
 
@@ -608,7 +614,7 @@
   :root[data-style="w95"] :is(.seg button,.tsw button,.tseg button)[aria-pressed=true]{background:#000080;color:#fff;border-color:var(--bv-d) var(--bv-l) var(--bv-l) var(--bv-d);box-shadow:none}
   :root[data-style="w95"][data-mode="dark"] :is(.seg button,.tsw button,.tseg button)[aria-pressed=true]{background:#1E3A9F}
   :root[data-style="w95"] .btn.wa,:root[data-style="w95"] .btn.ghost{background:var(--card);color:var(--ink)}
-  :root[data-style="w95"] :is(input[type=number],input[type=date],select,.opt,.ferrow){background:var(--field);color:var(--ink);border:2px solid;border-color:var(--bv-m) var(--bv-l) var(--bv-l) var(--bv-m);box-shadow:inset 1px 1px 0 var(--bv-d),inset -1px -1px 0 var(--bv-h);border-radius:0}
+  :root[data-style="w95"] :is(input[type=number],input[type=date],input[type=text],textarea,select,.opt,.ferrow){background:var(--field);color:var(--ink);border:2px solid;border-color:var(--bv-m) var(--bv-l) var(--bv-l) var(--bv-m);box-shadow:inset 1px 1px 0 var(--bv-d),inset -1px -1px 0 var(--bv-h);border-radius:0}
   :root[data-style="w95"] .opt:has(input:checked){background:var(--sel)}
   :root[data-style="w95"] .tile{background:var(--card);border:2px solid;border-color:var(--bv-l) var(--bv-d) var(--bv-d) var(--bv-l);box-shadow:inset -1px -1px 0 var(--bv-m);color:var(--ink);border-radius:0}
   :root[data-style="w95"] .chk input:checked + .tile{background:#000080;color:#fff;border-color:var(--bv-d) var(--bv-l) var(--bv-l) var(--bv-d);box-shadow:none}
@@ -640,8 +646,8 @@
   :root[data-style="xp"] :is(.pill,.bbtns button,.way button){background:linear-gradient(#FFFFFF,#ECE9D8 85%,#D6D0C0);color:#000;border:1px solid #003C74;border-radius:4px;font-weight:600}
   :root[data-style="xp"] .sb.minus{background:linear-gradient(#FFFFFF,#ECE9D8 85%,#D6D0C0);color:#000;border:1px solid #003C74}
   :root[data-style="xp"] .sb{border:1px solid #003C74}
-  :root[data-style="xp"] :is(input[type=number],input[type=date],select,.opt){background:#fff;color:#000;border:1px solid #7F9DB9;border-radius:3px;box-shadow:none}
-  :root[data-style="xp"][data-mode="dark"] :is(input[type=number],input[type=date],select,.opt){background:var(--field);color:var(--ink)}
+  :root[data-style="xp"] :is(input[type=number],input[type=date],input[type=text],textarea,select,.opt){background:#fff;color:#000;border:1px solid #7F9DB9;border-radius:3px;box-shadow:none}
+  :root[data-style="xp"][data-mode="dark"] :is(input[type=number],input[type=date],input[type=text],textarea,select,.opt){background:var(--field);color:var(--ink)}
   :root[data-style="xp"] .opt:has(input:checked){background:var(--sel);border-color:var(--sel-line)}
   :root[data-style="xp"] .tile{background:linear-gradient(#FFFFFF,#ECE9D8);color:#000;border:1px solid #7F9DB9;border-radius:4px}
   :root[data-style="xp"][data-mode="dark"] .tile{background:var(--card2);color:var(--ink)}
@@ -1305,7 +1311,7 @@
             <p class="rule">Turmas do mesmo ano e da mesma disciplina são aulas <b>espelhadas</b> (mesmo preparo). Cada preparo diferente, além do primeiro, soma 5% ao total das aulas. <b>Aulas geminadas</b> (seguidas, na mesma turma e disciplina) ficam no preço normal, sem acréscimo.</p>
             <div class="temas" id="temasBox">
               <h4>Temas sensíveis em sala</h4>
-              <p class="hint">Religião, política e outros temas. Escolha como o professor deve tratá-los. O padrão é a liberdade de cátedra: o professor pleno, com as suas ideias e a sua opinião, sempre com ética e sem impor nada a ninguém. Se a escola preferir neutralidade ou que o tema nem seja abordado, basta escolher: o professor aceita e segue o que a escola pedir. Esse tema é conversado pessoalmente com a escola, sobre a posição dela, e pode ser ajustado no contrato.</p>
+              <p class="hint">Religião, política e outros temas. Escolha como o professor deve tratá-los. O padrão é a liberdade de cátedra: o professor pleno, com as suas ideias e a sua opinião, sempre com ética e sem impor nada a ninguém. Se a escola preferir neutralidade, que o tema não seja abordado ou que valha o regimento interno dela, basta escolher: o professor aceita e segue o que a escola pedir. Esse tema é conversado pessoalmente com a escola, sobre a posição dela, e pode ser ajustado no contrato.</p>
               <div id="temasLista"></div>
             </div>
             <div class="legend" id="legend"></div>
@@ -1372,6 +1378,15 @@
               <label class="lb" for="inicio">Data de início do contrato</label>
               <input type="date" id="inicio">
               <p class="hint" id="hintInicio">Informe a data em que o contrato começa. O primeiro pagamento vence nesse dia.</p>
+            </div>
+            <div>
+              <label class="lb" for="escola">Nome da escola ou do contratante (opcional)</label>
+              <input type="text" id="escola" maxlength="60" autocomplete="organization" placeholder="Ex.: Colégio Exemplo">
+            </div>
+            <div>
+              <label class="lb" for="obs">Observações para o professor (opcional)</label>
+              <textarea id="obs" maxlength="200" rows="3" placeholder="Ex.: turmas, regras da escola, dúvidas..."></textarea>
+              <p class="hint">O que você escrever aqui vai na mensagem e no link, e o professor vê igualzinho ao abrir.</p>
             </div>
             <div>
               <p class="lb">Renovação do contrato</p>
@@ -1446,6 +1461,7 @@
   <div class="thumbs" id="bvThumbs"></div>
   <div class="bvfoot">
     <div class="tsw" id="bvModo"><button type="button" data-mode="light" aria-pressed="true">Claro</button><button type="button" data-mode="dark" aria-pressed="false">Escuro</button></div>
+    <div class="swrow"><button type="button" class="sw" id="bvSom" role="switch" aria-checked="true" aria-label="Sons do site"></button><span id="bvSomTxt">Sons ligados</span></div>
     <button type="button" class="btn" id="bvEntrar">Entrar no site</button>
   </div>
 </div>
@@ -1522,7 +1538,7 @@ const TEMAS = [{ nome: 'Religião' }, { nome: 'Política' }, { nome: 'Outros tem
 const TRATOS = [
   { nome: 'Neutralidade', curto: 'neutralidade', frase: 'a pedido da escola, o professor aborda com neutralidade, apresentando fatos e diferentes pontos de vista, sem opinião pessoal' },
   { nome: 'Não abordar', curto: 'não abordar', frase: 'o professor não aborda esses temas em sala' },
-  { nome: 'Opinião só se perguntado', curto: 'opinião só se perguntado', frase: 'o professor só dá a sua opinião quando perguntado' },
+  { nome: 'Regimento interno da escola', curto: 'regimento interno da escola', frase: 'o professor segue o que o regimento interno da escola (regulamento, normas e orientações) determinar sobre esses temas' },
   { nome: 'Liberdade de cátedra', curto: 'liberdade de cátedra', frase: 'o professor tem liberdade de cátedra: apresenta também as suas próprias ideias e opiniões, com ética e respeito, sem impor preferências políticas ou religiosas a ninguém, e, em escola confessional (por exemplo, católica), respeita o ideário da escola' }
 ];
 const TRATO_PADRAO = 3;   // liberdade de cátedra é a escolha inicial; o índice 3 é novo, então links antigos continuam iguais
@@ -2142,18 +2158,19 @@ function calcular() {
   const cond = CONDICOES.concat([metodo.cond, frasTemas()]).concat(divisao.txt ? ['Divisão do ano letivo da escola: ' + divisao.txt + '.'] : []);
   $('condLista').innerHTML = cond.map(c => '<li>' + icone(iconeDaCondicao(c), 'ci') + '<span>' + fmtCond(c) + '</span></li>').join('');
   const est = codificarEstado();
-  textoResumo = 'Orçamento do contrato · Prof. Rodrigo Gonçalves Pereira\n' +
+  const escolaTxt = $('escola').value.replace(/\s+/g, ' ').trim(), obsTxt = $('obs').value.replace(/\s+/g, ' ').trim();
+  textoResumo = 'Orçamento do contrato · Prof. Rodrigo Gonçalves Pereira\n' + (escolaTxt ? 'Escola/contratante: ' + escolaTxt + '\n' : '') +
     linhas.map(([a, b, c]) => a + ': ' + b + (c ? ' (' + c + ')' : '')).join('\n') +
     (modo === 'grade' && aulas.length ? '\n\nGrade:\n' + aulas.map(a => a.dia + ' ' + a.turno + ' ' + a.aula + ' (' + a.hora + ') · ' + a.turma + ' · ' + a.disc).join('\n') : '') +
     '\n\n' + num(horasAula) + (relogio ? ' horas de aula por mês' : ' aulas por mês') + (renov.m > 1 ? ' · ' + num(horasAula * renov.m) + ' no contrato (' + renov.m + ' meses)' : '') +
     '\nVALOR DO CONTRATO (' + renov.nome.toLowerCase() + '): ' + brl(valorContrato) + (renov.m > 1 ? '\nEquivale a ' + brl(total) + ' por mês, com ' + pct(renov.desc) + ' de desconto' : '') +
-    '\nVisual escolhido: ' + nomeTema() +
+    '\nVisual escolhido: ' + nomeTema() + (obsTxt ? '\nObservações: ' + obsTxt : '') +
     '\n\nCondições:\n- ' + cond.map(semMarca).join('\n- ') +
     '\n\nCódigo do orçamento: ' + est.codigo + '\nAbrir a mesma página: ' + est.link;
   const waHref = 'https://wa.me/5545999699444?text=' + encodeURIComponent('Olá, professor! Fiz uma simulação de contrato:\n\n' + textoResumo);
   $('wa').href = waHref; $('wa2').href = waHref;
   estadoAtual = est;
-  atualizarRecibo({ est, aulas, linhas, total, valorContrato, horasAula, relogio, unidade, local, inicio, renov, diaTxt, cond });
+  atualizarRecibo({ escolaTxt, obsTxt, est, aulas, linhas, total, valorContrato, horasAula, relogio, unidade, local, inicio, renov, diaTxt, cond });
 }
 
 /* ---------- Código do orçamento: o estado da página vai dentro do link ---------- */
@@ -2206,11 +2223,16 @@ function codificarEstado() {
   TEMAS_VAL.forEach(v => put(v, 2));
   put(Math.max(0, STYLES.indexOf(root.dataset.style)), 4);
   put(root.dataset.mode === 'dark' ? 1 : 0, 1);
+  [$('escola').value, $('obs').value].forEach((txt, k) => {   // textos livres: tamanho (8 bits) + bytes UTF-8
+    let by = Array.from(new TextEncoder().encode(txt.replace(/\s+/g, ' ').trim()));
+    while (by.length > 250) by.pop();
+    put(by.length, 8); by.forEach(b => put(b, 8));
+  });
   const payload = bitsParaTexto(bits);
   let h = hash32(payload), codigo = '';
   for (let i = 0; i < 6; i++) { codigo += CROCK[h & 31]; h = h >>> 5; }
   codigo = 'ORC-' + codigo;
-  return { payload, codigo, link: PAGE_URL + '#o5.' + payload, h: hash32(payload) };
+  return { payload, codigo, link: PAGE_URL + '#o6.' + payload, h: hash32(payload) };
 }
 
 function decodificarEstado(payload, versao) {
@@ -2255,6 +2277,11 @@ function decodificarEstado(payload, versao) {
   e.estilo = null; e.modoTema = null;
   const bEst = versao >= 5 ? 4 : 3;
   if (versao >= 4 && bits.length - p >= bEst + 1) { const si = get(bEst), mo = get(1); if (si < STYLES.length) { e.estilo = STYLES[si]; e.modoTema = mo ? 'dark' : 'light'; } }
+  e.escola = ''; e.obs = '';
+  if (versao >= 6) {
+    const lerTxt = () => { const n = get(8), by = []; for (let i = 0; i < n; i++) by.push(get(8)); return new TextDecoder('utf-8').decode(new Uint8Array(by)); };
+    e.escola = lerTxt().slice(0, 60); e.obs = lerTxt().slice(0, 200);
+  }
   return falhou ? null : e;
 }
 
@@ -2276,6 +2303,7 @@ function restaurarEstado(e) {
   document.querySelector('input[name=metod][value="' + (e.metod < METODOLOGIAS.length ? e.metod : 0) + '"]').checked = true;
   $('divisao').value = e.divisao < DIVISOES.length ? e.divisao : 0;
   if (e.estilo) { tema.estilo = e.estilo; tema.modo = e.modoTema; aplicarTema(tema.estilo, tema.modo); }   // o visual que o contratante escolheu
+  $('escola').value = e.escola || ''; $('obs').value = e.obs || '';
   e.temas.forEach((v, i) => { TEMAS_VAL[i] = v; });
   atualizarTemas();
   balaoVisto = true; $('balao').hidden = true;
@@ -2284,7 +2312,7 @@ function restaurarEstado(e) {
 
 function abrirDoLink() {
   const h = (location.hash || '').replace(/^#/, '');
-  const versao = h.indexOf('o1.') === 0 ? 1 : h.indexOf('o2.') === 0 ? 2 : h.indexOf('o3.') === 0 ? 3 : h.indexOf('o4.') === 0 ? 4 : h.indexOf('o5.') === 0 ? 5 : 0;
+  const versao = h.indexOf('o1.') === 0 ? 1 : h.indexOf('o2.') === 0 ? 2 : h.indexOf('o3.') === 0 ? 3 : h.indexOf('o4.') === 0 ? 4 : h.indexOf('o5.') === 0 ? 5 : h.indexOf('o6.') === 0 ? 6 : 0;
   if (!versao) return;
   const e = decodificarEstado(h.slice(3), versao);
   if (!e) return;
@@ -2322,7 +2350,7 @@ function atualizarRecibo(d) {
     }).join('') + '</div></div>').join('');
   } else horarios = '<p class="rc-empty">' + (modo === 'grade' ? 'Nenhum horário marcado.' : 'Carga informada por quantidade, sem horários definidos.') + '</p>';
   $('recibo').innerHTML =
-    '<div class="rc-h"><h4>Prof. Rodrigo G. Pereira</h4><p>Prestação de serviços educacionais · MEI</p><p>ORÇAMENTO DO CONTRATO</p></div>' +
+    '<div class="rc-h"><h4>Prof. Rodrigo G. Pereira</h4><p>Prestação de serviços educacionais · MEI</p><p>ORÇAMENTO DO CONTRATO</p>' + (d.escolaTxt ? '<p><b>' + esc(d.escolaTxt) + '</b></p>' : '') + '</div>' +
     '<div class="rc-meta"><span>' + esc(quando) + '</span><b>' + d.est.codigo + '</b></div>' +
     '<div class="rc-sec"><h5>Itens</h5>' + linhasHtml + '</div>' +
     '<div class="rc-total"><span>VALOR DO CONTRATO<br><small style="font-weight:400">' + d.renov.nome.toUpperCase() + (d.renov.m > 1 ? ' · ' + d.renov.m + ' MESES' : '') + '</small></span><strong>' + brl(d.valorContrato) + '</strong></div>' +
@@ -2330,6 +2358,7 @@ function atualizarRecibo(d) {
     '<div class="rc-sec"><h5>Pagamento</h5><div class="rc-pay"><b>À VISTA, ANTECIPADO</b><br>' +
       (d.inicio ? 'A ser pago em <b>' + fmtData(d.inicio) + '</b>, no início do contrato' : 'A ser pago no início do contrato (data a definir)') + (d.renov.m > 1 ? ': <b>' + brl(d.valorContrato) + '</b> (' + d.renov.m + ' meses)' : '') + '.</div>' +
       '<p class="rc-note">Contrato renovado ' + d.renov.cada + (d.inicio ? ', ' + d.diaTxt : '') + '.</p></div>' +
+    (d.obsTxt ? '<div class="rc-sec"><h5>Observações</h5><p class="rc-note">' + esc(d.obsTxt) + '</p></div>' : '') +
     '<div class="rc-sec"><h5>Condições</h5><ul class="rc-cond">' + d.cond.map(c => '<li>' + fmtCond(c) + '</li>').join('') + '</ul></div>' +
     '<p class="rc-count">' + num(d.horasAula) + (d.relogio ? ' horas de aula por mês' : ' aulas por mês') + (d.renov.m > 1 ? ' · ' + num(d.horasAula * d.renov.m) + ' no contrato' : '') + ' · planejamento incluso</p>' +
     '<div class="rc-sec" style="border-bottom:0"><h5>Horários do professor</h5>' + horarios + '</div>' +
@@ -2692,14 +2721,18 @@ $('extras').addEventListener('click', e => {
   if (!b || e.pointerType === 'mouse') return;   // mouse já tratado no pointerdown
   mudarExtra(b.dataset.id, +b.dataset.d);
 });
+function sincronizarSom() { const b = document.getElementById('bvSom'); if (b) { b.setAttribute('aria-checked', somLigado); document.getElementById('bvSomTxt').textContent = somLigado ? 'Sons ligados' : 'Sons desligados'; } }
+document.getElementById('bvSom').addEventListener('click', () => $('som').click());
 $('som').addEventListener('click', () => {
   somLigado = !somLigado;
   $('som').setAttribute('aria-pressed', somLigado);
+  sincronizarSom();
   $('som').textContent = 'Sons: ' + (somLigado ? 'ligados' : 'desligados');
   try { localStorage.setItem('som-prof', somLigado ? '1' : '0'); } catch (e) {}
   if (somLigado) somMoeda(true);
 });
 $('som').setAttribute('aria-pressed', somLigado);
+sincronizarSom();
 $('som').textContent = 'Sons: ' + (somLigado ? 'ligados' : 'desligados');
 const GRUPOS_SOM = [['', [['auto', 'Automático (conforme o visual)']]], ['Sintetizados', SONS_SINT], ['Cofre: várias moedas', COFRES.map(c => [c.id, c.nome])]]
   .concat(AMOSTRAS.map(a => a.grupo).filter((g, i, arr) => arr.indexOf(g) === i).map(g => [g, AMOSTRAS.filter(a => a.grupo === g).map(a => [a.id, a.nome])]));
@@ -2715,7 +2748,7 @@ $('somTipo').addEventListener('change', () => {   // ao escolher, toca uma amost
   somMoeda(true);
 });
 
-['horas', 'turmas', 'disciplinas', 'preparos', 'inicio']
+['horas', 'turmas', 'disciplinas', 'preparos', 'inicio', 'escola', 'obs']
   .forEach(id => { $(id).addEventListener('input', calcular); $(id).addEventListener('change', calcular); });
 document.querySelectorAll('input[name=local], input[name=regime], input[name=renov], input[name=metod]').forEach(r => r.addEventListener('change', calcular));
 
