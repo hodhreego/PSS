@@ -625,6 +625,19 @@
   @keyframes avisoSeta{from{transform:translateX(-6px)}to{transform:translateX(6px)}}
   @keyframes avisoSetaEsq{from{transform:translateX(6px)}to{transform:translateX(-6px)}}
   .eyebrow-link{animation:avisoPulsa 1s ease-in-out infinite;border-color:#FFD54F!important}
+
+  /* ---------- RESUMOS E MAPAS MENTAIS (bem destacado) ---------- */
+  .aviso-resumos{flex:0 0 auto;display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff;padding:12px 14px;
+    background:linear-gradient(110deg,#0B6B3A,#16A34A 55%,#22C55E);position:relative;z-index:5;
+    box-shadow:0 4px 14px rgba(0,0,0,.3);border-top:3px solid #FFD54F;border-bottom:3px solid #FFD54F;animation:arBrilho 1.4s ease-in-out infinite}
+  .ar-emoji{font-size:34px;line-height:1;flex:none;animation:avisoPulsa 1s ease-in-out infinite}
+  .ar-txt{flex:1;min-width:0;display:flex;flex-direction:column}
+  .ar-txt b{font:900 17px/1.15 'Source Sans 3',system-ui,sans-serif;letter-spacing:.01em}
+  .ar-txt small{font:700 12.5px/1.3 'Source Sans 3',system-ui,sans-serif;color:#FFF3C4;margin-top:3px}
+  .ar-seta{flex:none;display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:#FFD54F;color:#0B4D2A;
+    font:900 24px/1 'Source Sans 3',system-ui,sans-serif;box-shadow:0 0 0 3px #fff;animation:avisoSeta .6s ease-in-out infinite alternate}
+  .aviso-resumos:hover{filter:brightness(1.08)}
+  @keyframes arBrilho{0%,100%{box-shadow:0 4px 14px rgba(0,0,0,.3)}50%{box-shadow:0 4px 22px rgba(255,213,79,.85)}}
 </style>
 <script src="dados_conhecimentos_completo.js"></script>
 </head>
@@ -637,6 +650,12 @@
     <a class="aviso-banca" href="https://servicos.nc.ufpr.br/PortalNC/Concurso?concurso=SEED2026" target="_blank" rel="noopener">
       <span class="aviso-topo">⚠️ HOJE É O ÚLTIMO DIA!</span>
       <span class="aviso-linha"><span class="aviso-seta" aria-hidden="true">👉</span><span class="aviso-btn">PEGUE SEU COMPROVANTE DE INSCRIÇÃO<small>Clique aqui · site da banca NC/UFPR ↗</small></span><span class="aviso-seta esq" aria-hidden="true">👈</span></span>
+    </a>
+    <!-- RESUMOS E MAPAS MENTAIS (página de venda) -->
+    <a class="aviso-resumos" href="https://claude.ai/artifact/NbnDmgL7PQZr7h17QKHQTP" target="_blank" rel="noopener">
+      <span class="ar-emoji" aria-hidden="true">🧠</span>
+      <span class="ar-txt"><b>RESUMOS E MAPAS MENTAIS PARA A PROVA</b><small>15 disciplinas · só R$ 3,00 cada · clique e garanta o seu</small></span>
+      <span class="ar-seta" aria-hidden="true">➜</span>
     </a>
     <!-- CABEÇALHO FIXO: pontuação e total sempre visíveis -->
     <div class="hero">
