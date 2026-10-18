@@ -604,6 +604,27 @@
       max-width: 1200px;
     }
   }
+
+  /* ---------- AVISO DO COMPROVANTE (bem destacado) ---------- */
+  .aviso-banca{flex:0 0 auto;display:block;text-decoration:none;text-align:center;padding:12px 10px 14px;
+    background:linear-gradient(180deg,#B71C1C,#E53935);color:#fff;position:relative;z-index:5;
+    animation:avisoFundo 1s ease-in-out infinite;box-shadow:0 4px 14px rgba(0,0,0,.35)}
+  .aviso-topo{display:block;font:900 15px/1.2 'Source Sans 3',system-ui,sans-serif;letter-spacing:.06em;margin-bottom:8px;
+    animation:avisoPisca .8s steps(2,start) infinite}
+  .aviso-linha{display:flex;align-items:center;justify-content:center;gap:8px}
+  .aviso-btn{display:flex;flex-direction:column;align-items:center;background:#FFD54F;color:#1a1200;border-radius:14px;
+    padding:12px 14px;font:900 19px/1.15 'Source Sans 3',system-ui,sans-serif;letter-spacing:.01em;
+    box-shadow:0 0 0 4px #fff,0 8px 20px rgba(0,0,0,.35);animation:avisoPulsa 1s ease-in-out infinite}
+  .aviso-btn small{display:block;font-weight:800;font-size:12.5px;margin-top:5px;color:#7a1010;letter-spacing:.02em}
+  .aviso-seta{font-size:34px;line-height:1;flex:none;animation:avisoSeta .6s ease-in-out infinite alternate}
+  .aviso-seta.esq{animation-name:avisoSetaEsq}
+  .aviso-banca:hover .aviso-btn{background:#FFE082}
+  @keyframes avisoPisca{to{visibility:hidden}}
+  @keyframes avisoFundo{0%,100%{background:linear-gradient(180deg,#B71C1C,#E53935)}50%{background:linear-gradient(180deg,#D32F2F,#FF5252)}}
+  @keyframes avisoPulsa{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+  @keyframes avisoSeta{from{transform:translateX(-6px)}to{transform:translateX(6px)}}
+  @keyframes avisoSetaEsq{from{transform:translateX(6px)}to{transform:translateX(-6px)}}
+  .eyebrow-link{animation:avisoPulsa 1s ease-in-out infinite;border-color:#FFD54F!important}
 </style>
 <script src="dados_conhecimentos_completo.js"></script>
 </head>
@@ -612,6 +633,11 @@
 <div class="stage">
   <div class="canvas">
 
+    <!-- AVISO: comprovante de inscrição no site da banca -->
+    <a class="aviso-banca" href="https://servicos.nc.ufpr.br/PortalNC/Concurso?concurso=SEED2026" target="_blank" rel="noopener">
+      <span class="aviso-topo">⚠️ HOJE É O ÚLTIMO DIA!</span>
+      <span class="aviso-linha"><span class="aviso-seta" aria-hidden="true">👉</span><span class="aviso-btn">PEGUE SEU COMPROVANTE DE INSCRIÇÃO<small>Clique aqui · site da banca NC/UFPR ↗</small></span><span class="aviso-seta esq" aria-hidden="true">👈</span></span>
+    </a>
     <!-- CABEÇALHO FIXO: pontuação e total sempre visíveis -->
     <div class="hero">
       <div class="celebrate-flash" id="celebrateFlash"></div>
