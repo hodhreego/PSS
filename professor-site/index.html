@@ -1429,7 +1429,7 @@
       <div style="--c:var(--teal)"><h3>Programação</h3><p>Sistemas, ferramentas e automações para a rotina escolar.</p></div>
       <div style="--c:var(--gold)"><h3>Projetos e oficinas</h3><p>Trabalhos interdisciplinares, oficinas e eventos.</p></div>
       <div style="--c:var(--cyan)"><h3>Consultoria pedagógica</h3><p>Apoio à equipe e formação de professores.</p></div>
-      <div style="--c:var(--violet)"><h3>Cursos e oficinas</h3><p>Preparatórios para concursos, idiomas, arte e cultura, contação de histórias e visitas de estudo.</p></div>
+      <div style="--c:var(--violet)"><h3>Cursos e oficinas</h3><p>Preparatórios para concursos e vestibular, idiomas, arte e cultura, contação de histórias e visitas de estudo.</p></div>
       <div style="--c:var(--teal)"><h3>Tecnologia e suporte</h3><p>Treinamento em informática, manutenção de computadores e instalação de redes.</p></div>
       <div style="--c:var(--gold)"><h3>Materiais e eventos</h3><p>Edição de livros e apostilas, encadernação, impressão de material e fotografia de eventos.</p></div>
       <div style="--c:var(--orange)"><h3>Supervisão e gestão escolar</h3><p>Supervisão, orientação educacional e apoio à coordenação e à direção.</p></div>
@@ -1590,7 +1590,7 @@ const SERVICOS_EXTRAS = [
   { id: 'correcao',     grupo: 'Ensino e atividades pedagógicas', nome: 'Correção de avaliações e devolutivas' },
   { id: 'projetos',     grupo: 'Ensino e atividades pedagógicas', nome: 'Projetos interdisciplinares, oficinas e eventos' },
   { id: 'consultoria',  grupo: 'Ensino e atividades pedagógicas', nome: 'Consultoria pedagógica e formação de professores' },
-  { id: 'preparatorio', grupo: 'Ensino e atividades pedagógicas', nome: 'Cursos preparatórios para concursos' },
+  { id: 'preparatorio', grupo: 'Ensino e atividades pedagógicas', nome: 'Cursos preparatórios para concursos e vestibular', valor: 100 },   // valor fixo por aula/hora, em vez da hora de serviços
   { id: 'idiomas',      grupo: 'Ensino e atividades pedagógicas', nome: 'Cursos de idiomas (turmas extracurriculares)' },
   { id: 'arte',         grupo: 'Ensino e atividades pedagógicas', nome: 'Oficinas de arte e cultura' },
   { id: 'contacao',     grupo: 'Ensino e atividades pedagógicas', nome: 'Contação de histórias e teatro' },
@@ -2125,14 +2125,14 @@ function calcular() {
   const valorHoraExtra = valorHora * (1 + ACRESCIMO_SERVICOS_EXTRAS);
 
   // Serviços adicionais: horas × hora base com acréscimo de ACRESCIMO_SERVICOS_EXTRAS (sem acréscimos de turma/disciplina)
-  let horasExtras = 0;
+  let horasExtras = 0, valorExtras = 0;
   const detalheExtras = [];
   SERVICOS_EXTRAS.forEach(s => {
     const h = av ? 0 : lerNumero('extra_' + s.id, 0, false);
-    if ($('ep_' + s.id)) $('ep_' + s.id).textContent = av ? 'Não entra em aulas avulsas' : h > 0 ? h + ' h por mês × ' + brl(valorHoraExtra) + ' = ' + brl(h * valorHoraExtra) + ' por mês' : brl(valorHoraExtra) + ' por hora · 0 h por mês';
-    if (h > 0) { horasExtras += h; detalheExtras.push(['+ ' + s.nome, brl(h * valorHoraExtra), num(h) + ' h por mês × ' + brl(valorHoraExtra)]); }
+    const vh = s.valor || valorHoraExtra;   // alguns serviços têm valor próprio por aula/hora
+    if ($('ep_' + s.id)) $('ep_' + s.id).textContent = av ? 'Não entra em aulas avulsas' : h > 0 ? h + ' h por mês × ' + brl(vh) + ' = ' + brl(h * vh) + ' por mês' : brl(vh) + ' por ' + (s.valor ? 'aula' : 'hora') + ' · 0 h por mês';
+    if (h > 0) { horasExtras += h; valorExtras += h * vh; detalheExtras.push(['+ ' + s.nome, brl(h * vh), num(h) + ' h por mês × ' + brl(vh)]); }
   });
-  const valorExtras = horasExtras * valorHoraExtra;
   const totalTabela = subtotal + adTotal + acrEspecial + valorExtras;   // valor de tabela do mês, antes do desconto do contrato
   const descValor = totalTabela * renov.desc;
   const total = totalTabela - descValor;   // valor de cada mês, com desconto
