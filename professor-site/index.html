@@ -1305,7 +1305,7 @@
 
         <section class="panel" aria-labelledby="h4">
           <div class="ph"><i>4</i><h3 id="h4">Serviços adicionais</h3></div>
-          <p class="sub">Serviços do MEI e atividades além da regência, cobrados pelo mesmo valor-hora. Abra o grupo e toque no + para adicionar horas por mês.</p>
+          <p class="sub">Serviços do MEI e atividades além da regência, cobrados a 20% a mais que a hora-aula. Abra o grupo e toque no + para adicionar horas por mês.</p>
           <div class="somrow"><button type="button" class="pill" id="som" aria-pressed="true">Sons: ligados</button>
             <label class="somsel"><span>Som das moedas</span><select id="somTipo" aria-label="Tipo de som das moedas (ao somar serviços)"></select></label></div>
           <div id="extras"></div>
@@ -1420,8 +1420,8 @@
 
   <section class="sec" id="servicos">
     <div class="kicker mono">Além da sala de aula</div>
-    <h2>Tudo o que sustenta a aula, <span class="grad">no mesmo valor-hora</span></h2>
-    <p class="lead">O planejamento das aulas de todas as disciplinas faz parte do contrato. As demais atividades intelectuais são cobradas pela mesma hora.</p>
+    <h2>Tudo o que sustenta a aula, <span class="grad">numa hora própria</span></h2>
+    <p class="lead">O planejamento das aulas de todas as disciplinas faz parte do contrato. As demais atividades intelectuais são cobradas por hora, com 20% a mais que a hora-aula.</p>
     <div class="svc">
       <div style="--c:var(--orange)"><h3>Planejamento incluso</h3><p>1 hora de planejamento a cada 3 horas de aula, para todas as disciplinas.</p></div>
       <div style="--c:var(--pink)"><h3>Atividades e materiais</h3><p>Criação de atividades, provas e materiais didáticos.</p></div>
@@ -1505,6 +1505,10 @@ const ACRESCIMO_POR_TURMA_EXTRA = 0.05;
 
 // Acréscimo por DISCIPLINA ADICIONAL (a partir da 2ª), sobre o total das aulas. 0.05 = 5% por disciplina extra.
 const ACRESCIMO_POR_DISCIPLINA_EXTRA = 0.05;
+// Hora mais cara (acréscimo sobre o valor-hora base): aulas da noite, de sábado e do Ensino Médio (uma vez, sem somar), e serviços adicionais.
+const ACRESCIMO_AULA_ESPECIAL = 0.20;
+const ACRESCIMO_SERVICOS_EXTRAS = 0.20;
+const aulaEspecial = a => a.turno === 'Noite' || a.dia === 'Sáb' || /série EM/.test(a.turma);
 
 // Endereço desta página. O link do orçamento é este endereço + "#" + o código do orçamento.
 // Se o site for publicado em outro lugar (por exemplo GitHub Pages), troque aqui.
@@ -2074,15 +2078,17 @@ function calcular() {
   const relogio = regime === 'relogio';
   const unidade = relogio ? '60 minutos' : DURACAO_AULA_MIN + ' minutos';
   const valorHora = Math.max(VALOR_MINIMO_HORA, relogio ? VALOR_HORA_AULA * (1 + ACRESCIMO_HORA_RELOGIO) : VALOR_HORA_AULA);
-  $('hintRegime').textContent = 'Valor base: ' + brl(valorHora) + ' por ' + (relogio ? 'hora-relógio' : 'hora-aula') + '.';
+  $('hintRegime').textContent = 'Valor base: ' + brl(valorHora) + ' por ' + (relogio ? 'hora-relógio' : 'hora-aula') + '. Aulas da noite, de sábado e do Ensino Médio: ' + pct(ACRESCIMO_AULA_ESPECIAL) + ' a mais (uma vez, sem somar).';
 
-  let horasAula, turmas, disciplinas, preparos, origem, naoEspelhadas, turmasExtras, discExtras, isentos = { p: 0, t: 0, d: 0 }, geminadas = 0;
+  let horasEspeciais = 0, horasAula, turmas, disciplinas, preparos, origem, naoEspelhadas, turmasExtras, discExtras, isentos = { p: 0, t: 0, d: 0 }, geminadas = 0;
   const aulas = aulasMarcadas();
   if (modo === 'grade') {
     const porDia = {};
     aulas.forEach(a => { porDia[a.dia] = (porDia[a.dia] || 0) + 1; });
     const descontadas = av ? 0 : DIAS_VISIVEIS.reduce((s, d) => s + FERIADOS[d] * (porDia[d] || 0), 0);   // aulas que caem em feriado ou dia sem aula
     horasAula = av ? aulas.length : Math.max(0, aulas.length * SEMANAS_POR_MES - descontadas);
+    const espSemana = aulas.filter(aulaEspecial);
+    horasEspeciais = av ? espSemana.length : Math.max(0, espSemana.length * SEMANAS_POR_MES - espSemana.reduce((t, a) => t + (FERIADOS[a.dia] || 0), 0));
     turmas = new Set(aulas.map(a => a.turma)).size;
     disciplinas = new Set(aulas.map(a => a.disc)).size;
     preparos = new Set(aulas.map(a => a.disc + '|' + a.turma.split(' · ')[0])).size;   // disciplina + ano; letras de turma são espelhadas
@@ -2115,17 +2121,19 @@ function calcular() {
   const adTurmas = subtotal * ACRESCIMO_POR_TURMA_EXTRA * turmasExtras;
   const adDisc = subtotal * ACRESCIMO_POR_DISCIPLINA_EXTRA * discExtras;
   const adTotal = adNaoEsp + adTurmas + adDisc;
+  const acrEspecial = horasEspeciais * (1 + FRACAO_PLANEJAMENTO) * valorHora * ACRESCIMO_AULA_ESPECIAL;   // inclui o planejamento dessas aulas
+  const valorHoraExtra = valorHora * (1 + ACRESCIMO_SERVICOS_EXTRAS);
 
-  // Serviços adicionais: horas × mesma hora base (sem acréscimos de turma/disciplina)
+  // Serviços adicionais: horas × hora base com acréscimo de ACRESCIMO_SERVICOS_EXTRAS (sem acréscimos de turma/disciplina)
   let horasExtras = 0;
   const detalheExtras = [];
   SERVICOS_EXTRAS.forEach(s => {
     const h = av ? 0 : lerNumero('extra_' + s.id, 0, false);
-    if ($('ep_' + s.id)) $('ep_' + s.id).textContent = av ? 'Não entra em aulas avulsas' : h > 0 ? h + ' h por mês × ' + brl(valorHora) + ' = ' + brl(h * valorHora) + ' por mês' : brl(valorHora) + ' por hora · 0 h por mês';
-    if (h > 0) { horasExtras += h; detalheExtras.push(['+ ' + s.nome, brl(h * valorHora), num(h) + ' h por mês × ' + brl(valorHora)]); }
+    if ($('ep_' + s.id)) $('ep_' + s.id).textContent = av ? 'Não entra em aulas avulsas' : h > 0 ? h + ' h por mês × ' + brl(valorHoraExtra) + ' = ' + brl(h * valorHoraExtra) + ' por mês' : brl(valorHoraExtra) + ' por hora · 0 h por mês';
+    if (h > 0) { horasExtras += h; detalheExtras.push(['+ ' + s.nome, brl(h * valorHoraExtra), num(h) + ' h por mês × ' + brl(valorHoraExtra)]); }
   });
-  const valorExtras = horasExtras * valorHora;
-  const totalTabela = subtotal + adTotal + valorExtras;   // valor de tabela do mês, antes do desconto do contrato
+  const valorExtras = horasExtras * valorHoraExtra;
+  const totalTabela = subtotal + adTotal + acrEspecial + valorExtras;   // valor de tabela do mês, antes do desconto do contrato
   const descValor = totalTabela * renov.desc;
   const total = totalTabela - descValor;   // valor de cada mês, com desconto
   const valorContrato = total * renov.m;   // valor do contrato inteiro (1, 2, 3, 6 ou 12 meses)
@@ -2145,7 +2153,7 @@ function calcular() {
     ['Acréscimo por turmas extras', brl(adTurmas), turmasExtras + ' extra(s) × ' + pct(ACRESCIMO_POR_TURMA_EXTRA) + (isentos.t ? ' · ' + isentos.t + ' geminada(s) sem acréscimo' : '')],
     ['Acréscimo por disciplinas extras', brl(adDisc), discExtras + ' extra(s) × ' + pct(ACRESCIMO_POR_DISCIPLINA_EXTRA) + (isentos.d ? ' · ' + isentos.d + ' geminada(s) sem acréscimo' : '')],
     ['Total de complexidade', brl(adTotal), null, true]
-  ].concat(detalheExtras.length ? detalheExtras.concat([['Total de serviços adicionais', brl(valorExtras), num(horasExtras) + ' h por mês', true]]) : [])
+  ].concat(acrEspecial > 0 ? [['Acréscimo por noite, sábado e Ensino Médio', brl(acrEspecial), num(horasEspeciais) + (relogio ? ' horas' : ' aulas') + ' × ' + pct(ACRESCIMO_AULA_ESPECIAL) + ' (com o planejamento delas)', true]] : []).concat(detalheExtras.length ? detalheExtras.concat([['Total de serviços adicionais', brl(valorExtras), num(horasExtras) + ' h por mês', true]]) : [])
    .concat(av ? [['Valor das aulas (' + renov.nome.toLowerCase() + ')', brl(valorContrato), num(horasAula) + (relogio ? ' horas' : ' aulas') + ' · sem contrato, sem desconto', true]] : [['Valor de tabela (mensal)', brl(totalTabela), null, true], ['Desconto por contrato ' + renov.nome.toLowerCase() + ' (' + pct(renov.desc) + ')', '− ' + brl(descValor), null, true]])
    .concat(av ? [] : [['Valor mensal com desconto', brl(total), null, true], ['Valor do contrato (' + renov.nome.toLowerCase() + (renov.m > 1 ? ', ' + renov.m + ' meses' : '') + ')', brl(valorContrato), (renov.m > 1 ? renov.m + ' meses × ' + brl(total) + ' · ' : '') + num(horasAula * renov.m) + (relogio ? ' horas' : ' aulas') + ' no contrato', true]])
    .concat([['Pagamento', 'à vista, antecipado', (inicio ? 'A ser pago em ' + fmtData(inicio) + ' (início do contrato)' : 'A ser pago no início do contrato (data a definir)') + ' · renovação ' + renov.nome.toLowerCase(), false, true]]);
