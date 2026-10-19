@@ -1252,7 +1252,7 @@
             <p class="rule">Turmas do mesmo ano e da mesma disciplina são aulas <b>espelhadas</b> (mesmo preparo). Cada preparo diferente, além do primeiro, soma 5% ao total das aulas. <b>Aulas geminadas</b> (seguidas, na mesma turma e disciplina) ficam no preço normal, sem acréscimo.</p>
             <div class="temas" id="temasBox">
               <h4>Temas sensíveis em sala</h4>
-              <p class="hint">Religião, política e outros temas. Escolha como o professor deve tratá-los. O padrão é a liberdade de cátedra: o professor pleno, com as suas ideias e a sua opinião, sempre com ética e sem impor nada a ninguém. Se a escola preferir neutralidade, que o tema não seja abordado ou que valha o regimento interno dela, basta escolher: o professor aceita e segue o que a escola pedir. Esse tema é conversado pessoalmente com a escola, sobre a posição dela, e pode ser ajustado no contrato.</p>
+              <p class="hint">Religião, política e outros temas. Escolha como o professor deve tratá-los. O padrão é a liberdade de cátedra: o professor pleno, com as suas ideias e a sua opinião, sempre com ética e sem impor nada a ninguém. Se a escola preferir neutralidade, que o tema não seja abordado ou que valha o regimento interno dela, basta escolher: o professor aceita e segue o que a escola pedir. Esse assunto é conversado pessoalmente com a escola e pode ser ajustado no contrato, de acordo com a posição dela.</p>
               <div id="temasLista"></div>
             </div>
             <div class="legend" id="legend"></div>
@@ -1298,7 +1298,7 @@
           <p class="sub">O planejamento de todas as disciplinas está incluso: 1 hora para cada 3 horas de aula. Informe onde ele será feito.</p>
           <div class="opts" role="radiogroup" aria-label="Local do planejamento">
             <label class="opt"><input type="radio" name="local" value="Em casa / Remoto" checked><span><b>Em casa / Remoto</b><small>Planejamento fora da escola</small></span></label>
-            <label class="opt"><input type="radio" name="local" value="Na escola / Presencial"><span><b>Na escola / Presencial</b><small>Hora-atividade nas dependências</small></span></label>
+            <label class="opt"><input type="radio" name="local" value="Na escola / Presencial"><span><b>Na escola / Presencial</b><small>Hora-atividade nas dependências da escola</small></span></label>
           </div>
           <p class="hint">O local não altera o valor, mas consta no orçamento.</p>
         </section>
@@ -1332,7 +1332,7 @@
             <div>
               <p class="lb">Renovação do contrato ou aulas avulsas</p>
               <div class="opts" role="radiogroup" aria-label="Renovação do contrato" id="renovOpts"></div>
-              <p class="hint">O contrato é renovado a cada período escolhido, com pagamento antecipado de cada período. Para só uma substituição, escolha uma das três últimas opções: sem contrato, sem desconto e sem renovação.</p>
+              <p class="hint">O contrato é renovado a cada período escolhido, com pagamento antecipado de cada período. Para apenas uma substituição, escolha uma das três últimas opções: sem contrato, sem desconto e sem renovação.</p>
               <p class="hint" id="avNota" hidden></p>
             </div>
             <div>
@@ -1379,15 +1379,14 @@
 
   <section class="sec" id="trajetoria">
     <div class="kicker mono">Trajetória</div>
-    <h2>Da licenciatura em Matemática ao <span class="grad">Inglês</span>, e rumo à Geografia e à Filosofia</h2>
-    <p class="lead">Experiência em sala de aula no Colégio Marcos Cláudio Schuster (SEED) e formação contínua em novas áreas.</p>
+    <h2>Da Matemática ao <span class="grad">Inglês</span>, com a sala de aula como base</h2>
+    <p class="lead">Experiência em sala de aula no Colégio Marcos Cláudio Schuster (SEED) e formação continuada.</p>
     <div class="line">
       <div class="ev" style="--c:var(--orange)"><div class="y mono">2018</div><h3>Licenciatura em Matemática</h3></div>
       <div class="ev" style="--c:var(--pink)"><div class="y mono">2021 · atualmente</div><h3>Professor de Matemática e Educação Financeira</h3><p>SEED, Colégio Marcos Cláudio Schuster.</p></div>
       <div class="ev" style="--c:var(--violet)"><div class="y mono">2024</div><h3>Licenciatura em Letras, Português e Inglês</h3></div>
       <div class="ev" style="--c:var(--teal)"><div class="y mono">2025 · atualmente</div><h3>Professor de Língua Inglesa</h3><p>SEED, Colégio Marcos Cláudio Schuster.</p></div>
       <div class="ev" style="--c:var(--cyan)"><div class="y mono">Formação continuada</div><h3>Três pós-graduações lato sensu</h3><p>Gestão Escolar, Educação Especial e Inclusiva com Neuropsicopedagogia, e Metodologia do Ensino de Matemática.</p></div>
-      <div class="ev" style="--c:var(--gold)"><div class="y mono">Em andamento</div><h3>Segunda graduação em Geografia e em Filosofia</h3><p>Cursos para licenciados, ampliando o leque de disciplinas.</p></div>
     </div>
     <div class="quote">
       <p>Atuar como professor, aplicando meus conhecimentos de forma clara e eficaz, com foco na excelência do ensino, no desenvolvimento intelectual dos alunos e na disciplina em sala de aula, com responsabilidade, respeito e mérito.</p>
@@ -1455,7 +1454,7 @@
 <div class="balao" id="balao" role="status" hidden>
   <button type="button" class="bx" id="balaoX" aria-label="Fechar aviso">×</button>
   <b>Temas sensíveis</b>
-  <p>Religião, política e outros temas: você decide como o professor deve tratá-los em sala. Quer opinião dele ou só neutralidade?</p>
+  <p>Religião, política e outros temas: você decide como o professor deve tratá-los em sala. Quer a opinião dele ou só neutralidade?</p>
   <div class="bbtns"><button type="button" class="on" id="balaoSim">Escolher agora</button><button type="button" id="balaoNao">Deixar neutro</button></div>
 </div>
 <div class="boasvindas" id="boasVindas" role="dialog" aria-labelledby="bvTit" hidden>
@@ -1548,7 +1547,7 @@ const TRATOS = [
   { nome: 'Neutralidade', curto: 'neutralidade', frase: 'a pedido da escola, o professor aborda com neutralidade, apresentando fatos e diferentes pontos de vista, sem opinião pessoal' },
   { nome: 'Não abordar', curto: 'não abordar', frase: 'o professor não aborda esses temas em sala' },
   { nome: 'Regimento interno da escola', curto: 'regimento interno da escola', frase: 'o professor segue o que o regimento interno da escola (regulamento, normas e orientações) determinar sobre esses temas' },
-  { nome: 'Liberdade de cátedra', curto: 'liberdade de cátedra', frase: 'o professor tem liberdade de cátedra: apresenta também as suas próprias ideias e opiniões, com ética e respeito, sem impor preferências políticas ou religiosas a ninguém, e, em escola confessional (por exemplo, católica), respeita o ideário da escola' }
+  { nome: 'Liberdade de cátedra', curto: 'liberdade de cátedra', frase: 'o professor tem liberdade de cátedra, podendo apresentar também as suas próprias ideias e opiniões, com ética e respeito, sem impor preferências políticas ou religiosas a ninguém e, em escola confessional (por exemplo, católica), respeitando o ideário da escola' }
 ];
 const TRATO_PADRAO = 3;   // liberdade de cátedra é a escolha inicial; o índice 3 é novo, então links antigos continuam iguais
 
@@ -1565,9 +1564,9 @@ const SEMANAS_POR_MES = 4;
 
 // AGENDA DO PROFESSOR. Cada turno tem 6 aulas. Em "dias" ficam só os dias em que ainda há vaga;
 // os demais aparecem como ocupados. Deixe [] quando o turno estiver cheio. Os horários são ajustáveis.
-const DIAS = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex'];
+const DIAS = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
 const TURNOS = [
-  { id: 'manha', nome: 'Manhã', icone: 'sun', c1: '#FFC15C', c2: '#FF8A2B', dias: ['Seg', 'Ter', 'Qui'],
+  { id: 'manha', nome: 'Manhã', icone: 'sun', c1: '#FFC15C', c2: '#FF8A2B', dias: ['Seg', 'Ter', 'Qui', 'Sáb'],
     horarios: ['07:00–07:50', '07:50–08:40', '08:40–09:30', '09:50–10:40', '10:40–11:30', '11:30–12:20'] },
   { id: 'tarde', nome: 'Tarde', icone: 'sunset', c1: '#FF8A2B', c2: '#F0489F', dias: [],
     horarios: ['13:00–13:50', '13:50–14:40', '14:40–15:30', '15:50–16:40', '16:40–17:30', '17:30–18:20'] },
@@ -2073,7 +2072,7 @@ function calcular() {
   $('hintInicio').textContent = av ? 'Informe a data da primeira aula. O pagamento é à vista, antes das aulas.' : inicio ? 'Primeiro pagamento em ' + fmtData(inicio) + '. Contrato renovado ' + renov.cada + ', ' + diaTxt + '.' : 'Informe a data em que o contrato começa. O primeiro pagamento vence nesse dia.';
   const regime = document.querySelector('input[name=regime]:checked').value;
   const relogio = regime === 'relogio';
-  const unidade = relogio ? 'hora-relógio (60 min)' : 'hora-aula (' + DURACAO_AULA_MIN + ' min)';
+  const unidade = relogio ? '60 minutos' : DURACAO_AULA_MIN + ' minutos';
   const valorHora = Math.max(VALOR_MINIMO_HORA, relogio ? VALOR_HORA_AULA * (1 + ACRESCIMO_HORA_RELOGIO) : VALOR_HORA_AULA);
   $('hintRegime').textContent = 'Valor base: ' + brl(valorHora) + ' por ' + (relogio ? 'hora-relógio' : 'hora-aula') + '.';
 
@@ -2189,7 +2188,8 @@ function calcular() {
 }
 
 /* ---------- Código do orçamento: o estado da página vai dentro do link ---------- */
-const SLOT_KEYS = Array.prototype.map.call(document.querySelectorAll('#farm .slot[id]'), s => s.id.slice(5));
+const _slotsDom = Array.prototype.slice.call(document.querySelectorAll('#farm .slot[id]'));
+const SLOT_KEYS = _slotsDom.filter(s => s.dataset.dia !== 'Sáb').concat(_slotsDom.filter(s => s.dataset.dia === 'Sáb')).map(s => s.id.slice(5));   // sábado no fim: links antigos não mudam
 const B64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
 const CROCK = '0123456789ABCDEFGHJKMNPQRSTVWXYZ';
 
@@ -2247,7 +2247,7 @@ function codificarEstado() {
   let h = hash32(payload), codigo = '';
   for (let i = 0; i < 6; i++) { codigo += CROCK[h & 31]; h = h >>> 5; }
   codigo = 'ORC-' + codigo;
-  return { payload, codigo, link: PAGE_URL + '#o6.' + payload, h: hash32(payload) };
+  return { payload, codigo, link: PAGE_URL + '#o7.' + payload, h: hash32(payload) };
 }
 
 function decodificarEstado(payload, versao) {
@@ -2284,7 +2284,8 @@ function decodificarEstado(payload, versao) {
   const bR = versao >= 3 ? 3 : 2;   // a partir da v3 a renovação usa 3 bits (cabem 5 períodos)
   e.renov = bits.length - p >= bR ? get(bR) : 0;
   e.fer = DIAS_VISIVEIS.map(() => 0);
-  if (bits.length - p >= DIAS_VISIVEIS.length * 3) e.fer = DIAS_VISIVEIS.map(() => Math.min(get(3), MAX_FER));
+  const nFer = versao >= 7 ? DIAS_VISIVEIS.length : DIAS_VISIVEIS.filter(d => d !== 'Sáb').length;   // antes do v7 o sábado não existia
+  if (bits.length - p >= nFer * 3) { for (let i = 0; i < nFer; i++) e.fer[i] = Math.min(get(3), MAX_FER); }
   e.metod = 0; e.divisao = 0;
   e.temas = TEMAS.map(() => TRATO_PADRAO);
   if (bits.length - p >= 3) { e.metod = get(1); e.divisao = get(2); }
@@ -2327,7 +2328,7 @@ function restaurarEstado(e) {
 
 function abrirDoLink() {
   const h = (location.hash || '').replace(/^#/, '');
-  const versao = h.indexOf('o1.') === 0 ? 1 : h.indexOf('o2.') === 0 ? 2 : h.indexOf('o3.') === 0 ? 3 : h.indexOf('o4.') === 0 ? 4 : h.indexOf('o5.') === 0 ? 5 : h.indexOf('o6.') === 0 ? 6 : 0;
+  const versao = h.indexOf('o1.') === 0 ? 1 : h.indexOf('o2.') === 0 ? 2 : h.indexOf('o3.') === 0 ? 3 : h.indexOf('o4.') === 0 ? 4 : h.indexOf('o5.') === 0 ? 5 : h.indexOf('o6.') === 0 ? 6 : h.indexOf('o7.') === 0 ? 7 : 0;
   if (!versao) return;
   const e = decodificarEstado(h.slice(3), versao);
   if (!e) return;
@@ -2342,7 +2343,7 @@ const COR_DISC = {
   'Matemática': ['#FFE4CC', '#FF8A2B', '#6B3200'], 'Inglês': ['#D3F4EF', '#19C7B5', '#03463F'], 'Educação Financeira': ['#FFF0BF', '#E0A800', '#5E4300'],
   'Geografia': ['#D9F4DE', '#3DB35A', '#12461F'], 'Filosofia': ['#E7E0FF', '#7A5CFF', '#32197F']
 };
-const DIA_EXT = { Seg: 'Segunda', Ter: 'Terça', Qua: 'Quarta', Qui: 'Quinta', Sex: 'Sexta' };
+const DIA_EXT = { Seg: 'Segunda', Ter: 'Terça', Qua: 'Quarta', Qui: 'Quinta', Sex: 'Sexta', 'Sáb': 'Sábado' };
 
 function barras(h) {
   let s = h || 1, x = 0, out = '';
@@ -2689,10 +2690,11 @@ function somClique(tipo) {
     cliqueDoVisual(ctxAudio, root.dataset.style || 'asimov', tipo, ctxAudio.currentTime + 0.005);
   } catch (e) {}
 }
-document.addEventListener('click', e => {
-  const t = e.target.closest && e.target.closest('button, input, select, summary, label, a.btn, .th');
-  if (!t || t.closest('.sb') || t.closest('#extras .extra') && t.matches('label')) return;   // + e − dos serviços tocam moedas
-  if (t.disabled) return;
+document.addEventListener('click', e => {   // qualquer coisa clicável faz o som do visual escolhido
+  const t = e.target.closest && e.target.closest('a[href], button, input, select, summary, label, [role=button], [role=switch], .th, .slot');
+  if (!t || t.disabled || t.closest('.sb')) return;   // + e − dos serviços tocam as moedas (e o clique, se não houver o que somar)
+  if (t.tagName === 'INPUT' && !/^(checkbox|radio|range|button|submit|reset)$/.test(t.type)) return;   // campos de texto, número, data e hora: sem som
+  if (t.tagName === 'LABEL' && t.querySelector('input[type=text],input[type=number],input[type=date],input[type=time],textarea')) return;
   const ehTema = t.closest('#swStyle, #bvThumbs');
   let tipo = 'sel';
   if (ehTema) tipo = 'tema';
@@ -2712,7 +2714,7 @@ function atualizarStepper(id) {
 function atualizarSteppers() { SERVICOS_EXTRAS.forEach(s => atualizarStepper(s.id)); }
 function mudarExtra(id, delta) {
   const atual = lerNumero('extra_' + id, 0, true), novo = Math.max(0, Math.min(MAX_EXTRA, atual + delta));
-  if (novo === atual) return false;
+  if (novo === atual) { somClique('off'); return false; }
   $('extra_' + id).value = novo;
   atualizarStepper(id);
   const sv = $('ev_' + id); sv.classList.remove('pop'); void sv.offsetWidth; sv.classList.add('pop');
