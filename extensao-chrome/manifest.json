@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "Postador da Loja",
+  "version": "0.1.0",
+  "description": "Preenche os formulários de produto no WhatsApp Web, na Eduzz e no catálogo da Meta com os dados da Loja de Matemática.",
+  "action": { "default_title": "Abrir o Postador" },
+  "side_panel": { "default_path": "painel.html" },
+  "background": { "service_worker": "sw.js" },
+  "permissions": ["sidePanel", "storage", "scripting", "tabs"],
+  "host_permissions": [
+    "https://web.whatsapp.com/*",
+    "https://*.eduzz.com/*",
+    "https://business.facebook.com/*",
+    "https://hodhreego.github.io/*"
+  ]
+}

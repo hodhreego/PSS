@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Postador da Loja</title>
+<link rel="stylesheet" href="painel.css">
+</head>
+<body>
+<header>
+  <b>Postador da Loja</b>
+  <span id="site" class="site">—</span>
+</header>
+<main>
+  <input id="busca" type="search" placeholder="Buscar produto…" autocomplete="off">
+  <select id="lista" size="7" aria-label="Produtos"></select>
+
+  <section id="det" hidden>
+    <div class="topo">
+      <img id="capa" alt="">
+      <div><h2 id="nome"></h2><p id="meta"></p></div>
+    </div>
+    <div id="campos"></div>
+    <button id="preencher" class="pri">Preencher nesta aba</button>
+    <p class="dica">Abra antes o formulário de “novo item/produto” no site. O Postador preenche e <b>destaca</b> o botão final; quem clica é você.</p>
+    <ul id="log"></ul>
+  </section>
+
+  <details>
+    <summary>Calibrar campos deste site</summary>
+    <p class="dica">Se um campo não for encontrado: escolha o campo, clique em “Calibrar” e depois clique no campo na página.</p>
+    <div class="linha">
+      <select id="campoCal" aria-label="Campo"></select>
+      <button id="calibrar">Calibrar</button>
+    </div>
+    <ul id="calibrados"></ul>
+    <button id="exportar">Copiar calibragem (para o OpenCode)</button>
+  </details>
+</main>
+<script type="module" src="painel.js"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "instructions": ["automacao/PROTOCOLO.md"],
+  "mcp": {
+    "navegador": {
+      "type": "local",
+      "command": ["npx", "-y", "@playwright/mcp@latest", "--user-data-dir", "automacao/.perfil/mcp"],
+      "enabled": true
+    },
+    "chrome-real": {
+      "type": "local",
+      "command": ["npx", "-y", "chrome-devtools-mcp@latest", "--browserUrl", "http://127.0.0.1:9222"],
+      "enabled": false
+    }
+  },
+  "permission": {
+    "edit": "allow",
+    "bash": {
+      "*": "ask",
+      "python automacao/catalogo.py*": "allow",
+      "python3 automacao/catalogo.py*": "allow",
+      "git status*": "allow",
+      "git diff*": "allow",
+      "git log*": "allow"
+    }
+  }
+}

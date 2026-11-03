@@ -1,0 +1,10 @@
+# automação: perfis de navegador têm sessões logadas (NUNCA versionar)
+automacao/.perfil/
+automacao/registros/
+__pycache__/
+# OpenCode instala dependências das ferramentas aqui
+.opencode/node_modules/
+.opencode/package.json
+.opencode/bun.lock
+# capas copiadas para a extensão por: python automacao/catalogo.py --capas
+extensao-chrome/capas/
