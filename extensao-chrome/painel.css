@@ -1,0 +1,29 @@
+:root{--navy:#1B3A6B;--gold:#C9A227;--ok:#1f9d57;--err:#c0392b;--bg:#fff;--ink:#1B2733;--mut:#5b6b80;--line:#d9e2f1;--soft:#EEF3FB}
+@media (prefers-color-scheme: dark){:root{--bg:#141a24;--ink:#e6ecf5;--mut:#9aa8bd;--line:#2c3a52;--soft:#1c2433}}
+*{box-sizing:border-box}
+body{margin:0;font:14px/1.4 system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:var(--navy);color:#fff;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.site{font-size:12px;background:rgba(255,255,255,.15);padding:3px 8px;border-radius:99px}
+.site.on{background:var(--ok)}
+main{padding:12px;display:flex;flex-direction:column;gap:10px}
+input,select,button{font:inherit;color:inherit}
+input[type=search],select{width:100%;border:1.5px solid var(--line);border-radius:8px;padding:7px 9px;background:var(--bg)}
+button{border:1.5px solid var(--line);background:var(--soft);border-radius:8px;padding:7px 10px;cursor:pointer}
+button:hover{border-color:var(--navy)}
+button.pri{background:var(--gold);border-color:var(--gold);color:#2b2200;font-weight:700;padding:10px}
+.topo{display:flex;gap:10px;align-items:center}
+.topo img{width:64px;height:64px;object-fit:cover;border-radius:8px;background:var(--soft)}
+h2{font-size:15px;margin:0}
+#meta{margin:2px 0 0;color:var(--mut);font-size:12px}
+#campos{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+.campo{border:1px solid var(--line);border-radius:8px;padding:6px 8px}
+.campo small{display:flex;justify-content:space-between;color:var(--mut);font-weight:600;text-transform:uppercase;font-size:11px}
+.campo small button{padding:1px 8px;font-size:11px}
+.campo div{white-space:pre-wrap;word-break:break-word;max-height:70px;overflow:auto;font-size:13px}
+.dica{color:var(--mut);font-size:12px;margin:4px 0}
+#log,#calibrados{list-style:none;padding:0;margin:0;font-size:13px;display:flex;flex-direction:column;gap:3px}
+#calibrados li{display:flex;justify-content:space-between;gap:6px;align-items:center}
+#calibrados code{font-size:11px;word-break:break-all}
+.linha{display:flex;gap:6px}
+details{border-top:1px solid var(--line);padding-top:8px}
+summary{cursor:pointer;font-weight:600}
